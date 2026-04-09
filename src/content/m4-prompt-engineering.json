@@ -1,0 +1,92 @@
+{
+  "moduleId": "m4",
+  "title": "Prompt Engineering",
+  "technique": "Técnica 1: Sé claro y directo",
+  "source": "Anthropic Prompt Engineering Guide",
+  "questions": [
+    {
+      "id": 1,
+      "question": "¿Cuál es el principio fundamental de la Técnica 1 de Anthropic para prompt engineering?",
+      "options": [
+        "Usar el mayor número de palabras posible para dar contexto",
+        "Ser claro y directo en las instrucciones al modelo",
+        "Siempre incluir ejemplos antes de la instrucción",
+        "Escribir los prompts en inglés para mejor rendimiento"
+      ],
+      "correct": 1,
+      "explanation": "Anthropic recomienda ser claro y directo. Claude responde mejor cuando las instrucciones son específicas y sin ambigüedad, en lugar de depender de que el modelo 'adivine' lo que quieres."
+    },
+    {
+      "id": 2,
+      "question": "¿Qué prompt sigue mejor la técnica 'sé claro y directo'?",
+      "options": [
+        "Háblame sobre marketing",
+        "Escribe 3 estrategias de marketing digital para una tienda online de ropa, con presupuesto menor a $500/mes",
+        "Marketing digital, estrategias, tienda, ropa, barato",
+        "Necesito ayuda con mi negocio de ropa por favor"
+      ],
+      "correct": 1,
+      "explanation": "El segundo prompt es claro y directo: especifica la cantidad (3 estrategias), el dominio (marketing digital), el contexto (tienda online de ropa) y una restricción (presupuesto < $500/mes). No deja nada a la interpretación."
+    },
+    {
+      "id": 3,
+      "question": "¿Por qué Anthropic recomienda evitar la ambigüedad en los prompts?",
+      "options": [
+        "Porque Claude no entiende palabras complejas",
+        "Porque los prompts ambiguos cuestan más tokens",
+        "Porque Claude puede interpretar la instrucción de formas no deseadas",
+        "Porque los prompts cortos siempre son mejores"
+      ],
+      "correct": 2,
+      "explanation": "La ambigüedad permite múltiples interpretaciones. Claude elegirá una, pero puede no ser la que tú querías. Ser directo elimina esa incertidumbre y produce resultados más predecibles y útiles."
+    },
+    {
+      "id": 4,
+      "question": "Tienes este prompt: 'Haz algo con estos datos de ventas'. ¿Cómo lo mejorarías aplicando la Técnica 1?",
+      "options": [
+        "Haz algo interesante y útil con estos datos de ventas por favor",
+        "Datos de ventas → análisis",
+        "Analiza estos datos de ventas del Q1 2025 e identifica los 3 productos con mayor crecimiento porcentual",
+        "Procesa los datos"
+      ],
+      "correct": 2,
+      "explanation": "La versión mejorada especifica exactamente qué hacer (analizar), con qué datos (ventas Q1 2025), y qué resultado esperas (3 productos con mayor crecimiento porcentual). Eso es ser claro y directo."
+    },
+    {
+      "id": 5,
+      "question": "Según Anthropic, ¿qué elemento NO es necesario incluir para que un prompt sea 'claro y directo'?",
+      "options": [
+        "La tarea específica que quieres que Claude realice",
+        "El formato de salida esperado",
+        "La historia completa de por qué necesitas la respuesta",
+        "Las restricciones o limitaciones relevantes"
+      ],
+      "correct": 2,
+      "explanation": "No necesitas explicar toda la historia detrás de tu solicitud. Lo importante es que la tarea, el formato y las restricciones sean claros. El contexto excesivo e irrelevante puede distraer del objetivo principal."
+    },
+    {
+      "id": 6,
+      "question": "¿Cuál es la diferencia entre un prompt vago y uno directo?",
+      "options": [
+        "El vago es más corto y el directo es más largo",
+        "El vago deja espacio para interpretación, el directo especifica exactamente qué se espera",
+        "El directo siempre usa bullet points",
+        "No hay diferencia real, solo es cuestión de estilo"
+      ],
+      "correct": 1,
+      "explanation": "La diferencia clave es la especificidad. Un prompt vago como 'escribe sobre perros' permite infinitas interpretaciones. Uno directo como 'escribe 5 consejos para entrenar un cachorro labrador de 3 meses' deja claro qué esperas."
+    },
+    {
+      "id": 7,
+      "question": "Estás construyendo un chatbot con Claude API. ¿Cómo aplicarías 'sé claro y directo' en el system prompt?",
+      "options": [
+        "Sé un buen asistente y ayuda al usuario",
+        "Eres un asistente de soporte técnico para una app de fitness. Responde solo preguntas sobre ejercicios y nutrición. Usa un tono amigable. Si la pregunta no es sobre fitness, responde: 'Solo puedo ayudarte con temas de fitness'",
+        "Ayuda con fitness",
+        "Eres un asistente. Haz lo que el usuario pida sobre cualquier tema"
+      ],
+      "correct": 1,
+      "explanation": "El segundo prompt define el rol (soporte técnico), el dominio (app de fitness), los límites (solo ejercicios y nutrición), el tono (amigable) y el comportamiento ante excepciones. Eso es claridad y dirección aplicada a un system prompt real."
+    }
+  ]
+}
