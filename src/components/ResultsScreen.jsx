@@ -1,13 +1,5 @@
 import { useState, useEffect } from "react"
 
-// Badge de la Técnica 1
-const BADGE = {
-  nombre: "Prompt Claro",
-  icono: "🎯",
-  descripcion: "Dominas la Técnica 1: Sé claro y directo",
-  requisito: 5, // mínimo 5/7 correctas (71%+)
-}
-
 // Mensajes según rendimiento
 function getMensaje(porcentaje) {
   if (porcentaje === 100) return { emoji: "🏆", texto: "¡Puntuación perfecta! Eres un master del prompting." }
@@ -25,26 +17,22 @@ function CirculoProgreso({ porcentaje }) {
   return (
     <div className="relative w-28 h-28">
       <svg className="w-28 h-28 circle-progress" viewBox="0 0 100 100">
-        {/* Fondo del círculo */}
         <circle cx="50" cy="50" r={radio} fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="6" />
-        {/* Progreso */}
         <circle
           cx="50" cy="50" r={radio} fill="none"
-          stroke="url(#gradient)" strokeWidth="6"
+          stroke="url(#gradient-result)" strokeWidth="6"
           strokeLinecap="round"
           strokeDasharray={circunferencia}
           strokeDashoffset={offset}
           className="animate-circle-fill"
-          style={{ "--circle-target": offset }}
         />
         <defs>
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id="gradient-result" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#3B82F6" />
             <stop offset="100%" stopColor="#8B5CF6" />
           </linearGradient>
         </defs>
       </svg>
-      {/* Porcentaje al centro */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className="text-2xl font-black text-white animate-count-up">{porcentaje}%</span>
         <span className="text-[10px] text-gray-500">aciertos</span>
@@ -53,17 +41,17 @@ function CirculoProgreso({ porcentaje }) {
   )
 }
 
-// ResultsScreen — pantalla de celebración con stats, badge y compartir
-export default function ResultsScreen({ correctas, totalPreguntas, xp, onRestart }) {
+// ResultsScreen — pantalla de celebración adaptada a cada lección
+export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, onRestart, onVolver, hayNextLesson }) {
   const porcentaje = Math.round((correctas / totalPreguntas) * 100)
-  const badgeDesbloqueado = correctas >= BADGE.requisito
+  const badgeDesbloqueado = correctas >= 5 // 5/7 = 71%+
   const mensaje = getMensaje(porcentaje)
 
   // Contador animado de XP
   const [xpAnimado, setXpAnimado] = useState(0)
   useEffect(() => {
     let actual = 0
-    const paso = Math.ceil(xp / 30)
+    const paso = Math.max(1, Math.ceil(xp / 30))
     const intervalo = setInterval(() => {
       actual += paso
       if (actual >= xp) {
@@ -77,7 +65,7 @@ export default function ResultsScreen({ correctas, totalPreguntas, xp, onRestart
 
   // Texto para compartir en LinkedIn
   const textoLinkedIn = encodeURIComponent(
-    `Acabo de completar la lección "Sé Claro y Directo" en AIPath con ${porcentaje}% de aciertos y ${xp} XP.\n\nAprendiendo Prompt Engineering con las técnicas oficiales de Anthropic.\n\n#AIPath #PromptEngineering #IA #Anthropic`
+    `Acabo de completar la lección "${leccion.technique}" en AIPath con ${porcentaje}% de aciertos y ${xp} XP.\n\nAprendiendo Prompt Engineering con las técnicas oficiales de Anthropic.\n\n#AIPath #PromptEngineering #IA #Anthropic`
   )
 
   return (
@@ -103,9 +91,8 @@ export default function ResultsScreen({ correctas, totalPreguntas, xp, onRestart
         </div>
       )}
 
-      {/* Card principal de resultados */}
+      {/* Card principal */}
       <div className="glass-strong rounded-3xl p-8 w-full relative z-10 animate-scale-in">
-        {/* Emoji y mensaje */}
         <p className="text-5xl mb-3">{mensaje.emoji}</p>
         <h3 className="text-2xl font-bold text-gradient mb-1">¡Lección completada!</h3>
         <p className="text-sm text-gray-400 mb-6">{mensaje.texto}</p>
@@ -133,30 +120,29 @@ export default function ResultsScreen({ correctas, totalPreguntas, xp, onRestart
                 ? "bg-gradient-to-br from-blue-500 to-purple-600 animate-badge-unlock"
                 : "bg-white/5"
             }`}>
-              {BADGE.icono}
+              {leccion.icon}
             </div>
             <div className="text-left">
               <p className="font-bold text-sm text-white flex items-center gap-2">
-                {BADGE.nombre}
+                {leccion.badge}
                 {badgeDesbloqueado && (
                   <span className="text-[10px] font-bold text-green-400 bg-green-400/10 px-1.5 py-0.5 rounded-full">
                     DESBLOQUEADO
                   </span>
                 )}
               </p>
-              <p className="text-xs text-gray-400 mt-0.5">{BADGE.descripcion}</p>
+              <p className="text-xs text-gray-400 mt-0.5">
+                Técnica {leccion.number}: {leccion.technique}
+              </p>
               {!badgeDesbloqueado && (
-                <p className="text-xs text-gray-600 mt-1">
-                  Necesitas {BADGE.requisito}+ correctas para desbloquear
-                </p>
+                <p className="text-xs text-gray-600 mt-1">Necesitas 5+ correctas para desbloquear</p>
               )}
             </div>
           </div>
         </div>
 
-        {/* Botones de acción */}
+        {/* Botones */}
         <div className="flex flex-col gap-3 animate-slide-up" style={{ animationDelay: "600ms" }}>
-          {/* Compartir en LinkedIn */}
           {badgeDesbloqueado && (
             <a
               href={`https://www.linkedin.com/feed/?shareActive=true&text=${textoLinkedIn}`}
@@ -171,20 +157,18 @@ export default function ResultsScreen({ correctas, totalPreguntas, xp, onRestart
             </a>
           )}
 
-          {/* Reintentar */}
           <button
             onClick={onRestart}
-            className="btn-primary w-full px-5 py-3.5 rounded-xl text-sm font-semibold text-white"
+            className="w-full px-5 py-3.5 rounded-xl text-sm font-semibold text-gray-300 glass hover:bg-white/8 transition-all"
           >
             Intentar de nuevo
           </button>
 
-          {/* Siguiente lección (próximamente) */}
           <button
-            disabled
-            className="w-full px-5 py-3.5 rounded-xl text-sm font-semibold text-gray-600 bg-white/3 border border-white/5 cursor-not-allowed"
+            onClick={onVolver}
+            className="btn-primary w-full px-5 py-3.5 rounded-xl text-sm font-semibold text-white"
           >
-            Siguiente lección — próximamente
+            {badgeDesbloqueado && hayNextLesson ? "Siguiente lección →" : "Volver al módulo"}
           </button>
         </div>
       </div>

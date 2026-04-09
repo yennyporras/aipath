@@ -1,92 +1,853 @@
 {
   "moduleId": "m4",
   "title": "Prompt Engineering",
-  "technique": "Técnica 1: Sé claro y directo",
   "source": "Anthropic Prompt Engineering Guide",
-  "questions": [
+  "lessons": [
     {
-      "id": 1,
-      "question": "¿Cuál es el principio fundamental de la Técnica 1 de Anthropic para prompt engineering?",
-      "options": [
-        "Usar el mayor número de palabras posible para dar contexto",
-        "Ser claro y directo en las instrucciones al modelo",
-        "Siempre incluir ejemplos antes de la instrucción",
-        "Escribir los prompts en inglés para mejor rendimiento"
-      ],
-      "correct": 1,
-      "explanation": "Anthropic recomienda ser claro y directo. Claude responde mejor cuando las instrucciones son específicas y sin ambigüedad, en lugar de depender de que el modelo 'adivine' lo que quieres."
+      "id": "t1-claro-directo",
+      "number": 1,
+      "technique": "Sé claro y directo",
+      "description": "Escribe instrucciones específicas y sin ambigüedad para obtener respuestas precisas.",
+      "icon": "🎯",
+      "badge": "Prompt Claro",
+      "questions": [
+        {
+          "id": 1,
+          "question": "¿Cuál es el principio fundamental de la Técnica 1 de Anthropic para prompt engineering?",
+          "options": [
+            "Usar el mayor número de palabras posible para dar contexto",
+            "Ser claro y directo en las instrucciones al modelo",
+            "Siempre incluir ejemplos antes de la instrucción",
+            "Escribir los prompts en inglés para mejor rendimiento"
+          ],
+          "correct": 1,
+          "explanation": "Anthropic recomienda ser claro y directo. Claude responde mejor cuando las instrucciones son específicas y sin ambigüedad, en lugar de depender de que el modelo 'adivine' lo que quieres."
+        },
+        {
+          "id": 2,
+          "question": "¿Qué prompt sigue mejor la técnica 'sé claro y directo'?",
+          "options": [
+            "Háblame sobre marketing",
+            "Escribe 3 estrategias de marketing digital para una tienda online de ropa, con presupuesto menor a $500/mes",
+            "Marketing digital, estrategias, tienda, ropa, barato",
+            "Necesito ayuda con mi negocio de ropa por favor"
+          ],
+          "correct": 1,
+          "explanation": "El segundo prompt es claro y directo: especifica la cantidad (3 estrategias), el dominio (marketing digital), el contexto (tienda online de ropa) y una restricción (presupuesto < $500/mes). No deja nada a la interpretación."
+        },
+        {
+          "id": 3,
+          "question": "¿Por qué Anthropic recomienda evitar la ambigüedad en los prompts?",
+          "options": [
+            "Porque Claude no entiende palabras complejas",
+            "Porque los prompts ambiguos cuestan más tokens",
+            "Porque Claude puede interpretar la instrucción de formas no deseadas",
+            "Porque los prompts cortos siempre son mejores"
+          ],
+          "correct": 2,
+          "explanation": "La ambigüedad permite múltiples interpretaciones. Claude elegirá una, pero puede no ser la que tú querías. Ser directo elimina esa incertidumbre y produce resultados más predecibles y útiles."
+        },
+        {
+          "id": 4,
+          "question": "Tienes este prompt: 'Haz algo con estos datos de ventas'. ¿Cómo lo mejorarías aplicando la Técnica 1?",
+          "options": [
+            "Haz algo interesante y útil con estos datos de ventas por favor",
+            "Datos de ventas → análisis",
+            "Analiza estos datos de ventas del Q1 2025 e identifica los 3 productos con mayor crecimiento porcentual",
+            "Procesa los datos"
+          ],
+          "correct": 2,
+          "explanation": "La versión mejorada especifica exactamente qué hacer (analizar), con qué datos (ventas Q1 2025), y qué resultado esperas (3 productos con mayor crecimiento porcentual). Eso es ser claro y directo."
+        },
+        {
+          "id": 5,
+          "question": "Según Anthropic, ¿qué elemento NO es necesario incluir para que un prompt sea 'claro y directo'?",
+          "options": [
+            "La tarea específica que quieres que Claude realice",
+            "El formato de salida esperado",
+            "La historia completa de por qué necesitas la respuesta",
+            "Las restricciones o limitaciones relevantes"
+          ],
+          "correct": 2,
+          "explanation": "No necesitas explicar toda la historia detrás de tu solicitud. Lo importante es que la tarea, el formato y las restricciones sean claros. El contexto excesivo e irrelevante puede distraer del objetivo principal."
+        },
+        {
+          "id": 6,
+          "question": "¿Cuál es la diferencia entre un prompt vago y uno directo?",
+          "options": [
+            "El vago es más corto y el directo es más largo",
+            "El vago deja espacio para interpretación, el directo especifica exactamente qué se espera",
+            "El directo siempre usa bullet points",
+            "No hay diferencia real, solo es cuestión de estilo"
+          ],
+          "correct": 1,
+          "explanation": "La diferencia clave es la especificidad. Un prompt vago como 'escribe sobre perros' permite infinitas interpretaciones. Uno directo como 'escribe 5 consejos para entrenar un cachorro labrador de 3 meses' deja claro qué esperas."
+        },
+        {
+          "id": 7,
+          "question": "Estás construyendo un chatbot con Claude API. ¿Cómo aplicarías 'sé claro y directo' en el system prompt?",
+          "options": [
+            "Sé un buen asistente y ayuda al usuario",
+            "Eres un asistente de soporte técnico para una app de fitness. Responde solo preguntas sobre ejercicios y nutrición. Usa un tono amigable. Si la pregunta no es sobre fitness, responde: 'Solo puedo ayudarte con temas de fitness'",
+            "Ayuda con fitness",
+            "Eres un asistente. Haz lo que el usuario pida sobre cualquier tema"
+          ],
+          "correct": 1,
+          "explanation": "El segundo prompt define el rol (soporte técnico), el dominio (app de fitness), los límites (solo ejercicios y nutrición), el tono (amigable) y el comportamiento ante excepciones. Eso es claridad y dirección aplicada a un system prompt real."
+        }
+      ]
     },
     {
-      "id": 2,
-      "question": "¿Qué prompt sigue mejor la técnica 'sé claro y directo'?",
-      "options": [
-        "Háblame sobre marketing",
-        "Escribe 3 estrategias de marketing digital para una tienda online de ropa, con presupuesto menor a $500/mes",
-        "Marketing digital, estrategias, tienda, ropa, barato",
-        "Necesito ayuda con mi negocio de ropa por favor"
-      ],
-      "correct": 1,
-      "explanation": "El segundo prompt es claro y directo: especifica la cantidad (3 estrategias), el dominio (marketing digital), el contexto (tienda online de ropa) y una restricción (presupuesto < $500/mes). No deja nada a la interpretación."
+      "id": "t2-few-shot",
+      "number": 2,
+      "technique": "Usa ejemplos (Few-shot)",
+      "description": "Proporciona ejemplos del resultado esperado para que Claude entienda el patrón.",
+      "icon": "📋",
+      "badge": "Maestro de Ejemplos",
+      "questions": [
+        {
+          "id": 1,
+          "question": "¿Qué es few-shot prompting según Anthropic?",
+          "options": [
+            "Usar el menor número de palabras posible en el prompt",
+            "Incluir ejemplos de entrada-salida en el prompt para que Claude aprenda el patrón",
+            "Disparar múltiples prompts al mismo tiempo",
+            "Limitar la respuesta de Claude a pocas palabras"
+          ],
+          "correct": 1,
+          "explanation": "Few-shot prompting significa dar a Claude ejemplos concretos de pares entrada→salida. Al ver el patrón en los ejemplos, Claude puede replicarlo con datos nuevos de forma más precisa."
+        },
+        {
+          "id": 2,
+          "question": "¿Cuántos ejemplos recomienda Anthropic como mínimo para few-shot prompting efectivo?",
+          "options": [
+            "Al menos 10 ejemplos para cubrir todos los casos",
+            "Solo 1 ejemplo es suficiente siempre",
+            "2-5 ejemplos bien escogidos que cubran los casos más representativos",
+            "No importa la cantidad, solo la calidad del prompt principal"
+          ],
+          "correct": 2,
+          "explanation": "Anthropic recomienda entre 2 y 5 ejemplos que sean representativos y diversos. No necesitas cubrir todos los casos — necesitas mostrar el patrón claramente. Más ejemplos no siempre mejoran el resultado y pueden consumir contexto innecesario."
+        },
+        {
+          "id": 3,
+          "question": "¿Cuál es la diferencia entre zero-shot y few-shot prompting?",
+          "options": [
+            "Zero-shot es más preciso que few-shot",
+            "Zero-shot no da ejemplos, few-shot sí incluye ejemplos del resultado esperado",
+            "Few-shot solo funciona con datos numéricos",
+            "Zero-shot usa más tokens que few-shot"
+          ],
+          "correct": 1,
+          "explanation": "En zero-shot le das la instrucción directamente sin ejemplos. En few-shot, agregas ejemplos concretos del formato o resultado esperado. Few-shot es más útil cuando necesitas un formato específico o la tarea es sutil."
+        },
+        {
+          "id": 4,
+          "question": "Necesitas que Claude clasifique emails como 'urgente', 'normal' o 'spam'. ¿Cómo aplicarías few-shot?",
+          "options": [
+            "Clasifica emails en tres categorías: urgente, normal, spam",
+            "Escribe 3 ejemplos: 'Tu cuenta será eliminada en 24h' → urgente, 'Reporte mensual adjunto' → normal, 'Ganaste $1M haz clic aquí' → spam. Luego: clasifica este email: ...",
+            "Usa tu mejor criterio para clasificar los emails",
+            "Urgente=importante, Normal=no importante, Spam=basura. Clasifica."
+          ],
+          "correct": 1,
+          "explanation": "El segundo prompt muestra ejemplos reales de cada categoría con el formato exacto de salida esperado. Claude ve el patrón (email → categoría) y puede aplicarlo consistentemente a emails nuevos."
+        },
+        {
+          "id": 5,
+          "question": "¿Qué error común debes evitar al crear ejemplos para few-shot?",
+          "options": [
+            "Usar ejemplos demasiado simples",
+            "Dar ejemplos que todos sigan el mismo patrón sin mostrar variaciones o edge cases",
+            "Incluir la explicación de cada ejemplo",
+            "Usar ejemplos en el mismo idioma que el prompt"
+          ],
+          "correct": 1,
+          "explanation": "Si todos tus ejemplos son idénticos en estructura, Claude podría no saber cómo manejar variaciones. Incluye diversidad en tus ejemplos: casos fáciles, difíciles y ambiguos para que Claude aprenda a discriminar."
+        },
+        {
+          "id": 6,
+          "question": "¿En qué situación NO necesitarías few-shot prompting?",
+          "options": [
+            "Cuando necesitas un formato de salida muy específico",
+            "Cuando la tarea es completamente estándar y Claude ya la hace bien sin ejemplos",
+            "Cuando quieres clasificar datos en categorías personalizadas",
+            "Cuando necesitas extraer información de texto no estructurado"
+          ],
+          "correct": 1,
+          "explanation": "Si le pides a Claude algo estándar como 'resume este texto en 3 puntos', no necesitas ejemplos — ya sabe hacerlo. Reserva few-shot para cuando necesitas un formato personalizado, categorías propias, o una tarea sutil que podría interpretarse de varias formas."
+        },
+        {
+          "id": 7,
+          "question": "Tienes un prompt few-shot con 3 ejemplos pero Claude sigue dando respuestas en formato incorrecto. ¿Qué harías?",
+          "options": [
+            "Agregar 20 ejemplos más",
+            "Revisar si los ejemplos son consistentes en formato y agregar uno que muestre explícitamente el edge case que está fallando",
+            "Cambiar completamente a zero-shot",
+            "Usar otro modelo de IA"
+          ],
+          "correct": 1,
+          "explanation": "Si Claude no sigue el formato, probablemente tus ejemplos son inconsistentes entre sí o no cubren el caso que está fallando. Revisa la consistencia y agrega un ejemplo que muestre exactamente el patrón del caso problemático."
+        }
+      ]
     },
     {
-      "id": 3,
-      "question": "¿Por qué Anthropic recomienda evitar la ambigüedad en los prompts?",
-      "options": [
-        "Porque Claude no entiende palabras complejas",
-        "Porque los prompts ambiguos cuestan más tokens",
-        "Porque Claude puede interpretar la instrucción de formas no deseadas",
-        "Porque los prompts cortos siempre son mejores"
-      ],
-      "correct": 2,
-      "explanation": "La ambigüedad permite múltiples interpretaciones. Claude elegirá una, pero puede no ser la que tú querías. Ser directo elimina esa incertidumbre y produce resultados más predecibles y útiles."
+      "id": "t3-chain-of-thought",
+      "number": 3,
+      "technique": "Deja a Claude pensar (CoT)",
+      "description": "Pide a Claude que razone paso a paso antes de dar su respuesta final.",
+      "icon": "🧠",
+      "badge": "Pensador Profundo",
+      "questions": [
+        {
+          "id": 1,
+          "question": "¿Qué es Chain of Thought (CoT) prompting?",
+          "options": [
+            "Encadenar múltiples prompts en secuencia",
+            "Pedirle a Claude que muestre su razonamiento paso a paso antes de dar la respuesta final",
+            "Hacer que Claude piense en cadena con otros modelos de IA",
+            "Un método para reducir la cantidad de tokens en la respuesta"
+          ],
+          "correct": 1,
+          "explanation": "Chain of Thought le pide a Claude que razone explícitamente paso a paso. Al 'pensar en voz alta', Claude puede resolver problemas complejos con mayor precisión porque cada paso valida el anterior."
+        },
+        {
+          "id": 2,
+          "question": "¿En qué tipo de tareas es MÁS útil usar Chain of Thought?",
+          "options": [
+            "Traducir un texto simple de un idioma a otro",
+            "Problemas que requieren razonamiento multi-paso: matemáticas, lógica, análisis de datos complejos",
+            "Generar texto creativo como poemas o historias",
+            "Formatear datos en JSON"
+          ],
+          "correct": 1,
+          "explanation": "CoT brilla en tareas que requieren múltiples pasos de razonamiento. En matemáticas, lógica o análisis complejo, descomponer el problema en pasos reduce errores dramáticamente. Para tareas simples como traducción, CoT es innecesario."
+        },
+        {
+          "id": 3,
+          "question": "¿Cómo le pides a Claude que use Chain of Thought?",
+          "options": [
+            "Escribe 'usa CoT' al inicio del prompt",
+            "Agrega instrucciones como 'Piensa paso a paso' o 'Antes de responder, razona sobre el problema'",
+            "Claude siempre usa CoT automáticamente",
+            "Solo funciona si usas el parámetro cot=true en la API"
+          ],
+          "correct": 1,
+          "explanation": "Puedes activar CoT con frases como 'Piensa paso a paso', 'Razona antes de responder', o 'Muestra tu proceso de pensamiento'. También puedes estructurarlo: 'Paso 1: analiza X. Paso 2: evalúa Y. Paso 3: da tu conclusión.'"
+        },
+        {
+          "id": 4,
+          "question": "Un cliente reporta un bug: 'La app se crashea al guardar'. ¿Cómo usarías CoT para que Claude te ayude a diagnosticar?",
+          "options": [
+            "¿Por qué crashea la app?",
+            "Piensa paso a paso: 1) ¿Qué podría causar un crash al guardar? 2) ¿Qué componentes están involucrados en el proceso de guardado? 3) ¿Cuáles son las causas más probables? 4) ¿Qué verificarías primero?",
+            "Arregla el bug de guardado",
+            "Dame una lista de todos los bugs posibles en una app"
+          ],
+          "correct": 1,
+          "explanation": "Al estructurar el razonamiento en pasos, Claude descompone el problema metódicamente: identifica componentes, lista causas posibles, prioriza las más probables, y sugiere un plan de diagnóstico. Sin CoT, podría dar una respuesta superficial."
+        },
+        {
+          "id": 5,
+          "question": "¿Cuál es un riesgo de usar Chain of Thought en TODAS las tareas?",
+          "options": [
+            "Claude se confunde si piensa demasiado",
+            "Consume más tokens y tiempo en tareas simples donde no es necesario, sin mejorar la calidad",
+            "CoT siempre mejora la respuesta, no hay riesgo",
+            "El modelo se vuelve más lento permanentemente"
+          ],
+          "correct": 1,
+          "explanation": "CoT consume tokens adicionales porque Claude genera todo el razonamiento antes de la respuesta. Para tareas simples como 'traduce esta palabra', el razonamiento explícito no mejora la calidad y solo desperdicia recursos."
+        },
+        {
+          "id": 6,
+          "question": "¿Puedes combinar Chain of Thought con few-shot prompting?",
+          "options": [
+            "No, son técnicas mutuamente excluyentes",
+            "Sí, puedes dar ejemplos que incluyan el razonamiento paso a paso además de la respuesta final",
+            "Solo en la API de pago, no en chat",
+            "Sí, pero solo si el prompt tiene menos de 100 palabras"
+          ],
+          "correct": 1,
+          "explanation": "Puedes dar ejemplos donde muestres tanto el razonamiento como la respuesta final. Por ejemplo: 'Input: 15% de 80 → Pensamiento: 15/100 × 80 = 12 → Respuesta: 12'. Claude aprende a razonar Y a formatear la salida."
+        },
+        {
+          "id": 7,
+          "question": "¿Qué diferencia hay entre 'piensa paso a paso' y darle una estructura de pasos explícita a Claude?",
+          "options": [
+            "No hay diferencia, producen el mismo resultado",
+            "'Piensa paso a paso' deja que Claude elija su estructura; una estructura explícita guía el razonamiento exacto que quieres ver",
+            "La estructura explícita es peor porque limita a Claude",
+            "'Piensa paso a paso' solo funciona en inglés"
+          ],
+          "correct": 1,
+          "explanation": "'Piensa paso a paso' es abierto — Claude decide cómo descomponer el problema. Una estructura explícita ('1. Identifica variables 2. Plantea ecuación 3. Resuelve') te da control sobre el proceso de razonamiento, lo cual es mejor para dominios específicos."
+        }
+      ]
     },
     {
-      "id": 4,
-      "question": "Tienes este prompt: 'Haz algo con estos datos de ventas'. ¿Cómo lo mejorarías aplicando la Técnica 1?",
-      "options": [
-        "Haz algo interesante y útil con estos datos de ventas por favor",
-        "Datos de ventas → análisis",
-        "Analiza estos datos de ventas del Q1 2025 e identifica los 3 productos con mayor crecimiento porcentual",
-        "Procesa los datos"
-      ],
-      "correct": 2,
-      "explanation": "La versión mejorada especifica exactamente qué hacer (analizar), con qué datos (ventas Q1 2025), y qué resultado esperas (3 productos con mayor crecimiento porcentual). Eso es ser claro y directo."
+      "id": "t4-xml-tags",
+      "number": 4,
+      "technique": "Usa XML tags",
+      "description": "Estructura tus prompts con etiquetas XML para organizar instrucciones, datos y formato.",
+      "icon": "🏷️",
+      "badge": "Arquitecto de Prompts",
+      "questions": [
+        {
+          "id": 1,
+          "question": "¿Por qué Anthropic recomienda usar etiquetas XML en los prompts para Claude?",
+          "options": [
+            "Porque Claude fue entrenado específicamente en XML y no entiende otros formatos",
+            "Para estructurar claramente las diferentes partes del prompt: instrucciones, datos, formato de salida",
+            "Porque XML es más rápido de procesar que texto plano",
+            "Solo es necesario para prompts en la API, no en chat"
+          ],
+          "correct": 1,
+          "explanation": "Las etiquetas XML ayudan a Claude a distinguir claramente entre instrucciones, datos de entrada, ejemplos y formato de salida. Esta separación reduce la confusión y mejora la precisión, especialmente en prompts complejos."
+        },
+        {
+          "id": 2,
+          "question": "¿Cuál es la forma correcta de usar XML tags para dar contexto a Claude?",
+          "options": [
+            "<context>Eres un experto en marketing</context> es incorrecto, mejor usar comillas",
+            "Envolver datos con tags descriptivas: <documento>texto aquí</documento> y luego la instrucción fuera de los tags",
+            "Las tags deben tener siempre atributos: <context type='main'>",
+            "Solo puedes usar tags predefinidas como <system> y <user>"
+          ],
+          "correct": 1,
+          "explanation": "Puedes crear tus propias etiquetas con nombres descriptivos. Lo importante es separar datos (<documento>, <contexto>) de instrucciones. Claude entiende que lo que está dentro de las tags es input/datos y lo de fuera son instrucciones."
+        },
+        {
+          "id": 3,
+          "question": "Tienes un prompt con instrucciones + un artículo largo + formato de salida. ¿Cómo lo estructurarías con XML?",
+          "options": [
+            "Todo junto en un párrafo largo",
+            "<instrucciones>Resume el artículo...</instrucciones> <articulo>texto del artículo</articulo> <formato>Devuelve un JSON con: titulo, resumen, puntos_clave</formato>",
+            "<prompt>instrucciones + artículo + formato todo aquí</prompt>",
+            "No uses XML, es más confuso que texto plano"
+          ],
+          "correct": 1,
+          "explanation": "Separar instrucciones, datos y formato en tags distintas le da a Claude una estructura clara. Sabe exactamente qué es la instrucción, dónde están los datos y cómo debe formatear la salida. Esto es especialmente útil en prompts largos."
+        },
+        {
+          "id": 4,
+          "question": "¿Puedes inventar tus propios nombres de etiquetas XML para Claude?",
+          "options": [
+            "No, debes usar solo las etiquetas estándar de XML",
+            "Sí, puedes usar cualquier nombre descriptivo como <datos_cliente>, <reglas>, <ejemplo_salida>",
+            "Solo puedes usar etiquetas en inglés",
+            "Solo funcionan las etiquetas que empiezan con 'claude-'"
+          ],
+          "correct": 1,
+          "explanation": "Puedes inventar cualquier nombre de etiqueta que sea descriptivo. <datos_cliente>, <instrucciones>, <contexto_legal>, <formato_respuesta> — lo que tenga sentido para tu caso. Claude interpreta el nombre de la etiqueta como señal del tipo de contenido."
+        },
+        {
+          "id": 5,
+          "question": "¿Cuándo es especialmente importante usar XML tags en los prompts?",
+          "options": [
+            "Solo cuando el prompt tiene más de 1000 palabras",
+            "Cuando el prompt mezcla instrucciones con datos, tiene múltiples fuentes de información, o necesitas un formato de salida específico",
+            "Solo cuando programas con la API",
+            "Siempre, incluso para preguntas simples como '¿Qué hora es?'"
+          ],
+          "correct": 1,
+          "explanation": "XML tags son más valiosas cuando hay complejidad: múltiples tipos de contenido mezclados, datos + instrucciones, o cuando necesitas que Claude distinga claramente entre lo que debe leer y lo que debe hacer. Para preguntas simples son innecesarias."
+        },
+        {
+          "id": 6,
+          "question": "¿Cómo usarías XML tags para pedirle a Claude que genere output en un formato específico?",
+          "options": [
+            "Dame el output en formato bonito",
+            "Usa <example_output> para mostrarle el formato exacto que esperas, incluyendo la estructura que debe replicar",
+            "Escribe 'FORMAT: json' al inicio",
+            "Las XML tags solo sirven para input, no para definir output"
+          ],
+          "correct": 1,
+          "explanation": "Puedes usar tags como <example_output> o <formato_esperado> para mostrarle a Claude exactamente cómo debe verse su respuesta. Incluye la estructura, campos y formato. Claude imitará ese patrón en su respuesta."
+        },
+        {
+          "id": 7,
+          "question": "¿Cuál es un error común al usar XML tags en prompts para Claude?",
+          "options": [
+            "Usar tags con nombres en español",
+            "Anidar demasiadas etiquetas sin propósito claro, haciendo el prompt más confuso en lugar de más claro",
+            "No cerrar las etiquetas (Claude no las necesita cerradas)",
+            "Mezclar XML tags con texto plano"
+          ],
+          "correct": 1,
+          "explanation": "Las tags deben simplificar, no complicar. Si anidas <seccion><subseccion><parrafo><dato> sin necesidad real, el prompt se vuelve más difícil de leer para ti y no ayuda a Claude. Usa tags solo donde la separación aporte claridad."
+        }
+      ]
     },
     {
-      "id": 5,
-      "question": "Según Anthropic, ¿qué elemento NO es necesario incluir para que un prompt sea 'claro y directo'?",
-      "options": [
-        "La tarea específica que quieres que Claude realice",
-        "El formato de salida esperado",
-        "La historia completa de por qué necesitas la respuesta",
-        "Las restricciones o limitaciones relevantes"
-      ],
-      "correct": 2,
-      "explanation": "No necesitas explicar toda la historia detrás de tu solicitud. Lo importante es que la tarea, el formato y las restricciones sean claros. El contexto excesivo e irrelevante puede distraer del objetivo principal."
+      "id": "t5-system-prompts",
+      "number": 5,
+      "technique": "System prompts",
+      "description": "Usa el system prompt para definir rol, personalidad, reglas y limitaciones de Claude.",
+      "icon": "⚙️",
+      "badge": "Configurador",
+      "questions": [
+        {
+          "id": 1,
+          "question": "¿Qué es el system prompt en Claude API?",
+          "options": [
+            "El primer mensaje que envía el usuario",
+            "Un mensaje especial que define el comportamiento, rol y reglas de Claude ANTES de la conversación con el usuario",
+            "Un prompt que solo funciona en la interfaz web de Claude",
+            "El mensaje final que Claude usa para cerrar la conversación"
+          ],
+          "correct": 1,
+          "explanation": "El system prompt se envía al inicio y establece el contexto global: quién es Claude en esta conversación, qué puede y no puede hacer, cómo debe comportarse, y cualquier regla que aplique a todas las interacciones."
+        },
+        {
+          "id": 2,
+          "question": "¿Qué elementos debería incluir un system prompt bien diseñado?",
+          "options": [
+            "Solo el nombre del asistente",
+            "Rol/identidad, tono de comunicación, restricciones, formato de respuesta y comportamiento ante excepciones",
+            "Solo las restricciones de lo que NO puede hacer",
+            "Un resumen de la historia de la empresa"
+          ],
+          "correct": 1,
+          "explanation": "Un buen system prompt cubre: quién es (rol), cómo habla (tono), qué puede/no puede hacer (restricciones), cómo responde (formato), y qué hacer cuando no sabe o la pregunta está fuera de alcance (excepciones)."
+        },
+        {
+          "id": 3,
+          "question": "¿Cuál es la diferencia entre poner instrucciones en el system prompt vs. en el mensaje del usuario?",
+          "options": [
+            "No hay diferencia, son intercambiables",
+            "El system prompt persiste durante toda la conversación y establece reglas globales; el mensaje del usuario es para tareas específicas",
+            "El system prompt es más barato en tokens",
+            "El mensaje del usuario tiene prioridad sobre el system prompt siempre"
+          ],
+          "correct": 1,
+          "explanation": "El system prompt define comportamiento persistente: 'siempre responde en español', 'nunca des consejos médicos'. Los mensajes del usuario son para tareas puntuales. Separar esto mantiene la conversación limpia y las reglas consistentes."
+        },
+        {
+          "id": 4,
+          "question": "Estás creando un chatbot de atención al cliente para una tienda. ¿Cuál es el mejor system prompt?",
+          "options": [
+            "Ayuda a los clientes",
+            "Eres Sara, asistente virtual de TiendaXYZ. Solo respondes sobre productos, envíos y devoluciones. Tono amigable y profesional. Si preguntan sobre otro tema, redirige amablemente. Nunca inventes información sobre stock o precios — si no sabes, di que verificarás con el equipo.",
+            "Eres un chatbot. Responde todo lo que te pregunten sobre la tienda.",
+            "Sé amable con los clientes y véndeles productos"
+          ],
+          "correct": 1,
+          "explanation": "Este system prompt define identidad (Sara de TiendaXYZ), alcance (productos, envíos, devoluciones), tono (amigable y profesional), comportamiento fuera de alcance (redirige) y una regla de seguridad (no inventar datos). Cubre todos los escenarios."
+        },
+        {
+          "id": 5,
+          "question": "¿Qué pasa si el system prompt contradice el mensaje del usuario?",
+          "options": [
+            "Siempre gana el mensaje del usuario",
+            "Claude intenta seguir el system prompt como regla global, pero mensajes de usuario muy explícitos pueden crear conflicto — por eso el system prompt debe ser claro en prioridades",
+            "Claude se crashea",
+            "Siempre gana el system prompt sin excepción"
+          ],
+          "correct": 1,
+          "explanation": "Claude prioriza el system prompt como reglas base, pero usuarios insistentes pueden generar tensión. Por eso Anthropic recomienda que el system prompt incluya instrucciones explícitas sobre qué hacer ante intentos de override, como: 'Bajo ninguna circunstancia cambies tu idioma de respuesta.'"
+        },
+        {
+          "id": 6,
+          "question": "¿Cuándo deberías actualizar o cambiar el system prompt en una aplicación en producción?",
+          "options": [
+            "Nunca, una vez definido es permanente",
+            "Cuando los usuarios reportan respuestas incorrectas, cuando el alcance del producto cambia, o cuando identificas edge cases no cubiertos",
+            "Solo cuando cambias de modelo de IA",
+            "Cada semana automáticamente"
+          ],
+          "correct": 1,
+          "explanation": "El system prompt es un componente vivo de tu aplicación. Debe evolucionar con feedback real de usuarios, nuevos edge cases descubiertos, y cambios en el producto. Trátalo como código: versiona, testea y itera."
+        },
+        {
+          "id": 7,
+          "question": "¿Qué técnica puedes usar DENTRO del system prompt para hacerlo más efectivo?",
+          "options": [
+            "Hacerlo lo más corto posible, máximo 1 línea",
+            "Combinar con XML tags para separar rol, reglas y formato, y con few-shot para mostrar ejemplos de respuestas ideales",
+            "Escribirlo todo en mayúsculas para que Claude lo priorice",
+            "Repetir las instrucciones 3 veces para reforzarlas"
+          ],
+          "correct": 1,
+          "explanation": "Puedes usar XML tags dentro del system prompt (<rol>, <reglas>, <ejemplos>) y agregar few-shot examples del tipo de respuesta ideal. Las técnicas de Anthropic se complementan — combinarlas produce los mejores resultados."
+        }
+      ]
     },
     {
-      "id": 6,
-      "question": "¿Cuál es la diferencia entre un prompt vago y uno directo?",
-      "options": [
-        "El vago es más corto y el directo es más largo",
-        "El vago deja espacio para interpretación, el directo especifica exactamente qué se espera",
-        "El directo siempre usa bullet points",
-        "No hay diferencia real, solo es cuestión de estilo"
-      ],
-      "correct": 1,
-      "explanation": "La diferencia clave es la especificidad. Un prompt vago como 'escribe sobre perros' permite infinitas interpretaciones. Uno directo como 'escribe 5 consejos para entrenar un cachorro labrador de 3 meses' deja claro qué esperas."
+      "id": "t6-prefill",
+      "number": 6,
+      "technique": "Prefill de respuesta",
+      "description": "Pre-escribe el inicio de la respuesta de Claude para guiar formato y contenido.",
+      "icon": "✏️",
+      "badge": "Prefiller Pro",
+      "questions": [
+        {
+          "id": 1,
+          "question": "¿Qué es el prefill (pre-rellenado) de respuesta en Claude?",
+          "options": [
+            "Que Claude rellena formularios automáticamente",
+            "Pre-escribir el inicio de la respuesta de Claude en el campo 'assistant' para guiar el formato o contenido de su output",
+            "Rellenar el prompt con datos antes de enviarlo",
+            "Una técnica para que Claude responda más rápido"
+          ],
+          "correct": 1,
+          "explanation": "Prefill significa poner texto al inicio del turno del assistant en la API. Si escribes '{' como prefill, Claude continuará generando JSON válido. Si escribes 'Análisis:', Claude generará un análisis. Controlas el formato desde el primer carácter."
+        },
+        {
+          "id": 2,
+          "question": "¿Cómo usarías prefill para asegurar que Claude responda en JSON?",
+          "options": [
+            "Escribe 'responde en JSON' en el prompt",
+            "En el campo assistant, pre-escribe '{' — Claude continuará generando un objeto JSON válido",
+            "Usa el parámetro format='json' en la API",
+            "No es posible garantizar formato JSON"
+          ],
+          "correct": 1,
+          "explanation": "Al pre-escribir '{' en el turno del assistant, Claude entiende que debe continuar con JSON válido. Es la forma más confiable de forzar output JSON porque Claude no puede 'deshacer' lo que ya está escrito — solo puede continuar."
+        },
+        {
+          "id": 3,
+          "question": "¿En qué parámetro de la API de Claude se coloca el prefill?",
+          "options": [
+            "En el campo 'system'",
+            "En el último mensaje con role 'assistant' dentro del array de messages",
+            "En un campo especial llamado 'prefill'",
+            "En el campo 'user' del último mensaje"
+          ],
+          "correct": 1,
+          "explanation": "El prefill se coloca como un mensaje con role 'assistant' al final del array de messages. Claude lo ve como si ya hubiera empezado a responder y simplemente continúa desde ese punto."
+        },
+        {
+          "id": 4,
+          "question": "Necesitas que Claude responda SOLO con 'sí' o 'no', sin explicación. ¿Cómo usarías prefill?",
+          "options": [
+            "Prefill: 'Respuesta: ' — esto fuerza un formato corto pero no garantiza sí/no",
+            "Combina instrucción clara ('Responde solo sí o no') + prefill con la estructura exacta que esperas",
+            "Prefill: 'La respuesta completa y detallada es:'",
+            "No es posible limitar la respuesta de Claude"
+          ],
+          "correct": 1,
+          "explanation": "La mejor estrategia combina una instrucción explícita ('Responde únicamente sí o no, sin explicación') con prefill. Puedes prefill con 'Respuesta: ' y la instrucción hará que Claude ponga solo sí o no después."
+        },
+        {
+          "id": 5,
+          "question": "¿Cuál es un riesgo de usar prefill de forma incorrecta?",
+          "options": [
+            "Claude puede ignorar completamente el prefill",
+            "Si el prefill contradice la instrucción o es incoherente, Claude puede generar output confuso o intentar 'corregir' el prefill de formas inesperadas",
+            "El prefill consume el doble de tokens",
+            "No hay riesgos, siempre funciona perfectamente"
+          ],
+          "correct": 1,
+          "explanation": "Si el prefill dice una cosa y las instrucciones otra, Claude queda en conflicto. Por ejemplo, si la instrucción dice 'responde en español' pero el prefill empieza en inglés, Claude podría mezclar idiomas. El prefill debe ser coherente con todo el prompt."
+        },
+        {
+          "id": 6,
+          "question": "¿Se puede usar prefill junto con system prompt y XML tags?",
+          "options": [
+            "No, el prefill anula el system prompt",
+            "Sí, se complementan: system prompt define reglas, XML tags estructuran el input, y prefill guía el formato del output",
+            "Solo se puede usar con una de las dos, no ambas",
+            "Solo si el prompt tiene menos de 500 tokens"
+          ],
+          "correct": 1,
+          "explanation": "Las técnicas de Anthropic están diseñadas para combinarse. Un flujo completo sería: system prompt (rol y reglas), XML tags (estructura del input), few-shot (ejemplos), y prefill (formato del output). Cada una controla un aspecto diferente."
+        },
+        {
+          "id": 7,
+          "question": "¿Cuál es un caso de uso real donde prefill es especialmente valioso?",
+          "options": [
+            "Cuando chateas casualmente con Claude",
+            "En pipelines de procesamiento de datos donde necesitas output estructurado consistente (JSON, CSV, XML) en cada iteración",
+            "Cuando quieres que Claude escriba poesía",
+            "Solo en tareas de traducción"
+          ],
+          "correct": 1,
+          "explanation": "En pipelines automatizados, necesitas que cada respuesta tenga exactamente el mismo formato para que tu código lo parsee. Prefill garantiza consistencia: siempre empieza con '{', siempre genera JSON válido, siempre parseable programáticamente."
+        }
+      ]
     },
     {
-      "id": 7,
-      "question": "Estás construyendo un chatbot con Claude API. ¿Cómo aplicarías 'sé claro y directo' en el system prompt?",
-      "options": [
-        "Sé un buen asistente y ayuda al usuario",
-        "Eres un asistente de soporte técnico para una app de fitness. Responde solo preguntas sobre ejercicios y nutrición. Usa un tono amigable. Si la pregunta no es sobre fitness, responde: 'Solo puedo ayudarte con temas de fitness'",
-        "Ayuda con fitness",
-        "Eres un asistente. Haz lo que el usuario pida sobre cualquier tema"
-      ],
-      "correct": 1,
-      "explanation": "El segundo prompt define el rol (soporte técnico), el dominio (app de fitness), los límites (solo ejercicios y nutrición), el tono (amigable) y el comportamiento ante excepciones. Eso es claridad y dirección aplicada a un system prompt real."
+      "id": "t7-encadenar-prompts",
+      "number": 7,
+      "technique": "Encadena prompts",
+      "description": "Divide tareas complejas en sub-tareas encadenadas para mayor precisión.",
+      "icon": "🔗",
+      "badge": "Estratega de Cadenas",
+      "questions": [
+        {
+          "id": 1,
+          "question": "¿Qué significa 'encadenar prompts' según Anthropic?",
+          "options": [
+            "Escribir prompts muy largos con muchas instrucciones",
+            "Dividir una tarea compleja en sub-tareas secuenciales, donde la salida de un prompt alimenta el siguiente",
+            "Enviar el mismo prompt múltiples veces",
+            "Conectar Claude con otros modelos de IA"
+          ],
+          "correct": 1,
+          "explanation": "Encadenar prompts (prompt chaining) significa descomponer una tarea compleja en pasos más pequeños y manejables. Cada paso produce un resultado que se usa como input del siguiente. Esto reduce errores y da más control sobre cada etapa."
+        },
+        {
+          "id": 2,
+          "question": "¿Por qué es mejor encadenar 3 prompts simples que usar 1 prompt complejo?",
+          "options": [
+            "Es más barato en tokens",
+            "Cada sub-tarea es más fácil de verificar, depurar y mejorar individualmente, y Claude comete menos errores en tareas focalizadas",
+            "Claude no puede procesar prompts largos",
+            "No es mejor, solo es más trabajo"
+          ],
+          "correct": 1,
+          "explanation": "Un prompt que pide 5 cosas a la vez puede fallar en cualquiera de ellas. Al encadenar, cada paso hace UNA cosa bien. Si falla un paso, sabes cuál y lo arreglas sin tocar los demás. Además, Claude es más preciso en tareas focalizadas."
+        },
+        {
+          "id": 3,
+          "question": "Necesitas: 1) Extraer datos de un PDF, 2) Limpiar y formatear los datos, 3) Generar un reporte. ¿Cómo encadenarías?",
+          "options": [
+            "Un solo prompt: 'Extrae datos del PDF, límpialos y genera un reporte'",
+            "Prompt 1: 'Extrae estos campos del PDF' → usa el output como input → Prompt 2: 'Limpia y estructura estos datos en JSON' → usa el JSON como input → Prompt 3: 'Genera un reporte ejecutivo con estos datos'",
+            "Tres prompts idénticos enviados al mismo tiempo",
+            "Solo necesitas un prompt si es claro y directo"
+          ],
+          "correct": 1,
+          "explanation": "Cada prompt tiene una tarea clara y verificable. Si la extracción falla, lo ves inmediatamente sin contaminar los pasos posteriores. Puedes refinar cada paso independientemente y reusar cadenas parciales para diferentes tareas."
+        },
+        {
+          "id": 4,
+          "question": "¿Cuál es un gate check (punto de control) en una cadena de prompts?",
+          "options": [
+            "Una contraseña para proteger el prompt",
+            "Una validación intermedia que verifica si el output de un paso cumple los requisitos antes de pasarlo al siguiente",
+            "Un límite de tokens entre prompts",
+            "Una pausa obligatoria entre prompts"
+          ],
+          "correct": 1,
+          "explanation": "Los gate checks son verificaciones entre pasos: ¿el JSON es válido? ¿se extrajeron todos los campos? ¿la respuesta tiene el formato correcto? Si un paso no pasa el gate, puedes reintentar ese paso específico en vez de repetir toda la cadena."
+        },
+        {
+          "id": 5,
+          "question": "¿Cuándo NO deberías encadenar prompts?",
+          "options": [
+            "Cuando la tarea tiene muchos datos",
+            "Cuando la tarea es simple y directa, y un solo prompt produce buenos resultados consistentemente",
+            "Cuando usas la API de Claude",
+            "Cuando trabajas con texto en español"
+          ],
+          "correct": 1,
+          "explanation": "Si un solo prompt con instrucciones claras produce buenos resultados, encadenar agrega complejidad innecesaria. Encadena solo cuando la tarea realmente tiene múltiples etapas distintas o cuando un prompt monolítico produce errores frecuentes."
+        },
+        {
+          "id": 6,
+          "question": "En una cadena de prompts, ¿qué información deberías pasar entre pasos?",
+          "options": [
+            "Todo el contexto completo de todos los pasos anteriores",
+            "Solo el output relevante del paso anterior, filtrado y formateado para lo que necesita el siguiente paso",
+            "Nada, cada paso es completamente independiente",
+            "Solo los errores de pasos anteriores"
+          ],
+          "correct": 1,
+          "explanation": "Pasar demasiado contexto desperdicia tokens y puede confundir. Pasar muy poco pierde información necesaria. Lo ideal es filtrar: solo el resultado del paso anterior que el siguiente paso necesita, en un formato limpio y claro."
+        },
+        {
+          "id": 7,
+          "question": "¿Cómo combinarías encadenamiento de prompts con las otras técnicas de Anthropic?",
+          "options": [
+            "No se pueden combinar, cada técnica es independiente",
+            "Cada prompt en la cadena puede usar system prompts, XML tags, few-shot y CoT según lo que necesite ese paso específico",
+            "Solo puedes usar una técnica por cadena",
+            "El encadenamiento reemplaza todas las demás técnicas"
+          ],
+          "correct": 1,
+          "explanation": "Cada eslabón de la cadena es un prompt independiente que puede usar cualquier técnica. Paso 1 podría usar XML tags para la extracción, paso 2 few-shot para la clasificación, y paso 3 CoT para el análisis. Las técnicas se combinan dentro de cada paso."
+        }
+      ]
+    },
+    {
+      "id": "t8-contexto-largo",
+      "number": 8,
+      "technique": "Contexto largo",
+      "description": "Aprovecha la ventana de contexto de Claude para procesar documentos extensos.",
+      "icon": "📄",
+      "badge": "Explorador de Contexto",
+      "questions": [
+        {
+          "id": 1,
+          "question": "¿Qué ventaja tiene Claude con la ventana de contexto largo (hasta 200K tokens)?",
+          "options": [
+            "Solo sirve para escribir textos muy largos",
+            "Puede procesar documentos extensos, codebases completos, libros o múltiples fuentes de datos en una sola conversación",
+            "Los tokens extra son solo para el output",
+            "Solo funciona en inglés"
+          ],
+          "correct": 1,
+          "explanation": "La ventana de 200K tokens permite a Claude analizar documentos completos, comparar múltiples fuentes, revisar codebases extensos, o procesar datasets — todo en una sola llamada, sin necesidad de dividir y perder contexto."
+        },
+        {
+          "id": 2,
+          "question": "Según Anthropic, ¿dónde deberías colocar la información más importante en un prompt largo?",
+          "options": [
+            "Siempre al inicio del prompt",
+            "Los datos/documentos largos al inicio o en medio, y las instrucciones/preguntas al final del prompt",
+            "No importa la posición, Claude lee todo igual",
+            "Siempre en la mitad exacta del prompt"
+          ],
+          "correct": 1,
+          "explanation": "Anthropic recomienda colocar los documentos largos primero y las instrucciones/preguntas al final. Esto funciona como dar a alguien un documento para leer y DESPUÉS preguntarle — el modelo procesa el contexto y luego responde con toda la información fresca."
+        },
+        {
+          "id": 3,
+          "question": "¿Qué técnica complementa mejor el uso de contexto largo?",
+          "options": [
+            "Usar emojis para marcar secciones importantes",
+            "Usar XML tags para separar y etiquetar cada documento o sección dentro del contexto largo",
+            "Repetir la pregunta cada 1000 tokens",
+            "Resumir manualmente antes de enviarlo a Claude"
+          ],
+          "correct": 1,
+          "explanation": "XML tags son esenciales con contexto largo. Etiquetar cada documento (<doc1>), sección (<capitulo_3>), o fuente (<datos_2024>) permite a Claude navegar el contenido y referenciar fuentes específicas en su respuesta."
+        },
+        {
+          "id": 4,
+          "question": "Necesitas que Claude analice un contrato de 50 páginas. ¿Cuál es el mejor approach?",
+          "options": [
+            "Dividir el contrato en 10 partes y enviar 10 prompts separados",
+            "Enviar el contrato completo dentro de XML tags + instrucciones específicas al final sobre qué buscar o analizar",
+            "Resumir el contrato tú mismo y enviar el resumen",
+            "Solo enviar las secciones que crees relevantes"
+          ],
+          "correct": 1,
+          "explanation": "Con 200K tokens, puedes enviar el contrato completo. Usa <contrato>texto completo</contrato> + instrucciones al final. Dividirlo pierde contexto cruzado (una cláusula en la página 3 puede afectar algo en la página 45). Resumir pierde detalles."
+        },
+        {
+          "id": 5,
+          "question": "¿Qué deberías evitar al trabajar con contexto largo en Claude?",
+          "options": [
+            "Enviar más de 100 palabras",
+            "Incluir información irrelevante que diluye la señal útil y puede distraer al modelo de lo que realmente importa",
+            "Usar múltiples documentos en un solo prompt",
+            "Hacer preguntas sobre el contenido"
+          ],
+          "correct": 1,
+          "explanation": "Más contexto no siempre es mejor. Si incluyes 5 documentos pero solo 2 son relevantes, los 3 irrelevantes pueden confundir a Claude o diluir la atención sobre lo importante. Incluye solo lo que el modelo necesita para responder tu pregunta."
+        },
+        {
+          "id": 6,
+          "question": "Tienes 5 PDFs de investigación y quieres que Claude compare sus conclusiones. ¿Cómo estructurarías el prompt?",
+          "options": [
+            "Envía los 5 PDFs sin instrucciones y di 'compara'",
+            "Etiqueta cada documento con XML: <paper_1 titulo='...'>contenido</paper_1> ... <paper_5>contenido</paper_5>, luego al final pregunta: 'Compara las conclusiones de los 5 papers, identificando acuerdos, contradicciones y gaps'",
+            "Copia y pega todo sin separación",
+            "Resume cada paper tú mismo primero"
+          ],
+          "correct": 1,
+          "explanation": "Etiquetar cada paper con XML le permite a Claude citar fuentes específicas ('Paper 3 contradice a Paper 1 en...'). Las instrucciones al final guían exactamente qué tipo de comparación quieres. Es la combinación perfecta de contexto largo + XML tags."
+        },
+        {
+          "id": 7,
+          "question": "¿Qué significa 'needle in a haystack' en el contexto de modelos con ventana larga?",
+          "options": [
+            "Un tipo de prompt engineering avanzado",
+            "La capacidad del modelo de encontrar un dato específico enterrado dentro de un contexto muy extenso",
+            "Un bug de los modelos de IA",
+            "Una técnica para comprimir textos largos"
+          ],
+          "correct": 1,
+          "explanation": "'Needle in a haystack' (aguja en un pajar) evalúa si el modelo puede localizar información específica dentro de un contexto masivo. Claude tiene buen rendimiento en estos tests, pero colocar los datos críticos claramente etiquetados siempre ayuda."
+        }
+      ]
+    },
+    {
+      "id": "t9-extended-thinking",
+      "number": 9,
+      "technique": "Extended Thinking",
+      "description": "Activa el pensamiento extendido de Claude para problemas que requieren razonamiento profundo.",
+      "icon": "💭",
+      "badge": "Pensamiento Extendido",
+      "questions": [
+        {
+          "id": 1,
+          "question": "¿Qué es Extended Thinking en Claude?",
+          "options": [
+            "Un modo donde Claude responde más lento pero con más texto",
+            "Una funcionalidad donde Claude razona internamente en un bloque de pensamiento antes de dar su respuesta, similar a cómo un experto reflexiona antes de hablar",
+            "Un plugin externo para mejorar las respuestas",
+            "Un modo donde Claude consulta internet para pensar mejor"
+          ],
+          "correct": 1,
+          "explanation": "Extended Thinking le da a Claude un 'espacio mental' para razonar. Claude genera un bloque de pensamiento interno (que puedes ver o no) donde analiza el problema en profundidad antes de formular su respuesta final, produciendo resultados más precisos."
+        },
+        {
+          "id": 2,
+          "question": "¿En qué se diferencia Extended Thinking del Chain of Thought (CoT)?",
+          "options": [
+            "Son exactamente lo mismo con diferente nombre",
+            "CoT muestra el razonamiento como parte de la respuesta visible; Extended Thinking genera razonamiento en un bloque separado antes de la respuesta, con capacidad de razonar más profundo y extenso",
+            "Extended Thinking es más barato en tokens",
+            "CoT es mejor para todas las tareas"
+          ],
+          "correct": 1,
+          "explanation": "En CoT, el razonamiento es parte de la respuesta que el usuario ve. Extended Thinking usa un bloque separado donde Claude puede razonar extensamente sin afectar la respuesta final. Esto permite razonamiento más profundo y una respuesta más limpia."
+        },
+        {
+          "id": 3,
+          "question": "¿Para qué tipo de problemas es más valioso Extended Thinking?",
+          "options": [
+            "Preguntas simples de sí o no",
+            "Problemas complejos que requieren razonamiento profundo: matemáticas avanzadas, debugging difícil, análisis estratégico, decisiones con múltiples factores",
+            "Generar listas simples",
+            "Traducir texto de un idioma a otro"
+          ],
+          "correct": 1,
+          "explanation": "Extended Thinking brilla en problemas donde la respuesta correcta requiere considerar múltiples ángulos, evaluar trade-offs, o seguir cadenas lógicas complejas. Para tareas simples agrega latencia sin beneficio."
+        },
+        {
+          "id": 4,
+          "question": "¿Cómo activas Extended Thinking en la API de Claude?",
+          "options": [
+            "Escribes 'piensa mucho' en el prompt",
+            "Usas el parámetro thinking con un budget de tokens máximos que Claude puede usar para razonar",
+            "Se activa automáticamente en todas las conversaciones",
+            "Solo funciona en Claude Pro, no en la API"
+          ],
+          "correct": 1,
+          "explanation": "En la API, activas Extended Thinking con el parámetro thinking: {type: 'enabled', budget_tokens: N}. El budget define cuántos tokens puede usar Claude para pensar. Un budget mayor permite razonamiento más profundo pero toma más tiempo."
+        },
+        {
+          "id": 5,
+          "question": "¿Qué consideraciones de costo deberías tener con Extended Thinking?",
+          "options": [
+            "Es completamente gratis",
+            "Los tokens de pensamiento se cobran como tokens de salida, así que un budget alto puede aumentar significativamente el costo por request",
+            "Solo se cobran si la respuesta es incorrecta",
+            "Es más barato que un prompt normal"
+          ],
+          "correct": 1,
+          "explanation": "Los thinking tokens se facturan como output tokens. Si pones un budget de 10K tokens de pensamiento, podrías estar pagando por 10K tokens de razonamiento + los tokens de la respuesta final. Úsalo selectivamente en tareas que realmente lo necesiten."
+        },
+        {
+          "id": 6,
+          "question": "¿Puedes ver lo que Claude 'pensó' durante Extended Thinking?",
+          "options": [
+            "No, el pensamiento es completamente oculto siempre",
+            "Sí, la API devuelve el bloque de thinking como parte de la respuesta, y puedes elegir mostrarlo o no al usuario",
+            "Solo si pagas extra",
+            "Solo en la versión de prueba"
+          ],
+          "correct": 1,
+          "explanation": "La API devuelve tanto el bloque de thinking como la respuesta final. Tú decides si mostrar el razonamiento al usuario (útil para transparencia) o solo la respuesta final (experiencia más limpia). Es una decisión de diseño de tu aplicación."
+        },
+        {
+          "id": 7,
+          "question": "¿Cuál es la mejor estrategia para decidir cuándo usar Extended Thinking vs. Chain of Thought?",
+          "options": [
+            "Siempre usa Extended Thinking, es superior en todo",
+            "CoT para razonamiento moderado visible al usuario; Extended Thinking para problemas complejos donde necesitas razonamiento profundo y una respuesta limpia",
+            "Nunca uses ninguno de los dos",
+            "Alterna entre ambos de forma aleatoria"
+          ],
+          "correct": 1,
+          "explanation": "CoT es mejor cuando quieres que el usuario vea el razonamiento (explicaciones educativas, mostrar trabajo). Extended Thinking es mejor cuando necesitas razonamiento profundo pero solo la respuesta final importa (análisis técnico, decisiones complejas)."
+        }
+      ]
     }
   ]
 }
