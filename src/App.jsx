@@ -138,7 +138,7 @@ export default function App() {
     : false
 
   return (
-    <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16">
+    <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16 bg-animated">
       {pantalla !== "intro" && (
         <>
           <Header rachaDiaria={progreso.rachaDiaria} rachaActual={rachaActual} />
