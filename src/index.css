@@ -244,3 +244,48 @@ body::after {
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 99px; }
+
+/* ── Glassmorphism card (alias de .surface) ── */
+.glass {
+  background: var(--color-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+}
+
+/* ── Slide animations ── */
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up   { animation: slide-up   0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-slide-down { animation: slide-down 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* ── Responsive layout tokens ── */
+:root {
+  --sidebar-w: 256px;
+  --content-max: 800px;
+}
+@media (min-width: 1280px) {
+  :root { --sidebar-w: 288px; }
+}
+
+/* ── Desktop sidebar scroll ── */
+@media (min-width: 1024px) {
+  html { overflow: hidden; }
+  body { overflow: hidden; height: 100dvh; }
+  main { height: 100dvh; overflow-y: auto; }
+}
+
+/* ── Quiz options desktop: más grandes ── */
+@media (min-width: 1024px) {
+  .option-btn {
+    padding: 14px 20px;
+    font-size: 0.875rem;
+  }
+}

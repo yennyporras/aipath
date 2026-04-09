@@ -10,10 +10,13 @@ import PracticaScreen from "./components/PracticaScreen"
 import LoginScreen from "./components/LoginScreen"
 import ProyectoScreen from "./components/ProyectoScreen"
 import CertificacionScreen from "./components/CertificacionScreen"
+import InstallBanner from "./components/InstallBanner"
+import { usePWAInstall } from "./hooks/usePWAInstall"
 import moduleData from "./content/m4-completo.json"
 
 const STORAGE_KEY = "aipath_progreso_v2"
 const SESSION_KEY = "aipath_session"
+const INSTALL_DISMISSED_KEY = "aipath_install_dismissed"
 
 function cargarProgreso() {
   try {
@@ -24,11 +27,7 @@ function cargarProgreso() {
       fasesProyecto: [], certificacionAprobada: false
     }
     const p = JSON.parse(guardado)
-    return {
-      fasesProyecto: [],
-      certificacionAprobada: false,
-      ...p
-    }
+    return { fasesProyecto: [], certificacionAprobada: false, ...p }
   } catch {
     return {
       xpTotal: 0, rachaDiaria: 1, badges: [],
@@ -60,8 +59,86 @@ function getSession() {
   try { return JSON.parse(localStorage.getItem(SESSION_KEY)) } catch { return null }
 }
 
+// ── Sidebar desktop ──────────────────────────────────────────────────
+function Sidebar({ progreso, pantalla, bloqueActual, leccionActual, onNavBloque, onNavBloqueActual }) {
+  const completadas = progreso.leccionesCompletadas || []
+  const todas = todasLasLecciones()
+  const totalDone = completadas.length
+  const nivel = Math.floor((progreso.xpTotal || 0) / 300) + 1
+
+  return (
+    <aside className="hidden lg:flex flex-col w-64 xl:w-72 shrink-0 h-screen sticky top-0 overflow-y-auto py-6 px-4"
+      style={{ borderRight: "1px solid var(--color-border)" }}>
+      {/* Logo */}
+      <div className="mb-8">
+        <img src="/etk-logo-white.png" alt="Estratek IA Academy" className="h-9 w-auto opacity-90" />
+      </div>
+
+      {/* Usuario */}
+      <div className="glass rounded-xl p-3 mb-6 flex items-center gap-3">
+        <div
+          className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
+          style={{ background: "var(--color-accent-blue)", color: "#0A0A0A" }}
+        >
+          {getSession()?.nombre?.[0]?.toUpperCase() || "U"}
+        </div>
+        <div className="min-w-0">
+          <p className="text-sm font-semibold text-white truncate">
+            {getSession()?.nombre || getSession()?.email?.split("@")[0] || "Usuario"}
+          </p>
+          <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>Nivel {nivel}</p>
+        </div>
+      </div>
+
+      {/* Progreso global */}
+      <div className="mb-6">
+        <div className="flex justify-between text-xs mb-1.5">
+          <span style={{ color: "var(--color-text-muted)" }}>Progreso M4</span>
+          <span style={{ color: "var(--color-accent-blue)" }}>{totalDone}/{todas.length}</span>
+        </div>
+        <div className="progress-bar">
+          <div className="progress-bar-fill" style={{ width: `${todas.length > 0 ? (totalDone / todas.length) * 100 : 0}%` }} />
+        </div>
+        <p className="text-xs mt-1.5" style={{ color: "var(--color-text-muted)" }}>
+          {progreso.xpTotal || 0} XP · Racha {progreso.rachaDiaria} día{progreso.rachaDiaria !== 1 ? "s" : ""}
+        </p>
+      </div>
+
+      {/* Navegación de bloques */}
+      <nav className="flex-1 space-y-1">
+        <p className="text-[10px] font-bold uppercase tracking-wider mb-3"
+          style={{ color: "var(--color-text-muted)" }}>Módulo 4</p>
+        {moduleData.bloques.map((bloque, bi) => {
+          const done = bloque.lecciones.filter(l => completadas.includes(l.id)).length
+          const complete = done === bloque.lecciones.length && bloque.lecciones.length > 0
+          const activo = bloqueActual?.id === bloque.id || leccionActual?.id?.startsWith(bloque.id.split("-")[0])
+
+          return (
+            <button
+              key={bloque.id}
+              onClick={() => onNavBloque(bloque)}
+              className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all text-xs"
+              style={{
+                background: activo ? "rgba(0,212,170,0.1)" : "transparent",
+                color: activo ? "var(--color-accent-blue)" : complete ? "var(--color-text-secondary)" : "var(--color-text-muted)",
+                borderLeft: activo ? "2px solid var(--color-accent-blue)" : "2px solid transparent"
+              }}
+            >
+              <span className="shrink-0">{complete ? "✓" : bloque.icon}</span>
+              <span className="truncate">{bloque.nombre}</span>
+              <span className="ml-auto shrink-0" style={{ color: "var(--color-text-muted)" }}>
+                {done}/{bloque.lecciones.length}
+              </span>
+            </button>
+          )
+        })}
+      </nav>
+    </aside>
+  )
+}
+
+// ── App ──────────────────────────────────────────────────────────────
 export default function App() {
-  // Pantallas: login | intro | lessons | teoria | quiz | practica | results | proyecto | certificacion
   const [pantalla, setPantalla] = useState(() => getSession() ? "intro" : "login")
   const [bloqueActual, setBloqueActual] = useState(null)
   const [leccionActual, setLeccionActual] = useState(null)
@@ -74,6 +151,13 @@ export default function App() {
 
   const [progreso, setProgreso] = useState(() => cargarProgreso())
   const [rachaRota, setRachaRota] = useState(false)
+  const [installDismissed, setInstallDismissed] = useState(
+    () => localStorage.getItem(INSTALL_DISMISSED_KEY) === "1"
+  )
+
+  const { isInstallable, isInstalled, promptInstall } = usePWAInstall()
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 1024
+  const mostrarBanner = isInstallable && !isInstalled && !installDismissed && pantalla !== "login"
 
   useEffect(() => {
     const { rachaDiaria, rachaRota: rota } = calcularRachaDiaria(progreso)
@@ -83,29 +167,21 @@ export default function App() {
     setRachaRota(rota)
   }, [])
 
-  function handleLogin() {
-    setPantalla("intro")
+  function handleDismissInstall() {
+    setInstallDismissed(true)
+    localStorage.setItem(INSTALL_DISMISSED_KEY, "1")
   }
 
+  function handleLogin() { setPantalla("intro") }
+
   function handleSelectBlock(bloque) {
-    if (bloque.id === "proyecto_final") {
-      setPantalla("proyecto")
-      setBloqueActual(null)
-      return
-    }
-    if (bloque.id === "certificacion_final") {
-      setPantalla("certificacion")
-      setBloqueActual(null)
-      return
-    }
+    if (bloque.id === "proyecto_final") { setPantalla("proyecto"); setBloqueActual(null); return }
+    if (bloque.id === "certificacion_final") { setPantalla("certificacion"); setBloqueActual(null); return }
     setBloqueActual(bloque)
     setPantalla("lessons")
   }
 
-  function handleVolverBloques() {
-    setPantalla("intro")
-    setBloqueActual(null)
-  }
+  function handleVolverBloques() { setPantalla("intro"); setBloqueActual(null) }
 
   function handleSelectLesson(leccion) {
     setLeccionActual(leccion)
@@ -118,9 +194,7 @@ export default function App() {
     setRachaRota(false)
   }
 
-  function handleTeoriaOk() {
-    setPantalla("quiz")
-  }
+  function handleTeoriaOk() { setPantalla("quiz") }
 
   function handleResponder(esCorrecto) {
     if (esCorrecto) {
@@ -141,7 +215,6 @@ export default function App() {
       const nuevoProgreso = { ...progreso }
       nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + xpSesion
       nuevoProgreso.ultimaSesion = new Date().toDateString()
-
       const minAprobacion = Math.ceil(preguntas.length * 0.7)
       if (correctas >= minAprobacion) {
         if (!nuevoProgreso.leccionesCompletadas.includes(leccionActual.id)) {
@@ -151,10 +224,8 @@ export default function App() {
           nuevoProgreso.badges = [...nuevoProgreso.badges, leccionActual.id]
         }
       }
-
       guardarProgreso(nuevoProgreso)
       setProgreso(nuevoProgreso)
-
       if (leccionActual.contenido.practica) {
         setPantalla("practica")
       } else {
@@ -163,16 +234,10 @@ export default function App() {
     }
   }
 
-  function handlePracticaDone() {
-    setPantalla("results")
-  }
+  function handlePracticaDone() { setPantalla("results") }
 
   function handleReintentar() {
-    setPreguntaActual(0)
-    setXpSesion(0)
-    setRespondidas(0)
-    setCorrectas(0)
-    setRachaActual(0)
+    setPreguntaActual(0); setXpSesion(0); setRespondidas(0); setCorrectas(0); setRachaActual(0)
     setPantalla("quiz")
   }
 
@@ -182,18 +247,10 @@ export default function App() {
     const minAprobacion = Math.ceil(preguntas.length * 0.7)
     if (correctas >= minAprobacion) {
       const idx = todas.findIndex(l => l.id === leccionActual.id)
-      if (idx < todas.length - 1) {
-        handleSelectLesson(todas[idx + 1])
-        return
-      }
+      if (idx < todas.length - 1) { handleSelectLesson(todas[idx + 1]); return }
     }
-    if (bloqueActual) {
-      setPantalla("lessons")
-      setLeccionActual(null)
-    } else {
-      setPantalla("intro")
-      setLeccionActual(null)
-    }
+    if (bloqueActual) { setPantalla("lessons"); setLeccionActual(null) }
+    else { setPantalla("intro"); setLeccionActual(null) }
   }
 
   function handleFaseProyectoCompleta(fase) {
@@ -222,151 +279,187 @@ export default function App() {
     ? todas.findIndex(l => l.id === leccionActual.id) < todas.length - 1
     : false
 
+  // Botón instalar para desktop (pasado al Header)
+  const installButton = isInstallable && !isInstalled && !installDismissed
+    ? <InstallBanner onInstall={promptInstall} onDismiss={handleDismissInstall} isMobile={false} />
+    : null
+
   // ── LOGIN ──
-  if (pantalla === "login") {
-    return <LoginScreen onLogin={handleLogin} />
-  }
+  if (pantalla === "login") return <LoginScreen onLogin={handleLogin} />
 
-  // ── PROYECTO ──
-  if (pantalla === "proyecto") {
-    return (
-      <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16">
-        <Header rachaDiaria={progreso.rachaDiaria} rachaActual={rachaActual} />
-        <XPBar xp={(progreso.xpTotal || 0) + xpSesion} rachaActual={rachaActual} />
-        <div className="w-full animate-fade-in">
-          <ProyectoScreen
-            progreso={progreso}
-            onFaseCompleta={handleFaseProyectoCompleta}
-            onVolver={() => setPantalla("intro")}
-          />
-        </div>
-      </div>
-    )
-  }
-
-  // ── CERTIFICACIÓN ──
-  if (pantalla === "certificacion") {
-    return (
-      <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16">
-        <Header rachaDiaria={progreso.rachaDiaria} rachaActual={rachaActual} />
-        <XPBar xp={(progreso.xpTotal || 0) + xpSesion} rachaActual={rachaActual} />
-        <div className="w-full animate-fade-in">
-          <CertificacionScreen
-            progreso={progreso}
-            onCertAprobada={handleCertAprobada}
-            onVolver={() => setPantalla("intro")}
-          />
-        </div>
-      </div>
-    )
-  }
+  // ── LAYOUT PRINCIPAL (con sidebar en desktop) ──
+  const mostrarSidebar = pantalla !== "login"
+  const mostrarHeaderMobile = pantalla !== "intro"
 
   return (
-    <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16">
-      {pantalla !== "intro" && (
-        <>
-          <Header rachaDiaria={progreso.rachaDiaria} rachaActual={rachaActual} />
-          <XPBar xp={(progreso.xpTotal || 0) + xpSesion} rachaActual={rachaActual} />
-        </>
+    <div className="min-h-dvh text-white flex">
+      {/* Sidebar — solo desktop */}
+      {mostrarSidebar && (
+        <Sidebar
+          progreso={progreso}
+          pantalla={pantalla}
+          bloqueActual={bloqueActual}
+          leccionActual={leccionActual}
+          onNavBloque={handleSelectBlock}
+          onNavBloqueActual={() => {}}
+        />
       )}
 
-      {pantalla === "intro" && (
-        <div className="flex-1 w-full py-4">
-          {rachaRota && (
-            <div className="glass rounded-xl px-4 py-3 max-w-lg mx-auto mb-6 flex items-center gap-3 animate-slide-down">
-              <span className="text-lg">😢</span>
-              <p className="text-sm text-gray-400">Tu racha se rompió. ¡Hoy empieza una nueva!</p>
-            </div>
-          )}
-          <IntroScreen
-            modulo={moduleData}
-            progreso={progreso}
-            onSelectBlock={handleSelectBlock}
-          />
-        </div>
-      )}
-
-      {pantalla === "lessons" && bloqueActual && (
-        <div className="w-full animate-fade-in">
-          <BlockLessons
-            bloque={bloqueActual}
-            todasLecciones={todas}
-            progreso={progreso}
-            onSelectLesson={handleSelectLesson}
-            onVolver={handleVolverBloques}
-          />
-        </div>
-      )}
-
-      {pantalla === "teoria" && leccionActual && (
-        <div className="w-full animate-fade-in">
-          <TeoriaScreen
-            leccion={leccionActual}
-            onContinuar={handleTeoriaOk}
-            onVolver={() => { setPantalla("lessons"); setLeccionActual(null) }}
-          />
-        </div>
-      )}
-
-      {pantalla === "quiz" && leccionActual && (
-        <div className="w-full animate-fade-in">
-          <div className="max-w-lg mx-auto mb-4">
-            <button
-              onClick={() => setPantalla("teoria")}
-              className="text-xs transition-colors mb-2 flex items-center gap-1"
-              style={{ color: "var(--color-text-muted)" }}
-              onMouseEnter={e => e.currentTarget.style.color = "var(--color-text-secondary)"}
-              onMouseLeave={e => e.currentTarget.style.color = "var(--color-text-muted)"}
-            >
-              ← Volver a teoría
-            </button>
-            <p className="text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
-              {leccionActual.titulo}
-            </p>
+      {/* Contenido principal */}
+      <main className="flex-1 flex flex-col items-center p-5 pb-20 lg:pb-8 overflow-y-auto">
+        {/* Header mobile/tablet — en todo excepto intro */}
+        {mostrarHeaderMobile && (
+          <div className="w-full max-w-2xl lg:hidden">
+            <Header
+              rachaDiaria={progreso.rachaDiaria}
+              rachaActual={rachaActual}
+              installButton={installButton}
+            />
+            <XPBar xp={(progreso.xpTotal || 0) + xpSesion} rachaActual={rachaActual} />
           </div>
+        )}
 
-          <QuizCard
-            key={`${leccionActual.id}-${preguntaActual}`}
-            pregunta={preguntas[preguntaActual]}
-            indice={preguntaActual}
-            totalPreguntas={preguntas.length}
-            onAnswer={handleResponder}
-            rachaActual={rachaActual}
-          />
-          {respondidas > preguntaActual && (
-            <div className="flex justify-center mt-5 animate-slide-up">
-              <button
-                onClick={handleSiguiente}
-                className="btn-primary px-8 py-3.5 rounded-xl text-sm"
-              >
-                {preguntaActual < preguntas.length - 1 ? "Siguiente pregunta →" : "Ver práctica ✨"}
-              </button>
+        {/* Header desktop — siempre visible arriba del contenido */}
+        <div className="hidden lg:flex w-full max-w-3xl xl:max-w-4xl justify-between items-center mb-6">
+          <div>
+            {leccionActual && (
+              <p className="text-sm font-semibold text-white">{leccionActual.titulo}</p>
+            )}
+          </div>
+          <div className="flex items-center gap-4">
+            <XPBar xp={(progreso.xpTotal || 0) + xpSesion} rachaActual={rachaActual} />
+            <div className={`surface flex items-center gap-2 px-3 py-1.5 rounded-full ${rachaActual >= 3 ? "glow-streak" : ""}`}>
+              <span className="text-sm">{rachaActual >= 3 ? "🔥" : "✨"}</span>
+              <span className="text-xs font-medium" style={{ color: "var(--color-text-secondary)" }}>
+                {progreso.rachaDiaria} día{progreso.rachaDiaria !== 1 ? "s" : ""}
+              </span>
             </div>
-          )}
+            {installButton}
+          </div>
         </div>
-      )}
 
-      {pantalla === "practica" && leccionActual && (
-        <div className="w-full animate-fade-in">
-          <PracticaScreen
-            leccion={leccionActual}
-            onSiguiente={handlePracticaDone}
-          />
-        </div>
-      )}
+        {/* ── PANTALLAS ── */}
 
-      {pantalla === "results" && leccionActual && (
-        <div className="flex-1 flex items-center w-full animate-fade-in">
-          <ResultsScreen
-            leccion={leccionActual}
-            correctas={correctas}
-            totalPreguntas={preguntas.length}
-            xp={xpSesion}
-            onRestart={handleReintentar}
-            onVolver={handleVolver}
-            hayNextLesson={hayNextLesson}
-          />
-        </div>
+        {pantalla === "intro" && (
+          <div className="flex-1 w-full py-4">
+            {rachaRota && (
+              <div className="glass rounded-xl px-4 py-3 max-w-2xl mx-auto mb-6 flex items-center gap-3 animate-slide-down">
+                <span className="text-lg">😢</span>
+                <p className="text-sm text-gray-400">Tu racha se rompió. ¡Hoy empieza una nueva!</p>
+              </div>
+            )}
+            <IntroScreen modulo={moduleData} progreso={progreso} onSelectBlock={handleSelectBlock} />
+          </div>
+        )}
+
+        {pantalla === "lessons" && bloqueActual && (
+          <div className="w-full max-w-2xl lg:max-w-3xl animate-fade-in">
+            <BlockLessons
+              bloque={bloqueActual}
+              todasLecciones={todas}
+              progreso={progreso}
+              onSelectLesson={handleSelectLesson}
+              onVolver={handleVolverBloques}
+            />
+          </div>
+        )}
+
+        {pantalla === "teoria" && leccionActual && (
+          <div className="w-full max-w-2xl lg:max-w-3xl animate-fade-in">
+            <TeoriaScreen
+              leccion={leccionActual}
+              onContinuar={handleTeoriaOk}
+              onVolver={() => { setPantalla("lessons"); setLeccionActual(null) }}
+            />
+          </div>
+        )}
+
+        {pantalla === "quiz" && leccionActual && (
+          <div className="w-full max-w-lg lg:max-w-2xl animate-fade-in">
+            <div className="max-w-2xl mx-auto mb-4">
+              <button
+                onClick={() => setPantalla("teoria")}
+                className="text-xs transition-colors mb-2 flex items-center gap-1"
+                style={{ color: "var(--color-text-muted)" }}
+                onMouseEnter={e => e.currentTarget.style.color = "var(--color-text-secondary)"}
+                onMouseLeave={e => e.currentTarget.style.color = "var(--color-text-muted)"}
+              >
+                ← Volver a teoría
+              </button>
+              <p className="text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
+                {leccionActual.titulo}
+              </p>
+            </div>
+
+            <QuizCard
+              key={`${leccionActual.id}-${preguntaActual}`}
+              pregunta={preguntas[preguntaActual]}
+              indice={preguntaActual}
+              totalPreguntas={preguntas.length}
+              onAnswer={handleResponder}
+              rachaActual={rachaActual}
+            />
+            {respondidas > preguntaActual && (
+              <div className="flex justify-center mt-5 animate-slide-up">
+                <button
+                  onClick={handleSiguiente}
+                  className="btn-primary px-8 py-3.5 rounded-xl text-sm"
+                >
+                  {preguntaActual < preguntas.length - 1 ? "Siguiente pregunta →" : "Ver práctica ✨"}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {pantalla === "practica" && leccionActual && (
+          <div className="w-full max-w-2xl lg:max-w-3xl animate-fade-in">
+            <PracticaScreen leccion={leccionActual} onSiguiente={handlePracticaDone} />
+          </div>
+        )}
+
+        {pantalla === "results" && leccionActual && (
+          <div className="flex-1 flex items-center w-full max-w-lg lg:max-w-2xl animate-fade-in">
+            <ResultsScreen
+              leccion={leccionActual}
+              correctas={correctas}
+              totalPreguntas={preguntas.length}
+              xp={xpSesion}
+              onRestart={handleReintentar}
+              onVolver={handleVolver}
+              hayNextLesson={hayNextLesson}
+            />
+          </div>
+        )}
+
+        {pantalla === "proyecto" && (
+          <div className="w-full max-w-2xl lg:max-w-3xl animate-fade-in">
+            <ProyectoScreen
+              progreso={progreso}
+              onFaseCompleta={handleFaseProyectoCompleta}
+              onVolver={() => setPantalla("intro")}
+            />
+          </div>
+        )}
+
+        {pantalla === "certificacion" && (
+          <div className="w-full max-w-lg lg:max-w-2xl animate-fade-in">
+            <CertificacionScreen
+              progreso={progreso}
+              onCertAprobada={handleCertAprobada}
+              onVolver={() => setPantalla("intro")}
+            />
+          </div>
+        )}
+      </main>
+
+      {/* Banner instalación móvil/tablet */}
+      {mostrarBanner && isMobile && (
+        <InstallBanner
+          onInstall={promptInstall}
+          onDismiss={handleDismissInstall}
+          isMobile={true}
+        />
       )}
     </div>
   )

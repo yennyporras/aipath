@@ -28,10 +28,10 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock }) {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto px-2 relative z-10">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <div className="animate-reveal mb-5">
+    <div className="w-full max-w-2xl lg:max-w-4xl mx-auto px-2 relative z-10">
+      {/* Header — solo móvil/tablet; en desktop lo muestra la sidebar */}
+      <div className="text-center mb-8 lg:mb-6">
+        <div className="animate-reveal mb-5 lg:hidden">
           <img src="/etk-logo-white.png" alt="Estratek IA Academy" className="h-14 w-auto mx-auto opacity-90" />
         </div>
         <p className="font-display text-[11px] font-bold uppercase tracking-[0.3em] animate-reveal"
@@ -62,8 +62,8 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock }) {
         </div>
       </div>
 
-      {/* Block grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 stagger">
+      {/* Block grid — 1col mobile, 2col tablet, 3col desktop */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 stagger">
         {bloques.map((bloque, bi) => {
           const ll = bloque.lecciones
           const done = ll.filter(l => completadas.includes(l.id)).length
@@ -77,7 +77,7 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock }) {
               key={bloque.id}
               onClick={() => unlocked && onSelectBlock(bloque)}
               disabled={!unlocked}
-              className={`animate-reveal text-left h-[120px] flex items-center gap-4 p-4 ${
+              className={`animate-reveal text-left h-[120px] lg:h-[130px] flex items-center gap-4 p-4 lg:p-5 ${
                 unlocked
                   ? "surface-interactive cursor-pointer"
                   : "opacity-40 cursor-not-allowed"

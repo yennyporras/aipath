@@ -3,22 +3,29 @@
   "short_name": "Estratek IA",
   "description": "Tu ruta al dominio de la Inteligencia Artificial",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#0a0a0f",
-  "theme_color": "#3B82F6",
-  "orientation": "portrait",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "background_color": "#080810",
+  "theme_color": "#00D4AA",
+  "orientation": "any",
+  "categories": ["education", "productivity"],
+  "lang": "es",
   "icons": [
+    { "src": "/icon-72.png",  "sizes": "72x72",   "type": "image/png" },
+    { "src": "/icon-96.png",  "sizes": "96x96",   "type": "image/png" },
+    { "src": "/icon-128.png", "sizes": "128x128", "type": "image/png" },
+    { "src": "/icon-144.png", "sizes": "144x144", "type": "image/png" },
+    { "src": "/icon-152.png", "sizes": "152x152", "type": "image/png" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon-384.png", "sizes": "384x384", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
     {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "name": "Continuar aprendiendo",
+      "url": "/",
+      "description": "Retomar donde lo dejé"
     }
   ]
 }
