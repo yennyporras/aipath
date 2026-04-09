@@ -154,7 +154,7 @@ export default function App() {
     : false
 
   return (
-    <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16 bg-animated">
+    <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16">
       {/* Header — en todo excepto bloques */}
       {pantalla !== "intro" && (
         <>

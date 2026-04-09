@@ -1,111 +1,113 @@
 import { useState } from "react"
 
-const MENSAJES_CORRECTO = [
-  "¡Exacto!", "¡Correcto!", "¡Bien pensado!",
-  "¡Perfecto!", "¡Excelente!", "¡Así se hace!", "¡Genial!",
-]
+const PRAISE = ["¡Exacto!", "¡Correcto!", "¡Bien pensado!", "¡Perfecto!", "¡Excelente!", "¡Así se hace!", "¡Genial!"]
 
 export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, rachaActual }) {
-  const [seleccion, setSeleccion] = useState(null)
-  const [mostrarXP, setMostrarXP] = useState(false)
-  const yaRespondio = seleccion !== null
-  const esCorrecto = seleccion === pregunta.correcta
+  const [sel, setSel] = useState(null)
+  const [showXP, setShowXP] = useState(false)
+  const answered = sel !== null
+  const correct = sel === pregunta.correcta
 
-  function handleSeleccionar(i) {
-    if (yaRespondio) return
-    setSeleccion(i)
-    const correcto = i === pregunta.correcta
-    onAnswer(correcto)
-    if (correcto) {
-      setMostrarXP(true)
-      setTimeout(() => setMostrarXP(false), 1400)
+  function pick(i) {
+    if (answered) return
+    setSel(i)
+    onAnswer(i === pregunta.correcta)
+    if (i === pregunta.correcta) {
+      setShowXP(true)
+      setTimeout(() => setShowXP(false), 1400)
     }
   }
 
-  const mensajeRefuerzo = MENSAJES_CORRECTO[(indice || 0) % MENSAJES_CORRECTO.length]
-  const etiquetas = ["A", "B", "C", "D"]
   const num = (indice || 0) + 1
-  const progressPct = (num / totalPreguntas) * 100
+  const pct = (num / totalPreguntas) * 100
+  const labels = ["A", "B", "C", "D"]
 
   return (
     <div className="w-full max-w-lg mx-auto relative">
-      {mostrarXP && (
+      {showXP && (
         <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
-          <span className="animate-float-xp inline-block text-2xl font-black text-gradient">+30 XP</span>
+          <span className="font-display animate-float-xp inline-block text-xl font-bold text-gradient">+30 XP</span>
         </div>
       )}
 
-      <div
-        className={`glass-strong rounded-2xl p-6 transition-all duration-300 ${
-          yaRespondio && !esCorrecto ? "animate-shake" : ""
-        } ${yaRespondio && esCorrecto ? "animate-pulse-green" : ""} ${
-          rachaActual >= 3 && !yaRespondio ? "border-gradient active" : ""
-        }`}
-      >
-        {/* Progress bar gruesa */}
-        <div className="progress-thick mb-5">
-          <div className="progress-thick-fill" style={{ width: `${progressPct}%` }} />
+      <div className={`surface p-6 transition-all duration-300 ${
+        answered && !correct ? "animate-shake" : ""
+      } ${answered && correct ? "animate-pulse-green" : ""} ${
+        rachaActual >= 3 && !answered ? "border-gradient active" : ""
+      }`}>
+        {/* Progress */}
+        <div className="quiz-progress mb-5">
+          <div className="quiz-progress-fill" style={{ width: `${pct}%` }} />
         </div>
 
-        {/* Número de pregunta grande */}
         <div className="flex items-center justify-between mb-4">
-          <span className="text-xs font-semibold text-gray-400">
-            Pregunta <span className="text-white text-sm">{num}</span> de {totalPreguntas}
+          <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>
+            Pregunta <span className="font-display font-bold" style={{ color: "var(--color-text-primary)" }}>{num}</span> de {totalPreguntas}
           </span>
           {rachaActual >= 3 && (
-            <span className="text-[10px] font-bold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full animate-scale-in">
-              🔥 {rachaActual}x racha
+            <span className="text-[10px] font-bold text-amber-400 animate-scale-in"
+              style={{ background: "rgba(251,191,36,0.1)", padding: "2px 8px", borderRadius: "99px" }}>
+              🔥 {rachaActual}x
             </span>
           )}
         </div>
 
-        <h2 className="text-lg font-semibold text-gray-100 mb-6 leading-relaxed">{pregunta.pregunta}</h2>
+        <h2 className="font-display text-lg font-bold leading-relaxed mb-6"
+          style={{ color: "var(--color-text-primary)" }}>
+          {pregunta.pregunta}
+        </h2>
 
         <div className="flex flex-col gap-2.5 stagger">
-          {pregunta.opciones.map((opcion, i) => {
-            let estiloOpcion = "border-white/8 text-gray-300"
-            let estiloEtiqueta = "bg-white/5 text-gray-500"
+          {pregunta.opciones.map((opt, i) => {
+            let borderC = "var(--color-border)"
+            let bgC = "transparent"
+            let textC = "var(--color-text-secondary)"
+            let labelBg = "rgba(255,255,255,0.04)"
+            let labelC = "var(--color-text-muted)"
 
-            if (yaRespondio) {
+            if (answered) {
               if (i === pregunta.correcta) {
-                estiloOpcion = "border-green-500/50 bg-green-500/8 text-green-300 glow-green"
-                estiloEtiqueta = "bg-green-500/20 text-green-400"
-              } else if (i === seleccion) {
-                estiloOpcion = "border-red-500/50 bg-red-500/8 text-red-300"
-                estiloEtiqueta = "bg-red-500/20 text-red-400"
+                borderC = "rgba(16,185,129,0.5)"; bgC = "rgba(16,185,129,0.06)"
+                textC = "#6EE7B7"; labelBg = "rgba(16,185,129,0.15)"; labelC = "#6EE7B7"
+              } else if (i === sel) {
+                borderC = "rgba(239,68,68,0.5)"; bgC = "rgba(239,68,68,0.06)"
+                textC = "#FCA5A5"; labelBg = "rgba(239,68,68,0.15)"; labelC = "#FCA5A5"
               } else {
-                estiloOpcion = "border-white/4 text-gray-600"
-                estiloEtiqueta = "bg-white/3 text-gray-700"
+                borderC = "rgba(255,255,255,0.03)"; textC = "var(--color-text-muted)"
+                labelBg = "rgba(255,255,255,0.02)"; labelC = "rgba(255,255,255,0.15)"
               }
             }
 
             return (
-              <button
-                key={i}
-                onClick={() => handleSeleccionar(i)}
-                disabled={yaRespondio}
-                className={`option-btn animate-slide-up w-full text-left px-4 py-3.5 rounded-xl border transition-all duration-200 flex items-start gap-3 ${estiloOpcion}`}
-              >
-                <span className={`shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold transition-all ${estiloEtiqueta}`}>
-                  {etiquetas[i]}
+              <button key={i} onClick={() => pick(i)} disabled={answered}
+                className={`option-btn animate-reveal w-full text-left px-4 py-3.5 flex items-start gap-3`}
+                style={{ borderColor: borderC, background: bgC, animationDelay: `${i * 60}ms` }}>
+                <span className="shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold"
+                  style={{ background: labelBg, color: labelC }}>
+                  {labels[i]}
                 </span>
-                <span className="text-sm leading-relaxed pt-0.5">{opcion}</span>
+                <span className="text-sm leading-relaxed pt-0.5" style={{ color: textC }}>{opt}</span>
               </button>
             )
           })}
         </div>
 
-        {yaRespondio && (
-          <div className={`mt-5 p-4 rounded-xl animate-slide-up ${
-            esCorrecto ? "bg-green-500/8 border border-green-500/20" : "bg-amber-500/8 border border-amber-500/20"
-          }`}>
+        {answered && (
+          <div className="animate-reveal mt-5 p-4 rounded-xl"
+            style={{
+              background: correct ? "rgba(16,185,129,0.06)" : "rgba(245,158,11,0.06)",
+              border: `1px solid ${correct ? "rgba(16,185,129,0.15)" : "rgba(245,158,11,0.15)"}`,
+              animationDelay: "0ms"
+            }}>
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-lg">{esCorrecto ? "✅" : "💡"}</span>
-              <p className={`font-bold text-sm ${esCorrecto ? "text-green-400" : "text-amber-400"}`}>
-                {esCorrecto ? mensajeRefuerzo : "Casi — esto es lo que necesitas recordar:"}
+              <span className="text-base">{correct ? "✅" : "💡"}</span>
+              <p className="font-display text-sm font-bold" style={{ color: correct ? "#6EE7B7" : "#FBBF24" }}>
+                {correct ? PRAISE[(indice || 0) % PRAISE.length] : "Casi — recuerda esto:"}
               </p>
             </div>
-            <p className="text-sm text-gray-400 leading-relaxed">{pregunta.explicacion_profunda}</p>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
+              {pregunta.explicacion_profunda}
+            </p>
           </div>
         )}
       </div>
