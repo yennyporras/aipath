@@ -3,10 +3,10 @@ import Header from "./components/Header"
 import XPBar from "./components/XPBar"
 import QuizCard from "./components/QuizCard"
 import IntroScreen from "./components/IntroScreen"
+import BlockLessons from "./components/BlockLessons"
 import ResultsScreen from "./components/ResultsScreen"
 import moduleData from "./content/m4-completo.json"
 
-// ── Persistencia en localStorage ──
 const STORAGE_KEY = "aipath_progreso_v2"
 
 function cargarProgreso() {
@@ -33,13 +33,14 @@ function calcularRachaDiaria(progreso) {
   return { rachaDiaria: 1, rachaRota: progreso.rachaDiaria > 1 }
 }
 
-// Obtiene todas las lecciones aplanadas en orden de todos los bloques
 function todasLasLecciones() {
   return moduleData.bloques.flatMap(b => b.lecciones)
 }
 
 export default function App() {
+  // Pantallas: intro (bloques) | lessons (lecciones de un bloque) | quiz | results
   const [pantalla, setPantalla] = useState("intro")
+  const [bloqueActual, setBloqueActual] = useState(null)
   const [leccionActual, setLeccionActual] = useState(null)
 
   const [preguntaActual, setPreguntaActual] = useState(0)
@@ -58,6 +59,16 @@ export default function App() {
     }
     setRachaRota(rota)
   }, [])
+
+  function handleSelectBlock(bloque) {
+    setBloqueActual(bloque)
+    setPantalla("lessons")
+  }
+
+  function handleVolverBloques() {
+    setPantalla("intro")
+    setBloqueActual(null)
+  }
 
   function handleSelectLesson(leccion) {
     setLeccionActual(leccion)
@@ -90,8 +101,7 @@ export default function App() {
       nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + xpSesion
       nuevoProgreso.ultimaSesion = new Date().toDateString()
 
-      const totalPreguntas = preguntas.length
-      const minAprobacion = Math.ceil(totalPreguntas * 0.7)
+      const minAprobacion = Math.ceil(preguntas.length * 0.7)
       if (correctas >= minAprobacion) {
         if (!nuevoProgreso.leccionesCompletadas.includes(leccionActual.id)) {
           nuevoProgreso.leccionesCompletadas = [...nuevoProgreso.leccionesCompletadas, leccionActual.id]
@@ -127,8 +137,14 @@ export default function App() {
         return
       }
     }
-    setPantalla("intro")
-    setLeccionActual(null)
+    // Volver a la lista de lecciones del bloque actual
+    if (bloqueActual) {
+      setPantalla("lessons")
+      setLeccionActual(null)
+    } else {
+      setPantalla("intro")
+      setLeccionActual(null)
+    }
   }
 
   const preguntas = leccionActual?.contenido?.verificacion || []
@@ -139,6 +155,7 @@ export default function App() {
 
   return (
     <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16 bg-animated">
+      {/* Header — en todo excepto bloques */}
       {pantalla !== "intro" && (
         <>
           <Header rachaDiaria={progreso.rachaDiaria} rachaActual={rachaActual} />
@@ -146,6 +163,7 @@ export default function App() {
         </>
       )}
 
+      {/* Pantalla de bloques */}
       {pantalla === "intro" && (
         <div className="flex-1 w-full py-4">
           {rachaRota && (
@@ -157,19 +175,33 @@ export default function App() {
           <IntroScreen
             modulo={moduleData}
             progreso={progreso}
-            onSelectLesson={handleSelectLesson}
+            onSelectBlock={handleSelectBlock}
           />
         </div>
       )}
 
+      {/* Pantalla de lecciones de un bloque */}
+      {pantalla === "lessons" && bloqueActual && (
+        <div className="w-full animate-fade-in">
+          <BlockLessons
+            bloque={bloqueActual}
+            todasLecciones={todas}
+            progreso={progreso}
+            onSelectLesson={handleSelectLesson}
+            onVolver={handleVolverBloques}
+          />
+        </div>
+      )}
+
+      {/* Quiz */}
       {pantalla === "quiz" && leccionActual && (
         <div className="w-full animate-fade-in">
           <div className="max-w-lg mx-auto mb-4">
             <button
-              onClick={() => { setPantalla("intro"); setLeccionActual(null) }}
-              className="text-xs text-gray-600 hover:text-gray-400 transition-colors mb-2 flex items-center gap-1"
+              onClick={() => { setPantalla("lessons"); setLeccionActual(null) }}
+              className="text-xs text-gray-500 hover:text-gray-300 transition-colors mb-2 flex items-center gap-1"
             >
-              ← Volver al módulo
+              ← Volver a lecciones
             </button>
             <p className="text-sm font-medium text-gray-400">{leccionActual.titulo}</p>
           </div>
@@ -195,6 +227,7 @@ export default function App() {
         </div>
       )}
 
+      {/* Resultados */}
       {pantalla === "results" && leccionActual && (
         <div className="flex-1 flex items-center w-full animate-fade-in">
           <ResultsScreen
