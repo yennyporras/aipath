@@ -8,6 +8,8 @@ import ResultsScreen from "./components/ResultsScreen"
 import TeoriaScreen from "./components/TeoriaScreen"
 import PracticaScreen from "./components/PracticaScreen"
 import LoginScreen from "./components/LoginScreen"
+import ProyectoScreen from "./components/ProyectoScreen"
+import CertificacionScreen from "./components/CertificacionScreen"
 import moduleData from "./content/m4-completo.json"
 
 const STORAGE_KEY = "aipath_progreso_v2"
@@ -16,10 +18,23 @@ const SESSION_KEY = "aipath_session"
 function cargarProgreso() {
   try {
     const guardado = localStorage.getItem(STORAGE_KEY)
-    if (!guardado) return { xpTotal: 0, rachaDiaria: 1, badges: [], leccionesCompletadas: [], ultimaSesion: null }
-    return JSON.parse(guardado)
+    if (!guardado) return {
+      xpTotal: 0, rachaDiaria: 1, badges: [],
+      leccionesCompletadas: [], ultimaSesion: null,
+      fasesProyecto: [], certificacionAprobada: false
+    }
+    const p = JSON.parse(guardado)
+    return {
+      fasesProyecto: [],
+      certificacionAprobada: false,
+      ...p
+    }
   } catch {
-    return { xpTotal: 0, rachaDiaria: 1, badges: [], leccionesCompletadas: [], ultimaSesion: null }
+    return {
+      xpTotal: 0, rachaDiaria: 1, badges: [],
+      leccionesCompletadas: [], ultimaSesion: null,
+      fasesProyecto: [], certificacionAprobada: false
+    }
   }
 }
 
@@ -46,7 +61,7 @@ function getSession() {
 }
 
 export default function App() {
-  // Pantallas: login | intro | lessons | teoria | quiz | practica | results
+  // Pantallas: login | intro | lessons | teoria | quiz | practica | results | proyecto | certificacion
   const [pantalla, setPantalla] = useState(() => getSession() ? "intro" : "login")
   const [bloqueActual, setBloqueActual] = useState(null)
   const [leccionActual, setLeccionActual] = useState(null)
@@ -73,6 +88,16 @@ export default function App() {
   }
 
   function handleSelectBlock(bloque) {
+    if (bloque.id === "proyecto_final") {
+      setPantalla("proyecto")
+      setBloqueActual(null)
+      return
+    }
+    if (bloque.id === "certificacion_final") {
+      setPantalla("certificacion")
+      setBloqueActual(null)
+      return
+    }
     setBloqueActual(bloque)
     setPantalla("lessons")
   }
@@ -113,7 +138,6 @@ export default function App() {
     if (preguntaActual < preguntas.length - 1) {
       setPreguntaActual(prev => prev + 1)
     } else {
-      // Guardar progreso al terminar preguntas
       const nuevoProgreso = { ...progreso }
       nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + xpSesion
       nuevoProgreso.ultimaSesion = new Date().toDateString()
@@ -131,7 +155,6 @@ export default function App() {
       guardarProgreso(nuevoProgreso)
       setProgreso(nuevoProgreso)
 
-      // Ir a práctica si existe, si no directo a resultados
       if (leccionActual.contenido.practica) {
         setPantalla("practica")
       } else {
@@ -173,6 +196,26 @@ export default function App() {
     }
   }
 
+  function handleFaseProyectoCompleta(fase) {
+    const nuevoProgreso = { ...progreso }
+    if (!nuevoProgreso.fasesProyecto.includes(fase.id)) {
+      nuevoProgreso.fasesProyecto = [...nuevoProgreso.fasesProyecto, fase.id]
+      nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + fase.xp
+    }
+    guardarProgreso(nuevoProgreso)
+    setProgreso(nuevoProgreso)
+  }
+
+  function handleCertAprobada() {
+    const nuevoProgreso = { ...progreso }
+    if (!nuevoProgreso.certificacionAprobada) {
+      nuevoProgreso.certificacionAprobada = true
+      nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + moduleData.certificacion_final.xp_aprobacion
+    }
+    guardarProgreso(nuevoProgreso)
+    setProgreso(nuevoProgreso)
+  }
+
   const preguntas = leccionActual?.contenido?.verificacion || []
   const todas = todasLasLecciones()
   const hayNextLesson = leccionActual
@@ -184,9 +227,42 @@ export default function App() {
     return <LoginScreen onLogin={handleLogin} />
   }
 
+  // ── PROYECTO ──
+  if (pantalla === "proyecto") {
+    return (
+      <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16">
+        <Header rachaDiaria={progreso.rachaDiaria} rachaActual={rachaActual} />
+        <XPBar xp={(progreso.xpTotal || 0) + xpSesion} rachaActual={rachaActual} />
+        <div className="w-full animate-fade-in">
+          <ProyectoScreen
+            progreso={progreso}
+            onFaseCompleta={handleFaseProyectoCompleta}
+            onVolver={() => setPantalla("intro")}
+          />
+        </div>
+      </div>
+    )
+  }
+
+  // ── CERTIFICACIÓN ──
+  if (pantalla === "certificacion") {
+    return (
+      <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16">
+        <Header rachaDiaria={progreso.rachaDiaria} rachaActual={rachaActual} />
+        <XPBar xp={(progreso.xpTotal || 0) + xpSesion} rachaActual={rachaActual} />
+        <div className="w-full animate-fade-in">
+          <CertificacionScreen
+            progreso={progreso}
+            onCertAprobada={handleCertAprobada}
+            onVolver={() => setPantalla("intro")}
+          />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16">
-      {/* Header — en todo excepto bloques */}
       {pantalla !== "intro" && (
         <>
           <Header rachaDiaria={progreso.rachaDiaria} rachaActual={rachaActual} />
@@ -194,7 +270,6 @@ export default function App() {
         </>
       )}
 
-      {/* Pantalla de bloques */}
       {pantalla === "intro" && (
         <div className="flex-1 w-full py-4">
           {rachaRota && (
@@ -211,7 +286,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Pantalla de lecciones de un bloque */}
       {pantalla === "lessons" && bloqueActual && (
         <div className="w-full animate-fade-in">
           <BlockLessons
@@ -224,7 +298,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Teoría */}
       {pantalla === "teoria" && leccionActual && (
         <div className="w-full animate-fade-in">
           <TeoriaScreen
@@ -235,7 +308,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Quiz */}
       {pantalla === "quiz" && leccionActual && (
         <div className="w-full animate-fade-in">
           <div className="max-w-lg mx-auto mb-4">
@@ -274,7 +346,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Práctica */}
       {pantalla === "practica" && leccionActual && (
         <div className="w-full animate-fade-in">
           <PracticaScreen
@@ -284,7 +355,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Resultados */}
       {pantalla === "results" && leccionActual && (
         <div className="flex-1 flex items-center w-full animate-fade-in">
           <ResultsScreen

@@ -5,13 +5,22 @@ const BLOCK_ICONS_BG = [
   "from-purple-500/15 to-purple-600/5",
   "from-cyan-500/15 to-cyan-600/5",
   "from-emerald-500/15 to-emerald-600/5",
+  "from-teal-500/15 to-teal-600/5",
+  "from-sky-500/15 to-sky-600/5",
+  "from-rose-500/15 to-rose-600/5",
 ]
 
 export default function IntroScreen({ modulo, progreso, onSelectBlock }) {
   const bloques = modulo.bloques
   const completadas = progreso.leccionesCompletadas || []
+  const fasesProyecto = progreso.fasesProyecto || []
+  const certAprobada = progreso.certificacionAprobada || false
   const todas = bloques.flatMap(b => b.lecciones)
   const totalDone = completadas.length
+  const totalLecciones = todas.length
+
+  // Proyecto y cert desbloqueados solo si se completaron todos los bloques
+  const todosBloquesCompletos = bloques.every(b => b.lecciones.every(l => completadas.includes(l.id)))
 
   function bloqueDesbloqueado(bi) {
     if (bi === 0) return true
@@ -101,12 +110,90 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock }) {
         })}
       </div>
 
-      {totalDone === todas.length && todas.length > 0 && (
+      {/* Proyecto Final */}
+      {totalLecciones > 0 && (
+        <button
+          onClick={() => todosBloquesCompletos && onSelectBlock({ id: "proyecto_final" })}
+          disabled={!todosBloquesCompletos}
+          className={`animate-reveal w-full text-left flex items-center gap-4 p-4 mt-3 rounded-2xl transition-all ${
+            todosBloquesCompletos
+              ? "surface-interactive cursor-pointer"
+              : "opacity-40 cursor-not-allowed border border-white/4"
+          }`}
+          style={{ animationDelay: `${240 + bloques.length * 80}ms` }}
+        >
+          <div
+            className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
+            style={{ background: "rgba(0,212,170,0.12)" }}
+          >
+            {!todosBloquesCompletos ? "🔒" : fasesProyecto.length === 5 ? "✅" : "🛠️"}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="font-display text-sm font-bold" style={{ color: fasesProyecto.length === 5 ? "var(--color-accent-blue)" : "var(--color-text-primary)" }}>
+              Proyecto Final
+            </p>
+            <div className="flex items-center gap-2 mt-1">
+              <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>5 fases · 10h</span>
+              <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>·</span>
+              <span style={{ fontSize: "10px", color: "var(--color-accent-blue)" }}>500 XP</span>
+            </div>
+            {todosBloquesCompletos && (
+              <div className="progress-bar mt-2.5">
+                <div className="progress-bar-fill" style={{ width: `${(fasesProyecto.length / 5) * 100}%` }} />
+              </div>
+            )}
+          </div>
+          <span style={{ fontSize: "11px", color: fasesProyecto.length === 5 ? "var(--color-accent-blue)" : "var(--color-text-muted)" }}>
+            {fasesProyecto.length === 5 ? "✓" : todosBloquesCompletos ? "→" : ""}
+          </span>
+        </button>
+      )}
+
+      {/* Certificación Final */}
+      {totalLecciones > 0 && (
+        <button
+          onClick={() => todosBloquesCompletos && onSelectBlock({ id: "certificacion_final" })}
+          disabled={!todosBloquesCompletos}
+          className={`animate-reveal w-full text-left flex items-center gap-4 p-4 mt-3 rounded-2xl transition-all ${
+            todosBloquesCompletos
+              ? "surface-interactive cursor-pointer"
+              : "opacity-40 cursor-not-allowed border border-white/4"
+          }`}
+          style={{ animationDelay: `${240 + (bloques.length + 1) * 80}ms` }}
+        >
+          <div
+            className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
+            style={{ background: "rgba(0,212,170,0.12)" }}
+          >
+            {!todosBloquesCompletos ? "🔒" : certAprobada ? "🎓" : "📝"}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="font-display text-sm font-bold" style={{ color: certAprobada ? "var(--color-accent-blue)" : "var(--color-text-primary)" }}>
+              Certificación M4
+            </p>
+            <div className="flex items-center gap-2 mt-1">
+              <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>60 preguntas · 90 min</span>
+              <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>·</span>
+              <span style={{ fontSize: "10px", color: "var(--color-accent-blue)" }}>1000 XP</span>
+            </div>
+            {certAprobada && (
+              <p style={{ fontSize: "10px", color: "var(--color-accent-blue)", marginTop: "4px" }}>
+                ✓ Certificada
+              </p>
+            )}
+          </div>
+          <span style={{ fontSize: "11px", color: certAprobada ? "var(--color-accent-blue)" : "var(--color-text-muted)" }}>
+            {certAprobada ? "✓" : todosBloquesCompletos ? "→" : ""}
+          </span>
+        </button>
+      )}
+
+      {certAprobada && (
         <div className="surface rounded-2xl p-6 mt-8 text-center max-w-md mx-auto animate-scale-in">
           <p className="text-4xl mb-2">🏆</p>
-          <p className="font-display text-lg font-bold text-gradient">¡Módulo completado!</p>
+          <p className="font-display text-lg font-bold text-gradient">¡M4 completado y certificado!</p>
           <p style={{ fontSize: "12px", color: "var(--color-text-muted)", marginTop: "4px" }}>
-            Dominaste Prompt Engineering Profesional
+            Eres Prompt Engineer Profesional Estratek
           </p>
         </div>
       )}
