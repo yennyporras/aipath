@@ -11,17 +11,17 @@ const MENSAJES_CORRECTO = [
   "¡Genial!",
 ]
 
-// QuizCard — tarjeta de pregunta con opciones, feedback inmediato y animaciones
-export default function QuizCard({ pregunta, totalPreguntas, onAnswer, rachaActual }) {
+// QuizCard — compatible con estructura m4-completo.json (verificacion[])
+export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, rachaActual }) {
   const [seleccion, setSeleccion] = useState(null)
   const [mostrarXP, setMostrarXP] = useState(false)
   const yaRespondio = seleccion !== null
-  const esCorrecto = seleccion === pregunta.correct
+  const esCorrecto = seleccion === pregunta.correcta
 
-  function handleSeleccionar(indice) {
+  function handleSeleccionar(i) {
     if (yaRespondio) return
-    setSeleccion(indice)
-    const correcto = indice === pregunta.correct
+    setSeleccion(i)
+    const correcto = i === pregunta.correcta
     onAnswer(correcto)
     if (correcto) {
       setMostrarXP(true)
@@ -29,18 +29,15 @@ export default function QuizCard({ pregunta, totalPreguntas, onAnswer, rachaActu
     }
   }
 
-  // Mensaje aleatorio de refuerzo
-  const mensajeRefuerzo = MENSAJES_CORRECTO[pregunta.id % MENSAJES_CORRECTO.length]
+  const mensajeRefuerzo = MENSAJES_CORRECTO[(indice || 0) % MENSAJES_CORRECTO.length]
   const etiquetas = ["A", "B", "C", "D"]
+  const numPregunta = (indice || 0) + 1
 
   return (
     <div className="w-full max-w-lg mx-auto relative">
-      {/* XP flotante al acertar */}
       {mostrarXP && (
         <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
-          <span className="animate-float-xp inline-block text-2xl font-black text-gradient">
-            +30 XP
-          </span>
+          <span className="animate-float-xp inline-block text-2xl font-black text-gradient">+30 XP</span>
         </div>
       )}
 
@@ -51,15 +48,15 @@ export default function QuizCard({ pregunta, totalPreguntas, onAnswer, rachaActu
           rachaActual >= 3 && !yaRespondio ? "border-gradient active" : ""
         }`}
       >
-        {/* Barra de progreso con dots */}
+        {/* Barra de progreso */}
         <div className="flex items-center gap-1.5 mb-5">
           {Array.from({ length: totalPreguntas }, (_, i) => (
             <div
               key={i}
               className={`h-1.5 rounded-full flex-1 transition-all duration-500 ${
-                i < pregunta.id - 1
+                i < numPregunta - 1
                   ? "bg-gradient-to-r from-blue-500 to-purple-500"
-                  : i === pregunta.id - 1
+                  : i === numPregunta - 1
                   ? "bg-blue-500"
                   : "bg-white/8"
               }`}
@@ -67,24 +64,16 @@ export default function QuizCard({ pregunta, totalPreguntas, onAnswer, rachaActu
           ))}
         </div>
 
-        {/* Número de pregunta */}
-        <p className="text-xs text-gray-500 mb-2">
-          Pregunta {pregunta.id} de {totalPreguntas}
-        </p>
+        <p className="text-xs text-gray-500 mb-2">Pregunta {numPregunta} de {totalPreguntas}</p>
+        <h2 className="text-lg font-semibold text-gray-100 mb-6 leading-relaxed">{pregunta.pregunta}</h2>
 
-        {/* Texto de la pregunta */}
-        <h2 className="text-lg font-semibold text-gray-100 mb-6 leading-relaxed">
-          {pregunta.question}
-        </h2>
-
-        {/* Opciones */}
         <div className="flex flex-col gap-3 stagger">
-          {pregunta.options.map((opcion, i) => {
+          {pregunta.opciones.map((opcion, i) => {
             let estiloOpcion = "border-white/8 text-gray-300"
             let estiloEtiqueta = "bg-white/5 text-gray-500"
 
             if (yaRespondio) {
-              if (i === pregunta.correct) {
+              if (i === pregunta.correcta) {
                 estiloOpcion = "border-green-500/50 bg-green-500/8 text-green-300 glow-green"
                 estiloEtiqueta = "bg-green-500/20 text-green-400"
               } else if (i === seleccion) {
@@ -112,7 +101,6 @@ export default function QuizCard({ pregunta, totalPreguntas, onAnswer, rachaActu
           })}
         </div>
 
-        {/* Panel de feedback */}
         {yaRespondio && (
           <div
             className={`mt-5 p-4 rounded-xl animate-slide-up ${
@@ -122,16 +110,12 @@ export default function QuizCard({ pregunta, totalPreguntas, onAnswer, rachaActu
             }`}
           >
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-lg">
-                {esCorrecto ? "✅" : "💡"}
-              </span>
+              <span className="text-lg">{esCorrecto ? "✅" : "💡"}</span>
               <p className={`font-bold text-sm ${esCorrecto ? "text-green-400" : "text-amber-400"}`}>
                 {esCorrecto ? mensajeRefuerzo : "Casi — esto es lo que necesitas recordar:"}
               </p>
             </div>
-            <p className="text-sm text-gray-400 leading-relaxed">
-              {pregunta.explanation}
-            </p>
+            <p className="text-sm text-gray-400 leading-relaxed">{pregunta.explicacion_profunda}</p>
           </div>
         )}
       </div>

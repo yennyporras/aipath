@@ -4,10 +4,10 @@ import XPBar from "./components/XPBar"
 import QuizCard from "./components/QuizCard"
 import IntroScreen from "./components/IntroScreen"
 import ResultsScreen from "./components/ResultsScreen"
-import moduleData from "./content/m4-prompt-engineering.json"
+import moduleData from "./content/m4-completo.json"
 
 // ── Persistencia en localStorage ──
-const STORAGE_KEY = "aipath_progreso"
+const STORAGE_KEY = "aipath_progreso_v2"
 
 function cargarProgreso() {
   try {
@@ -33,23 +33,24 @@ function calcularRachaDiaria(progreso) {
   return { rachaDiaria: 1, rachaRota: progreso.rachaDiaria > 1 }
 }
 
+// Obtiene todas las lecciones aplanadas en orden de todos los bloques
+function todasLasLecciones() {
+  return moduleData.bloques.flatMap(b => b.lecciones)
+}
+
 export default function App() {
-  // ── Estado de navegación ──
-  const [pantalla, setPantalla] = useState("intro") // intro | quiz | results
+  const [pantalla, setPantalla] = useState("intro")
   const [leccionActual, setLeccionActual] = useState(null)
 
-  // ── Estado del quiz ──
   const [preguntaActual, setPreguntaActual] = useState(0)
   const [xpSesion, setXpSesion] = useState(0)
   const [respondidas, setRespondidas] = useState(0)
   const [correctas, setCorrectas] = useState(0)
   const [rachaActual, setRachaActual] = useState(0)
 
-  // ── Progreso persistente ──
   const [progreso, setProgreso] = useState(() => cargarProgreso())
   const [rachaRota, setRachaRota] = useState(false)
 
-  // Calcular racha diaria al cargar
   useEffect(() => {
     const { rachaDiaria, rachaRota: rota } = calcularRachaDiaria(progreso)
     if (rachaDiaria !== progreso.rachaDiaria) {
@@ -58,7 +59,6 @@ export default function App() {
     setRachaRota(rota)
   }, [])
 
-  // ── Handlers ──
   function handleSelectLesson(leccion) {
     setLeccionActual(leccion)
     setPantalla("quiz")
@@ -82,17 +82,17 @@ export default function App() {
   }
 
   function handleSiguiente() {
-    const preguntas = leccionActual.questions
+    const preguntas = leccionActual.contenido.verificacion
     if (preguntaActual < preguntas.length - 1) {
       setPreguntaActual(prev => prev + 1)
     } else {
-      // Guardar progreso
       const nuevoProgreso = { ...progreso }
       nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + xpSesion
       nuevoProgreso.ultimaSesion = new Date().toDateString()
 
-      // Marcar lección como completada si aprobó (70%+)
-      if (correctas >= 5) {
+      const totalPreguntas = preguntas.length
+      const minAprobacion = Math.ceil(totalPreguntas * 0.7)
+      if (correctas >= minAprobacion) {
         if (!nuevoProgreso.leccionesCompletadas.includes(leccionActual.id)) {
           nuevoProgreso.leccionesCompletadas = [...nuevoProgreso.leccionesCompletadas, leccionActual.id]
         }
@@ -117,12 +117,13 @@ export default function App() {
   }
 
   function handleVolver() {
-    // Si aprobó y hay siguiente lección, ir a ella directamente
-    if (correctas >= 5) {
-      const lecciones = moduleData.lessons
-      const idx = lecciones.findIndex(l => l.id === leccionActual.id)
-      if (idx < lecciones.length - 1) {
-        handleSelectLesson(lecciones[idx + 1])
+    const todas = todasLasLecciones()
+    const preguntas = leccionActual.contenido.verificacion
+    const minAprobacion = Math.ceil(preguntas.length * 0.7)
+    if (correctas >= minAprobacion) {
+      const idx = todas.findIndex(l => l.id === leccionActual.id)
+      if (idx < todas.length - 1) {
+        handleSelectLesson(todas[idx + 1])
         return
       }
     }
@@ -130,15 +131,14 @@ export default function App() {
     setLeccionActual(null)
   }
 
-  // ── Render ──
-  const preguntas = leccionActual?.questions || []
+  const preguntas = leccionActual?.contenido?.verificacion || []
+  const todas = todasLasLecciones()
   const hayNextLesson = leccionActual
-    ? moduleData.lessons.findIndex(l => l.id === leccionActual.id) < moduleData.lessons.length - 1
+    ? todas.findIndex(l => l.id === leccionActual.id) < todas.length - 1
     : false
 
   return (
     <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16">
-      {/* Header y XP — durante quiz y resultados */}
       {pantalla !== "intro" && (
         <>
           <Header rachaDiaria={progreso.rachaDiaria} rachaActual={rachaActual} />
@@ -146,7 +146,6 @@ export default function App() {
         </>
       )}
 
-      {/* Pantalla de inicio — lista de lecciones */}
       {pantalla === "intro" && (
         <div className="flex-1 w-full py-4">
           {rachaRota && (
@@ -163,10 +162,8 @@ export default function App() {
         </div>
       )}
 
-      {/* Pantalla del quiz */}
       {pantalla === "quiz" && leccionActual && (
         <div className="w-full animate-fade-in">
-          {/* Título de la técnica */}
           <div className="max-w-lg mx-auto mb-4">
             <button
               onClick={() => { setPantalla("intro"); setLeccionActual(null) }}
@@ -174,14 +171,13 @@ export default function App() {
             >
               ← Volver al módulo
             </button>
-            <p className="text-sm font-medium text-gray-400">
-              <span className="text-gray-600">T{leccionActual.number}</span> {leccionActual.technique}
-            </p>
+            <p className="text-sm font-medium text-gray-400">{leccionActual.titulo}</p>
           </div>
 
           <QuizCard
             key={`${leccionActual.id}-${preguntaActual}`}
             pregunta={preguntas[preguntaActual]}
+            indice={preguntaActual}
             totalPreguntas={preguntas.length}
             onAnswer={handleResponder}
             rachaActual={rachaActual}
@@ -199,7 +195,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Pantalla de resultados */}
       {pantalla === "results" && leccionActual && (
         <div className="flex-1 flex items-center w-full animate-fade-in">
           <ResultsScreen
