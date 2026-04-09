@@ -1,90 +1,198 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Header from "./components/Header"
 import XPBar from "./components/XPBar"
 import QuizCard from "./components/QuizCard"
+import IntroScreen from "./components/IntroScreen"
+import ResultsScreen from "./components/ResultsScreen"
 import moduleData from "./content/m4-prompt-engineering.json"
 
+// Clave para localStorage
+const STORAGE_KEY = "aipath_progreso"
+
+// Carga el progreso guardado o devuelve valores por defecto
+function cargarProgreso() {
+  try {
+    const guardado = localStorage.getItem(STORAGE_KEY)
+    if (!guardado) return null
+    return JSON.parse(guardado)
+  } catch {
+    return null
+  }
+}
+
+// Guarda el progreso en localStorage
+function guardarProgreso(datos) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(datos))
+}
+
+// Calcula la racha diaria comparando fechas
+function calcularRachaDiaria(progreso) {
+  if (!progreso) return { rachaDiaria: 0, rachaRota: false }
+
+  const hoy = new Date().toDateString()
+  const ultimaSesion = progreso.ultimaSesion
+
+  if (ultimaSesion === hoy) {
+    return { rachaDiaria: progreso.rachaDiaria, rachaRota: false }
+  }
+
+  const ayer = new Date()
+  ayer.setDate(ayer.getDate() - 1)
+
+  if (ultimaSesion === ayer.toDateString()) {
+    return { rachaDiaria: progreso.rachaDiaria + 1, rachaRota: false }
+  }
+
+  // Pasó más de un día — racha se rompe
+  return { rachaDiaria: 1, rachaRota: progreso.rachaDiaria > 1 }
+}
+
 export default function App() {
-  const [currentQ, setCurrentQ] = useState(0)
-  const [xp, setXp] = useState(0)
-  const [answered, setAnswered] = useState(0)
-  const [correctCount, setCorrectCount] = useState(0)
-  const [finished, setFinished] = useState(false)
+  const [pantalla, setPantalla] = useState("intro") // intro | quiz | results
+  const [preguntaActual, setPreguntaActual] = useState(0)
+  const [xpSesion, setXpSesion] = useState(0)
+  const [respondidas, setRespondidas] = useState(0)
+  const [correctas, setCorrectas] = useState(0)
+  const [rachaActual, setRachaActual] = useState(0) // racha de aciertos consecutivos en esta sesión
 
-  const questions = moduleData.questions
+  // Progreso persistente
+  const [xpTotal, setXpTotal] = useState(0)
+  const [rachaDiaria, setRachaDiaria] = useState(1)
+  const [badges, setBadges] = useState([])
+  const [rachaRota, setRachaRota] = useState(false)
 
-  function handleAnswer(isCorrect) {
-    if (isCorrect) {
-      setXp((prev) => prev + 30)
-      setCorrectCount((prev) => prev + 1)
+  const preguntas = moduleData.questions
+
+  // Cargar progreso al iniciar
+  useEffect(() => {
+    const progreso = cargarProgreso()
+    if (progreso) {
+      setXpTotal(progreso.xpTotal || 0)
+      setBadges(progreso.badges || [])
+      const { rachaDiaria: racha, rachaRota: rota } = calcularRachaDiaria(progreso)
+      setRachaDiaria(racha)
+      setRachaRota(rota)
     }
-    setAnswered((prev) => prev + 1)
+  }, [])
+
+  function handleIniciar() {
+    setPantalla("quiz")
+    setRachaRota(false)
   }
 
-  function handleNext() {
-    if (currentQ < questions.length - 1) {
-      setCurrentQ((prev) => prev + 1)
+  function handleResponder(esCorrecto) {
+    if (esCorrecto) {
+      setXpSesion((prev) => prev + 30)
+      setCorrectas((prev) => prev + 1)
+      setRachaActual((prev) => prev + 1)
     } else {
-      setFinished(true)
+      setRachaActual(0)
+    }
+    setRespondidas((prev) => prev + 1)
+  }
+
+  function handleSiguiente() {
+    if (preguntaActual < preguntas.length - 1) {
+      setPreguntaActual((prev) => prev + 1)
+    } else {
+      // Guardar progreso al terminar
+      const nuevoXpTotal = xpTotal + xpSesion
+      const nuevoBadges = [...badges]
+      if (correctas >= 5 && !badges.includes("prompt-claro")) {
+        nuevoBadges.push("prompt-claro")
+      }
+
+      guardarProgreso({
+        xpTotal: nuevoXpTotal,
+        rachaDiaria,
+        badges: nuevoBadges,
+        ultimaSesion: new Date().toDateString(),
+      })
+
+      setXpTotal(nuevoXpTotal)
+      setBadges(nuevoBadges)
+      setPantalla("results")
     }
   }
 
-  function handleRestart() {
-    setCurrentQ(0)
-    setXp(0)
-    setAnswered(0)
-    setCorrectCount(0)
-    setFinished(false)
+  function handleReintentar() {
+    setPantalla("intro")
+    setPreguntaActual(0)
+    setXpSesion(0)
+    setRespondidas(0)
+    setCorrectas(0)
+    setRachaActual(0)
   }
+
+  const nivelActual = Math.floor(xpTotal / 210) + 1
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col items-center p-6">
-      <Header streak={1} />
-      <XPBar xp={xp} />
-
-      <p className="text-sm text-gray-500 mb-1 max-w-2xl w-full">
-        {moduleData.title}
-      </p>
-      <h2 className="text-md font-medium text-gray-300 mb-6 max-w-2xl w-full">
-        {moduleData.technique}
-      </h2>
-
-      {!finished ? (
+    <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16">
+      {/* Header y XP bar — solo durante el quiz */}
+      {pantalla === "quiz" && (
         <>
-          <QuizCard
-            key={currentQ}
-            question={questions[currentQ]}
-            onAnswer={handleAnswer}
-          />
-          {answered > currentQ && (
-            <button
-              onClick={handleNext}
-              className="mt-4 px-6 py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl font-medium transition-colors"
-            >
-              {currentQ < questions.length - 1
-                ? "Siguiente pregunta"
-                : "Ver resultados"}
-            </button>
-          )}
+          <Header rachaDiaria={rachaDiaria} rachaActual={rachaActual} />
+          <XPBar xp={xpTotal + xpSesion} rachaActual={rachaActual} />
         </>
-      ) : (
-        <div className="w-full max-w-2xl bg-gray-900 rounded-2xl p-8 text-center">
-          <p className="text-4xl mb-4">
-            {correctCount >= 6 ? "🏆" : correctCount >= 4 ? "💪" : "📚"}
-          </p>
-          <h3 className="text-2xl font-bold mb-2">¡Lección completada!</h3>
-          <p className="text-gray-400 mb-4">
-            Acertaste {correctCount} de {questions.length} preguntas
-          </p>
-          <p className="text-blue-400 font-semibold text-lg mb-6">
-            +{correctCount * 30} XP ganados
-          </p>
-          <button
-            onClick={handleRestart}
-            className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl font-medium transition-colors"
-          >
-            Intentar de nuevo
-          </button>
+      )}
+
+      {/* Pantalla de inicio */}
+      {pantalla === "intro" && (
+        <div className="flex-1 flex items-center w-full">
+          <div className="w-full">
+            {/* Aviso de racha rota */}
+            {rachaRota && (
+              <div className="glass rounded-xl px-4 py-3 max-w-lg mx-auto mb-6 flex items-center gap-3 animate-slide-down">
+                <span className="text-lg">😢</span>
+                <p className="text-sm text-gray-400">
+                  Tu racha se rompió. ¡Hoy empieza una nueva!
+                </p>
+              </div>
+            )}
+            <IntroScreen
+              modulo={moduleData}
+              xpGuardado={xpTotal}
+              nivelGuardado={nivelActual}
+              onStart={handleIniciar}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Pantalla del quiz */}
+      {pantalla === "quiz" && (
+        <div className="w-full animate-fade-in">
+          <QuizCard
+            key={preguntaActual}
+            pregunta={preguntas[preguntaActual]}
+            totalPreguntas={preguntas.length}
+            onAnswer={handleResponder}
+            rachaActual={rachaActual}
+          />
+          {respondidas > preguntaActual && (
+            <div className="flex justify-center mt-5 animate-slide-up">
+              <button
+                onClick={handleSiguiente}
+                className="btn-primary px-8 py-3.5 rounded-xl text-sm font-bold text-white"
+              >
+                {preguntaActual < preguntas.length - 1
+                  ? "Siguiente pregunta →"
+                  : "Ver resultados ✨"}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Pantalla de resultados */}
+      {pantalla === "results" && (
+        <div className="flex-1 flex items-center w-full animate-fade-in">
+          <ResultsScreen
+            correctas={correctas}
+            totalPreguntas={preguntas.length}
+            xp={xpSesion}
+            onRestart={handleReintentar}
+          />
         </div>
       )}
     </div>

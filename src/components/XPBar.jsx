@@ -1,23 +1,26 @@
-export default function XPBar({ xp }) {
-  const xpPerLevel = 100
-  const level = Math.floor(xp / xpPerLevel) + 1
-  const currentXP = xp % xpPerLevel
-  const progress = (currentXP / xpPerLevel) * 100
+// XPBar — barra de experiencia con nivel, progreso animado y indicador de racha
+export default function XPBar({ xp, rachaActual }) {
+  const xpPorNivel = 210 // 7 preguntas × 30 XP = 210 XP para subir de nivel
+  const nivel = Math.floor(xp / xpPorNivel) + 1
+  const xpActual = xp % xpPorNivel
+  const progreso = (xpActual / xpPorNivel) * 100
 
   return (
-    <div className="w-full max-w-2xl mx-auto mb-6">
-      <div className="flex justify-between items-center mb-1">
-        <span className="text-sm font-semibold text-blue-400">
-          Nivel {level}
-        </span>
-        <span className="text-sm text-gray-400">
-          {currentXP} / {xpPerLevel} XP
+    <div className="w-full max-w-lg mx-auto mb-5 animate-slide-down" style={{ animationDelay: "80ms" }}>
+      <div className="flex justify-between items-center mb-2">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-bold text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-full">
+            Nivel {nivel}
+          </span>
+        </div>
+        <span className="text-xs text-gray-500 tabular-nums">
+          {xpActual} / {xpPorNivel} XP
         </span>
       </div>
-      <div className="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
+      <div className="w-full bg-white/5 rounded-full h-2.5 overflow-hidden">
         <div
-          className="bg-blue-500 h-3 rounded-full transition-all duration-500 ease-out"
-          style={{ width: `${progress}%` }}
+          className="xp-bar-fill h-2.5 rounded-full transition-all duration-700 ease-out"
+          style={{ width: `${progreso}%` }}
         />
       </div>
     </div>
