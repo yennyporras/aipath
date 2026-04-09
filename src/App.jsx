@@ -5,9 +5,13 @@ import QuizCard from "./components/QuizCard"
 import IntroScreen from "./components/IntroScreen"
 import BlockLessons from "./components/BlockLessons"
 import ResultsScreen from "./components/ResultsScreen"
+import TeoriaScreen from "./components/TeoriaScreen"
+import PracticaScreen from "./components/PracticaScreen"
+import LoginScreen from "./components/LoginScreen"
 import moduleData from "./content/m4-completo.json"
 
 const STORAGE_KEY = "aipath_progreso_v2"
+const SESSION_KEY = "aipath_session"
 
 function cargarProgreso() {
   try {
@@ -37,9 +41,13 @@ function todasLasLecciones() {
   return moduleData.bloques.flatMap(b => b.lecciones)
 }
 
+function getSession() {
+  try { return JSON.parse(localStorage.getItem(SESSION_KEY)) } catch { return null }
+}
+
 export default function App() {
-  // Pantallas: intro (bloques) | lessons (lecciones de un bloque) | quiz | results
-  const [pantalla, setPantalla] = useState("intro")
+  // Pantallas: login | intro | lessons | teoria | quiz | practica | results
+  const [pantalla, setPantalla] = useState(() => getSession() ? "intro" : "login")
   const [bloqueActual, setBloqueActual] = useState(null)
   const [leccionActual, setLeccionActual] = useState(null)
 
@@ -60,6 +68,10 @@ export default function App() {
     setRachaRota(rota)
   }, [])
 
+  function handleLogin() {
+    setPantalla("intro")
+  }
+
   function handleSelectBlock(bloque) {
     setBloqueActual(bloque)
     setPantalla("lessons")
@@ -72,13 +84,17 @@ export default function App() {
 
   function handleSelectLesson(leccion) {
     setLeccionActual(leccion)
-    setPantalla("quiz")
+    setPantalla("teoria")
     setPreguntaActual(0)
     setXpSesion(0)
     setRespondidas(0)
     setCorrectas(0)
     setRachaActual(0)
     setRachaRota(false)
+  }
+
+  function handleTeoriaOk() {
+    setPantalla("quiz")
   }
 
   function handleResponder(esCorrecto) {
@@ -97,6 +113,7 @@ export default function App() {
     if (preguntaActual < preguntas.length - 1) {
       setPreguntaActual(prev => prev + 1)
     } else {
+      // Guardar progreso al terminar preguntas
       const nuevoProgreso = { ...progreso }
       nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + xpSesion
       nuevoProgreso.ultimaSesion = new Date().toDateString()
@@ -113,8 +130,18 @@ export default function App() {
 
       guardarProgreso(nuevoProgreso)
       setProgreso(nuevoProgreso)
-      setPantalla("results")
+
+      // Ir a práctica si existe, si no directo a resultados
+      if (leccionActual.contenido.practica) {
+        setPantalla("practica")
+      } else {
+        setPantalla("results")
+      }
     }
+  }
+
+  function handlePracticaDone() {
+    setPantalla("results")
   }
 
   function handleReintentar() {
@@ -137,7 +164,6 @@ export default function App() {
         return
       }
     }
-    // Volver a la lista de lecciones del bloque actual
     if (bloqueActual) {
       setPantalla("lessons")
       setLeccionActual(null)
@@ -152,6 +178,11 @@ export default function App() {
   const hayNextLesson = leccionActual
     ? todas.findIndex(l => l.id === leccionActual.id) < todas.length - 1
     : false
+
+  // ── LOGIN ──
+  if (pantalla === "login") {
+    return <LoginScreen onLogin={handleLogin} />
+  }
 
   return (
     <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16">
@@ -193,17 +224,33 @@ export default function App() {
         </div>
       )}
 
+      {/* Teoría */}
+      {pantalla === "teoria" && leccionActual && (
+        <div className="w-full animate-fade-in">
+          <TeoriaScreen
+            leccion={leccionActual}
+            onContinuar={handleTeoriaOk}
+            onVolver={() => { setPantalla("lessons"); setLeccionActual(null) }}
+          />
+        </div>
+      )}
+
       {/* Quiz */}
       {pantalla === "quiz" && leccionActual && (
         <div className="w-full animate-fade-in">
           <div className="max-w-lg mx-auto mb-4">
             <button
-              onClick={() => { setPantalla("lessons"); setLeccionActual(null) }}
-              className="text-xs text-gray-500 hover:text-gray-300 transition-colors mb-2 flex items-center gap-1"
+              onClick={() => setPantalla("teoria")}
+              className="text-xs transition-colors mb-2 flex items-center gap-1"
+              style={{ color: "var(--color-text-muted)" }}
+              onMouseEnter={e => e.currentTarget.style.color = "var(--color-text-secondary)"}
+              onMouseLeave={e => e.currentTarget.style.color = "var(--color-text-muted)"}
             >
-              ← Volver a lecciones
+              ← Volver a teoría
             </button>
-            <p className="text-sm font-medium text-gray-400">{leccionActual.titulo}</p>
+            <p className="text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
+              {leccionActual.titulo}
+            </p>
           </div>
 
           <QuizCard
@@ -218,12 +265,22 @@ export default function App() {
             <div className="flex justify-center mt-5 animate-slide-up">
               <button
                 onClick={handleSiguiente}
-                className="btn-primary px-8 py-3.5 rounded-xl text-sm font-bold text-white"
+                className="btn-primary px-8 py-3.5 rounded-xl text-sm"
               >
-                {preguntaActual < preguntas.length - 1 ? "Siguiente pregunta →" : "Ver resultados ✨"}
+                {preguntaActual < preguntas.length - 1 ? "Siguiente pregunta →" : "Ver práctica ✨"}
               </button>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Práctica */}
+      {pantalla === "practica" && leccionActual && (
+        <div className="w-full animate-fade-in">
+          <PracticaScreen
+            leccion={leccionActual}
+            onSiguiente={handlePracticaDone}
+          />
         </div>
       )}
 
