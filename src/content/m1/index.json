@@ -3387,26 +3387,90 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "En 2026 existen cuatro grandes familias de modelos de lenguaje, cada una con filosofía, fortalezas y casos de uso diferenciados. Elegir el modelo correcto puede significar la diferencia entre un sistema eficiente y uno costoso o de baja calidad. GPT-4o y GPT-4-turbo (OpenAI): los modelos más adoptados en el mundo por su madurez del ecosistema y las herramientas disponibles. GPT-4o es multimodal nativo (texto, imagen, audio). Fortalezas: razonamiento complejo, código, matemáticas. Limitaciones: precio (GPT-4o mini es más barato pero menos capaz en tareas complejas), políticas de uso más restrictivas. Claude 3.5 Sonnet y Claude 3 Opus (Anthropic): líderes en seguimiento de instrucciones complejas, escritura larga de alta calidad, y análisis de documentos extensos. Constitutional AI hace a Claude más predecible y menos propenso a sycophancy. Ventana de contexto de 200K tokens es una ventaja significativa. Fortalezas: análisis profundo, escritura, coding. Precio competitivo con GPT-4. Gemini 1.5 Pro y Flash (Google): ventana de contexto de 1M tokens (la más larga disponible), integración nativa con el ecosistema Google. Flash es el más rápido y barato para tareas de alta volumen. Fortalezas: procesamiento de video, audio, documentos masivos. Integración con Google Workspace. LLaMA 3 (Meta, open source): totalmente gratuito para deployment propio. Llama-3-70B-Instruct compite directamente con GPT-3.5 en muchas tareas. Permite fine-tuning completo sin restricciones de políticas. Desventaja: requiere infraestructura propia para deployment. Mistral Large (Mistral AI): modelo europeo con fuerte desempeño en francés, español y otros idiomas europeos. Opción preferida para empresas europeas por cumplimiento GDPR. Para empresas en LATAM: la decisión depende del caso de uso. RAG y chatbots de soporte: Claude o GPT-4o mini (costo-efectivos). Análisis de documentos masivos: Gemini 1.5 Pro. Deployment on-premise por razones de privacidad: Llama-3-70B. Fine-tuning personalizado sin restricciones: Llama-3 o Mistral.",
+              "analogia": "Los modelos de lenguaje son como equipos de consultores especializados: GPT es el consultor de McKinsey (caro, muy bueno en todo), Claude es el especialista en análisis profundo (documentos largos, instrucciones complejas), Gemini es el que tiene acceso a todos los archivos de Google, y Llama es el consultor interno que puedes contratar directamente.",
+              "ejemplo_malo": "Usar GPT-4o para clasificar 10 millones de emails al mes — el costo sería prohibitivo. GPT-4o mini o Gemini Flash serían 10-20x más baratos para esa tarea.",
+              "ejemplo_bueno": "Arquitectura de modelos por capa: Gemini Flash para clasificación de alta volumen, Claude Sonnet para análisis profundo, Llama-3-70B on-premise para datos sensibles que no pueden salir de la empresa.",
+              "por_que_importa": "La elección del modelo es una decisión de arquitectura, no solo técnica. Considera: costo por token, calidad para tu caso específico, restricciones de privacidad de datos, límites de la API, y velocidad de respuesta.",
+              "tip_profesional": "Regla práctica: benchmarks generales son guías, no verdad absoluta. Siempre evalúa los modelos candidatos en 50-100 ejemplos de TU caso de uso específico — el mejor modelo en MMLU puede no ser el mejor para clasificar contratos de seguros en español."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la principal ventaja de LLaMA 3 sobre Claude y GPT para empresas con datos sensibles?",
+                "opciones": [
+                  "Mayor velocidad de respuesta",
+                  "Ser open source y deployable on-premise: los datos nunca salen de tu infraestructura, elimina riesgos de privacidad y dependencia de terceros",
+                  "Mayor calidad en todas las tareas",
+                  "Menor costo de API"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Cuando los datos son clasificados, regulados (sector salud, defensa, banca) o estratégicamente sensibles, enviarlos a APIs externas puede ser inaceptable legalmente o estratégicamente. LLaMA 3 permite deployment completamente interno: el modelo corre en tus GPUs, los datos nunca salen, y tienes control total sobre el modelo. El trade-off: requieres inversión en infraestructura GPU y equipo técnico para operar.",
+                "concepto_reforzado": "LLaMA como solución on-premise para datos sensibles"
+              },
+              {
+                "pregunta": "¿Por qué Gemini 1.5 Pro con 1M tokens de contexto es especialmente útil para ciertas industrias?",
+                "opciones": [
+                  "Porque es más inteligente que otros modelos",
+                  "Porque permite procesar documentos masivos completos (repositorios de código, libros enteros, años de transcripciones de juntas directivas) sin necesidad de chunking o RAG",
+                  "Porque es gratis",
+                  "Porque tiene mejor integración con Python"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Con 1M tokens puedes literalmente meter el código fuente completo de un proyecto mediano, o los estados financieros completos de 10 años, o la totalidad de los contratos de una empresa en una sola llamada. Sectores que se benefician: legal (expedientes completos), finanzas (análisis de todos los reportes históricos), I+D (análisis de papers completos). El costo puede ser alto para uso frecuente, pero para análisis puntuales de alto valor, puede ser la herramienta correcta.",
+                "concepto_reforzado": "Ventana de 1M tokens y sus casos de uso industriales"
+              },
+              {
+                "pregunta": "¿Cuál sería el modelo más costo-eficiente para clasificar 1 millón de emails de soporte al día?",
+                "opciones": [
+                  "GPT-4o — el más capaz",
+                  "Claude Opus — el mejor en análisis",
+                  "Gemini Flash o GPT-4o mini — modelos de bajo costo y alta velocidad optimizados para tareas de clasificación de alta volumen",
+                  "Llama-3-70B — open source gratis"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "1M emails/día × 500 tokens promedio = 500M tokens/día. Con GPT-4o a $5/1M tokens: $2,500/día = $75,000/mes. Con Gemini 1.5 Flash a $0.075/1M tokens (inputs cortos): $37.5/día = $1,125/mes. La diferencia es 66x. Para tareas de clasificación bien definidas, los modelos rápidos y económicos superan en ROI a los modelos premium. GPT-4o o Claude Opus deben reservarse para tareas que realmente requieren razonamiento complejo.",
+                "concepto_reforzado": "Selección de modelo según costo para alta volumen"
+              },
+              {
+                "pregunta": "¿Qué significa que Claude tenga mejor 'seguimiento de instrucciones complejas' que otros modelos?",
+                "opciones": [
+                  "Que Claude responde más rápido",
+                  "Que Claude tiene mayor fidelidad al seguir instrucciones largas y detalladas con múltiples condiciones y restricciones, sin ignorar o confundir partes del prompt",
+                  "Que Claude tiene más memoria",
+                  "Que Claude puede procesar código mejor"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "En evaluaciones como IFEval (Instruction Following Evaluation), Claude consistentemente supera a otros modelos en tareas que requieren seguir múltiples restricciones simultáneas: 'escribe en formato X, con longitud Y, para audiencia Z, evitando temas W, citando solo fuentes de tipo V.' La Constitutional AI y el proceso de entrenamiento de Anthropic priorizan explícitamente la fidelidad a instrucciones. Para sistemas complejos con prompts elaborados, esta diferencia es significativa.",
+                "concepto_reforzado": "Seguimiento de instrucciones complejas como diferenciador de Claude"
+              },
+              {
+                "pregunta": "¿Cuándo debería una empresa LATAM elegir Mistral Large sobre GPT o Claude?",
+                "opciones": [
+                  "Siempre, Mistral es el mejor",
+                  "Cuando los datos deben permanecer en Europa por compliance con GDPR, o cuando necesitan soporte de idiomas europeos de alta calidad con modelo más económico que GPT-4",
+                  "Solo para aplicaciones en francés",
+                  "Cuando no tienen presupuesto para otras APIs"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Para empresas con operaciones en Europa o clientes europeos, el GDPR requiere que los datos personales se procesen dentro de la UE o en países con adecuación de datos. Mistral AI es empresa europea con infraestructura en Europa — cumple GDPR de forma nativa. Para empresas puramente LATAM sin requisitos europeos, Claude y GPT son generalmente superiores. Pero si tu empresa tiene un componente europeo significativo, Mistral es la opción natural.",
+                "concepto_reforzado": "Mistral y cumplimiento GDPR para empresas con operaciones europeas"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de servicios profesionales colombiana tiene tres necesidades: (1) Chatbot de soporte al cliente para 50,000 conversaciones/mes. (2) Análisis profundo de contratos de fusiones y adquisiciones (200-300 páginas). (3) Procesamiento de información financiera confidencial de clientes en servidores propios.",
+              "instruccion": "Selecciona el modelo óptimo para cada necesidad y justifica. Incluye consideraciones de costo, calidad y privacidad.",
+              "pista": "No hay un modelo que sea óptimo para las tres — esta es exactamente la situación donde usar diferentes modelos para diferentes tareas es la arquitectura correcta.",
+              "solucion": "(1) CHATBOT: Claude Haiku o Gemini Flash. 50K conversaciones × 2K tokens promedio = 100M tokens/mes. Claude Haiku: ~$0.25 = $25/mes. Excelente calidad para soporte, muy económico. (2) ANÁLISIS M&A: Claude 3.5 Sonnet o Gemini 1.5 Pro. Los contratos de M&A requieren ventana de contexto grande (200-300 páginas = 100K-150K tokens en español). Claude Sonnet (200K contexto, $3/1M tokens) o Gemini 1.5 Pro (1M contexto). Uso puntual, costo por análisis: $0.30-0.50. La calidad de análisis justifica ampliamente el costo. (3) DATOS FINANCIEROS CONFIDENCIALES: Llama-3-70B on-premise. Los datos financieros de clientes no pueden ir a APIs externas sin políticas de privacidad muy claras. Deployment en servidores propios de la empresa. Costo inicial de GPU (2x A100 en cloud dedicado: ~$8/hora) vs cero riesgo regulatorio.",
+              "criterios_de_exito": [
+                "Elige modelo diferente para cada caso de uso",
+                "Justifica la elección de on-premise para datos confidenciales",
+                "Incluye estimación de costos para al menos uno de los casos"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Modelos de imagen: Stable Diffusion, DALL-E, Midjourney, Flux — el ecosistema de generación visual.",
+              "modulo_relacionado": "M3 — LLMs Avanzados: profundizarás en las diferencias arquitectónicas entre estos modelos"
             }
           }
         },
@@ -3419,26 +3483,90 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Los modelos de generación de imagen son la aplicación de IA más visible para el público general. En 2026, cuatro modelos dominan el mercado con filosofías muy diferentes. DALL-E 3 (OpenAI): integrado en ChatGPT, la opción más accesible. Sigue instrucciones en texto natural con alta fidelidad — si el prompt dice 'seis perros en un barco de madera rojo', DALL-E 3 los pone. Fortaleza: seguimiento de instrucciones y texto en imagen. Limitación: sin control de estilo granular, sin open source. Midjourney v6: el modelo favorito de diseñadores y creativos. Produce las imágenes más estéticamente impresionantes, con un estilo visual reconocible. Funciona vía Discord. Fortaleza: calidad artística excepcional. Limitación: dificultad para seguir instrucciones precisas, no tiene API pública. Stable Diffusion 3 (Stability AI): el modelo open source de referencia. Puede instalarse localmente, hacer fine-tuning con tus propias imágenes, y generar sin restricciones de contenido. Plataformas como ComfyUI y Automatic1111 permiten pipelines complejos. Fortaleza: control total, gratuito, extensible con LoRA y controladores. Flux.1 (Black Forest Labs, 2024): el modelo que combinó la calidad de Midjourney con el control de instrucciones de DALL-E. Flux.1 Schnell (gratuito, 4 pasos de inferencia) y Flux.1 Dev (para fine-tuning) son los modelos abiertos del momento. Supera a SD3 en coherencia y calidad fotorrealista. Las tecnologías subyacentes: los modelos de imagen modernos son Diffusion Models — aprenden a generar imágenes 'desruidando' progresivamente una imagen de ruido aleatorio guiados por un prompt de texto (CLIP o T5). El proceso iterativo (20-50 pasos) es costoso computacionalmente. Flux usa una arquitectura Rectified Flow que reduce esto a 4-8 pasos con mayor calidad. Para uso empresarial en LATAM: DALL-E 3 via API para integraciones rápidas con control de instrucciones. Midjourney para creativos y agencias. Stable Diffusion / Flux local para empresas que necesitan control de imagen sin restricciones de contenido o privacidad. El caso de uso de mayor ROI en empresas: generación de variaciones de assets de marketing (10 versiones de un banner en 30 segundos vs 2 horas con un diseñador), generación de imágenes de productos que aún no existen, y avatares de empleados/personajes de marca.",
+              "analogia": "Los modelos de imagen son como diferentes estilos de artista: DALL-E es el artista que sigue instrucciones al pie de la letra (aunque el resultado no siempre sea el más bello). Midjourney es el artista con su propio estilo estético brillante. Stable Diffusion es el artista que puedes contratar full-time y enseñarle tu propio estilo.",
+              "ejemplo_malo": "Usar Midjourney para generar imágenes de productos con especificaciones técnicas exactas — su interpretación 'artística' puede añadir o cambiar detalles del producto.",
+              "ejemplo_bueno": "Pipeline de assets de marketing: DALL-E 3 para primera iteración con instrucciones exactas, Midjourney para refinamiento estético final — combinar las fortalezas de cada modelo.",
+              "por_que_importa": "La generación de imagen ya tiene ROI comprobado en marketing. Calcula el costo por imagen (DALL-E 3: ~$0.04/imagen, Midjourney: $10/mes plan básico ilimitado) vs tiempo de diseñador ($25-50/hora en LATAM). Para volúmenes altos, el ROI es claro.",
+              "tip_profesional": "Para uso empresarial serio: aprende ComfyUI y Stable Diffusion/Flux. Son gratuitos, sin restricciones, y con control total. El conocimiento de workflows de ComfyUI se ha convertido en una habilidad muy demandada en agencias de diseño y marketing en LATAM."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué diferencia principal distingue a Stable Diffusion de DALL-E y Midjourney?",
+                "opciones": [
+                  "Genera imágenes de mayor calidad",
+                  "Es completamente open source: puede instalarse localmente, hacer fine-tuning con imágenes propias, sin restricciones de uso y sin pagar por llamadas API",
+                  "Es más rápido que los otros",
+                  "Solo funciona para fotografía realista"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Stable Diffusion y Flux siendo open source significa: (1) Cero costo de inferencia si tienes GPU propia, (2) Fine-tuning con tus imágenes para crear modelos de estilo o de personaje, (3) Sin restricciones de contenido impuestas por una empresa, (4) Puede integrarse en cualquier pipeline sin restricciones de API. Las limitaciones son técnicas (requieres conocimiento para instalación y uso) no comerciales.",
+                "concepto_reforzado": "Open source como diferenciador de Stable Diffusion"
+              },
+              {
+                "pregunta": "¿Por qué Flux.1 es significativo frente a Stable Diffusion 3?",
+                "opciones": [
+                  "Es más caro",
+                  "Combinó la calidad fotorrealista de Midjourney con la capacidad de seguir instrucciones de DALL-E, en un modelo open source — superando a SD3 en coherencia con 4-8 pasos de inferencia",
+                  "Es de OpenAI",
+                  "Solo genera arte abstracto"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Flux.1 (agosto 2024, Black Forest Labs — fundadores de Stable Diffusion) resolvió el mayor problema de los modelos de difusión: el trade-off entre velocidad (pocos pasos) y calidad. La arquitectura Rectified Flow logra imágenes de calidad comparable a Midjourney en 4 pasos vs los 20-50 pasos de SD1.5. Además sigue instrucciones en texto con fidelidad superior a SD3. Flux Schnell es gratuito para uso no comercial, Flux Dev para fine-tuning.",
+                "concepto_reforzado": "Flux como evolución de Stable Diffusion"
+              },
+              {
+                "pregunta": "¿Para qué caso de uso empresarial tiene más ROI inmediato la generación de imágenes con IA?",
+                "opciones": [
+                  "Reemplazar a todos los fotógrafos",
+                  "Generación de variaciones de assets de marketing en alta volumen (10 versiones de un banner en segundos), productos que aún no existen físicamente, y personalización visual a escala",
+                  "Solo para entretenimiento",
+                  "Generación de logos corporativos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El ROI más claro: una agencia de e-commerce necesita 500 fotos de productos en diferentes ambientes/colores. Opción tradicional: sesión fotográfica = $2,000-5,000. Opción IA: imagen base del producto + Stable Diffusion/Flux generando variaciones de ambiente y color = $50-100 en cómputo. En publicidad digital, necesitar 20 variaciones de un anuncio para A/B testing pasa de 2 días de diseño a 30 minutos con IA.",
+                "concepto_reforzado": "ROI empresarial de generación de imagen"
+              },
+              {
+                "pregunta": "¿Qué es un modelo LoRA en el contexto de imágenes y cómo se usa?",
+                "opciones": [
+                  "Un tipo de imagen especial",
+                  "Un adaptador de fine-tuning liviano para Stable Diffusion/Flux que enseña al modelo un estilo, personaje o concepto específico con 10-50 imágenes de ejemplo",
+                  "El optimizador de entrenamiento de imágenes",
+                  "Una herramienta de edición de imagen"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "LoRA para imágenes es análogo a LoRA para LLMs: pequeñas matrices de adaptación que modifican el modelo base para seguir un estilo o personaje. Con 15-30 fotos de una persona, puedes entrenar un LoRA de 'tu avatar' y generarte en cualquier situación. Con 20 ejemplos del estilo visual de tu marca, puedes generar imágenes que siempre tengan ese estilo. El entrenamiento de un LoRA tarda 15-30 minutos en una RTX 3090 o en Google Colab Pro. Plataformas como Civitai tienen miles de LoRAs públicos.",
+                "concepto_reforzado": "LoRA como fine-tuning para estilos de imagen"
+              },
+              {
+                "pregunta": "¿Por qué Midjourney sigue siendo popular a pesar de no tener API pública?",
+                "opciones": [
+                  "Porque es gratuito",
+                  "Porque produce consistentemente las imágenes más estéticamente impresionantes para uso creativo — diseñadores y agencias valoran la calidad artística sobre la programabilidad",
+                  "Porque tiene el mayor vocabulario de estilos",
+                  "Porque soporta más idiomas"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Midjourney desarrolló un modelo con un 'sentido estético' emergente que produce imágenes con coherencia compositiva, iluminación y textura superiores a la mayoría de modelos. Para diseñadores, creativos y agencias donde la impresión visual es primaria y no necesitan integración API programática, Midjourney sigue siendo insustituible. Su comunidad en Discord y la función /describe (analiza una imagen y genera el prompt) son herramientas adicionales valiosas.",
+                "concepto_reforzado": "Midjourney como referente en calidad artística"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una agencia de publicidad en Medellín necesita generar assets para una campaña de bebidas: 50 variaciones de imagen del producto en diferentes ambientes (playa, montaña, ciudad nocturna, cocina moderna), en 3 colores de empaque diferentes = 150 imágenes únicas. El cliente necesita las imágenes en 48 horas.",
+              "instruccion": "Diseña el workflow de producción con IA: qué modelo usas, cómo estructuras el proceso, cómo garantizas consistencia del producto en todas las imágenes, y estima el costo vs producción tradicional.",
+              "pista": "La consistencia del producto (mismo packaging, mismo logo) a través de 150 imágenes es el mayor reto técnico.",
+              "solucion": "WORKFLOW: (1) Fotografía base: 3 fotos del producto real en estudio (una por color de empaque) — esto garantiza la fidelidad del producto. (2) Fine-tuning: entrenar un LoRA del producto con estas 3 fotos en Flux Dev (20-30 min en GPU). El LoRA aprende exactamente cómo es el empaque. (3) Generación: usando el LoRA + Flux.1, generar prompt para cada ambiente: 'fotografía comercial de [producto] en [playa/montaña/ciudad/cocina], iluminación profesional, fondo [descriptor]'. 150 imágenes × 10 segundos = 25 minutos de generación. (4) Curación: revisar las 150 imágenes, seleccionar las mejores 50 (si el cliente quiere 50 finales). (5) Post-producción: ajustes menores en Adobe si necesario. COSTO: GPU cloud para fine-tuning + generación: ~$15. Tiempo total del equipo: 4-6 horas. COSTO TRADICIONAL: fotógrafo de producto ($800) + locaciones en 4 ambientes ($2,000) + edición de 150 fotos ($1,500) = $4,300 y 5-7 días.",
+              "criterios_de_exito": [
+                "Usa LoRA para garantizar consistencia del producto",
+                "Define el flujo completo desde fotografía base hasta curación",
+                "Hace la comparación de costo vs producción tradicional"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Modelos de audio y voz: Whisper, ElevenLabs, Suno — el ecosistema de IA para sonido.",
+              "modulo_relacionado": "M11 — IA para Creativos: aprenderás workflows completos de generación de imagen para producción"
             }
           }
         },
@@ -3451,26 +3579,90 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Los modelos de audio son una de las fronteras de mayor crecimiento en IA, con aplicaciones directas y ROI comprobado en múltiples industrias. El ecosistema abarca tres áreas: transcripción, síntesis de voz y generación de música. Transcripción (Speech-to-Text): Whisper (OpenAI, open source) es el estándar de referencia para transcripción de alta calidad. Soporta 99 idiomas incluyendo español de múltiples variantes (colombiano, mexicano, español de España). La versión large-v3 tiene una tasa de error menor al 5% en español hablado claro. Casos de uso empresariales con ROI directo: transcripción de reuniones, call centers (análisis de conversaciones), dictado médico, subtitulado automático. Whisper puede correrse localmente (gratis) o via API de OpenAI ($0.006/minuto). Assembly AI y Deepgram son alternativas comerciales con capacidades adicionales como diarización (identificar qué speaker habló cuándo). Síntesis de voz (Text-to-Speech): ElevenLabs es el líder indiscutible en 2026. Sus voces son prácticamente indistinguibles de voces humanas reales. Permite clonar la voz de una persona con 30-60 segundos de audio (Voice Cloning). Soporta español con acento neutro latinoamericano. Precio: desde $5/mes para 30K caracteres. Casos de uso: narración de videos corporativos, podcasts con IA, asistentes virtuales con voz propia de la marca, contenido de e-learning. OpenAI TTS también es excelente y más barato para volúmenes altos ($15/1M caracteres). Google Text-to-Speech con WaveNet es la opción para integración con GCP. Generación de música: Suno v4 y Udio son los modelos que generan canciones completas (letra, melodía, producción) desde un prompt de texto. Suno puede generar en español, cumbia, vallenato o cualquier género con descripción. Casos de uso: jingles de marketing, música de fondo para videos, prototipos de canciones para artistas. La combinación más poderosa para empresas LATAM: Whisper para transcribir todas las llamadas de ventas → LLM para analizar temas, objeciones y oportunidades → síntesis de insights accionables para el equipo.",
+              "analogia": "El ecosistema de audio IA es como tener un equipo completo de medios: Whisper es el taquígrafo perfecto, ElevenLabs es el locutor profesional que nunca se cansa, y Suno es el compositor que produce en cualquier género.",
+              "ejemplo_malo": "Usar síntesis de voz genérica (robot) para el asistente de ventas de una empresa premium — la percepción de calidad del asistente afecta directamente la percepción de la marca.",
+              "ejemplo_bueno": "Pipeline de call center inteligente: grabación → Whisper (transcripción) → LLM (análisis de sentimiento, objeciones, próximos pasos) → ElevenLabs para respuestas de IVR naturales → dashboard de métricas en tiempo real.",
+              "por_que_importa": "La clonación de voz es la aplicación más transformadora y más delicada de ElevenLabs. Siempre obtener consentimiento explícito de la persona cuya voz se clona — las implicaciones legales y éticas son significativas. El EU AI Act requiere disclosure cuando se usa voz sintética.",
+              "tip_profesional": "Para proyectos de contenido con voz IA: crea una voz de marca consistente desde el inicio. ElevenLabs Professional Voice Cloning permite crear una voz única con 3 horas de audio de referencia — más consistente y mejor que voces genéricas para brand identity."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué hace a Whisper superior a las soluciones de transcripción anteriores para español?",
+                "opciones": [
+                  "Es el más rápido del mercado",
+                  "Fue entrenado con datos de 99 idiomas con múltiples acentos y ruido de fondo, logrando una tasa de error <5% en español hablado claro en condiciones reales, en lugar del 15-25% de sistemas anteriores",
+                  "Tiene más memoria que otros modelos",
+                  "Es exclusivo de OpenAI y no disponible para otros"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los sistemas de transcripción anteriores (Google Speech-to-Text clásico, Amazon Transcribe) estaban optimizados para inglés y tenían performance deficiente en español con acento latinoamericano, en llamadas con ruido de fondo, o con jerga técnica. Whisper fue entrenado en 680K horas de audio multilingüe diverse, incluyendo español con múltiples variantes y condiciones de audio reales. En benchmarks de español, Whisper large-v3 tiene WER (Word Error Rate) de 4-7%, comparable al mejor humano.",
+                "concepto_reforzado": "Whisper y su superioridad en transcripción multilingüe"
+              },
+              {
+                "pregunta": "¿Cuál es el caso de uso de mayor ROI inmediato para Whisper en call centers?",
+                "opciones": [
+                  "Reemplazar a todos los agentes de call center",
+                  "Transcribir automáticamente el 100% de las llamadas para análisis de calidad, identificar temas frecuentes, y detectar incumplimientos de script — tareas que antes requerían monitoreo manual del 1-5% de llamadas",
+                  "Hacer las llamadas más cortas",
+                  "Eliminar el ruido de fondo en tiempo real"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Empresas de call center históricament monitoreaban manualmente el 2-5% de las llamadas (limitación humana). Con Whisper + LLM, se puede analizar el 100% de las llamadas automáticamente: cumplimiento de script de ventas, satisfacción del cliente (análisis de sentimiento), identificación de objeciones frecuentes, detección de llamadas de alto riesgo regulatorio. ROI medible: una empresa con 50 agentes y 500 llamadas/día paga ~$90/día en Whisper API vs $200+/día en supervisores manuales.",
+                "concepto_reforzado": "Whisper para análisis masivo de llamadas en call centers"
+              },
+              {
+                "pregunta": "¿Qué es Voice Cloning en ElevenLabs y cuáles son las implicaciones éticas más importantes?",
+                "opciones": [
+                  "Generar voces de personajes ficticios",
+                  "Replicar la voz de una persona real con 30-60 segundos de audio de referencia — las implicaciones incluyen consentimiento obligatorio, riesgo de fraude con voz de personas sin permiso, y regulación creciente",
+                  "Mejorar la calidad de audio de grabaciones antiguas",
+                  "Convertir texto a voz con acento específico"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Voice Cloning es tecnológicamente impresionante y éticamente compleja. Legalmente: clonar la voz de una persona sin su consentimiento puede violar derechos de imagen en muchas jurisdicciones. El EU AI Act (aplicable desde 2026) requiere disclosure cuando se usa voz sintética en contenido audiovisual. Casos de uso legítimos: locutor que autoriza que su voz se use en sus propios materiales, empresa que crea 'la voz de su asistente virtual' con un locutor contratado, narración personalizada con la voz del fundador de la empresa.",
+                "concepto_reforzado": "Implicaciones éticas y legales del Voice Cloning"
+              },
+              {
+                "pregunta": "¿Para qué tipo de empresa en LATAM tiene más sentido usar Suno para generación de música?",
+                "opciones": [
+                  "Estudios de grabación que quieren reemplazar músicos",
+                  "Agencias de marketing y producción de video que necesitan jingles, música de fondo y prototipos musicales rápidos sin pagar derechos de autor o contratar músicos para cada proyecto",
+                  "Empresas que venden música en streaming",
+                  "Solo para artistas individuales"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Suno resuelve un problema real para agencias: cada video de marketing necesita música de fondo original (usar música existente requiere licencias costosas o el video puede ser bloqueado en YouTube). Suno genera música original, libre de derechos, en segundos. Un jingle de 30 segundos que tomaría 2-3 horas de estudio ($150-300) se genera con Suno en 1 minuto a costo mínimo. El nivel de calidad ya es suficiente para la mayoría de usos comerciales no musicales principales.",
+                "concepto_reforzado": "Suno para producción de contenido de marketing"
+              },
+              {
+                "pregunta": "¿Qué pipeline combina lo mejor de Whisper + LLM + ElevenLabs para un producto de IA de voz completo?",
+                "opciones": [
+                  "Usar cada herramienta por separado manualmente",
+                  "Voz del usuario → Whisper (transcripción) → LLM (comprensión + respuesta) → ElevenLabs (síntesis de voz de respuesta) → respuesta de voz al usuario: esto crea un asistente de voz completamente conversacional",
+                  "Primero ElevenLabs, luego LLM, luego Whisper",
+                  "Solo usar Whisper para todo el pipeline"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Este pipeline STT → LLM → TTS es la base de todos los asistentes de voz modernos de alta calidad. Whisper convierte la voz del usuario en texto (latencia: 0.5-2s). El LLM procesa el texto y genera la respuesta (1-3s para modelos rápidos). ElevenLabs convierte la respuesta en voz natural (1-2s). Latencia total: 2-7 segundos — aceptable para asistentes no en tiempo real. Para tiempo real, Cartesia (TTS ultrarápido) y modelos STT locales reducen la latencia a <1s.",
+                "concepto_reforzado": "Pipeline STT-LLM-TTS como base de asistentes de voz"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una clínica de medicina estética en Bogotá quiere crear una experiencia de onboarding para nuevas pacientes: un video de 5 minutos narrado por la doctora fundadora explicando los procedimientos, con subtítulos automáticos. La doctora tiene agenda apretada y no puede grabar 5 minutos de audio de alta calidad en estudio.",
+              "instruccion": "Diseña el workflow usando herramientas de audio IA. ¿Cómo grabar la muestra de voz de la doctora? ¿Qué herramienta para clonar la voz? ¿Cómo generar el guion narrado? ¿Cómo añadir subtítulos?",
+              "pista": "La doctora puede grabar 1 minuto de voz de alta calidad en su consultorio. Con eso es posible clonar su voz para el video de 5 minutos.",
+              "solucion": "WORKFLOW: (1) Captura de voz: la doctora graba 1 minuto de audio en su consultorio (smartphone con micrófono de solapa externo). Se le pide que lea un texto variado (diferentes velocidades, emociones, tono profesional). (2) Voice Cloning: subir el audio a ElevenLabs Professional Voice Cloning. En 10-15 minutos, ElevenLabs crea el modelo de voz de la doctora. (3) Guion: el equipo escribe el guion de 5 minutos del video de onboarding. LLM (Claude) ayuda a refinarlo para que suene natural al hablarlo. (4) Síntesis: ElevenLabs genera el audio de 5 minutos con la voz clonada de la doctora (~$0.50 en costo de API). (5) Subtítulos: Whisper transcribe el audio generado automáticamente, generando archivo SRT de subtítulos con timestamps precisos. (6) Montaje: el audio y subtítulos se integran en el video en herramienta de edición. CONSIDERACIONES ÉTICAS: la doctora debe firmar autorización de uso de su voz clonada para este video específico.",
+              "criterios_de_exito": [
+                "Define la captura mínima de audio de referencia para clonación",
+                "Incluye ElevenLabs Voice Cloning para la voz de la doctora",
+                "Usa Whisper para subtítulos automáticos del audio generado"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Modelos de video: Sora, Runway, Kling, HeyGen — el ecosistema de IA para video.",
+              "modulo_relacionado": "M11 — IA para Creativos: flujos completos de producción de contenido con IA"
             }
           }
         },
@@ -3483,26 +3675,90 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Los modelos de generación de video son la frontera más activa de la IA en 2026. Representan el mayor salto de productividad para productoras, agencias y empresas de contenido digital. El ecosistema tiene cuatro jugadores principales con capacidades distintas. Sora (OpenAI, 2024): generación de video de hasta 60 segundos desde texto o imagen. Calidad cinematográfica, coherencia física impresionante (objetos se mueven de forma realista). Disponible en ChatGPT Pro y Enterprise. Limitación: sin acceso API programático aún, sin control granular de movimiento. Runway Gen-3 Alpha: el estándar para profesionales de postproducción. No solo genera desde texto sino que permite Image-to-Video (animar una imagen), Video-to-Video (modificar un video existente), y Motion Brush (controlar qué parte de la imagen se mueve). Usado en producciones de Hollywood. Precio: desde $15/mes. Kling AI (Kuaishou, China): sorprendió en 2024 con videos de 2 minutos de calidad comparable a Sora. Especialmente fuerte en movimiento de personas y danza. Acceso gratuito limitado. HeyGen: especializado en avatares digitales y videos de presentación. Puede clonar a una persona en un avatar digital que habla cualquier texto, en cualquier idioma, con movimiento de labios sincronizado. Usado para contenido corporativo, cursos online y traducción de videos. Las tecnologías subyacentes: Sora usa un modelo de difusión en espacio de patches de video (similar a cómo GPT procesa tokens de texto, Sora procesa 'patches' espacio-temporales de video). Runway usa una arquitectura híbrida de difusión + flujo óptico. Para uso empresarial, la aplicación más transformadora es HeyGen: un CEO puede grabar 30 minutos en inglés y HeyGen lo convierte en versiones en español, portugués y francés con doblaje de voz sincronizado perfectamente. Para agencias de marketing en LATAM, Runway Gen-3 permite crear videos de productos en movimiento sin rodaje — el mismo nivel de calidad de un comercial de TV en segundos.",
+              "analogia": "Los modelos de video son como un equipo de producción de cine comprimido: Sora es el director de escena que convierte una idea en video, Runway es el editor de postproducción, y HeyGen es el actor digital que puede hablar en cualquier idioma.",
+              "ejemplo_malo": "Usar Sora para un proyecto que necesita control granular de movimiento específico — sin Motion Brush o similares, no puedes decirle exactamente cómo debe moverse cada elemento.",
+              "ejemplo_bueno": "HeyGen para internacionalización de contenido: un webinar en español se convierte en versiones en inglés y portugués en 30 minutos, con doblaje sincronizado de labios — elimina la necesidad de regrabación.",
+              "por_que_importa": "El mayor caso de uso empresarial en LATAM: HeyGen para traducción y adaptación de contenido de capacitación corporativa. Una empresa con operaciones en 5 países ya no necesita grabar el mismo video 5 veces — una grabación se convierte en 5 idiomas.",
+              "tip_profesional": "Para agencias: Runway Gen-3 + ElevenLabs + CapCut AI es el stack de producción de video 2026. Investiga también Pika Labs y LTX Video (modelos open source) para producción sin costo de API."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la diferencia principal entre Sora y Runway Gen-3 para uso profesional?",
+                "opciones": [
+                  "Sora es más barato",
+                  "Sora genera desde texto con calidad cinematográfica pero sin control granular; Runway ofrece Image-to-Video, Video-to-Video y Motion Brush para control preciso del movimiento — preferido por profesionales de postproducción",
+                  "Runway no tiene API",
+                  "Sora solo funciona en inglés"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Para un director creativo, el control sobre el movimiento específico es crítico. Runway's Motion Brush permite pintar exactamente qué objeto se mueve y en qué dirección. Sora es más 'caja negra' creativa — ideal para conceptos, menos para especificaciones precisas. En producción profesional, Runway se ha integrado en pipelines de VFX de nivel Hollywood (se usó en producciones de Warner Bros en 2025).",
+                "concepto_reforzado": "Sora vs Runway y el valor del control granular"
+              },
+              {
+                "pregunta": "¿Para qué empresa en LATAM tiene más ROI inmediato HeyGen?",
+                "opciones": [
+                  "Productoras de cine",
+                  "Empresas con contenido de capacitación o marketing en un idioma que necesitan llevar a múltiples mercados — un video en español se convierte en inglés, portugués, francés con doblaje sincronizado",
+                  "Solo para influencers",
+                  "Empresas de software"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El ROI de HeyGen en internacionalización es concreto: una empresa multinacional en LATAM puede tener el mismo CEO hablando en inglés para el mercado norteamericano, en portugués para Brasil, y en español neutro para el resto de LATAM — desde un solo video grabado. El doblaje tradicional requeriría actores de voz, estudio de grabación y sincronización manual. HeyGen automatiza todo en 30-60 minutos por video.",
+                "concepto_reforzado": "HeyGen como herramienta de internacionalización"
+              },
+              {
+                "pregunta": "¿Qué tecnología permite a Sora generar videos con física coherente (objetos que se mueven de forma realista)?",
+                "opciones": [
+                  "Programación explícita de física newtoniana",
+                  "Un modelo de difusión en espacio de patches espacio-temporales de video: aprende los patrones de movimiento y física del mundo real de billones de frames de video de entrenamiento",
+                  "Simulación de física en tiempo real",
+                  "Templates predefinidos de movimiento"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Sora divide el video en 'patches' espacio-temporales (pequeños cubos de píxeles × tiempo) y los procesa como tokens, igual que GPT procesa tokens de texto. Al entrenarse con miles de millones de frames de videos reales, aprende implícitamente las leyes de física del mundo: cómo cae un objeto, cómo fluye el agua, cómo se mueve la ropa. Esta física emerge del aprendizaje estadístico, no de programación explícita.",
+                "concepto_reforzado": "Arquitectura de Sora y aprendizaje de física implícita"
+              },
+              {
+                "pregunta": "¿Cuál es el mayor riesgo ético de los modelos de video como HeyGen?",
+                "opciones": [
+                  "Que reemplacen a todos los actores",
+                  "La creación de deepfakes: video falso de personas reales diciendo o haciendo cosas que nunca hicieron, con implicaciones para desinformación política, fraude y reputación",
+                  "Que sean demasiado caros para empresas pequeñas",
+                  "La velocidad de generación es demasiado lenta"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "HeyGen y modelos similares democratizan tanto la creación de video que también democratizan la creación de desinformación audiovisual. Un video falso de un político, CEO o figura pública era costoso en 2022; en 2026 puede generarse en minutos. El EU AI Act requiere watermarking técnico de video generado por IA. En Colombia y LATAM, la regulación está en desarrollo. El uso de deepfakes sin consentimiento para difamación, fraude o manipulación política es tanto un problema ético como un riesgo legal creciente.",
+                "concepto_reforzado": "Deepfakes como riesgo ético de modelos de video"
+              },
+              {
+                "pregunta": "¿Cuál sería el workflow mínimo para crear un tutorial en video con IA sin aparecer frente a la cámara?",
+                "opciones": [
+                  "Solo grabar audio y añadir subtítulos",
+                  "LLM para el guion → ElevenLabs para narración → HeyGen avatar digital o slides + Runway para animaciones + Whisper para subtítulos: crear video completo sin grabarse a sí mismo",
+                  "Solo usar Sora",
+                  "Contratar un equipo de producción"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El stack sin cámara: (1) Claude/GPT escribe el guion. (2) ElevenLabs narra con voz de marca. (3) HeyGen puede crear un avatar digital presentador, o el video puede ser solo pantalla + voz (loom-style). (4) Runway anima las diapositivas o genera visualizaciones. (5) Whisper genera subtítulos automáticamente. (6) CapCut AI o Descript ensamblan todo. Este pipeline permite publicar contenido profesional de forma escalable — la base de muchos cursos online exitosos en 2026.",
+                "concepto_reforzado": "Pipeline de video sin cámara con IA"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa consultora colombiana tiene un curso de compliance financiero de 10 horas que necesitan traducir para sus clientes en Brasil (portugués), México (español neutro de México) y Estados Unidos (inglés). El material original está en español colombiano con la voz del consultor principal.",
+              "instruccion": "Diseña el workflow completo de internacionalización usando HeyGen y herramientas complementarias. Incluye cómo manejar la voz, la sincronización de labios y los subtítulos en cada idioma.",
+              "pista": "HeyGen puede clonar la voz del consultor y traducir el video a múltiples idiomas con sincronización de labios. Whisper puede generar subtítulos de verificación.",
+              "solucion": "WORKFLOW DE INTERNACIONALIZACIÓN: (1) Preparación: los 10 videos del curso en español colombiano se transcriben con Whisper (precisión alta, permite verificar el texto base). (2) Traducción: Claude traduce las transcripciones a portugués brasileño, español neutro mexicano e inglés, manteniendo terminología técnica de compliance. Revisión humana de las traducciones (1-2h por idioma). (3) HeyGen: subir los videos originales del consultor + las traducciones. HeyGen crea versiones con: voz clonada del consultor hablando en cada idioma (lip sync sincronizado automáticamente). Tiempo de procesamiento: 2-3x la duración del video. (4) Subtítulos: Whisper transcribe las versiones generadas en cada idioma → archivos SRT para subtítulos que cumplan normativas de accesibilidad. (5) QA: revisor nativo de cada idioma verifica 10 minutos de muestra de cada versión. RESULTADO: 40 horas de video en 4 idiomas en 2-3 días laborales vs 3-4 meses de regrabación tradicional y 4x el costo.",
+              "criterios_de_exito": [
+                "Incluye Whisper para transcripción base y verificación de subtítulos",
+                "Usa HeyGen para doblaje con sincronización de labios",
+                "Menciona revisión humana de traducciones antes de procesar (no confiar 100% en traducción automática para contenido de compliance)"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Modelos de código: Copilot, Claude Code, Cursor, Devin — la IA que programa.",
+              "modulo_relacionado": "M11 — IA para Creativos: producción de contenido de video con IA a escala"
             }
           }
         },
@@ -3515,26 +3771,90 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Los modelos de código son la aplicación de IA con mayor ROI comprobado y más amplia adopción en 2026. Estudios de GitHub muestran que los desarrolladores con Copilot completan tareas 55% más rápido. El ecosistema abarca desde autocompletado hasta sistemas de agentes que escriben código completo autónomamente. GitHub Copilot (Microsoft/GitHub): el más adoptado, integrado en VS Code, JetBrains y más IDEs. Basado en modelos de OpenAI (GPT-4o). Costo: $10-19/mes por desarrollador. Fortaleza: integración nativa con el IDE, acceso al codebase completo. Funciona con todos los lenguajes. Claude Code (Anthropic): el sistema de agente de coding más capaz en razonamiento de código complejo, arquitectura de sistemas, y explicación de código. Este mismo curso fue desarrollado con Claude Code. Especialmente fuerte en Python, JavaScript/TypeScript, y tareas que requieren entender el código en contexto amplio. Cursor AI: IDE completo construido sobre VS Code con IA nativa. Permite hablar con tu codebase completo, editar múltiples archivos simultáneamente con un solo prompt, y tiene 'Cursor Composer' para tareas multi-archivo. En 2026, Cursor se convirtió en el IDE preferido de startups de IA. Costo: $20/mes. Devin (Cognition AI): el primer 'AI Software Engineer' autónomo. Puede completar tickets de GitHub de principio a fin: lee el ticket, escribe el código, crea tests, hace deploy y verifica que funcione. Todavía requiere supervisión humana para tareas complejas. Para el profesional de IA en LATAM: estos modelos no solo ayudan a programadores. Permiten que profesionales sin fondo técnico profundo creen scripts de automatización, prototipos de apps web, y dashboards de análisis. Un consultor de IA puede usar Claude Code para crear un script de Python que procese 10,000 facturas en minutos, sin ser desarrollador de software senior. El stack óptimo en 2026: Cursor + Claude como orquestador + GitHub Copilot para sugerencias inline. La productividad combinada puede multiplicar la velocidad de desarrollo 3-5x.",
+              "analogia": "Los modelos de código son como tener un programador senior disponible 24/7 que conoce todas las librerías del mundo. GitHub Copilot es el colega que completa tus frases. Claude Code es el arquitecto que diseña el sistema completo. Cursor es la oficina donde todos trabajan juntos.",
+              "ejemplo_malo": "Confiar ciegamente en el código generado por IA sin entenderlo ni revisarlo — un modelo puede generar código que funciona para el caso de prueba pero tiene vulnerabilidades de seguridad o falla en casos extremos.",
+              "ejemplo_bueno": "Workflow: Claude para diseñar la arquitectura → Cursor para implementar múltiples archivos → Copilot para sugerencias inline mientras codificas → Claude Code para debug de problemas complejos.",
+              "por_que_importa": "Los modelos de código tienen tasas de error del 10-30% dependiendo de la complejidad de la tarea. Siempre revisa el código generado con un nivel de entendimiento suficiente para detectar errores lógicos, vulnerabilidades de seguridad y problemas de rendimiento.",
+              "tip_profesional": "Para profesionales no técnicos que quieren usar IA para crear herramientas: empieza con Claude Artifacts (no requiere configuración de IDE) para scripts simples. Una vez cómodo, pasa a Cursor para proyectos más complejos. El objetivo no es convertirte en desarrollador senior sino en alguien que puede crear y mantener herramientas básicas con ayuda de IA."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la diferencia práctica entre GitHub Copilot y Cursor AI?",
+                "opciones": [
+                  "Copilot es más barato",
+                  "Copilot es un plugin de IDE para autocompletado en tiempo real; Cursor es un IDE completo donde puedes chatear con tu codebase completo, editar múltiples archivos con un prompt, y tener mayor contexto del proyecto",
+                  "Cursor solo funciona con Python",
+                  "Copilot funciona sin internet"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Copilot provee sugerencias token por token mientras escribes — su fortaleza es la velocidad de autocompletado inline. Cursor permite conversaciones completas sobre tu proyecto: 'refactoriza todas las llamadas API del proyecto para usar el nuevo sistema de autenticación' y Cursor edita múltiples archivos simultáneamente. Para proyectos complejos con múltiples archivos, Cursor tiene una ventaja de contexto significativa sobre Copilot.",
+                "concepto_reforzado": "Copilot vs Cursor y sus fortalezas diferentes"
+              },
+              {
+                "pregunta": "¿Por qué siempre debes revisar el código generado por IA antes de usarlo en producción?",
+                "opciones": [
+                  "Solo por formalidad",
+                  "Los modelos de código tienen tasas de error del 10-30%: pueden generar código funcionalmente correcto pero con vulnerabilidades de seguridad (SQL injection, XSS), bugs en casos extremos, o dependencias desactualizadas",
+                  "Para que aprendas más",
+                  "El código de IA nunca compila correctamente"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Estudios de seguridad muestran que el código generado por IA puede contener patrones de seguridad inseguros. En un estudio de Stanford (2021), el 40% del código de seguridad generado por Copilot tenía vulnerabilidades. Los modelos aprenden de código público en GitHub, que incluye código inseguro. Sin revisión: riesgo de exponer datos de usuarios, permitir inyección de SQL, o tener bugs que solo aparecen con datos reales en producción.",
+                "concepto_reforzado": "Responsabilidad humana en revisión de código generado"
+              },
+              {
+                "pregunta": "¿Qué es Devin y por qué es significativo aunque todavía requiera supervisión?",
+                "opciones": [
+                  "Un IDE de código abierto",
+                  "El primer sistema de IA que puede completar tickets de software de principio a fin autónomamente: lee el ticket, escribe código, crea tests, hace deploy — representando el primer paso hacia ingenieros de software autónomos",
+                  "Un lenguaje de programación nuevo",
+                  "Un sistema de documentación automática"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Devin demostró resolver el 13.86% de los issues reales de GitHub sin intervención humana (benchmark SWE-bench) — un salto enorme vs 1.96% del mejor modelo anterior. Su importancia es más conceptual que práctica: prueba que los agentes de código pueden completar tareas de software end-to-end. La versión actual requiere supervisión para tareas complejas, pero la trayectoria indica que en 2-3 años los agentes de código podrán manejar el 40-60% de tickets de desarrollo.",
+                "concepto_reforzado": "Devin como hito en agentes de software autónomos"
+              },
+              {
+                "pregunta": "¿Cómo puede un profesional no técnico usar modelos de código para crear valor inmediato?",
+                "opciones": [
+                  "Solo pueden usar si saben programar al menos 5 años",
+                  "Usando Claude Artifacts o Cursor para crear scripts de automatización específicos: procesar Excel, generar reportes, conectar APIs — con supervisión del código pero sin necesidad de ser developer senior",
+                  "Solo para aprender programación",
+                  "No es posible sin formación técnica profunda"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El paradigma está cambiando: con Claude Artifacts, un consultor puede pedir 'crea un script de Python que tome este CSV de 10,000 facturas y calcule el IVA aplicable según las reglas de la DIAN' y obtener código funcional en 30 segundos. Puede ejecutarlo en Google Colab (sin instalación). Si el código falla, puede pegar el error y pedir corrección. No necesita entender cada línea — necesita entender suficiente para verificar que hace lo correcto.",
+                "concepto_reforzado": "Profesionales no técnicos y el uso de modelos de código"
+              },
+              {
+                "pregunta": "¿Cuál sería el primer modelo de código que debería aprender a usar un consultor de IA en LATAM?",
+                "opciones": [
+                  "Devin — el más autónomo",
+                  "Claude Code o Claude Artifacts — tiene el mejor razonamiento para explicar el código, proponer arquitecturas, y manejar el contexto del proyecto completo sin necesidad de configurar un IDE complejo",
+                  "Copilot — el más adoptado",
+                  "Cursor — el más potente"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Para principiantes: Claude Artifacts (accesible desde claude.ai sin instalación) es el punto de entrada más bajo. Genera código, lo puedes ejecutar in-browser, y Claude explica cada parte. Una vez cómodo, Cursor es el salto a proyectos reales. Copilot requiere ya estar escribiendo código activamente para aprovechar el autocompletado. GitHub Copilot Chat (en VSCode) es una transición intermedia: chat sobre el código sin cambiar de IDE.",
+                "concepto_reforzado": "Secuencia de adopción de herramientas de código para no técnicos"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Eres consultor de IA para una empresa de logística en Cali. El director financiero tiene un Excel con 5,000 facturas del último año, cada una con: número de factura, proveedor, fecha, monto bruto, tipo de IVA (0%, 5%, 19%). Necesita calcular el IVA total pagado por proveedor y por mes, y generar un reporte en PDF con gráficas.",
+              "instruccion": "¿Cómo usarías Claude (sin ser programador senior) para crear esta herramienta? Describe el proceso paso a paso.",
+              "pista": "Claude Artifacts puede generar código Python que procesa el Excel y genera el reporte. Google Colab puede ejecutar ese código sin instalar nada.",
+              "solucion": "PROCESO: (1) Preparar el Excel: asegurarse de que tiene las columnas correctas con nombres en inglés o español consistentes. (2) Prompt a Claude: 'Tengo un archivo Excel con 5,000 facturas con columnas: numero_factura, proveedor, fecha, monto_bruto, tipo_iva. Necesito código Python que: (a) calcule el IVA pagado por proveedor y por mes, (b) genere tablas pivot de este resumen, (c) cree un PDF con el resumen y gráficas de barras del IVA mensual. Usa pandas, openpyxl y reportlab.' (3) Claude genera el código completo con explicación. (4) Copiar a Google Colab (gratuito, no requiere instalación). (5) Subir el Excel a Colab. (6) Ejecutar el código. Si hay error: copiar el error en Claude para corrección. (7) Descargar el PDF generado. Tiempo total: 30-60 minutos. Costo: gratis (Claude free + Colab gratuito).",
+              "criterios_de_exito": [
+                "Usa Claude para generar el código sin programar desde cero",
+                "Menciona Google Colab como entorno de ejecución sin instalación",
+                "Incluye el ciclo de corrección de errores (copiar error → pedir corrección a Claude)"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Modelos de embeddings y búsqueda semántica — la base técnica de RAG y búsqueda inteligente.",
+              "modulo_relacionado": "M12 — Automatización con Python: aprenderás a crear estas herramientas de forma sistemática"
             }
           }
         },
@@ -3547,26 +3867,90 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Los modelos de embeddings son silenciosamente el componente de IA de mayor impacto en sistemas empresariales reales. Mientras los LLMs capturan la atención pública, los modelos de embeddings son la infraestructura invisible que hace posibles los sistemas RAG, la búsqueda semántica, los sistemas de recomendación y la detección de duplicados a escala. Un modelo de embedding es un modelo de red neuronal que convierte cualquier texto (o imagen, o audio) en un vector numérico de alta dimensión. La clave: este proceso es optimizado para que vectores de textos similares queden cerca en el espacio vectorial. Los modelos de embedding más usados en 2026: text-embedding-3-large (OpenAI, 3,072 dimensiones): el mejor para inglés, muy bueno en español. Precio: $0.13/1M tokens. Ideal para producción con OpenAI. text-embedding-004 (Google Vertex): alta calidad, integrado en el ecosistema Google Cloud. multilingual-e5-large (Microsoft, open source): excelente para español y múltiples idiomas, gratuito, deployable localmente. bge-m3 (BAAI, open source, 2024): el mejor modelo multilingual open source en 2026, supera a e5 en benchmarks MTEB. Para español específicamente: los modelos multilinguals suelen ser la mejor opción para producción ya que los modelos optimizados solo para inglés tienen performance degradada en español. Los modelos de embedding se usan en: (1) RAG: convertir documentos y queries en vectores para búsqueda semántica. (2) Clasificación sin fine-tuning: los embeddings de textos pueden usarse directamente como features en clasificadores. (3) Clustering: agrupar documentos por similitud semántica sin etiquetas. (4) Detección de duplicados: identificar emails, tickets o documentos con el mismo significado aunque usen diferentes palabras. (5) Sistemas de recomendación: 'clientes que compraron X también compraron Y' basado en similitud de embeddings de productos. Para una empresa en LATAM, implementar embeddings correctamente puede transformar sus sistemas de búsqueda interna: de búsqueda por palabras clave (que falla con sinónimos y variaciones) a búsqueda semántica que entiende el significado.",
+              "analogia": "Los modelos de embedding son como cartógrafos del significado: crean un mapa donde las ideas similares están en el mismo barrio del mapa. Cuando buscas por significado, simplemente buscas en el vecindario correcto del mapa.",
+              "ejemplo_malo": "Usar el mismo modelo de embedding para indexar documentos que para consultas, pero cambiar el modelo entre versiones sin re-indexar — esto causa que los vectores de documentos e queries estén en espacios incompatibles, destruyendo la búsqueda.",
+              "ejemplo_bueno": "Pipeline de embedding consistente: documentos y queries siempre procesados con el mismo modelo (versión fija). Si cambias el modelo, re-indexas toda la base de documentos. Documentar explícitamente qué modelo y versión usa cada base vectorial.",
+              "por_que_importa": "El benchmark MTEB (Massive Text Embedding Benchmark) es la referencia para evaluar modelos de embedding en retrieval, clasificación y clustering. Para seleccionar el modelo correcto para tu idioma y tarea, consulta los resultados de MTEB en Hugging Face.",
+              "tip_profesional": "Para sistemas RAG en producción con español: prueba bge-m3 (open source, top en MTEB multilingual) antes de pagar por modelos propietarios. En muchos benchmarks de español, supera a text-embedding-3-large a costo cero."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué es crítico usar el mismo modelo de embedding para indexar documentos y para consultas?",
+                "opciones": [
+                  "Por convención de código limpio",
+                  "Porque diferentes modelos crean espacios vectoriales incompatibles — comparar embeddings de modelos distintos es como mezclar coordenadas GPS con coordenadas de mapa plano",
+                  "Para reducir costos",
+                  "Para hacer el sistema más rápido"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Cada modelo de embedding crea su propio espacio vectorial con su propia geometría. Un vector de text-embedding-3-large para 'contrato de arrendamiento' es un punto en un espacio de 3,072 dimensiones con coordenadas específicas de ese modelo. El mismo texto con multilingual-e5 produce coordenadas completamente diferentes en un espacio de 1,024 dimensiones. Mezclarlos en una búsqueda produce resultados aleatorios. Este es un error frecuente cuando se migra de modelo.",
+                "concepto_reforzado": "Consistencia del modelo de embedding como requisito de sistema"
+              },
+              {
+                "pregunta": "¿Para qué caso de uso de negocio tiene más impacto inmediato un sistema de embeddings en una empresa?",
+                "opciones": [
+                  "Para reemplazar a los trabajadores",
+                  "Para transformar la búsqueda interna de documentos: de búsqueda por palabras clave (encuentra 0 resultados si el usuario usa sinónimos) a búsqueda semántica que encuentra documentos relevantes aunque usen vocabulario diferente",
+                  "Para hacer el sitio web más rápido",
+                  "Para analizar imágenes de productos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Empresas con repositorios de documentos internos (manuales, procedimientos, contratos, reportes) tienen un problema recurrente: la búsqueda por palabras clave falla cuando el usuario no usa exactamente las palabras correctas. Búsqueda semántica con embeddings: '¿cómo pido vacaciones?' encuentra 'procedimiento de solicitud de licencia remunerada' aunque no comparta ninguna palabra. El ROI es inmediato y medible: tiempo promedio para encontrar documentos internos puede reducirse del 80-90%.",
+                "concepto_reforzado": "Búsqueda semántica como transformación de productividad empresarial"
+              },
+              {
+                "pregunta": "¿Qué es el benchmark MTEB y cómo lo usas para elegir el modelo de embedding correcto?",
+                "opciones": [
+                  "Es un test de velocidad de generación",
+                  "Massive Text Embedding Benchmark: evalúa modelos de embedding en múltiples tareas y idiomas. Consultarlo en Hugging Face te permite comparar modelos según tu idioma y tarea específica antes de elegir",
+                  "Es un certificado de calidad de Anthropic",
+                  "Es una métrica de costo por token"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "MTEB evalúa modelos en 56 datasets cubriendo 8 tareas (retrieval, clasificación, clustering, etc.) y múltiples idiomas. Para seleccionar tu modelo: filtra por idioma (Spanish), tarea (Retrieval para RAG), y mira el ranking. Los resultados actuales (2025) muestran que bge-m3 y e5-mistral-7b-instruct lideran en retrieval multilingual. Estos rankings cambian con nuevos modelos — verifica regularmente si hay mejores opciones para tu caso.",
+                "concepto_reforzado": "MTEB como guía de selección de modelos de embedding"
+              },
+              {
+                "pregunta": "¿Cómo se usan los embeddings para detección de duplicados en un sistema de tickets de soporte?",
+                "opciones": [
+                  "Comparando el texto carácter por carácter",
+                  "Generando el embedding de cada nuevo ticket y calculando similitud coseno con los tickets existentes: si la similitud > 0.9, el ticket es probable duplicado del más similar",
+                  "Usando palabras clave predefinidas",
+                  "Comparando el timestamp de creación"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Pipeline de deduplicación: (1) Al crear un ticket nuevo, generar su embedding. (2) Buscar en la base vectorial los N tickets más similares. (3) Si similitud coseno > 0.85-0.90, marcar como posible duplicado y sugerir al agente verificar el ticket original. (4) Esto reduce la carga de trabajo de agentes de soporte que de otra forma resolverían el mismo problema múltiples veces. Empresas reportan reducción del 20-30% en tickets resueltos gracias a deduplicación semántica.",
+                "concepto_reforzado": "Embeddings para deduplicación semántica de tickets"
+              },
+              {
+                "pregunta": "¿Cuál es la ventaja de bge-m3 sobre text-embedding-3-large para un sistema RAG en español?",
+                "opciones": [
+                  "text-embedding-3-large es siempre superior",
+                  "bge-m3 es open source (cero costo de API), deployable localmente (datos privados), y en benchmarks MTEB de retrieval multilingual supera o iguala a text-embedding-3-large en español",
+                  "bge-m3 es más rápido en inglés",
+                  "text-embedding-3-large tiene más dimensiones"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Para sistemas que procesan millones de documentos en español: text-embedding-3-large a $0.13/1M tokens puede acumular costos significativos. bge-m3 corriendo en un servidor GPU propio o en Hugging Face Inference API tiene costo marginal casi cero para alto volumen. En benchmarks BEIR-ES y mMARCO (retrieval en español), bge-m3 y multilingual-e5-large large tienen performance comparable o superior. Para datos sensibles que no pueden enviarse a APIs externas, los modelos open source son la única opción.",
+                "concepto_reforzado": "bge-m3 como alternativa open source para español"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa farmacéutica tiene 15 años de documentación técnica de medicamentos (10,000+ documentos PDF): fichas técnicas, estudios clínicos, alertas de farmacovigilancia. Los representantes médicos pierden 30+ minutos buscando información específica antes de visitas a médicos. Quieren reducirlo a menos de 2 minutos.",
+              "instruccion": "Diseña el sistema completo de búsqueda semántica: elección del modelo de embedding para documentos farmacéuticos en español, estrategia de chunking, base vectorial, y la interfaz de búsqueda para los representantes.",
+              "pista": "Los documentos farmacéuticos tienen vocabulario técnico muy especializado — esto influye en la elección del modelo de embedding.",
+              "solucion": "MODELO DE EMBEDDING: bge-m3 (multilingual, open source, top en MTEB para retrieval en español técnico). Alternativa: text-embedding-3-large si no tienen infraestructura para modelo local. CHUNKING: dividir cada PDF por secciones semánticas (indicaciones, contraindicaciones, dosis, efectos adversos, interacciones) usando headers como separadores. Chunks de 300-500 palabras con 50 palabras de overlap. Metadata por chunk: medicamento, tipo de documento, sección, fecha de publicación. BASE VECTORIAL: Qdrant (open source, auto-hosteable, buena performance en español). Colección separada por tipo de documento para filtrar eficientemente. INTERFAZ: buscador web simple (React o incluso Streamlit) donde el representante escribe en lenguaje natural: '¿qué dice el prospecto de Metformina sobre pacientes con insuficiencia renal?' → búsqueda semántica → top-5 fragmentos relevantes → Claude sintetiza la respuesta citando el fragmento y el documento fuente. RESULTADO: de 30 minutos de búsqueda manual a <2 minutos con fuente verificable.",
+              "criterios_de_exito": [
+                "Justifica la elección del modelo de embedding para español técnico",
+                "Define chunking por secciones semánticas del documento farmacéutico",
+                "Incluye generación de respuesta con LLM + cita de fuente para verificación"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Modelos multimodales: visión + lenguaje + acción — la convergencia de todos los tipos de modelos.",
+              "modulo_relacionado": "M8 — RAG: implementarás un sistema RAG completo con embeddings y búsqueda semántica"
             }
           }
         },
@@ -3579,26 +3963,90 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Los modelos multimodales son la frontera más activa de la investigación en IA en 2026. La idea es simple en concepto pero revolucionaria en implicaciones: un modelo que puede ver, escuchar, leer, razonar y actuar — procesando cualquier combinación de texto, imagen, audio, video y código como inputs, y generando cualquier tipo de output. La evolución hacia la multimodalidad fue gradual: GPT-3 (solo texto) → GPT-4V (texto + imagen) → GPT-4o (texto + imagen + audio nativo) → modelos en desarrollo (texto + imagen + audio + video + acción). Los modelos más importantes en 2026: GPT-4o (OpenAI): procesamiento nativo de texto, imagen y audio. Puede describir imágenes, responder preguntas sobre imágenes, transcribir audio en tiempo real, y generar audio de respuesta. Claude 3.5 Sonnet con visión: análisis de imágenes con razonamiento excepcional — puede leer documentos escaneados, analizar gráficas de datos, entender diagramas técnicos, interpretar imágenes médicas con contexto. Gemini 1.5 Pro: el más avanzado en video y audio largo — puede procesar videos completos de 1 hora y responder preguntas sobre el contenido. Fuerte en integración con Google Workspace. Las aplicaciones empresariales más transformadoras: (1) Análisis de facturas y documentos escaneados: subir un PDF escaneado y extraer todos los datos estructurados sin necesidad de OCR previo. Claude puede leer el documento como imagen y extraer datos con alta precisión. (2) Control de calidad visual: analizar imágenes de productos en línea de producción para detectar defectos. GPT-4o puede procesar imágenes de la cámara de calidad en tiempo real. (3) Análisis de dashboards y gráficas: subir capturas de pantalla de dashboards y preguntar 'qué tendencia muestra esta gráfica' o 'cuál es el KPI más preocupante'. (4) Asistentes con visión: sistemas que ven lo que el técnico ve (a través de su cámara) y le dan instrucciones de reparación en tiempo real. La frontera de acción: los modelos 'computer use' de Anthropic (2024) pueden controlar un computador visualmente — ven la pantalla, interpretan qué hay, y ejecutan clicks y escritura para completar tareas. Representa el primer paso hacia agentes que pueden trabajar en cualquier aplicación sin necesidad de API.",
+              "analogia": "Un modelo multimodal es como un consultor senior que puede ver tu pantalla, escuchar tu explicación verbal, leer el documento que le muestras, y responderte todo en una sola conversación coherente — sin cambiar de herramienta.",
+              "ejemplo_malo": "Subir una imagen borrosa o de baja resolución a un modelo de visión esperando análisis preciso — la calidad del análisis depende directamente de la calidad de la imagen.",
+              "ejemplo_bueno": "Pipeline de análisis de facturas: foto con smartphone (alta resolución, buena iluminación) → Claude Vision → JSON estructurado con todos los campos → validación automática → ingreso a sistema contable. Costo: centavos por factura vs minutos de digitación manual.",
+              "por_que_importa": "Para análisis de documentos escaneados: siempre enviar imágenes de alta resolución (300 DPI mínimo). Documentos con fondo gris o manchas reducen la precisión del OCR visual del modelo. Un scanner con modo texto en escala de grises genera mejor input que una foto de cámara.",
+              "tip_profesional": "La funcionalidad de 'computer use' de Anthropic es el futuro de la automatización: en lugar de necesitar APIs de cada software, el agente ve la pantalla y opera la interfaz visual. Prueba las demos en la documentación de Anthropic para entender hacia dónde va la automatización empresarial."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué hace diferente a un modelo 'natively multimodal' como GPT-4o de un modelo con visión añadida como GPT-4V?",
+                "opciones": [
+                  "Solo el nombre",
+                  "Natively multimodal: texto, imagen y audio se procesan en el mismo espacio latente del modelo (integración profunda). Visión añadida: un encoder de imagen separado convierte la imagen a tokens que el modelo de texto procesa (integración superficial)",
+                  "La velocidad de procesamiento",
+                  "El número de idiomas soportados"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "GPT-4V usaba CLIP (encoder de imagen) para convertir imágenes en tokens y luego GPT-4 los procesaba como texto. GPT-4o fue entrenado desde cero con texto, imagen y audio integrados en un único modelo — puede hacer razonamiento que cruza modalidades de forma más fluida. La diferencia práctica: GPT-4o puede procesar audio directamente (sin transcripción previa), responder en voz, y hacer razonamiento temporal sobre video frame por frame.",
+                "concepto_reforzado": "Multimodalidad nativa vs visión añadida"
+              },
+              {
+                "pregunta": "¿Cuál es el caso de uso de mayor ROI inmediato para modelos de visión en empresas LATAM?",
+                "opciones": [
+                  "Reconocimiento facial de empleados",
+                  "Digitalización automática de documentos físicos: facturas, contratos, formularios escaneados — extracción de datos estructurados sin digitación manual",
+                  "Análisis de imágenes de marketing",
+                  "Solo para startups de tecnología"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "En LATAM, millones de empresas aún manejan documentos físicos o PDFs escaneados. La alternativa anterior era: OCR (extracción de texto con 70-85% de precisión) + plantillas rígidas de extracción + corrección manual. Con Claude Vision o GPT-4o: el modelo 'lee' la factura como lo haría un humano, entiende el layout, extrae todos los campos con 95%+ precisión, y puede manejar formatos variables sin plantillas. ROI: una empresa que digitalizaba 500 facturas/día en 8 horas de trabajo puede hacerlo en 30 minutos.",
+                "concepto_reforzado": "Visión para digitalización de documentos en LATAM"
+              },
+              {
+                "pregunta": "¿Cómo se usa Claude con visión para control de calidad en manufactura?",
+                "opciones": [
+                  "Claude instala cámaras automáticamente",
+                  "Se conecta Claude Vision a las cámaras de la línea de producción: cada imagen de producto pasa por el modelo que clasifica 'OK', 'defecto superficial', 'defecto crítico' con descripción del problema detectado",
+                  "Claude reemplaza a todos los operadores de calidad",
+                  "Solo funciona con productos electrónicos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El pipeline de QC visual con IA: cámara industrial captura imagen del producto → la imagen se envía al modelo de visión vía API → el modelo analiza la imagen y responde en JSON con clasificación y descripción del defecto → si es defecto crítico, se activa alarma en PLC y el producto es retirado de la línea. Con few-shot examples de defectos conocidos en el prompt, el modelo puede detectar exactamente los defectos específicos de tu proceso. Ventaja sobre computer vision tradicional: no requiere re-entrenamiento cuando cambia el producto.",
+                "concepto_reforzado": "Visión para control de calidad en manufactura"
+              },
+              {
+                "pregunta": "¿Qué es 'computer use' de Anthropic y por qué representa una ruptura en automatización?",
+                "opciones": [
+                  "Una herramienta de gestión de computadoras",
+                  "Un modo donde Claude puede ver la pantalla del computador, entender qué aplicación está activa, y ejecutar clicks, escritura y navegación — automatizando cualquier tarea en cualquier interfaz visual sin necesidad de API",
+                  "Una forma de hacer computación más eficiente",
+                  "Una herramienta de programación"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Computer use elimina la necesidad de APIs: en lugar de integrarse con Salesforce vía API, el agente puede operar Salesforce visualmente como lo haría un humano. Puede usar cualquier software, incluso los sin API pública. Las implicaciones: automatizar flujos de trabajo que involucran múltiples aplicaciones con interfaces gráficas. La limitación actual: velocidad más baja que APIs directas y mayor tasa de error en interfaces complejas. En 2026, está en fase beta productiva para casos bien definidos.",
+                "concepto_reforzado": "Computer use como automatización visual sin API"
+              },
+              {
+                "pregunta": "¿Cómo analiza Claude una gráfica de datos para extraer insights útiles?",
+                "opciones": [
+                  "Solo describe los colores de la gráfica",
+                  "Interpreta el tipo de gráfica, lee los valores del eje X e Y, identifica tendencias (crecimiento, caída, estacionalidad), valores atípicos, y puede comparar múltiples series — respondiendo preguntas de negocio sobre los datos visualizados",
+                  "Extrae solo el título de la gráfica",
+                  "Necesita acceso a los datos crudos, no puede ver gráficas"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Claude 3.5 Sonnet con visión puede: (1) Identificar el tipo de gráfica (líneas, barras, scatter, pie). (2) Leer aproximadamente los valores del eje. (3) Identificar tendencias temporales. (4) Detectar valores atípicos. (5) Responder preguntas específicas: '¿en qué mes fue mayor el pico de ventas?' Un CFO puede subir una captura de su dashboard de BI y preguntarle al modelo '¿qué KPI requiere atención urgente esta semana?' y recibir un análisis ejecutivo sin abrir Excel.",
+                "concepto_reforzado": "Análisis de gráficas y dashboards con modelos de visión"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de construcción en Medellín tiene 200 trabajadores en múltiples obras. Cada trabajador debe llenar un reporte físico diario de avance (formato de tabla en papel) con: horas trabajadas, actividades realizadas, materiales usados y observaciones. Actualmente un asistente administrativo digitalizaN estos reportes manualmente (4 horas/día). Quieren automatizar esto.",
+              "instruccion": "Diseña el sistema de automatización usando modelos de visión. ¿Cómo capturan los reportes? ¿Qué modelo usas? ¿Cómo estructuras el output? ¿Cómo manejas reportes con letra ilegible?",
+              "pista": "Los trabajadores tienen smartphones. El asistente administrativo puede recibir fotos por WhatsApp.",
+              "solucion": "SISTEMA: (1) Captura: los trabajadores fotografían su reporte diario con el smartphone y lo envían por WhatsApp Business. (2) Automatización: WhatsApp Business API recibe las fotos y las envía a Claude Vision vía Anthropic API. (3) Prompt de extracción: 'Extrae de esta imagen de reporte de construcción los siguientes campos en JSON: trabajador (texto), fecha (fecha), horas_trabajadas (número), actividades (lista de strings), materiales_usados (lista de objetos con nombre y cantidad), observaciones (texto libre). Si un campo es ilegible, escribe ILEGIBLE en ese campo.' (4) El JSON se valida (campos requeridos presentes, horas entre 1-12) y se inserta en base de datos. (5) Reportes con campos ILEGIBLE se envían al asistente para revisión manual (solo excepción). VOLUMEN: 200 reportes × 30 segundos de procesamiento = 100 minutos → puede ejecutarse en paralelo, termina en 15 minutos. COSTO: 200 imágenes × $0.003/imagen aprox = $0.60/día vs 4 horas de salario del asistente.",
+              "criterios_de_exito": [
+                "Define el flujo completo desde captura (WhatsApp) hasta base de datos",
+                "Usa Claude Vision para extracción estructurada con JSON",
+                "Maneja el caso de letra ilegible con fallback a revisión humana"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Modelos de razonamiento: o1, DeepSeek R1, Gemini Thinking — la IA que piensa antes de responder.",
+              "modulo_relacionado": "M10 — Agentes de IA: los agentes multimodales son la arquitectura dominante de los sistemas de IA en 2026"
             }
           }
         },
@@ -3611,26 +4059,90 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Los modelos de razonamiento representan un salto cualitativo en las capacidades de los LLMs. Mientras los modelos estándar generan la siguiente palabra de forma relativamente directa, los modelos de razonamiento 'piensan en voz alta' antes de responder — generando una cadena de pensamiento interna (chain of thought) que les permite resolver problemas significativamente más difíciles. OpenAI o1 (2024): el primero en demostrar el paradigma. Fue entrenado con RLHF donde el reward model valora el proceso de razonamiento correcto, no solo la respuesta final. o1 destaca en matemáticas de competencia (95° percentil en AMC), programación competitiva, y problemas de ciencias que requieren múltiples pasos de deducción. Limitaciones: más lento (seconds vs milliseconds), más caro, no siempre superior en tareas simples. DeepSeek R1 (2025, DeepSeek, China): abierto, open source y comparable a o1 en muchos benchmarks a una fracción del costo. Demostró que el paradigma de razonamiento puede implementarse de forma eficiente. Fue un momento significativo en el ecosistema de IA — un modelo open source de China alcanzando capacidades de los mejores modelos de laboratorios privados de EEUU. Gemini 2.0 Thinking (Google, 2025): integra el modo de razonamiento en Gemini con ventana de contexto extendida. Claude con pensamiento extendido (Anthropic, 2025): modo de análisis más profundo con chain of thought visible. La arquitectura de razonamiento: los modelos de razonamiento generan 'tokens de pensamiento' (invisible al usuario en algunos modelos) antes de generar la respuesta final. Estos tokens actúan como borrador donde el modelo puede explorar múltiples caminos, backtrackear cuando detecta errores, y verificar su propia lógica. El resultado: menos errores en razonamiento complejo, capacidad de resolver problemas que requieren muchos pasos consecutivos. Para cuándo usar modelos de razonamiento: matemáticas avanzadas y estadística, análisis legal o regulatorio complejo con múltiples condiciones, debugging de código complejo, toma de decisiones que involucra múltiples variables y trade-offs. Para cuándo NO usarlos: tareas simples de clasificación o extracción (más caros y lentos sin beneficio), generación de contenido creativo (el razonamiento no ayuda en creatividad), y chat conversacional estándar.",
+              "analogia": "Los modelos de razonamiento son como la diferencia entre un estudiante que responde de forma impulsiva y uno que hace un borrador antes de la respuesta final. El borrador (chain of thought) permite detectar y corregir errores antes de entregar la respuesta.",
+              "ejemplo_malo": "Usar o1 para clasificar emails de soporte — el razonamiento complejo no añade valor en clasificación simple y el costo es 5-10x mayor que usando GPT-4o mini.",
+              "ejemplo_bueno": "Usar o1 para analizar si una cláusula contractual específica viola el artículo 14 de la Ley 80 de Contratación Pública colombiana — exactamente el tipo de razonamiento jurídico multi-paso donde o1 supera a modelos estándar.",
+              "por_que_importa": "Los modelos de razonamiento no son siempre mejores — son mejores en tareas específicas que requieren razonamiento multi-paso. Para la mayoría de tareas empresariales cotidianas (clasificación, extracción, chat), los modelos estándar son más eficientes en costo y velocidad.",
+              "tip_profesional": "Cuando elijas entre modelo de razonamiento vs modelo estándar, haz la pregunta: '¿necesita el modelo explorar múltiples posibilidades y verificar su lógica, o es una respuesta directa?' Si es la primera: razonamiento. Si es la segunda: modelo estándar."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la diferencia fundamental entre o1 y GPT-4o en cómo generan respuestas?",
+                "opciones": [
+                  "o1 es más rápido",
+                  "o1 genera una cadena de pensamiento interna (chain of thought) antes de la respuesta final, permitiendo verificar y corregir su razonamiento en pasos intermedios. GPT-4o genera directamente la respuesta.",
+                  "GPT-4o tiene mayor ventana de contexto",
+                  "o1 fue entrenado con más datos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La diferencia es análoga a cálculo mental vs cálculo con papel. GPT-4o es cálculo mental — responde directamente desde sus patrones aprendidos, excelente para la mayoría de tareas. o1 usa un 'borrador' interno: puede explorar múltiples caminos de razonamiento, detectar inconsistencias en sus propias conclusiones, y backtrackear. Para problemas que requieren 10+ pasos lógicos encadenados (demostraciones matemáticas, análisis legal complejo), esta capacidad de autocorrección es crítica.",
+                "concepto_reforzado": "Chain of thought como diferenciador de modelos de razonamiento"
+              },
+              {
+                "pregunta": "¿Por qué DeepSeek R1 fue significativo para el ecosistema global de IA?",
+                "opciones": [
+                  "Porque fue el primer modelo chino",
+                  "Porque demostró que modelos de razonamiento de nivel o1 pueden implementarse de forma open source y a menor costo, democratizando el acceso al razonamiento avanzado",
+                  "Porque fue más rápido que o1",
+                  "Porque fue creado por un estudiante universitario"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "DeepSeek R1 fue un momento 'Sputnik' de la IA: mostró que la brecha entre modelos propietarios de laboratorios con millones en inversión y modelos open source era menor de lo pensado. En múltiples benchmarks de matemáticas y código, R1 igualó o superó a o1 siendo completamente open source y deployable. Esto aceleró la adopción de técnicas de razonamiento en toda la comunidad de IA open source y redujo los costos de acceso a capacidades de razonamiento avanzado.",
+                "concepto_reforzado": "DeepSeek R1 como democratización del razonamiento avanzado"
+              },
+              {
+                "pregunta": "¿Para cuál tarea debería un abogado usar o1 en lugar de GPT-4o?",
+                "opciones": [
+                  "Redactar el cuerpo de un email de seguimiento",
+                  "Analizar si una cláusula de arbitraje específica en un contrato es ejecutable bajo el Estatuto Arbitral colombiano (Ley 1563 de 2012) considerando 5 condiciones específicas del contrato",
+                  "Generar un resumen de un contrato de 2 páginas",
+                  "Clasificar contratos en categorías"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El análisis de ejecutabilidad de una cláusula arbitral puede requerir: (1) verificar si las partes tenían capacidad para comprometerse, (2) verificar si el objeto del arbitraje es arbitrable según la ley, (3) verificar las formalidades requeridas, (4) analizar si hay excepciones aplicables, (5) considerar la jurisprudencia relevante. Este razonamiento multi-paso encadenado es exactamente donde o1 supera a GPT-4o — puede verificar su propia lógica en cada paso. Para redactar el email o el resumen simple, GPT-4o es suficiente y más rápido.",
+                "concepto_reforzado": "Selección de modelo de razonamiento para análisis legal complejo"
+              },
+              {
+                "pregunta": "¿Qué limitación importante tienen los modelos de razonamiento como o1?",
+                "opciones": [
+                  "No soportan español",
+                  "Son significativamente más lentos (seconds vs milliseconds) y caros (5-10x más que GPT-4o) — no apropiados para aplicaciones que requieren respuesta en tiempo real o alto volumen de consultas simples",
+                  "No pueden procesar imágenes",
+                  "Solo funcionan en matemáticas"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "o1 puede tardar 10-30 segundos para respuestas complejas (vs 1-2 segundos de GPT-4o). El costo es $15/1M tokens de entrada vs $5/1M para GPT-4o ($2.50 para mini). Para un chatbot de soporte que necesita responder en <3 segundos a 10,000 consultas/día, o1 sería inapropiado técnica y económicamente. La regla: razonamiento para análisis profundo puntual, modelos rápidos para interacciones en tiempo real.",
+                "concepto_reforzado": "Trade-offs de velocidad y costo en modelos de razonamiento"
+              },
+              {
+                "pregunta": "¿Cómo saber si una tarea se beneficia de un modelo de razonamiento?",
+                "opciones": [
+                  "Si el usuario pide que el modelo 'piense más'",
+                  "Si la tarea requiere múltiples pasos de deducción encadenados donde un error en el paso 2 invalida el paso 10, y donde el modelo necesita explorar múltiples hipótesis antes de concluir",
+                  "Si el usuario prefiere respuestas más largas",
+                  "Si el costo no importa"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La heurística práctica: cuenta los 'pasos de razonamiento' necesarios. Clasificar un email: 1 paso. Redactar un resumen: 2-3 pasos. Analizar si una empresa cumple con todos los requisitos de la Ley 1607 para acogerse a un beneficio tributario: 8-12 pasos de verificación encadenados. Para >5 pasos con dependencias entre ellos, un modelo de razonamiento suele superar al modelo estándar de forma justificada en costo.",
+                "concepto_reforzado": "Heurística para seleccionar modelo de razonamiento"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Eres consultor de IA para un despacho jurídico en Bogotá. Tienen dos tipos de tareas diarias: (A) Clasificar 200 emails diarios en categorías: 'urgente', 'cliente existente', 'lead nuevo', 'spam'. (B) Analizar si una fusión empresarial específica está sujeta a notificación ante la SIC según el Decreto 4886 de 2011, considerando los ingresos operacionales, activos y participación de mercado de las empresas involucradas.",
+              "instruccion": "¿Cuál modelo de razonamiento usarías para cada tarea y por qué? ¿Qué modelo es más costo-efectivo para cada una?",
+              "pista": "Una tarea es clasificación simple con criterios claros. La otra requiere análisis regulatorio multi-paso con múltiples condiciones y umbrales numéricos.",
+              "solucion": "TAREA A (clasificar emails): GPT-4o mini o Claude Haiku. Razonamiento: es clasificación de 4 categorías con criterios simples (urgente = deadline en <48h, cliente = dominio corporativo conocido). No requiere razonamiento multi-paso. 200 emails × ~200 tokens = 40K tokens/día. Claude Haiku: $0.0025 = <1 centavo/día. o1 costaría ~100x más sin mejora de calidad. TAREA B (análisis SIC): o1 o Claude con pensamiento extendido. Razonamiento: el análisis requiere verificar múltiples condiciones del Decreto 4886: ¿las ventas combinadas superan los 60,000 SMLMV? ¿Los activos totales superan el umbral? ¿Alguna empresa tiene >20% del mercado relevante definido por la SIC? ¿El sector tiene regulación sectorial especial? Cada condición depende de la anterior y un error en el cálculo inicial invalida el análisis completo. o1 puede verificar su aritmética y lógica en cada paso — reduce significativamente el riesgo de error legal.",
+              "criterios_de_exito": [
+                "Elige correctamente el modelo económico para clasificación simple",
+                "Justifica o1/razonamiento para el análisis regulatorio multi-paso",
+                "Incluye estimación de costo para la tarea de alta volumen"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Open source vs propietarios: trade-offs reales para tomar decisiones de arquitectura informadas.",
+              "modulo_relacionado": "M6 — Deep Learning: entenderás por qué el chain of thought emerge del entrenamiento con RLHF y escalado"
             }
           }
         },
@@ -3643,26 +4155,90 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "La elección entre modelos open source y propietarios es una de las decisiones arquitectónicas más importantes en cualquier sistema de IA empresarial. No hay una respuesta universal — hay trade-offs que debes evaluar según tu contexto específico. Modelos propietarios (Claude, GPT-4o, Gemini): accedes vía API, pagas por uso, el modelo está en infraestructura del proveedor. Ventajas: sin costo de infraestructura inicial, actualizaciones automáticas (hoy pagas por el modelo, mañana puede ser mejor sin que hagas nada), soporte técnico del proveedor, modelos frontier normalmente superiores en calidad. Desventajas: los datos salen de tu infraestructura (implicaciones de privacidad y regulación), dependencia del proveedor (el proveedor puede cambiar precios, políticas o discontinuar el modelo), sin control sobre el modelo (no puedes hacer fine-tuning sin pasar por el proveedor). Modelos open source (LLaMA 3, Mistral, DeepSeek, Flux, Whisper): descargas los pesos del modelo y los corres en tu infraestructura. Ventajas: los datos nunca salen de tu infraestructura, sin costo de API (solo infraestructura), control total (fine-tuning sin restricciones), sin dependencia de proveedor, posibilidad de operar sin internet. Desventajas: debes operar la infraestructura GPU (costo operativo, equipo técnico), los modelos frontier suelen ser propietarios (GPT-4o sigue siendo superior a LLaMA-70B en muchas tareas), actualizaciones no automáticas. El mundo real no es binario — la arquitectura óptima frecuentemente combina ambos. Los patrones más comunes en producción 2026: RAG con embeddings open source (bge-m3) + LLM propietario (Claude) para generación. Fine-tuning de modelo open source para tareas específicas + modelo propietario como fallback. Modelo open source para datos sensibles + propietario para análisis general. El factor regulatorio es determinante: en sectores bancario, salud y defensa en Colombia, los datos de clientes a menudo no pueden salir a servidores externos sin aprobación regulatoria específica. Esto hace que los modelos open source con deployment on-premise sean la única opción legal en muchos casos.",
+              "analogia": "Open source vs propietario es como comprar vs arrendar maquinaria: arrendar (propietario) es más fácil al inicio pero pagas mensualmente y el proveedor puede cambiar condiciones. Comprar (open source) requiere inversión inicial y mantenimiento, pero tienes control total y sin pagos mensuales.",
+              "ejemplo_malo": "Elegir un modelo propietario para procesar datos de pacientes de una clínica sin verificar si el contrato del proveedor cumple con la Ley 1581 de protección de datos de Colombia.",
+              "ejemplo_bueno": "Arquitectura híbrida: LLaMA-3-70B on-premise para procesar datos confidenciales de nómina → Claude Sonnet via API para generar el informe ejecutivo a partir de métricas anonimizadas. Los datos sensibles nunca salen, los insights sí.",
+              "por_que_importa": "Antes de elegir un modelo propietario para datos sensibles: revisar siempre el Data Processing Agreement (DPA) del proveedor. Anthropic, OpenAI y Google tienen DPAs corporativos que pueden satisfacer requisitos de privacidad — pero debes verificar, no asumir.",
+              "tip_profesional": "El 'open source tax' es real: operar modelos open source en producción requiere equipo técnico que puede costar $3,000-8,000/mes en salarios en LATAM. Para volúmenes bajos (<1M tokens/mes), las APIs propietarias son frecuentemente más económicas en costo total. El punto de equilibrio varía según el modelo y la escala."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la principal razón regulatoria para elegir modelos open source en sectores como banca o salud en Colombia?",
+                "opciones": [
+                  "Porque son de mayor calidad",
+                  "Porque los datos de clientes en sectores regulados a menudo no pueden enviarse a servidores externos de terceros sin cumplir requisitos específicos de la SFC o Minsalud — deployment on-premise resuelve esto",
+                  "Porque son más baratos",
+                  "Porque los reguladores prefieren open source"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La Superintendencia Financiera de Colombia y Minsalud tienen requerimientos de soberanía de datos: la información de clientes debe mantenerse bajo control de la entidad. Enviar datos de transacciones financieras o historiales clínicos a APIs de OpenAI o Anthropic puede requerir aprobación regulatoria explícita, DPAs específicos, y en algunos casos puede no ser permitido. Con modelos open source on-premise: el modelo corre en los servidores de la entidad, los datos nunca salen, cumplimiento automático.",
+                "concepto_reforzado": "Regulación como driver de adopción de open source"
+              },
+              {
+                "pregunta": "¿Cuándo tiene más sentido económico una API propietaria que operar un modelo open source?",
+                "opciones": [
+                  "Nunca, open source siempre es más barato a largo plazo",
+                  "Para volúmenes bajos (<1M tokens/mes) y equipos sin infraestructura GPU: el costo de infraestructura y equipo técnico para operar open source supera el costo de la API propietaria",
+                  "Solo para startups",
+                  "Cuando el modelo propietario es gratis"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Ejemplo concreto: 500K tokens/mes en Claude Sonnet = $1.50/mes. Operar LLaMA-3-70B requiere una GPU A100 (~$2/hora en cloud, $1,440/mes) o un equipo con GPU propia. Para 500K tokens, el API propietaria es 960x más económica. El punto de equilibrio está alrededor de 50-100M tokens/mes donde el costo de la API comienza a superar el costo de infraestructura. Calcula siempre el Total Cost of Ownership (TCO): costo API vs (infraestructura + personal + mantenimiento).",
+                "concepto_reforzado": "TCO en la decisión open source vs propietario"
+              },
+              {
+                "pregunta": "¿Qué es 'vendor lock-in' y por qué es un riesgo en modelos propietarios?",
+                "opciones": [
+                  "El proceso de firmar un contrato con el proveedor",
+                  "La dependencia de una plataforma específica donde cambiar se vuelve costoso: si OpenAI discontinúa un modelo, cambia la API o sube precios drásticamente, migrar todo tu sistema puede costar meses de trabajo",
+                  "Una función de seguridad de los modelos",
+                  "Un tipo de acuerdo de licencia"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Ejemplos reales de vendor lock-in risk: en 2023, OpenAI deprecó GPT-4 original y empresas tuvieron que actualizar sus prompts (la nueva versión tiene comportamientos ligeramente diferentes). La API de OpenAI cambió dos veces en 2023 requiriendo actualizaciones de código. Si dependes de funcionalidades específicas de un modelo propietario y el proveedor las elimina o cambia precios, tienes poco poder de negociación. Mitigación: usar el modelo vía interfaces estandarizadas (LiteLLM), tener una arquitectura que permita cambiar el modelo backend con cambios mínimos.",
+                "concepto_reforzado": "Vendor lock-in como riesgo estratégico"
+              },
+              {
+                "pregunta": "¿Qué es LiteLLM y cómo resuelve el problema del vendor lock-in?",
+                "opciones": [
+                  "Un modelo de lenguaje más rápido",
+                  "Una librería de Python que provee una interfaz unificada para llamar a 100+ APIs de LLMs (OpenAI, Anthropic, Gemini, modelos locales) con el mismo código — cambiar de proveedor requiere solo cambiar una variable de configuración",
+                  "Una base de datos vectorial",
+                  "Un sistema de fine-tuning de modelos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "LiteLLM implementa el estándar de la API de OpenAI para todos los proveedores: anthropic/claude-3-5-sonnet, google/gemini-pro, ollama/llama-3, all callable with the same completion() function. Tu código de aplicación no cambia cuando cambias de Claude a GPT o a un modelo local. Esta abstracción reduce el vendor lock-in: si Anthropic sube precios, puedes migrar a otro proveedor en horas, no semanas.",
+                "concepto_reforzado": "LiteLLM como abstracción anti-lock-in"
+              },
+              {
+                "pregunta": "¿Cuál modelo open source es más recomendable para una empresa LATAM que necesita deployment on-premise con alta capacidad de razonamiento?",
+                "opciones": [
+                  "GPT-2 — el original y gratuito",
+                  "LLaMA-3-70B-Instruct (Meta): el mejor balance de capacidad (comparable a GPT-3.5/GPT-4 en muchas tareas), licencia commercial-friendly, y comunidad masiva de soporte y herramientas",
+                  "Stable Diffusion — el más conocido",
+                  "BERT — el más rápido"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "LLaMA-3-70B-Instruct en 2026 es el modelo de referencia open source: licencia que permite uso comercial (Meta Custom Commercial License), soporte en español sólido, ecosistema de herramientas maduro (Ollama para desarrollo, vLLM para producción, HuggingFace para fine-tuning), y capacidades que en muchos casos reales superan a GPT-3.5. Para casos donde se necesita razonamiento de nivel frontier: DeepSeek R1 (open source) o Qwen-72B son alternativas sólidas.",
+                "concepto_reforzado": "LLaMA-3 como referencia open source para deployment comercial"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una cooperativa financiera en Colombia con 50,000 asociados quiere implementar un asistente de IA para responder preguntas sobre productos financieros (créditos, ahorros, seguros). Por regulación de la SFC, la información de asociados no puede salir a servidores externos. El presupuesto mensual de tecnología es $2,000 USD.",
+              "instruccion": "¿Modelo open source o propietario? Diseña la arquitectura completa considerando regulación, presupuesto y calidad. Incluye estimación de costos.",
+              "pista": "Hay dos fuentes de datos: información pública de los productos (puede ir a API externa) e información de cada asociado (no puede salir).",
+              "solucion": "ARQUITECTURA HÍBRIDA (solución óptima): CAPA 1 — Datos del asociado (on-premise): LLaMA-3-8B o Mistral-7B corriendo en servidor local ($200/mes en servidor con GPU A10 en proveedor cloud colombiano como GreenCloud o AWS Colombia). Procesa consultas que requieren datos del asociado (saldo, historial, estado de crédito). Los datos nunca salen del servidor. CAPA 2 — Información de productos (propietaria): Claude Haiku via API para responder preguntas generales sobre productos (características, tasas, requisitos — información pública). ~$30-50/mes para 2,000 consultas/día. CAPA 3 — Orquestador: el sistema detecta si la consulta requiere datos del asociado → ruta on-premise, o es sobre productos generales → ruta API. COSTO TOTAL: servidor on-premise ~$200 + API externa ~$50 + mantenimiento técnico ~$500 = $750/mes. Dentro del presupuesto de $2,000. CUMPLIMIENTO: los datos del asociado nunca salen de la cooperativa — cumple SFC.",
+              "criterios_de_exito": [
+                "Identifica que los datos del asociado no pueden salir y propone on-premise para esa capa",
+                "Usa API propietaria para información pública (más costo-efectivo que operar modelo grande on-premise)",
+                "Calcula los costos y verifica que caben en el presupuesto"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Cómo elegir el modelo correcto para cada tarea — framework de decisión para arquitectos de IA.",
+              "modulo_relacionado": "M9 — Fine-tuning: aprenderás cuándo y cómo hacer fine-tuning de modelos open source para casos específicos"
             }
           }
         },
@@ -3675,26 +4251,90 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Con más de 100 modelos de IA disponibles en 2026, elegir el correcto puede parecer abrumador. Un framework estructurado de decisión permite tomar esta decisión en minutos con criterios claros y justificables. El framework de 5 dimensiones para selección de modelo: (1) TIPO DE TAREA: ¿texto, imagen, audio, video, código, o multimodal? Esto filtra inmediatamente al 70% de los modelos. (2) CALIDAD MÍNIMA REQUERIDA: ¿necesitas el estado del arte o es suficiente 'bueno'? Para clasificación de emails, GPT-4o mini es suficiente. Para análisis legal crítico, Claude Sonnet o o1. (3) LATENCIA Y THROUGHPUT: ¿necesitas respuesta en <1 segundo o la respuesta puede tardar 30 segundos? ¿cuántas solicitudes por segundo debes manejar? Esto determina si necesitas modelos optimizados para velocidad (Gemini Flash, Claude Haiku) vs calidad (Claude Sonnet, GPT-4o). (4) PRIVACIDAD Y REGULACIÓN: ¿los datos pueden salir de tu infraestructura? Si no → modelos open source on-premise. Si sí → modelos propietarios con DPA adecuado. (5) COSTO: ¿cuántos tokens procesas por mes? Calcula el costo de cada modelo candidato para tu volumen específico. El proceso práctico: benchmark en tus datos reales. Los rankings genéricos (MMLU, HumanEval) son guías pero el mejor modelo para TU tarea puede diferir del benchmark general. Siempre evalúa 50-100 ejemplos de tu caso de uso específico con los modelos candidatos. Herramienta práctica: LMSYS Chatbot Arena (lmarena.ai) permite comparar respuestas de múltiples modelos en tiempo real de forma blind — útil para evaluaciones cualitativas iniciales. Reglas heurísticas rápidas en 2026: Si costo es crítico y calidad es suficiente → Claude Haiku, GPT-4o mini, o Gemini Flash. Si calidad es crítica y tarea es compleja → Claude Sonnet, GPT-4o, o Gemini 1.5 Pro. Si razonamiento multi-paso → o1, DeepSeek R1, o Claude con thinking. Si datos sensibles on-premise → LLaMA-3-70B o Mistral-7B. Si documentos muy largos → Gemini 1.5 Pro (1M tokens). Si español de alta calidad → Claude Sonnet o Gemini. Si código → Claude o GPT-4o. Actualiza tu conocimiento del mercado regularmente: el ecosistema de modelos cambia cada 2-3 meses.",
+              "analogia": "Elegir un modelo de IA es como elegir un vehículo para un viaje: si necesitas cruzar la ciudad rápido → moto (Haiku/Flash). Si necesitas ir cómodo con familia → SUV (Sonnet/GPT-4o). Si necesitas llevar una mudanza → camión (Gemini 1.5 Pro). Usar el camión para cruzar la ciudad es caro e ineficiente.",
+              "ejemplo_malo": "Elegir siempre el modelo más caro y poderoso 'por si acaso' — para el 80% de las tareas empresariales, Claude Haiku o GPT-4o mini tienen calidad suficiente a 10-20x menor costo.",
+              "ejemplo_bueno": "Framework aplicado: chatbot de FAQ (Claude Haiku, $25/mes) + análisis mensual de contratos de alto valor (Claude Sonnet, $5/análisis) + procesamiento de datos de nómina (LLaMA on-premise, $200/mes) = arquitectura optimizada por costo y calidad.",
+              "por_que_importa": "La eficiencia económica es una competencia profesional. Un arquitecto de IA que puede obtener el 95% de la calidad del modelo más caro con el 10% del costo usando el modelo correcto, es significativamente más valioso que uno que siempre usa el modelo más caro 'para estar seguro'.",
+              "tip_profesional": "Configura una hoja de cálculo de comparación de modelos con: nombre del modelo, precio/1M tokens input, precio/1M tokens output, ventana de contexto, fecha de corte, calidad en tu benchmark interno (1-5). Actualízala cada 2-3 meses. Esta tabla es tu referencia práctica para decisiones de arquitectura."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuáles son las 5 dimensiones del framework de selección de modelos?",
+                "opciones": [
+                  "Precio, velocidad, idioma, empresa y popularidad",
+                  "Tipo de tarea, calidad mínima requerida, latencia/throughput, privacidad/regulación, y costo — evaluadas en ese orden para filtrar modelos candidatos",
+                  "Solo calidad y precio",
+                  "Arquitectura, training data, parámetros, fine-tuning y deployment"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El orden importa: primero filtra por tipo de tarea (texto vs imagen vs código) que elimina el 70% de opciones. Luego calidad mínima (¿necesitas frontier o es suficiente 'bueno'?). Luego latencia (¿necesitas <1s o puedes esperar?). Privacidad filtra si los datos pueden salir o no. Finalmente costo selecciona el modelo más económico que pase todos los filtros anteriores. Este orden reduce la combinatoria de decisión de docenas a 2-3 opciones.",
+                "concepto_reforzado": "Framework de 5 dimensiones para selección de modelos"
+              },
+              {
+                "pregunta": "¿Por qué los benchmarks generales como MMLU no son suficientes para elegir el modelo correcto para tu empresa?",
+                "opciones": [
+                  "Porque MMLU está desactualizado",
+                  "Porque MMLU mide conocimiento académico general, pero tu tarea específica (clasificar contratos de seguros en español, responder FAQs de tu producto) puede tener un modelo diferente como ganador al evaluar en tus datos reales",
+                  "Porque los benchmarks son poco confiables",
+                  "Porque solo deberías usar el modelo con mayor ranking en MMLU siempre"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El efecto de distribución de datos: un modelo puede ser el mejor en MMLU (conocimiento académico) pero tener performance mediocre en terminología legal colombiana o en el estilo de redacción de tu industria específica. La única forma de saber cuál es el mejor para TU tarea es benchmarkear en TUS datos. Protocolo: 50-100 ejemplos representativos de tu tarea real, evaluados por un humano o un LLM más poderoso (LLM-as-a-judge), para al menos 3-4 modelos candidatos.",
+                "concepto_reforzado": "Benchmarks específicos vs generales en selección de modelos"
+              },
+              {
+                "pregunta": "¿Qué modelo elegirías para un sistema de moderación de contenido que debe procesar 1 millón de posts en español por día con latencia de <500ms?",
+                "opciones": [
+                  "Claude Sonnet — el más capaz en español",
+                  "Claude Haiku o Gemini Flash — modelos optimizados para velocidad y bajo costo, con calidad suficiente para clasificación de contenido a alta escala",
+                  "o1 — el más preciso",
+                  "LLaMA-3-70B on-premise — para evitar el costo de API"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "1M posts/día = 11.6 posts/segundo. Se necesita alto throughput. Posts de moderación: típicamente 50-200 tokens. Claude Haiku: $0.25/1M tokens output, respuesta en 0.5-1s. GPT-4o mini: $0.6/1M tokens, similar velocidad. Gemini Flash: $0.075/1M tokens — el más económico. Para moderación de contenido (tarea bien definida, no razonamiento complejo), Gemini Flash o Claude Haiku tienen calidad más que suficiente. Claude Sonnet sería 12x más caro sin mejora significativa de calidad en esta tarea específica.",
+                "concepto_reforzado": "Selección de modelo para alta velocidad y volumen"
+              },
+              {
+                "pregunta": "¿Cómo construirías un benchmark interno para evaluar modelos en tu caso de uso específico?",
+                "opciones": [
+                  "Solo usar los rankings de MMLU y Hugging Face",
+                  "Crear 50-100 ejemplos representativos de tu tarea real con respuestas 'ground truth', ejecutar cada modelo candidato, evaluar calidad con un humano o LLM-as-judge, y comparar precisión, costo y latencia",
+                  "Pedir a los proveedores que hagan el benchmark por ti",
+                  "Probar solo 5 ejemplos al azar"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Protocolo de benchmark práctico: (1) Curar 80 ejemplos de producción (inputs reales de tu sistema + outputs ideales anotados por humanos). (2) Para cada modelo candidato: ejecutar los 80 ejemplos, medir tiempo de respuesta, calcular el costo total. (3) Evaluación de calidad: para cada par (respuesta del modelo, respuesta ideal), clasificar como Correcto / Parcialmente correcto / Incorrecto usando un humano o usando GPT-4o como juez con una rubrica. (4) Calcular: accuracy, costo/ejemplo, latencia promedio. (5) Elegir el modelo que maximice accuracy/costo en tu escala. Este proceso lleva 2-4 horas pero es la única forma de tomar la decisión informada.",
+                "concepto_reforzado": "Benchmark interno como proceso de toma de decisión"
+              },
+              {
+                "pregunta": "¿Con qué frecuencia deberías actualizar tu evaluación de modelos disponibles?",
+                "opciones": [
+                  "Solo una vez al inicio del proyecto",
+                  "Cada 2-3 meses: el ecosistema de modelos cambia rápidamente y un modelo que era el mejor en enero puede ser superado en abril — revisar regularmente protege de pagar más o usar calidad inferior sin saberlo",
+                  "Solo cuando el proveedor anuncia un nuevo modelo",
+                  "Nunca, una vez elegido no se cambia"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "En 2024-2026, los lanzamientos de modelos significativos ocurren cada 2-3 meses. Claude 3.5 Sonnet reemplazó a Claude 3 Opus como mejor modelo de calidad en muchas tareas a mitad de 2024. Llama-3.3-70B superó a Llama-3-70B con mejor eficiencia en noviembre 2024. Sin revisión periódica, puedes estar pagando 10x más por un modelo más antiguo cuando uno equivalente o superior ahora cuesta menos. Una revisión trimestral de 2-3 horas puede generar ahorros significativos.",
+                "concepto_reforzado": "Revisión periódica del ecosistema de modelos como práctica profesional"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Eres el arquitecto de IA de una empresa de tecnología en Bogotá con tres productos: (1) App de consumidores con 50,000 usuarios activos diarios que hace preguntas de cocina y recetas. (2) Servicio B2B para contadores que analiza declaraciones de renta (datos fiscales confidenciales). (3) Sistema de detección de fraude en tiempo real para transacciones bancarias (<50ms de latencia requerida).",
+              "instruccion": "Aplica el framework de 5 dimensiones y selecciona el modelo para cada producto. Incluye razonamiento, modelo elegido, y estimación de costo mensual.",
+              "pista": "Las tres aplicaciones tienen requisitos completamente diferentes de calidad, latencia, privacidad y costo.",
+              "solucion": "PRODUCTO 1 — App de recetas: (1) Tipo: texto. (2) Calidad: suficiente (recetas no son críticas). (3) Latencia: <3s es aceptable. (4) Privacidad: preguntas de cocina, sin datos sensibles. (5) Costo: 50K usuarios × 3 consultas/día × 500 tokens = 75M tokens/mes. Claude Haiku: $18.75/mes. MODELO: Claude Haiku. PRODUCTO 2 — Análisis de renta: (1) Tipo: texto. (2) Calidad: alta (análisis fiscal crítico). (3) Latencia: 30-60s aceptable. (4) Privacidad: datos fiscales confidenciales — NO pueden salir. (5) Costo: 500 contadores × 5 análisis/día × 5K tokens = 12.5M tokens/mes. MODELO: LLaMA-3-70B on-premise (servidor GPU: $400/mes). Los datos fiscales nunca salen. PRODUCTO 3 — Detección de fraude: (1) Tipo: texto/clasificación. (2) Calidad: alta (no puede fallar demasiado). (3) Latencia: <50ms = modelo muy rápido. (4) Privacidad: datos bancarios — regulación SFC. (5) Solución: modelo de ML clásico + reglas para <50ms, no LLM (los LLMs no pueden dar <50ms). LLM solo para análisis secundario de transacciones sospechosas (asíncrono). NOTA: el fraude en <50ms es un caso donde los LLMs NO son la herramienta correcta — es ML clásico (XGBoost, redes neuronales livianas).",
+              "criterios_de_exito": [
+                "Aplica las 5 dimensiones a cada producto",
+                "Identifica que el fraude en tiempo real requiere ML clásico, no LLM",
+                "Propone on-premise para los datos fiscales confidenciales con estimación de costo"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Bloque 5 — Datos: el combustible de la IA. Cómo los datos definen la calidad de cualquier sistema de IA.",
+              "modulo_relacionado": "M3 — Selección y Evaluación de Modelos: profundizarás en benchmarks, evaluación y arquitectura de sistemas multi-modelo"
             }
           }
         }
