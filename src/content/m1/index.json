@@ -8648,30 +8648,100 @@
         },
         {
           "id": "m1-b10-l8",
-          "titulo": "Recursos Humanos: reclutamiento, evaluación y retención",
+          "titulo": "IA para emprendedores: oportunidades concretas",
           "bloque": 10,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "La IA no es solo para ingenieros o grandes corporaciones. En 2026, emprendedores de todos los sectores — sin necesidad de saber programar — pueden construir negocios rentables usando IA como herramienta central. Esta lección mapea los modelos de negocio concretos que están funcionando, con enfoque en lo que es accesible para emprendedores colombianos con recursos limitados.\n\nModelo 1 — Consultor IA especializado por vertical. El más accesible y de inicio más rápido. Un profesional con conocimiento profundo de una industria (salud, legal, construcción, gastronomía) aprende a usar herramientas de IA relevantes para esa industria y vende servicios de implementación y entrenamiento. Valor: el conocimiento del dominio es lo difícil de replicar — cualquier empresa puede comprar acceso a Claude, pero pocos saben cómo aplicarlo a la logística de construcción colombiana específicamente. Ingresos típicos en Colombia: $3,000-$8,000 USD/mes con 5-10 clientes activos.\n\nModelo 2 — Micro-SaaS IA vertical. Un software especializado para un nicho específico, construido con IA como core, vendido por suscripción. No necesita financiamiento externo si apunta a un nicho pequeño y específico. Ejemplo: software de generación de contratos de arrendamiento colombianos (con todas las cláusulas legales apropiadas para la Ley 820) a $30/mes para inmobiliarias. Con 500 clientes = $15,000 USD/mes ARR. La clave: el nicho debe ser lo suficientemente específico que los actores globales no lo atiendan, pero lo suficientemente grande para ser negocio.\n\nModelo 3 — Agencia de contenido IA. Produce contenido (artículos, videos, posts) para empresas usando IA para escalar producción. El diferenciador es la curaduría y edición humana que garantiza calidad, no solo la generación. En Colombia, agencias que cobran $1,500-$3,000 USD/mes por gestión de redes sociales + blog + email marketing tienen buena demanda de empresas medianas que no tienen equipo de marketing interno.\n\nModelo 4 — Automatización de procesos para pymes. Muchas pymes colombianas tienen procesos manuales repetitivos que pueden automatizarse con IA + herramientas como Zapier, Make.com o scripts de Python básicos + LLMs. Un emprendedor que puede automatizar: respuesta a correos de clientes, clasificación de solicitudes, generación de reportes, extracción de datos de documentos — puede cobrar $500-$2,000 USD por proyecto de automatización + mantenimiento mensual.\n\nModelo 5 — Productos de información y educación sobre IA. Cursos, bootcamps, workshops, newsletters, comunidades de práctica. El mercado de educación en IA sigue creciendo porque la demanda de personas que quieren entender y usar IA supera significativamente la oferta de educación de calidad en español latinoamericano. Un curso bien producido sobre IA para un sector específico (contadores, médicos, abogados) puede vender $100-500 USD por participante con poco overhead.\n\nLos ingredientes comunes de éxito: (1) Nicho específico > mercado general. (2) Empezar con servicios (ingresos inmediatos) antes que productos (requieren tiempo). (3) Validar que el cliente paga antes de construir el producto completo. (4) Usar herramientas no-code cuando sea posible para reducir tiempo de desarrollo. (5) Precio basado en valor entregado, no en costo de las herramientas.",
+              "analogia": "Ser emprendedor de IA hoy es como ser mecánico automotriz en los años 1920: la mayoría de personas tiene el problema (su negocio podría funcionar mejor con IA) pero nadie sabe cómo arreglarlo. Los mecánicos de esa era no inventaron el motor de combustión interna — solo aprendieron a entenderlo y repararlo. Tú no necesitas inventar ChatGPT para construir un negocio con IA — necesitas ser la persona en tu mercado que entiende cómo aplicarlo.",
+              "ejemplo_malo": "Un emprendedor colombiano lanza una plataforma de 'IA para todos los negocios' sin foco específico, con un plan de negocio de 60 páginas y $50,000 de inversión antes de tener un solo cliente. Después de 8 meses de desarrollo, el producto existe pero no tiene usuarios pagando porque nunca validó si alguien quería comprarlo. La competencia de herramientas generales como Claude, ChatGPT y Canva hace que el argumento de 'IA para todo' sea muy difícil de vender. El dinero se acabó antes de encontrar el nicho correcto.",
+              "ejemplo_bueno": "Una consultora colombiana de supply chain con 10 años de experiencia en logística empieza a ofrecer 'auditorías de procesos con IA' a empresas manufactureras. Su proceso: entrevista al equipo, identifica los 3 procesos manuales más costosos en tiempo, y en una semana entrega un plan de automatización con herramientas específicas y ROI calculado. Cobra $3,000 USD por auditoría. Las primeras 5 las hace gratis para generar casos de éxito. Con los casos de éxito, empieza a cobrar. En 6 meses tiene 8 clientes pagando = $24,000 USD/mes. No programó nada — usó Claude, Make.com y Google Sheets. El valor estaba en su conocimiento de supply chain + saber qué herramientas de IA funcionan para cada caso.",
+              "por_que_importa": "El momento para construir negocios de IA en Colombia es ahora: las herramientas son accesibles, la demanda de empresas para adoptar IA es alta pero la oferta de personas que saben cómo implementarla es baja, y los primeros en posicionarse como expertos en IA para un sector tendrán ventaja de reputación por años. Esta ventana de primero mover se cierra gradualmente a medida que más personas aprenden las mismas habilidades. Para un developer o profesional colombiano con este conocimiento, no hay mejor momento para usarlo.",
+              "tip_profesional": "El camino más rápido a ingresos como emprendedor de IA: (1) elige un sector donde tienes conocimiento o contactos, (2) identifica las 3 tareas más repetitivas y costosas en tiempo de ese sector, (3) aprende a automatizarlas con Claude API + Python básico o herramientas no-code, (4) ofrece hacer la primera implementación gratis a cambio de un caso de éxito y testimonio, (5) cobra las siguientes. Con 2-3 casos de éxito documentados, tienes todo lo que necesitas para vender servicios. El servicio genera el flujo de caja mientras construyes el producto."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué un consultor IA especializado en un sector tiene ventaja sobre herramientas generales como ChatGPT?",
+                "opciones": [
+                  "Porque tiene acceso a modelos de IA más potentes que los disponibles públicamente",
+                  "Porque el conocimiento del dominio específico es lo difícil de replicar — cualquier empresa puede comprar acceso a Claude pero pocos saben aplicarlo al sector específico",
+                  "Porque puede ofrecer precios menores que las suscripciones de herramientas como ChatGPT Plus",
+                  "Porque los consultores tienen certificaciones oficiales de IA que validan su conocimiento ante los clientes"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El acceso a herramientas de IA es una commodity en 2026: cualquier empresa puede pagar $20/mes por ChatGPT Plus o $100/mes por Claude API y tener acceso a los mejores modelos del mundo. Lo que no está en ninguna suscripción es el conocimiento de cómo aplicar esa IA al problema específico de la logística de una empresa de alimentos colombiana, cómo integrarla con el ERP que ya tienen, cómo entrenar al equipo para usarla correctamente, o cómo medir si está funcionando. Este conocimiento de dominio + implementación es el valor del consultor especializado. La ventaja se mantiene mientras el consultor continúa siendo el experto en la intersección de su sector y la IA — lo cual requiere actualización constante pero también construye reputación que es difícil de replicar.",
+                "concepto_reforzado": "Conocimiento de dominio + implementación como diferenciador del consultor IA vs herramientas generales"
+              },
+              {
+                "pregunta": "¿Qué característica debe tener un nicho para que sea adecuado para un micro-SaaS de IA?",
+                "opciones": [
+                  "Debe ser un mercado masivo de millones de usuarios para garantizar ingresos suficientes",
+                  "Debe ser lo suficientemente específico que actores globales no lo atiendan, pero lo suficientemente grande para ser negocio",
+                  "Debe estar en un sector donde la regulación sea alta para protegerse de competencia",
+                  "Debe ser un sector donde la IA aún no se haya implementado para ser pionero"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El micro-SaaS de IA funciona mejor en el espacio intermedio entre 'demasiado pequeño para ser negocio' y 'tan grande que hay competencia global'. Un software para 'todas las empresas' compite con soluciones de Microsoft, Google, y decenas de startups financiadas con millones. Un software para 'inmobiliarias en Colombia que necesitan generar contratos de arrendamiento conformes con la Ley 820 de 2003' tiene un mercado específico (miles de inmobiliarias colombianas) donde las herramientas globales no han adaptado su producto a las leyes locales. Con 300-500 clientes a $30-50/mes, es un negocio rentable de $9,000-25,000/mes que una sola persona puede mantener. La especificidad del nicho es la protección competitiva — los grandes actores no ven el retorno de invertir en un mercado tan específico.",
+                "concepto_reforzado": "Nicho vertical específico como estrategia de micro-SaaS de IA para evitar competencia con actores globales"
+              },
+              {
+                "pregunta": "¿Por qué es recomendable empezar con servicios antes que construir un producto de IA?",
+                "opciones": [
+                  "Porque los servicios requieren menos habilidades técnicas que los productos de software",
+                  "Porque los servicios generan ingresos inmediatos mientras se valida qué problema vale la pena resolver con un producto",
+                  "Porque en Colombia el mercado para productos de software es limitado y los servicios tienen mayor demanda",
+                  "Porque los productos de IA requieren inversión millonaria que los emprendedores colombianos no pueden acceder"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El consejo 'empieza con servicios' refleja un principio de gestión de riesgo en el emprendimiento: los servicios permiten generar ingresos mientras aprendes qué problemas tienen realmente tus clientes y qué soluciones están dispuestos a pagar. Muchos emprendedores construyen productos por meses o años basados en supuestos sobre qué quieren los clientes, para descubrir que el mercado no valora lo que construyeron. Los servicios son el mecanismo de validación más rápido: si alguien te paga por hacer algo manualmente, hay demanda para automatizarlo con un producto. El ejemplo del consultor de supply chain que cobra $3,000 por auditorías manuales primero, es la validación que le dice 'hay demanda de este servicio — ahora construyo el producto que lo automatiza a escala'.",
+                "concepto_reforzado": "Servicios primero como estrategia de validación de mercado antes de construir un producto de IA"
+              },
+              {
+                "pregunta": "¿Cuál es el modelo de negocio de IA más accesible para un profesional colombiano sin conocimientos profundos de programación?",
+                "opciones": [
+                  "Desarrollar un LLM especializado para su sector usando herramientas de fine-tuning automatizado",
+                  "Consultor IA especializado en su sector vertical, usando herramientas no-code y APIs existentes para entregar valor",
+                  "Construir un marketplace de soluciones de IA para conectar desarrolladores con clientes empresariales",
+                  "Crear un fondo de inversión en startups de IA latinoamericanas con capital propio"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El modelo de consultor IA especializado tiene la barrera de entrada más baja porque: (1) no requiere programación — herramientas como Make.com, Zapier, Claude.ai y ChatGPT son usables sin código, (2) el activo más valioso (conocimiento del sector) ya lo tiene el profesional de la industria, (3) los ingresos pueden empezar en semanas, no meses o años, (4) no requiere inversión inicial significativa — principalmente tiempo de aprendizaje. Un médico que aprende a usar IA para documentación clínica y enseña a otras clínicas tiene una propuesta de valor inmediata. Un contador que automatiza la generación de informes financieros con IA puede vender ese servicio sin escribir una línea de código. El modelo escala gradualmente: servicios → cursos sobre lo que aprendiste → eventualmente un micro-SaaS si identificas un problema recurrente.",
+                "concepto_reforzado": "Consultor IA como modelo de bajo costo de entrada para profesionales con conocimiento de dominio sin perfil técnico"
+              },
+              {
+                "pregunta": "¿Cuál es la señal más clara de que un servicio de IA tiene potencial para convertirse en un producto de SaaS?",
+                "opciones": [
+                  "Cuando más de 1,000 personas te siguen en LinkedIn y expresan interés en tus publicaciones sobre IA",
+                  "Cuando estás haciendo manualmente lo mismo para múltiples clientes y podrías automatizarlo — hay demanda demostrada y un proceso repetible",
+                  "Cuando un competidor internacional lanza un producto similar, validando que hay mercado para la idea",
+                  "Cuando consigues financiamiento de un fondo de capital de riesgo que valida el potencial del mercado"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La transición natural de servicio a producto ocurre cuando identificas que estás repitiendo el mismo proceso para diferentes clientes. Si como consultor estás creando manualmente los mismos reportes de análisis para 10 clientes distintos, hay un producto ahí: software que genera ese reporte automáticamente. La señal es crítica porque tiene dos validaciones simultáneas: (1) demanda real — clientes ya están pagando por ese servicio, (2) proceso repetible — ya sabes exactamente qué debe hacer el producto porque lo has hecho manualmente docenas de veces. Esto es radicalmente diferente de 'creo que hay mercado para esto' — es 'tengo 10 clientes pagando que validaron esta necesidad'. El seguimiento en LinkedIn puede indicar audiencia pero no willingness to pay. El financiamiento valida el pitch, no el mercado.",
+                "concepto_reforzado": "Proceso manual repetitivo con múltiples clientes pagando como señal de oportunidad para productizar un servicio de IA"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Eres un profesional colombiano con 8 años de experiencia en el sector inmobiliario (ventas, arrendamientos, administración de propiedad horizontal). Has estado aprendiendo IA durante 6 meses. Identificas que las inmobiliarias colombianas tienen estos procesos manuales: (1) responder los mismos 50 WhatsApps diarios sobre propiedades disponibles, (2) generar contratos de arrendamiento (2-3 horas cada uno, siempre con las mismas cláusulas del CST), (3) elaborar informes mensuales de cartera para propietarios (quién pagó, quién no, estado de reparaciones). Tienes $2,000 USD para empezar y 3 meses antes de necesitar ingresos.",
+              "instruccion": "Diseña tu plan de negocio para los primeros 90 días. Define: qué modelo de negocio elegir (servicio vs producto), por dónde empezar (cuál proceso automatizar primero), cómo conseguir los primeros 3 clientes, y cuánto podrías estar facturando al día 90.",
+              "input_malo": "Construir un SaaS completo que resuelva los tres problemas simultáneamente con app móvil, panel web y chatbot de WhatsApp integrado. Tardará 6 meses de desarrollo pero tendrá todo.",
+              "pista": "¿Cuál de los tres procesos es más fácil de automatizar, tiene mayor impacto visible para el cliente, y demuestra valor más rápido? ¿Empiezas por servicios o productos dado que necesitas ingresos en 90 días?",
+              "solucion": "Plan 90 días con modelo servicio-primero: DÍA 1-30 (validación y primeros clientes): Empezar por contratos de arrendamiento (proceso 2). Razones: (a) es el dolor más costoso en tiempo (2-3h → 10 min con IA), (b) el resultado es tangible e inmediato, (c) puedes hacerlo hoy con Claude + template personalizado para ley colombiana. Precio: $150 USD/mes por generación ilimitada de contratos (inmobiliaria promedio hace 15-20 contratos/mes = $7.5/contrato vs 2-3h de trabajo). Cómo conseguir 3 clientes: (1) tu red personal de contactos en el sector, (2) grupos de administradores de propiedad horizontal en LinkedIn/WhatsApp, (3) oferta de primer mes gratis a cambio de testimonio. DÍA 31-60 (escalar servicio + validar proceso 1): Con 3 clientes, identifica el patrón exacto de contratos que generan. Para proceso 1 (WhatsApps): ofrecer a los mismos clientes automatización con WhatsApp Business API + catálogo de propiedades estructurado. Precio adicional: $100 USD/mes. DÍA 61-90 (primer producto): Con 5-6 clientes en servicio manual, ya tienes el proceso perfectamente definido para los contratos. Construye con Make.com + Claude API un formulario web que genera el contrato en 5 min automáticamente. FACTURACIÓN DÍA 90: 6 clientes × $150 (contratos) + 4 clientes × $100 (WhatsApp) = $1,300 USD/mes. Con reinversión en producto = primer micro-SaaS construyéndose.",
+              "criterios_de_exito": [
+                "Elige modelo servicio-primero correctamente dado el constraint de 90 días para ingresos",
+                "Prioriza contratos de arrendamiento como primera automatización por mayor valor demostrable y urgencia del cliente",
+                "Tiene plan concreto de conseguir primeros 3 clientes usando la red sectorial existente",
+                "Proyecta ingresos realistas para 90 días basados en precio y número de clientes alcanzable"
+              ]
             },
+            "conexion": {
+              "siguiente_concepto": "Casos de fracaso en IA: qué no hacer",
+              "por_que_importa_despues": "Entender las oportunidades es la mitad de la ecuación. La otra mitad es aprender de los fracasos para no repetirlos. La siguiente lección documenta los patrones de error más comunes en proyectos de IA que parecían prometedores pero fallaron, y por qué entender estos patrones es tan valioso como conocer los casos de éxito."
+            }
             "conexion": {
               "siguiente_concepto": "",
               "por_que_importa_despues": ""
