@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import Header from "./components/Header"
+import AIPathLogo from "./components/AIPathLogo"
 import XPBar from "./components/XPBar"
 import QuizCard from "./components/QuizCard"
 import AcademyScreen from "./components/AcademyScreen"
@@ -58,6 +60,81 @@ function calcularRachaDiaria(progreso) {
 
 function getSession() {
   try { return JSON.parse(localStorage.getItem(SESSION_KEY)) } catch { return null }
+}
+
+// ── Cursor personalizado (solo desktop con hover) ────────────────────
+function CustomCursor() {
+  const cursorRef = useRef(null)
+  const [hovering, setHovering] = useState(false)
+
+  useEffect(() => {
+    const move = (e) => {
+      if (cursorRef.current) {
+        cursorRef.current.style.left = e.clientX + "px"
+        cursorRef.current.style.top  = e.clientY + "px"
+      }
+    }
+    const over = (e) => {
+      const el = e.target
+      const interactive = el.closest("button, a, input, [role='button'], label")
+      setHovering(!!interactive)
+    }
+    window.addEventListener("mousemove", move)
+    window.addEventListener("mouseover", over)
+    return () => {
+      window.removeEventListener("mousemove", move)
+      window.removeEventListener("mouseover", over)
+    }
+  }, [])
+
+  return (
+    <div
+      ref={cursorRef}
+      className={`custom-cursor ${hovering ? "hovering" : ""}`}
+    />
+  )
+}
+
+// ── Overlay milestone XP (cada 500 XP) ──────────────────────────────
+function XPMilestoneOverlay({ xp, onDone }) {
+  useEffect(() => {
+    const timer = setTimeout(onDone, 2200)
+    return () => clearTimeout(timer)
+  }, [onDone])
+
+  return (
+    <motion.div
+      className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="surface rounded-2xl px-10 py-8 flex flex-col items-center gap-3"
+        style={{ border: "1px solid rgba(99,102,241,0.5)", boxShadow: "0 0 60px rgba(99,102,241,0.25)" }}
+        initial={{ scale: 0.5, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.8, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      >
+        <motion.div
+          className="text-5xl"
+          animate={{ rotate: [0, -15, 15, -10, 10, 0], scale: [1, 1.2, 1] }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          🎯
+        </motion.div>
+        <p className="font-display text-2xl font-extrabold text-gradient"
+          style={{ fontFamily: "'Outfit', sans-serif" }}>
+          ¡{xp.toLocaleString()} XP!
+        </p>
+        <p className="text-xs font-bold uppercase tracking-widest"
+          style={{ color: "var(--color-text-muted)" }}>
+          Milestone alcanzado
+        </p>
+      </motion.div>
+    </motion.div>
+  )
 }
 
 // ── Sidebar desktop ──────────────────────────────────────────────────
@@ -178,6 +255,8 @@ export default function App() {
 
   const [progreso, setProgreso] = useState(() => cargarProgreso())
   const [rachaRota, setRachaRota] = useState(false)
+  const [xpMilestone, setXpMilestone] = useState(null)
+  const prevXpRef = useRef((cargarProgreso().xpTotal || 0))
   const [installDismissed, setInstallDismissed] = useState(
     () => localStorage.getItem(INSTALL_DISMISSED_KEY) === "1"
   )
@@ -193,6 +272,18 @@ export default function App() {
     }
     setRachaRota(rota)
   }, [])
+
+  // Detectar milestone de XP cada 500
+  useEffect(() => {
+    const currentXP = progreso.xpTotal || 0
+    const prev = prevXpRef.current
+    const prevMilestone = Math.floor(prev / 500)
+    const currMilestone = Math.floor(currentXP / 500)
+    if (currMilestone > prevMilestone && currentXP > 0) {
+      setXpMilestone(currMilestone * 500)
+    }
+    prevXpRef.current = currentXP
+  }, [progreso.xpTotal])
 
   function handleDismissInstall() {
     setInstallDismissed(true)
@@ -342,18 +433,26 @@ export default function App() {
     : null
 
   // ── LOGIN ──
-  if (pantalla === "login") return <LoginScreen onLogin={handleLogin} />
+  if (pantalla === "login") return (
+    <>
+      <CustomCursor />
+      <LoginScreen onLogin={handleLogin} />
+    </>
+  )
 
   // ── ACADEMY (home) — sin sidebar ──
   if (pantalla === "academy") {
     return (
       <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16">
+        <CustomCursor />
+        <AnimatePresence>
+          {xpMilestone && (
+            <XPMilestoneOverlay xp={xpMilestone} onDone={() => setXpMilestone(null)} />
+          )}
+        </AnimatePresence>
         {/* Header simplificado en academy */}
         <div className="w-full max-w-4xl flex justify-between items-center mb-8 animate-reveal">
-          <div className="aipath-logo">
-            <span className="logo-text">AI</span>
-            <span className="logo-accent">Path</span>
-          </div>
+          <AIPathLogo size="sm" />
           <div className="flex items-center gap-3">
             {installButton}
             <div className="surface flex items-center gap-2 px-3 py-1.5 rounded-full">
@@ -377,6 +476,12 @@ export default function App() {
   // ── LAYOUT CON SIDEBAR (todas las pantallas dentro de un módulo) ──
   return (
     <div className="min-h-dvh text-white flex">
+      <CustomCursor />
+      <AnimatePresence>
+        {xpMilestone && (
+          <XPMilestoneOverlay xp={xpMilestone} onDone={() => setXpMilestone(null)} />
+        )}
+      </AnimatePresence>
       <Sidebar
         progreso={progreso}
         moduloData={moduloData}

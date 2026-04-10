@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { playSound } from "../utils/sounds"
 
 function getMessage(pct) {
   if (pct === 100) return { emoji: "🏆", text: "¡Puntuación perfecta! Dominas este concepto." }
@@ -31,13 +33,51 @@ function ProgressCircle({ pct }) {
   )
 }
 
+// Confetti de 3s al aprobar
+function ConfettiRain() {
+  const colors = ["#6366F1", "#8B5CF6", "#F59E0B", "#10B981", "#A78BFA", "#F472B6"]
+  return (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+      {Array.from({ length: 30 }, (_, i) => (
+        <motion.div
+          key={i}
+          className="absolute"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top:  "-2%",
+            width:  `${3 + Math.random() * 6}px`,
+            height: `${4 + Math.random() * 8}px`,
+            borderRadius: Math.random() > 0.5 ? "50%" : "2px",
+            background: colors[i % colors.length],
+          }}
+          initial={{ y: 0, opacity: 1, rotate: 0 }}
+          animate={{
+            y: "110vh",
+            opacity: [1, 1, 0],
+            rotate: Math.random() > 0.5 ? 360 : -360,
+            x: (Math.random() - 0.5) * 200,
+          }}
+          transition={{
+            duration: 2 + Math.random() * 2,
+            delay:    Math.random() * 1.2,
+            ease: "easeIn",
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
 export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, onRestart, onVolver, hayNextLesson }) {
   const pct    = totalPreguntas > 0 ? Math.round((correctas / totalPreguntas) * 100) : 100
   const passed = totalPreguntas === 0 || correctas >= Math.ceil(totalPreguntas * 0.7)
   const msg    = getMessage(pct)
 
   const [xpAnim, setXpAnim] = useState(0)
+  const soundFired = useRef(false)
+
   useEffect(() => {
+    // Contador XP animado
     const steps = 40, duration = 1500
     const increment = xp / steps
     let current = 0
@@ -46,55 +86,99 @@ export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, 
       if (current >= xp) { current = xp; clearInterval(timer) }
       setXpAnim(Math.round(current))
     }, duration / steps)
+
+    // Sonido al montar
+    if (!soundFired.current) {
+      soundFired.current = true
+      setTimeout(() => playSound(passed ? "complete" : "xp"), 300)
+    }
+
     return () => clearInterval(timer)
-  }, [xp])
+  }, [xp, passed])
 
   return (
     <div className="w-full max-w-lg mx-auto flex flex-col items-center text-center px-2">
-      {/* Partículas si aprobó */}
-      {passed && (
-        <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-          {Array.from({ length: 12 }, (_, i) => (
-            <div key={i} className="absolute" style={{
-              left: `${8 + Math.random() * 84}%`, top: "-2%",
-              width: `${3 + Math.random() * 5}px`, height: `${3 + Math.random() * 5}px`,
-              borderRadius: "2px",
-              backgroundColor: ["#6366F1","#8B5CF6","#A78BFA","#F59E0B","#10B981"][i % 5],
-              animation: `confetti-fall ${2.5 + Math.random() * 2.5}s ease-in ${Math.random() * 1.2}s forwards`,
-            }} />
-          ))}
-        </div>
-      )}
+      {/* Confetti si aprobó */}
+      {passed && <ConfettiRain />}
 
-      <div className="surface rounded-2xl p-8 w-full relative z-10 animate-scale-in">
-        <p className="text-5xl mb-3">{msg.emoji}</p>
-        <h3 className="font-display text-2xl font-extrabold text-gradient mb-1"
-          style={{ fontFamily: "'Outfit', sans-serif" }}>
+      <motion.div
+        className="surface rounded-2xl p-8 w-full relative z-10"
+        initial={{ opacity: 0, scale: 0.85 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {/* Emoji resultado */}
+        <motion.p
+          className="text-5xl mb-3"
+          initial={{ scale: 0, rotate: -20 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ delay: 0.15, type: "spring", stiffness: 300, damping: 15 }}
+        >
+          {msg.emoji}
+        </motion.p>
+
+        <motion.h3
+          className="font-display text-2xl font-extrabold text-gradient mb-1"
+          style={{ fontFamily: "'Outfit', sans-serif" }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.35 }}
+        >
           ¡Lección completada!
-        </h3>
-        <p className="text-sm mb-6" style={{ color: "var(--color-text-secondary)" }}>{msg.text}</p>
+        </motion.h3>
+
+        <motion.p
+          className="text-sm mb-6"
+          style={{ color: "var(--color-text-secondary)" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          {msg.text}
+        </motion.p>
 
         {/* Stats */}
-        <div className="flex items-center justify-center gap-8 mb-6 animate-reveal" style={{ animationDelay: "200ms" }}>
+        <motion.div
+          className="flex items-center justify-center gap-8 mb-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25, duration: 0.4 }}
+        >
           <ProgressCircle pct={pct} />
           <div className="text-left">
-            <p className="font-display text-3xl font-extrabold" style={{ color: "#F59E0B", fontFamily: "'Outfit', sans-serif" }}>
+            <motion.p
+              className="font-display text-3xl font-extrabold"
+              style={{ color: "#F59E0B", fontFamily: "'Outfit', sans-serif" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
               +{xpAnim}
-            </p>
+            </motion.p>
             <p style={{ fontSize: "11px", color: "var(--color-text-muted)", marginTop: "4px" }}>XP ganados</p>
             <p className="text-sm mt-3" style={{ color: "var(--color-text-secondary)" }}>
               <span className="font-bold" style={{ color: "var(--color-text-primary)" }}>{correctas}</span> / {totalPreguntas} correctas
             </p>
           </div>
-        </div>
+        </motion.div>
 
         {/* Badge */}
-        <div className={`mb-6 animate-reveal ${passed ? "" : "opacity-40"}`} style={{ animationDelay: "400ms" }}>
+        <motion.div
+          className={`mb-6 ${passed ? "" : "opacity-40"}`}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: passed ? 1 : 0.4, scale: 1 }}
+          transition={{ delay: 0.45, type: "spring", stiffness: 250, damping: 18 }}
+        >
           <div className={`surface rounded-2xl p-4 flex items-center gap-4 ${passed ? "glow-indigo" : ""}`}>
-            <div className={`w-14 h-14 rounded-xl flex items-center justify-center text-2xl shrink-0 ${passed ? "animate-badge-unlock" : ""}`}
-              style={{ background: passed ? "linear-gradient(135deg, #6366F1, #8B5CF6)" : "rgba(255,255,255,0.03)" }}>
+            <motion.div
+              className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl shrink-0"
+              style={{ background: passed ? "linear-gradient(135deg, #6366F1, #8B5CF6)" : "rgba(255,255,255,0.03)" }}
+              initial={passed ? { scale: 0, rotate: -30 } : {}}
+              animate={passed ? { scale: 1, rotate: 0 } : {}}
+              transition={{ delay: 0.55, type: "spring", stiffness: 350, damping: 12 }}
+            >
               📖
-            </div>
+            </motion.div>
             <div className="text-left">
               <p className="font-display text-sm font-bold flex items-center gap-2"
                 style={{ color: "var(--color-text-primary)" }}>
@@ -115,10 +199,15 @@ export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, 
               )}
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Acciones */}
-        <div className="flex flex-col gap-3 animate-reveal" style={{ animationDelay: "600ms" }}>
+        <motion.div
+          className="flex flex-col gap-3"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.35 }}
+        >
           <button onClick={onRestart}
             className="w-full px-5 py-3.5 rounded-xl text-sm font-semibold surface transition-all"
             style={{ color: "var(--color-text-secondary)" }}
@@ -126,11 +215,15 @@ export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, 
             onMouseLeave={e => e.currentTarget.style.background = ""}>
             Intentar de nuevo
           </button>
-          <button onClick={onVolver} className="btn-primary w-full px-5 py-3.5 text-sm font-semibold">
+          <motion.button
+            onClick={() => { playSound("click"); onVolver() }}
+            className="btn-primary w-full px-5 py-3.5 text-sm font-semibold"
+            whileTap={{ scale: 0.97 }}
+          >
             {passed && hayNextLesson ? "Siguiente lección →" : "Volver"}
-          </button>
-        </div>
-      </div>
+          </motion.button>
+        </motion.div>
+      </motion.div>
     </div>
   )
 }

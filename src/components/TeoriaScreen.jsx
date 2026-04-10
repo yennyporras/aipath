@@ -1,9 +1,26 @@
+import { motion } from "framer-motion"
+import { playSound } from "../utils/sounds"
+
+const sectionVariants = {
+  hidden:  { opacity: 0, y: 20 },
+  visible: (i) => ({
+    opacity: 1, y: 0,
+    transition: { duration: 0.4, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }
+  })
+}
+
 export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
   const t = leccion.contenido.teoria
 
   return (
-    <div className="w-full max-w-lg mx-auto animate-fade-in">
-      <button onClick={onVolver}
+    <motion.div
+      className="w-full max-w-lg mx-auto"
+      initial={{ opacity: 0, x: 30 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -30 }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <button onClick={() => { playSound("click"); onVolver() }}
         className="text-xs mb-4 flex items-center gap-1 transition-colors"
         style={{ color: "var(--color-text-muted)" }}
         onMouseEnter={e => e.currentTarget.style.color = "var(--color-text-secondary)"}
@@ -14,7 +31,7 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
 
       <div className="surface p-6 flex flex-col gap-5">
         {/* Header */}
-        <div>
+        <motion.div custom={0} variants={sectionVariants} initial="hidden" animate="visible">
           <span className="text-xs font-bold tracking-widest uppercase"
             style={{ color: "var(--color-accent-primary)" }}>
             Teoría
@@ -23,23 +40,22 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
             style={{ color: "var(--color-text-primary)", fontFamily: "'Outfit', sans-serif" }}>
             {leccion.titulo}
           </h2>
-        </div>
+        </motion.div>
 
         {/* Explicación */}
-        <div className="animate-reveal" style={{ animationDelay: "80ms" }}>
+        <motion.div custom={1} variants={sectionVariants} initial="hidden" animate="visible">
           <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)", lineHeight: "1.8" }}>
             {t.explicacion}
           </p>
-        </div>
+        </motion.div>
 
         {/* Analogía */}
         {t.analogia && (
-          <div className="animate-reveal rounded-xl p-4"
-            style={{
-              animationDelay: "160ms",
-              background: "rgba(99,102,241,0.05)",
-              borderLeft: "3px solid rgba(99,102,241,0.5)"
-            }}>
+          <motion.div
+            custom={2} variants={sectionVariants} initial="hidden" animate="visible"
+            className="rounded-xl p-4"
+            style={{ background: "rgba(99,102,241,0.05)", borderLeft: "3px solid rgba(99,102,241,0.5)" }}
+          >
             <p className="text-xs font-bold mb-1.5 tracking-wide uppercase"
               style={{ color: "var(--color-accent-primary)" }}>
               💡 Analogía
@@ -47,12 +63,12 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
             <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
               {t.analogia}
             </p>
-          </div>
+          </motion.div>
         )}
 
         {/* Ejemplo malo vs bueno */}
         {t.ejemplo_malo && t.ejemplo_bueno && (
-          <div className="animate-reveal flex flex-col gap-2" style={{ animationDelay: "240ms" }}>
+          <motion.div custom={3} variants={sectionVariants} initial="hidden" animate="visible" className="flex flex-col gap-2">
             <p className="text-xs font-bold tracking-wide uppercase" style={{ color: "var(--color-text-muted)" }}>
               Ejemplos
             </p>
@@ -70,17 +86,16 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
                 {t.ejemplo_bueno}
               </p>
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* Por qué importa */}
         {t.por_que_importa && (
-          <div className="animate-reveal rounded-xl p-4"
-            style={{
-              animationDelay: "280ms",
-              background: "rgba(139,92,246,0.05)",
-              border: "1px solid rgba(139,92,246,0.15)"
-            }}>
+          <motion.div
+            custom={4} variants={sectionVariants} initial="hidden" animate="visible"
+            className="rounded-xl p-4"
+            style={{ background: "rgba(139,92,246,0.05)", border: "1px solid rgba(139,92,246,0.15)" }}
+          >
             <p className="text-xs font-bold mb-1.5 tracking-wide uppercase"
               style={{ color: "var(--color-accent-secondary)" }}>
               🎯 Por qué importa
@@ -88,34 +103,35 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
             <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
               {t.por_que_importa}
             </p>
-          </div>
+          </motion.div>
         )}
 
         {/* Tip profesional */}
         {t.tip_profesional && (
-          <div className="animate-reveal rounded-xl p-4"
-            style={{
-              animationDelay: "320ms",
-              background: "rgba(245,158,11,0.05)",
-              border: "1px solid rgba(245,158,11,0.15)"
-            }}>
-            <p className="text-xs font-bold mb-1.5 tracking-wide uppercase"
-              style={{ color: "#F59E0B" }}>
+          <motion.div
+            custom={5} variants={sectionVariants} initial="hidden" animate="visible"
+            className="rounded-xl p-4"
+            style={{ background: "rgba(245,158,11,0.05)", border: "1px solid rgba(245,158,11,0.15)" }}
+          >
+            <p className="text-xs font-bold mb-1.5 tracking-wide uppercase" style={{ color: "#F59E0B" }}>
               ⚡ Tip profesional
             </p>
             <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
               {t.tip_profesional}
             </p>
-          </div>
+          </motion.div>
         )}
 
         {/* CTA */}
-        <button onClick={onContinuar}
-          className="btn-primary w-full py-3.5 text-sm animate-reveal"
-          style={{ animationDelay: "400ms" }}>
+        <motion.button
+          custom={6} variants={sectionVariants} initial="hidden" animate="visible"
+          onClick={() => { playSound("click"); onContinuar() }}
+          className="btn-primary w-full py-3.5 text-sm"
+          whileTap={{ scale: 0.97 }}
+        >
           Entendido, al quiz →
-        </button>
+        </motion.button>
       </div>
-    </div>
+    </motion.div>
   )
 }
