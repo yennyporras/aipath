@@ -7,7 +7,7 @@
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone"],
   "background_color": "#050508",
-  "theme_color": "#6366F1",
+  "theme_color": "#06B6D4",
   "orientation": "any",
   "categories": ["education", "productivity"],
   "lang": "es",

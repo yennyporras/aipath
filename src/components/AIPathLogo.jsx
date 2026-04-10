@@ -21,7 +21,7 @@ export function AIPathIcon({ size = 36, className = "" }) {
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <rect width="40" height="40" rx="10" fill="#6366F1" />
+      <rect width="40" height="40" rx="10" fill="#06B6D4" />
       <text
         x="20"
         y="27"
@@ -62,30 +62,30 @@ export default function AIPathLogo({
         height="40"
         rx="10"
         fill="#0D0D14"
-        stroke="#6366F1"
+        stroke="#06B6D4"
         strokeWidth="1.5"
       />
 
       {/* Líneas verticales punteadas desde cada nodo */}
-      <line x1="10" y1="28" x2="10" y2="34" stroke="#6366F1" strokeWidth="1" strokeDasharray="2 2" strokeOpacity="0.5" />
-      <line x1="20" y1="18" x2="20" y2="34" stroke="#6366F1" strokeWidth="1" strokeDasharray="2 2" strokeOpacity="0.5" />
-      <line x1="30" y1="28" x2="30" y2="34" stroke="#6366F1" strokeWidth="1" strokeDasharray="2 2" strokeOpacity="0.5" />
+      <line x1="10" y1="28" x2="10" y2="34" stroke="#06B6D4" strokeWidth="1" strokeDasharray="2 2" strokeOpacity="0.5" />
+      <line x1="20" y1="18" x2="20" y2="34" stroke="#06B6D4" strokeWidth="1" strokeDasharray="2 2" strokeOpacity="0.5" />
+      <line x1="30" y1="28" x2="30" y2="34" stroke="#06B6D4" strokeWidth="1" strokeDasharray="2 2" strokeOpacity="0.5" />
 
       {/* Curva que conecta los nodos */}
       <path
         d="M13.5 28 Q20 18 26.5 28"
-        stroke="#6366F1"
+        stroke="#06B6D4"
         strokeWidth="1.5"
         fill="none"
         strokeLinecap="round"
       />
 
       {/* Nodos */}
-      <circle cx="10" cy="28" r="3.5" fill="#8B5CF6" />
-      <circle cx="20" cy="18" r="3.5" fill="#6366F1" />
-      <circle cx="30" cy="28" r="3.5" fill="#8B5CF6" />
+      <circle cx="10" cy="28" r="3.5" fill="#0891B2" />
+      <circle cx="20" cy="18" r="3.5" fill="#06B6D4" />
+      <circle cx="30" cy="28" r="3.5" fill="#0891B2" />
 
-      {/* Puntos de brillo en los nodos */}
+      {/* Punto de brillo en el nodo central */}
       <circle cx="18.8" cy="16.8" r="1" fill="white" fillOpacity="0.5" />
     </svg>
   )
@@ -118,7 +118,7 @@ export default function AIPathLogo({
                 fontFamily: "'Outfit', sans-serif",
                 fontWeight: 800,
                 fontSize: s.fontSize,
-                color: "#6366F1",
+                color: "#06B6D4",
                 letterSpacing: "-0.5px",
                 lineHeight: 1,
               }}

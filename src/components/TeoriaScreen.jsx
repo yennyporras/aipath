@@ -33,7 +33,7 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
         {/* Header */}
         <motion.div custom={0} variants={sectionVariants} initial="hidden" animate="visible">
           <span className="text-xs font-bold tracking-widest uppercase"
-            style={{ color: "var(--color-accent-primary)" }}>
+            style={{ color: "#06B6D4" }}>
             Teoría
           </span>
           <h2 className="font-display text-xl font-bold mt-1"
@@ -54,10 +54,10 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
           <motion.div
             custom={2} variants={sectionVariants} initial="hidden" animate="visible"
             className="rounded-xl p-4"
-            style={{ background: "rgba(99,102,241,0.05)", borderLeft: "3px solid rgba(99,102,241,0.5)" }}
+            style={{ background: "rgba(6,182,212,0.05)", borderLeft: "3px solid rgba(6,182,212,0.5)" }}
           >
             <p className="text-xs font-bold mb-1.5 tracking-wide uppercase"
-              style={{ color: "var(--color-accent-primary)" }}>
+              style={{ color: "#06B6D4" }}>
               💡 Analogía
             </p>
             <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
@@ -94,10 +94,10 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
           <motion.div
             custom={4} variants={sectionVariants} initial="hidden" animate="visible"
             className="rounded-xl p-4"
-            style={{ background: "rgba(139,92,246,0.05)", border: "1px solid rgba(139,92,246,0.15)" }}
+            style={{ background: "rgba(8,145,178,0.05)", border: "1px solid rgba(8,145,178,0.15)" }}
           >
             <p className="text-xs font-bold mb-1.5 tracking-wide uppercase"
-              style={{ color: "var(--color-accent-secondary)" }}>
+              style={{ color: "#0891B2" }}>
               🎯 Por qué importa
             </p>
             <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>

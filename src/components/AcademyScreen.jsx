@@ -5,17 +5,17 @@ import { playSound } from "../utils/sounds"
 
 const NIVEL_COLORS = {
   "Principiante": "#10B981",
-  "Intermedio":   "#3B82F6",
-  "Técnico":      "#8B5CF6",
+  "Intermedio":   "#06B6D4",
+  "Técnico":      "#0891B2",
   "Avanzado":     "#EF4444",
   "Estratégico":  "#F59E0B",
-  "Todos":        "#6366F1",
+  "Todos":        "#06B6D4",
 }
 
 const FASE_INFO = {
   1: { label: "Fase 1 — Funcional",         sub: "6 módulos · Prioridad máxima",      color: "#10B981" },
-  2: { label: "Fase 2 — Sólida",            sub: "6 módulos · ML + Backend",          color: "#3B82F6" },
-  3: { label: "Fase 3 — Referente Mundial", sub: "5 módulos · Arquitectura profunda",  color: "#8B5CF6" },
+  2: { label: "Fase 2 — Sólida",            sub: "6 módulos · ML + Backend",          color: "#06B6D4" },
+  3: { label: "Fase 3 — Referente Mundial", sub: "5 módulos · Arquitectura profunda",  color: "#F59E0B" },
 }
 
 function calcularCountdown() {
@@ -61,7 +61,6 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
     return () => clearInterval(id)
   }, [])
 
-  // Variantes para cascada de cards
   const containerVariants = {
     hidden: {},
     visible: { transition: { staggerChildren: 0.08 } }
@@ -103,25 +102,25 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
         transition={{ duration: 0.4, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
       >
         <div>
-          <p className="text-lg font-bold text-gradient" style={{ fontFamily: "'Outfit', sans-serif" }}>
+          <p className="text-lg font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: "#06B6D4" }}>
             <AnimatedNumber value={completadas.length} />
           </p>
           <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>Lecciones</p>
         </div>
         <div>
-          <p className="text-lg font-bold text-gradient" style={{ fontFamily: "'Outfit', sans-serif" }}>
+          <p className="text-lg font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}>
             <AnimatedNumber value={xpTotal} />
           </p>
           <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>XP total</p>
         </div>
         <div>
-          <p className="text-lg font-bold text-gradient" style={{ fontFamily: "'Outfit', sans-serif" }}>
+          <p className="text-lg font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: "#06B6D4" }}>
             <AnimatedNumber value={nivel} duration={600} />
           </p>
           <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>Nivel</p>
         </div>
         <div>
-          <p className="text-lg font-bold text-gradient" style={{ fontFamily: "'Outfit', sans-serif" }}>
+          <p className="text-lg font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: "#F97316" }}>
             <AnimatedNumber value={progreso.rachaDiaria || 1} duration={600} />
           </p>
           <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>Racha</p>
@@ -136,11 +135,11 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
         transition={{ duration: 0.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
       >
         <p className="text-center text-[11px] font-bold uppercase tracking-[0.2em] mb-3"
-          style={{ color: "#6366F1" }}>
+          style={{ color: "#06B6D4" }}>
           Meta: Referente en IA — Octubre 2026
         </p>
         <div className="surface rounded-2xl px-5 py-3 grid grid-cols-3 gap-2 text-center"
-          style={{ border: "1px solid rgba(99,102,241,0.2)" }}>
+          style={{ border: "1px solid rgba(6,182,212,0.2)" }}>
           {[
             { val: countdown.dias,    label: "días" },
             { val: countdown.horas,   label: "horas" },
@@ -151,7 +150,7 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
               animate={{ scale: [1, 1.04, 1] }}
               transition={{ duration: 2, repeat: Infinity, repeatDelay: 58, ease: "easeInOut" }}
             >
-              <p className="text-2xl font-extrabold text-gradient" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <p className="text-2xl font-extrabold" style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}>
                 {val}
               </p>
               <p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>{label}</p>
@@ -186,7 +185,6 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
               <div className="h-px flex-1" style={{ background: `${info.color}30` }} />
             </motion.div>
 
-            {/* Grid con stagger */}
             <motion.div
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
               variants={containerVariants}
@@ -215,7 +213,7 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
                     }`}
                     style={{
                       opacity: disponible ? 1 : 0.45,
-                      border: disponible ? `1px solid rgba(99,102,241,0.2)` : `1px solid var(--color-border)`
+                      border: disponible ? `1px solid rgba(6,182,212,0.2)` : `1px solid var(--color-border)`
                     }}
                   >
                     {/* Top */}
@@ -227,8 +225,8 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
                       <div className="flex flex-col items-end gap-1">
                         <span className="text-[9px] font-bold px-1.5 py-0.5 rounded"
                           style={{
-                            background: `${NIVEL_COLORS[modulo.nivel] || "#6366F1"}18`,
-                            color: NIVEL_COLORS[modulo.nivel] || "#6366F1"
+                            background: `${NIVEL_COLORS[modulo.nivel] || "#06B6D4"}18`,
+                            color: NIVEL_COLORS[modulo.nivel] || "#06B6D4"
                           }}>
                           {modulo.nivel?.toUpperCase()}
                         </span>
@@ -259,12 +257,12 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
                           {modulo.lecciones_total} lecciones
                         </span>
                         <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>·</span>
-                        <span style={{ fontSize: "10px", color: modulo.color || "#6366F1" }}>
+                        <span style={{ fontSize: "10px", color: "#F59E0B" }}>
                           {modulo.xp_total?.toLocaleString()} XP
                         </span>
                       </div>
                       {disponible && (
-                        <span style={{ fontSize: "11px", color: "#6366F1" }}>→</span>
+                        <span style={{ fontSize: "11px", color: "#06B6D4" }}>→</span>
                       )}
                     </div>
 

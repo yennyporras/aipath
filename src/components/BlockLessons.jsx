@@ -82,7 +82,7 @@ export default function BlockLessons({ bloque, todasLecciones, progreso, onSelec
                   {leccion.tipo !== "leccion" && (
                     <>
                       <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>·</span>
-                      <span style={{ fontSize: "10px", color: "#8B5CF6" }}>
+                      <span style={{ fontSize: "10px", color: "#0891B2" }}>
                         {leccion.tipo === "practica" ? "Lab" : "Eval"}
                       </span>
                     </>

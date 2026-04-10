@@ -1,13 +1,13 @@
 const BLOCK_ICONS_BG = [
+  "from-cyan-500/15 to-cyan-600/5",
+  "from-sky-500/15 to-sky-600/5",
+  "from-teal-500/15 to-teal-600/5",
   "from-blue-500/15 to-blue-600/5",
-  "from-indigo-500/15 to-indigo-600/5",
-  "from-violet-500/15 to-violet-600/5",
-  "from-purple-500/15 to-purple-600/5",
   "from-cyan-500/15 to-cyan-600/5",
   "from-emerald-500/15 to-emerald-600/5",
   "from-teal-500/15 to-teal-600/5",
   "from-sky-500/15 to-sky-600/5",
-  "from-rose-500/15 to-rose-600/5",
+  "from-cyan-500/15 to-cyan-600/5",
 ]
 
 export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverAcademy, mostrarProyectoCert = false }) {
@@ -16,11 +16,9 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
   const fasesProyecto = progreso.fasesProyecto || []
   const certAprobada = progreso.certificacionAprobada || false
   const todas = bloques.flatMap(b => b.lecciones)
-  // Contar solo lecciones de ESTE módulo
   const totalDone = todas.filter(l => completadas.includes(l.id)).length
   const totalLecciones = todas.length
 
-  // Proyecto y cert desbloqueados solo si se completaron todos los bloques
   const todosBloquesCompletos = bloques.every(b => b.lecciones.every(l => completadas.includes(l.id)))
 
   function bloqueDesbloqueado(bi) {
@@ -30,7 +28,7 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
 
   return (
     <div className="w-full max-w-2xl lg:max-w-4xl mx-auto px-2 relative z-10">
-      {/* Volver a academia — solo móvil (en desktop lo muestra la sidebar) */}
+      {/* Volver a academia — solo móvil */}
       {onVolverAcademy && (
         <button
           onClick={onVolverAcademy}
@@ -43,7 +41,7 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
         </button>
       )}
 
-      {/* Header — solo móvil/tablet; en desktop lo muestra la sidebar */}
+      {/* Header */}
       <div className="text-center mb-8 lg:mb-6">
         <div className="animate-reveal mb-5 lg:hidden">
           <div className="aipath-logo justify-center">
@@ -55,8 +53,8 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
           style={{ color: "var(--color-text-muted)", animationDelay: "80ms" }}>
           {modulo.id ? `Módulo ${modulo.numero ?? ""}` : "Módulo"}
         </p>
-        <h2 className="font-display text-3xl font-extrabold text-gradient mt-2 animate-reveal"
-          style={{ animationDelay: "120ms" }}>
+        <h2 className="font-display text-3xl font-extrabold mt-2 animate-reveal"
+          style={{ animationDelay: "120ms", color: "#06B6D4" }}>
           {modulo.title || modulo.titulo}
         </h2>
         <p className="text-sm mt-2 animate-reveal" style={{ color: "var(--color-text-secondary)", animationDelay: "160ms" }}>
@@ -68,18 +66,18 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
       <div className="max-w-md mx-auto surface rounded-2xl p-5 mb-8 animate-reveal" style={{ animationDelay: "200ms" }}>
         <div className="flex justify-between items-center mb-2.5">
           <span className="text-sm font-semibold" style={{ color: "var(--color-text-primary)" }}>Progreso</span>
-          <span className="font-display text-xs font-bold text-gradient">{totalDone}/{todas.length}</span>
+          <span className="font-display text-xs font-bold" style={{ color: "#06B6D4" }}>{totalDone}/{todas.length}</span>
         </div>
         <div className="progress-bar">
           <div className="progress-bar-fill" style={{ width: `${todas.length > 0 ? (totalDone / todas.length) * 100 : 0}%` }} />
         </div>
         <div className="flex justify-between mt-2.5" style={{ color: "var(--color-text-muted)", fontSize: "11px" }}>
-          <span>{progreso.xpTotal || 0} XP</span>
+          <span style={{ color: "#F59E0B" }}>{progreso.xpTotal || 0} XP</span>
           <span>Nivel {Math.floor((progreso.xpTotal || 0) / 300) + 1}</span>
         </div>
       </div>
 
-      {/* Block grid — 1col mobile, 2col tablet, 3col desktop */}
+      {/* Block grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 stagger">
         {bloques.map((bloque, bi) => {
           const ll = bloque.lecciones
@@ -111,7 +109,7 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
                 <div className="flex items-center gap-2 mt-1">
                   <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>{ll.length} lecciones</span>
                   <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>·</span>
-                  <span style={{ fontSize: "10px", color: "var(--color-accent-blue)" }}>{xpTotal} XP</span>
+                  <span style={{ fontSize: "10px", color: "#F59E0B" }}>{xpTotal} XP</span>
                 </div>
                 {unlocked && (
                   <div className="progress-bar mt-2.5">
@@ -119,7 +117,7 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
                   </div>
                 )}
               </div>
-              <span style={{ fontSize: "11px", color: complete ? "#10B981" : "var(--color-text-muted)" }}>
+              <span style={{ fontSize: "11px", color: complete ? "#10B981" : "#06B6D4" }}>
                 {complete ? "✓" : unlocked ? "→" : ""}
               </span>
             </button>
@@ -141,18 +139,18 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
         >
           <div
             className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
-            style={{ background: "rgba(0,212,170,0.12)" }}
+            style={{ background: "rgba(6,182,212,0.12)" }}
           >
             {!todosBloquesCompletos ? "🔒" : fasesProyecto.length === 5 ? "✅" : "🛠️"}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="font-display text-sm font-bold" style={{ color: fasesProyecto.length === 5 ? "var(--color-accent-blue)" : "var(--color-text-primary)" }}>
+            <p className="font-display text-sm font-bold" style={{ color: fasesProyecto.length === 5 ? "#06B6D4" : "var(--color-text-primary)" }}>
               Proyecto Final
             </p>
             <div className="flex items-center gap-2 mt-1">
               <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>5 fases · 10h</span>
               <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>·</span>
-              <span style={{ fontSize: "10px", color: "var(--color-accent-blue)" }}>500 XP</span>
+              <span style={{ fontSize: "10px", color: "#F59E0B" }}>500 XP</span>
             </div>
             {todosBloquesCompletos && (
               <div className="progress-bar mt-2.5">
@@ -160,7 +158,7 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
               </div>
             )}
           </div>
-          <span style={{ fontSize: "11px", color: fasesProyecto.length === 5 ? "var(--color-accent-blue)" : "var(--color-text-muted)" }}>
+          <span style={{ fontSize: "11px", color: fasesProyecto.length === 5 ? "#10B981" : "#06B6D4" }}>
             {fasesProyecto.length === 5 ? "✓" : todosBloquesCompletos ? "→" : ""}
           </span>
         </button>
@@ -180,35 +178,36 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
         >
           <div
             className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
-            style={{ background: "rgba(0,212,170,0.12)" }}
+            style={{ background: "rgba(245,158,11,0.12)" }}
           >
             {!todosBloquesCompletos ? "🔒" : certAprobada ? "🎓" : "📝"}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="font-display text-sm font-bold" style={{ color: certAprobada ? "var(--color-accent-blue)" : "var(--color-text-primary)" }}>
+            <p className="font-display text-sm font-bold" style={{ color: certAprobada ? "#F59E0B" : "var(--color-text-primary)" }}>
               Certificación M4
             </p>
             <div className="flex items-center gap-2 mt-1">
               <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>60 preguntas · 90 min</span>
               <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>·</span>
-              <span style={{ fontSize: "10px", color: "var(--color-accent-blue)" }}>1000 XP</span>
+              <span style={{ fontSize: "10px", color: "#F59E0B" }}>1000 XP</span>
             </div>
             {certAprobada && (
-              <p style={{ fontSize: "10px", color: "var(--color-accent-blue)", marginTop: "4px" }}>
+              <p style={{ fontSize: "10px", color: "#F59E0B", marginTop: "4px" }}>
                 ✓ Certificada
               </p>
             )}
           </div>
-          <span style={{ fontSize: "11px", color: certAprobada ? "var(--color-accent-blue)" : "var(--color-text-muted)" }}>
+          <span style={{ fontSize: "11px", color: certAprobada ? "#F59E0B" : "#06B6D4" }}>
             {certAprobada ? "✓" : todosBloquesCompletos ? "→" : ""}
           </span>
         </button>
       )}
 
       {mostrarProyectoCert && certAprobada && (
-        <div className="surface rounded-2xl p-6 mt-8 text-center max-w-md mx-auto animate-scale-in">
+        <div className="surface rounded-2xl p-6 mt-8 text-center max-w-md mx-auto animate-scale-in"
+          style={{ border: "1px solid rgba(245,158,11,0.3)", boxShadow: "0 0 32px rgba(245,158,11,0.1)" }}>
           <p className="text-4xl mb-2">🏆</p>
-          <p className="font-display text-lg font-bold text-gradient">¡M4 completado y certificado!</p>
+          <p className="font-display text-lg font-bold" style={{ color: "#F59E0B" }}>¡M4 completado y certificado!</p>
           <p style={{ fontSize: "12px", color: "var(--color-text-muted)", marginTop: "4px" }}>
             Eres Prompt Engineer Profesional AIPath
           </p>

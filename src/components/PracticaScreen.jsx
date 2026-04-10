@@ -33,7 +33,7 @@ export default function PracticaScreen({ leccion, onSiguiente }) {
         {/* Header */}
         <motion.div custom={0} variants={sectionVariants} initial="hidden" animate="visible">
           <span className="text-xs font-bold tracking-widest uppercase"
-            style={{ color: "var(--color-accent-primary)" }}>
+            style={{ color: "#06B6D4" }}>
             Práctica
           </span>
           <h2 className="font-display text-lg font-bold mt-1"
@@ -46,7 +46,7 @@ export default function PracticaScreen({ leccion, onSiguiente }) {
         <motion.div
           custom={1} variants={sectionVariants} initial="hidden" animate="visible"
           className="rounded-xl p-4"
-          style={{ background: "rgba(99,102,241,0.04)", borderLeft: "3px solid rgba(99,102,241,0.4)" }}
+          style={{ background: "rgba(6,182,212,0.04)", borderLeft: "3px solid rgba(6,182,212,0.4)" }}
         >
           <p className="text-xs font-bold mb-1.5 tracking-wide uppercase"
             style={{ color: "var(--color-text-muted)" }}>Contexto</p>
@@ -89,7 +89,7 @@ export default function PracticaScreen({ leccion, onSiguiente }) {
             >
               <div className="rounded-xl p-3.5"
                 style={{ background: "rgba(245,158,11,0.05)", border: "1px solid rgba(245,158,11,0.15)" }}>
-                <p className="text-xs font-bold mb-1" style={{ color: "#FBBF24" }}>💡 Pista</p>
+                <p className="text-xs font-bold mb-1" style={{ color: "#F59E0B" }}>💡 Pista</p>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
                   {p.pista}
                 </p>
@@ -158,10 +158,10 @@ export default function PracticaScreen({ leccion, onSiguiente }) {
             <motion.button
               onClick={() => { playSound("click"); setVerSolucion(true) }}
               className="w-full py-3 rounded-xl text-sm font-semibold transition-all"
-              style={{ border: "1px solid rgba(99,102,241,0.4)", color: "var(--color-accent-primary)", background: "rgba(99,102,241,0.06)" }}
+              style={{ border: "1px solid rgba(6,182,212,0.4)", color: "#06B6D4", background: "rgba(6,182,212,0.06)" }}
               whileTap={{ scale: 0.97 }}
-              onMouseEnter={e => e.currentTarget.style.background = "rgba(99,102,241,0.1)"}
-              onMouseLeave={e => e.currentTarget.style.background = "rgba(99,102,241,0.06)"}
+              onMouseEnter={e => e.currentTarget.style.background = "rgba(6,182,212,0.1)"}
+              onMouseLeave={e => e.currentTarget.style.background = "rgba(6,182,212,0.06)"}
             >
               Ver solución
             </motion.button>

@@ -23,7 +23,7 @@ function findUser(email, password) {
   return found ? { ...found, rol: "estudiante" } : null
 }
 
-const ACCENT = "#6366F1"
+const ACCENT = "#06B6D4"
 
 // Partículas flotantes con canvas
 function ParticlesCanvas() {
@@ -41,7 +41,7 @@ function ParticlesCanvas() {
     resize()
     window.addEventListener("resize", resize)
 
-    // 20 partículas índigo pequeñas
+    // 20 partículas cyan pequeñas
     const particles = Array.from({ length: 20 }, () => ({
       x:  Math.random() * window.innerWidth,
       y:  Math.random() * window.innerHeight,
@@ -57,7 +57,7 @@ function ParticlesCanvas() {
       particles.forEach(p => {
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(99,102,241,${p.o})`
+        ctx.fillStyle = `rgba(6,182,212,${p.o})`
         ctx.fill()
         p.x += p.dx
         p.y += p.dy
@@ -178,7 +178,7 @@ export default function LoginScreen({ onLogin }) {
                 placeholder="tu@email.com"
                 className="w-full rounded-xl text-sm px-4 py-3 outline-none transition-all"
                 style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)", color: "var(--color-text-primary)" }}
-                onFocus={e => e.target.style.borderColor = "rgba(99,102,241,0.6)"}
+                onFocus={e => e.target.style.borderColor = "rgba(6,182,212,0.6)"}
                 onBlur={e => e.target.style.borderColor = "var(--color-border)"}
               />
             </div>
@@ -192,7 +192,7 @@ export default function LoginScreen({ onLogin }) {
                   placeholder="••••••••"
                   className="w-full rounded-xl text-sm pl-4 pr-10 py-3 outline-none transition-all"
                   style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)", color: "var(--color-text-primary)" }}
-                  onFocus={e => e.target.style.borderColor = "rgba(99,102,241,0.6)"}
+                  onFocus={e => e.target.style.borderColor = "rgba(6,182,212,0.6)"}
                   onBlur={e => e.target.style.borderColor = "var(--color-border)"}
                 />
                 <button type="button" onClick={() => setShow(!showPass)}

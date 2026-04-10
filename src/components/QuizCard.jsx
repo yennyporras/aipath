@@ -6,7 +6,7 @@ const PRAISE = ["¡Exacto!", "¡Correcto!", "¡Bien pensado!", "¡Perfecto!", "�
 
 // Confetti de partículas pequeñas al acertar
 function MiniConfetti() {
-  const colors = ["#6366F1", "#8B5CF6", "#F59E0B", "#10B981", "#A78BFA"]
+  const colors = ["#06B6D4", "#0891B2", "#F59E0B", "#10B981", "#F97316"]
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl">
       {Array.from({ length: 18 }, (_, i) => (
@@ -43,7 +43,6 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
   const answered = sel !== null
   const correct  = sel === pregunta.correcta
 
-  // Resetear estado cuando cambia la pregunta
   const prevIndice = useRef(indice)
   useEffect(() => {
     if (prevIndice.current !== indice) {
@@ -85,12 +84,11 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
             exit={{}}
             transition={{ duration: 1.4, ease: "easeOut" }}
           >
-            <span className="font-display text-xl font-bold text-gradient">+30 XP</span>
+            <span className="font-display text-xl font-bold" style={{ color: "#F59E0B" }}>+30 XP</span>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Card principal con animaciones de entrada/salida */}
       <AnimatePresence mode="wait">
         <motion.div
           key={indice}
@@ -106,7 +104,6 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
             animate={answered && !correct ? { x: [0, -8, 6, -4, 3, 0] } : {}}
             transition={answered && !correct ? { duration: 0.5, ease: "easeOut" } : {}}
           >
-            {/* Confetti dentro del card */}
             {showConfetti && <MiniConfetti />}
 
             {/* Progress */}
@@ -126,8 +123,8 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
                 {" "}de {totalPreguntas}
               </span>
               {rachaActual >= 3 && (
-                <span className="text-[10px] font-bold text-amber-400 animate-scale-in"
-                  style={{ background: "rgba(251,191,36,0.1)", padding: "2px 8px", borderRadius: "99px" }}>
+                <span className="text-[10px] font-bold animate-scale-in"
+                  style={{ color: "#F97316", background: "rgba(249,115,22,0.1)", padding: "2px 8px", borderRadius: "99px" }}>
                   🔥 {rachaActual}x
                 </span>
               )}
@@ -143,7 +140,6 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
               {pregunta.pregunta}
             </motion.h2>
 
-            {/* Opciones en cascada */}
             <div className="flex flex-col gap-2.5">
               {pregunta.opciones.map((opt, i) => {
                 let borderC = "var(--color-border)", bgC = "transparent"

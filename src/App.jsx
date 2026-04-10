@@ -111,7 +111,7 @@ function XPMilestoneOverlay({ xp, onDone }) {
     >
       <motion.div
         className="surface rounded-2xl px-10 py-8 flex flex-col items-center gap-3"
-        style={{ border: "1px solid rgba(99,102,241,0.5)", boxShadow: "0 0 60px rgba(99,102,241,0.25)" }}
+        style={{ border: "1px solid rgba(6,182,212,0.5)", boxShadow: "0 0 60px rgba(6,182,212,0.25)" }}
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.8, opacity: 0 }}
@@ -219,7 +219,7 @@ function Sidebar({ progreso, moduloData, bloqueActual, leccionActual, onNavBloqu
                 onClick={() => onNavBloque(bloque)}
                 className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all text-xs"
                 style={{
-                  background: activo ? "rgba(99,102,241,0.1)" : "transparent",
+                  background: activo ? "rgba(6,182,212,0.1)" : "transparent",
                   color: activo ? "var(--color-accent-primary)" : complete ? "var(--color-text-secondary)" : "var(--color-text-muted)",
                   borderLeft: activo ? "2px solid var(--color-accent-primary)" : "2px solid transparent"
                 }}

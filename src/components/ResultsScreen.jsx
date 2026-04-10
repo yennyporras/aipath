@@ -20,13 +20,13 @@ function ProgressCircle({ pct }) {
           strokeLinecap="round" strokeDasharray={c} strokeDashoffset={off} className="animate-circle-fill" />
         <defs>
           <linearGradient id="gResult" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#6366F1" />
-            <stop offset="100%" stopColor="#8B5CF6" />
+            <stop offset="0%" stopColor="#06B6D4" />
+            <stop offset="100%" stopColor="#F59E0B" />
           </linearGradient>
         </defs>
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="font-display text-2xl font-extrabold">{pct}%</span>
+        <span className="font-display text-2xl font-extrabold" style={{ color: "#06B6D4" }}>{pct}%</span>
         <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>aciertos</span>
       </div>
     </div>
@@ -35,7 +35,7 @@ function ProgressCircle({ pct }) {
 
 // Confetti de 3s al aprobar
 function ConfettiRain() {
-  const colors = ["#6366F1", "#8B5CF6", "#F59E0B", "#10B981", "#A78BFA", "#F472B6"]
+  const colors = ["#06B6D4", "#0891B2", "#F59E0B", "#10B981", "#F97316", "#F472B6"]
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
       {Array.from({ length: 30 }, (_, i) => (
@@ -77,7 +77,6 @@ export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, 
   const soundFired = useRef(false)
 
   useEffect(() => {
-    // Contador XP animado
     const steps = 40, duration = 1500
     const increment = xp / steps
     let current = 0
@@ -87,7 +86,6 @@ export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, 
       setXpAnim(Math.round(current))
     }, duration / steps)
 
-    // Sonido al montar
     if (!soundFired.current) {
       soundFired.current = true
       setTimeout(() => playSound(passed ? "complete" : "xp"), 300)
@@ -98,7 +96,6 @@ export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, 
 
   return (
     <div className="w-full max-w-lg mx-auto flex flex-col items-center text-center px-2">
-      {/* Confetti si aprobó */}
       {passed && <ConfettiRain />}
 
       <motion.div
@@ -107,7 +104,6 @@ export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, 
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
-        {/* Emoji resultado */}
         <motion.p
           className="text-5xl mb-3"
           initial={{ scale: 0, rotate: -20 }}
@@ -118,8 +114,8 @@ export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, 
         </motion.p>
 
         <motion.h3
-          className="font-display text-2xl font-extrabold text-gradient mb-1"
-          style={{ fontFamily: "'Outfit', sans-serif" }}
+          className="font-display text-2xl font-extrabold mb-1"
+          style={{ fontFamily: "'Outfit', sans-serif", color: "#06B6D4" }}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.35 }}
@@ -169,10 +165,10 @@ export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, 
           animate={{ opacity: passed ? 1 : 0.4, scale: 1 }}
           transition={{ delay: 0.45, type: "spring", stiffness: 250, damping: 18 }}
         >
-          <div className={`surface rounded-2xl p-4 flex items-center gap-4 ${passed ? "glow-indigo" : ""}`}>
+          <div className={`surface rounded-2xl p-4 flex items-center gap-4 ${passed ? "glow-amber" : ""}`}>
             <motion.div
               className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl shrink-0"
-              style={{ background: passed ? "linear-gradient(135deg, #6366F1, #8B5CF6)" : "rgba(255,255,255,0.03)" }}
+              style={{ background: passed ? "linear-gradient(135deg, #06B6D4, #F59E0B)" : "rgba(255,255,255,0.03)" }}
               initial={passed ? { scale: 0, rotate: -30 } : {}}
               animate={passed ? { scale: 1, rotate: 0 } : {}}
               transition={{ delay: 0.55, type: "spring", stiffness: 350, damping: 12 }}
