@@ -5862,33 +5862,98 @@
         },
         {
           "id": "m1-b6-l9",
-          "titulo": "Newsletters, podcasts y fuentes confiables para mantenerte al día",
+          "titulo": "Elegir el modelo correcto para cada caso",
           "bloque": 6,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "La lección anterior te dio el framework de seis dimensiones para comparar modelos. Esta lección lo convierte en un árbol de decisión práctico que puedes aplicar en 10 minutos para llegar al modelo correcto en la mayoría de los casos de uso empresariales en LATAM en 2026. El objetivo no es la respuesta perfecta —el objetivo es la respuesta lo suficientemente buena de manera eficiente.\n\n**Árbol de decisión:**\n\n**Pregunta 1: ¿Los datos pueden salir de la infraestructura del cliente?**\nSi NO → Solo dos caminos válidos: (a) Llama u otro open source en self-hosting propio del cliente, o (b) Mistral con servidores en Europa si el cliente tiene requisito de residencia UE. Descarta Claude API, GPT API, Gemini API por defecto.\nSi SÍ → Continúa al paso 2.\n\n**Pregunta 2: ¿El cliente ya tiene un ecosistema tech dominante?**\nAzure + Microsoft 365 → Azure OpenAI Service (GPT-4o familia) es el camino de menor resistencia. Aprovecha infraestructura existente.\nGoogle Workspace + GCP → Gemini via Google AI Studio o Vertex AI. Activar Gemini for Workspace como quick win.\nNinguno o AWS → Evalúa Claude (Anthropic API o AWS Bedrock) o GPT-4o directo según el siguiente criterio.\n\n**Pregunta 3: ¿Cuál es la característica más crítica del caso de uso?**\n\nDocumentos muy largos (>50,000 tokens) → Claude Opus/Sonnet por ventana de contexto de 200K. Gemini 1.5 Pro si supera eso (1M tokens).\n\nRazonamiento matemático o código algorítmico complejo → OpenAI o3/o1. Estas tareas son donde los modelos de razonamiento extendido tienen ventaja real.\n\nInformación en tiempo real necesaria → Gemini con Google Search habilitado. Ninguna otra opción lo resuelve sin una integración adicional compleja.\n\nCalidad de escritura y tono natural → Claude Sonnet. Menor 'sabor a IA', mejor para contenido donde el estilo importa.\n\nAlto volumen con tarea estándar (clasificación, extracción, resumen) → Claude Haiku, GPT-4o Mini o Gemini Flash. Estos modelos económicos manejan el 80% de las tareas a 10-20% del costo de los modelos tope de gama.\n\nGeneración de imágenes → Flux (automatización), Midjourney (calidad artística máxima), DALL-E (integración con pipeline OpenAI).\n\n**Pregunta 4: ¿El presupuesto es el factor limitante?**\nSi el costo calculado con el modelo elegido en el paso anterior supera el presupuesto → Intenta primero el modelo de la familia más económica (Haiku, Mini, Flash). Si la calidad es suficiente, usa ese. Si no es suficiente en el eval set, justifica el costo del modelo premium con el ROI que genera.\n\n**Reglas de oro adicionales:**\n\nRegla del 80/20: En el 80% de los proyectos empresariales de LATAM en 2026, Claude Sonnet y GPT-4o son intercambiables en calidad. La decisión entre ellos depende más del ecosistema del cliente y la preferencia del equipo que de diferencias técnicas medibles.\n\nRegla del piloto: Nunca comprometas a un cliente con un modelo para toda la duración del proyecto sin un piloto de 2-4 semanas. Los modelos cambian, los casos de uso evolucionan, y el proveedor que es mejor hoy puede no serlo en 6 meses.\n\nRegla del costo oculto: El costo de la API es solo 30-50% del costo real de un proyecto de IA. El resto son horas de desarrollo, evaluación de calidad, mantenimiento, y gestión del cambio organizacional. No optimices obsesivamente el 30% del costo descuidando el 70%.",
+              "analogia": "Elegir el modelo correcto es como recetar el medicamento correcto: no es el más potente siempre, sino el más apropiado para el síntoma específico, la dosis correcta, y con consideración de contraindicaciones del paciente (restricciones de privacidad, presupuesto, ecosistema existente).",
+              "ejemplo_malo": "Recomendar Claude Opus para todas las tareas de un cliente porque 'es el más capaz', resultando en costos 10-15× mayores de lo necesario para tareas donde Claude Haiku sería suficiente.",
+              "ejemplo_bueno": "Diseñar una arquitectura de 'routing inteligente' donde las consultas entrantes se clasifican por complejidad: las simples van a Haiku ($), las medianas a Sonnet ($$), y las que requieren razonamiento complejo o documentos muy largos van a Opus ($$$). El costo promedio cae 60% sin pérdida perceptible de calidad en la experiencia del usuario.",
+              "por_que_importa": "Un consultor que siempre recomienda el modelo más caro no es necesariamente el más riguroso — puede ser el menos cuidadoso. La recomendación correcta ahorra dinero al cliente y construye más confianza que el modelo más impresionante en el demo.",
+              "tip_profesional": "Guarda una tabla comparativa personal con los últimos precios y capacidades de los modelos principales actualizada mensualmente. Los precios en IA bajan rápido y las capacidades mejoran rápido: una tabla de hace 6 meses puede llevar a decisiones equivocadas. Una hora al mes actualizando tu tabla de referencia vale por 10 propuestas más precisas al año."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "Según el árbol de decisión, ¿cuál es la primera pregunta a responder al elegir un modelo para un cliente?",
+                "opciones": [
+                  "¿Cuánto presupuesto tiene el cliente?",
+                  "¿Los datos del cliente pueden salir de su infraestructura?",
+                  "¿Cuál modelo tiene el mejor score en MMLU?",
+                  "¿El cliente ya usa ChatGPT o Claude?"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La pregunta de privacidad de datos va primero porque es un filtro eliminatorio: si los datos no pueden salir, todas las APIs propietarias principales (Claude, GPT, Gemini) quedan descartadas independientemente de su calidad o costo. Es el equivalente a preguntar primero '¿tienes alergia a la penicilina?' antes de recetar cualquier antibiótico. Empezar por el presupuesto o el score en benchmarks cuando hay restricciones de datos resulta en proponer soluciones técnicamente imposibles de implementar en ese cliente. La privacidad de datos es una restricción binaria (sí/no) que debe evaluarse primero para evitar gastar tiempo comparando opciones que no son viables.",
+                "concepto_reforzado": "Privacidad como primer filtro en la selección de modelo"
+              },
+              {
+                "pregunta": "Un cliente tiene todo en Azure y Microsoft 365. ¿Cuál es el argumento para recomendar Azure OpenAI Service sin necesariamente comparar en profundidad con Claude?",
+                "opciones": [
+                  "Porque GPT-4o siempre supera a Claude en todas las tareas",
+                  "Porque el equipo IT ya conoce Azure, los permisos se heredan de Active Directory, la facturación se consolida, y los datos permanecen en el tenant del cliente sin nuevo proveedor",
+                  "Porque Azure es más barato que Anthropic en todos los casos",
+                  "Porque Microsoft tiene mejor soporte en español que Anthropic"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La recomendación de Azure OpenAI Service para clientes en el ecosistema Microsoft no se basa en que GPT-4o sea técnicamente superior a Claude —para la mayoría de las tareas empresariales son comparables. Se basa en el costo de fricción de introducir un nuevo proveedor: el equipo IT necesita aprender a administrar un servicio nuevo, los roles de Azure Active Directory no se aplican automáticamente, la facturación de API va en una línea separada no consolidada con Azure, y el departamento de seguridad debe aprobar un nuevo proveedor. Estos costos de fricción son reales y frecuentemente superan cualquier ventaja técnica marginal de Claude en ese contexto. Un buen consultor cuantifica el costo de fricción antes de recomendar cambiar de ecosistema.",
+                "concepto_reforzado": "Costo de fricción de cambio de ecosistema en decisiones de modelo"
+              },
+              {
+                "pregunta": "¿Para cuál tipo de tarea específica los modelos o1/o3 de OpenAI tienen ventaja real sobre Claude y Gemini en 2026?",
+                "opciones": [
+                  "Escritura de emails de ventas",
+                  "Resumen de documentos extensos",
+                  "Razonamiento matemático complejo y código algorítmico con múltiples dependencias",
+                  "Generación de imágenes de producto"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Los modelos o1/o3 de OpenAI tienen razonamiento extendido interno (chain-of-thought antes de responder), lo que les da ventaja en problemas que requieren múltiples pasos de razonamiento lógico: demostraciones matemáticas, optimización combinatoria, debugging de código con dependencias complejas, y resolución de problemas científicos estructurados. En benchmarks de matemáticas olímpicas y competencias de programación, o1/o3 supera consistentemente a Claude Opus y Gemini Ultra en 2026. Sin embargo, para tareas empresariales ordinarias —análisis de documentos, escritura, Q&A, clasificación—, esta ventaja no se materializa y el costo premium de o1/o3 no se justifica. La regla: si el problema tiene una solución única y correcta que requiere razonamiento paso a paso, considera o1/o3. Si el problema requiere juicio, creatividad o manejo de ambigüedad, Claude suele ser competitivo o superior.",
+                "concepto_reforzado": "Casos de uso donde o1/o3 de OpenAI tiene ventaja real"
+              },
+              {
+                "pregunta": "¿Qué es la 'regla del 80/20' aplicada a la selección de modelos de LLM?",
+                "opciones": [
+                  "Que el 80% del presupuesto debe gastarse en el modelo y el 20% en desarrollo",
+                  "En el 80% de los proyectos empresariales de LATAM, Claude Sonnet y GPT-4o son intercambiables en calidad — la decisión depende más del ecosistema del cliente que de diferencias técnicas medibles",
+                  "Que debes probar el 80% de los modelos disponibles antes de elegir",
+                  "Que el modelo correcto responde bien el 80% de las preguntas"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Esta regla es una guía pragmática para evitar la parálisis por análisis. Para la mayoría de los proyectos empresariales —chatbots de soporte, análisis de documentos, generación de contenido, clasificación de texto— las diferencias de calidad entre Claude Sonnet y GPT-4o son marginales en el caso de uso real y frecuentemente imperceptibles para el usuario final. En estos casos, los factores que realmente determinan el éxito del proyecto son el ecosistema existente del cliente, la experiencia del equipo de desarrollo, la calidad de los datos y prompts, y la gestión del cambio organizacional — no la elección entre dos modelos comparables. Gastar semanas comparando Claude vs GPT-4o para una tarea estándar es un costo de oportunidad: ese tiempo podría invertirse en construir mejor el producto.",
+                "concepto_reforzado": "Regla 80/20: cuando la comparación de modelos no es el factor crítico"
+              },
+              {
+                "pregunta": "¿Qué es un 'routing inteligente' de modelos y cuál es su beneficio principal?",
+                "opciones": [
+                  "Un sistema de balanceo de carga para distribuir solicitudes entre servidores",
+                  "Una arquitectura que clasifica las consultas entrantes por complejidad y las envía al modelo apropiado — económico para tareas simples, potente para tareas complejas",
+                  "Un método para enviar el mismo prompt a múltiples modelos simultáneamente y combinar sus respuestas",
+                  "Un sistema de caché que evita llamadas repetidas a la API"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El routing inteligente es un patrón arquitectónico donde antes de llamar al modelo principal, un clasificador (que puede ser otro modelo más pequeño o reglas simples) determina la complejidad de la consulta y la enruta al modelo apropiado. Consultas simples ('¿cuál es el horario de atención?') van a un modelo económico como Haiku. Consultas medianas ('analiza este contrato de 5 páginas') van a Sonnet. Consultas muy complejas ('analiza este contrato de 100 páginas con múltiples partes y detecta todas las inconsistencias legales') van a Opus. El beneficio es inmediato: en la práctica, el 60-80% de las consultas en sistemas de soporte al cliente o análisis de documentos son de baja-media complejidad. Si el sistema las maneja con modelos económicos, el costo promedio cae dramáticamente sin degradar la calidad en los casos que importan.",
+                "concepto_reforzado": "Routing inteligente como patrón de optimización de costo"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Tienes tres clientes con necesidades diferentes y debes hacer una recomendación rápida (10 minutos por cliente) usando el árbol de decisión. Cliente A: Startup edtech en Chile, 5 personas, quiere generar quizzes automáticos a partir de PDFs de cursos universitarios, ~200 PDFs/mes de 20 páginas cada uno, sin restricciones de datos, presupuesto $50/mes. Cliente B: Banco en Colombia, procesa notas de crédito internas (datos confidenciales), necesita clasificar urgencia (1-4) de 3,000 documentos/mes, equipo con Azure. Cliente C: Agencia creativa en Buenos Aires, produce 50 campañas/mes, necesita generar texto publicitario en español rioplatense con alta calidad estética.",
+              "instruccion": "Para cada cliente, aplica el árbol de decisión y llega a una recomendación de modelo específica (incluyendo el tier: Haiku/Mini/Flash vs Sonnet/Pro vs Opus/Large) con una justificación de máximo 3 orígenes.",
+              "input_malo": "Para todos los clientes recomendaría Claude Opus porque tienen necesidades de IA serias y merecen el mejor modelo disponible.",
+              "pista": "Recorre el árbol: (1) ¿Pueden los datos salir? — filtra el Banco. (2) ¿Ecosistema tech existente? — el Banco tiene Azure. (3) ¿Característica crítica del caso de uso? — la agencia necesita calidad de escritura. (4) ¿Presupuesto limitante? — la startup tiene $50/mes.",
+              "solucion": "Cliente A (Startup edtech): (1) Datos pueden salir: sí. (2) Sin ecosistema específico. (3) La generación de quizzes es extracción estructurada + generación de preguntas — tarea estándar. (4) $50/mes con 200 PDFs × ~10,000 tokens = 2M tokens/mes. Claude Haiku: 2M × $0.25/M = $0.50 entrada + salida estimada $0.30 = ~$0.80/mes. Recomendación: Claude Haiku. Justificación: tarea estándar que no requiere modelo premium, costo real <$1/mes, deja presupuesto para desarrollo. Cliente B (Banco): (1) Datos confidenciales, NO pueden salir. (2) Azure instalado. (3) Clasificación de urgencia: tarea simple. Recomendación: Azure OpenAI Service con GPT-4o Mini. Justificación: (a) Azure mantiene datos en tenant del banco cumpliendo compliance, (b) clasificación de urgencia es tarea de baja complejidad donde Mini es suficiente, (c) infraestructura ya aprobada por seguridad. Cliente C (Agencia): (1) Datos pueden salir: sí. (2) Sin ecosistema específico. (3) Alta calidad de escritura en español rioplatense — calidad y tono son críticos. Recomendación: Claude Sonnet. Justificación: Claude tiene menor 'sabor a IA' en escritura, mejor adaptación de registro y tono regional, y Sonnet ofrece la calidad de Opus al 1/5 del costo para escritura creativa.",
+              "criterios_de_exito": [
+                "Identifica el filtro de privacidad para el banco antes de cualquier comparación técnica",
+                "Recomienda el tier económico (Haiku/Mini) para la startup con justificación de costo calculado",
+                "Justifica Claude Sonnet para la agencia con la característica específica de calidad de escritura"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "El ecosistema en 2027: qué viene",
+              "por_que_importa_despues": "Elegir el modelo correcto hoy es importante, pero el ecosistema cambia cada 6-12 meses. Entender qué tendencias se están gestando te da ventaja para anticipar los cambios antes que tus clientes."
             }
           }
         },
