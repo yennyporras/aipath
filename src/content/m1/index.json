@@ -5377,33 +5377,98 @@
         },
         {
           "id": "m1-b6-l4",
-          "titulo": "IDEs con IA: Cursor, Windsurf, GitHub Copilot comparados",
+          "titulo": "Llama y la apuesta open source de Meta",
           "bloque": 6,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "En febrero de 2023, Meta tomó una decisión que sacudió la industria de IA: publicó los pesos del modelo LLaMA (Large Language Model Meta AI) en acceso abierto. Esto no era solo un paper de investigación —eran los archivos del modelo que cualquier persona podía descargar, ejecutar en su computador y modificar. La decisión fue controversial: algunos la celebraron como democratización radical, otros la criticaron como irresponsable. Pero el efecto práctico fue inequívoco: detonó una explosión de modelos open source que cambió la estructura de poder de la industria.\n\nEn 2026, la familia Llama está en su cuarta generación. Llama 4 incluye variantes de diferentes tamaños —desde 8B parámetros (corre en una laptop con buena GPU) hasta 405B parámetros (requiere múltiples GPUs de servidor). Lo que hace a Llama 4 notable en 2026 no es que supere a Claude Opus o GPT-4o en benchmarks estándar —en la mayoría no lo hace—, sino que se acerca suficientemente bien a un costo de operación radicalmente menor cuando se hace self-hosting.\n\nEl argumento económico del open source es este: cuando usas la API de Claude o GPT, pagas por cada token procesado indefinidamente. Cuando despliegas Llama en tu propia infraestructura (o en una nube como AWS, Azure o GCP con instancias de GPU), pagas el costo de cómputo del servidor, que con suficiente volumen es dramáticamente menor que el costo por token de una API propietaria. Un empresa que procesa 500 millones de tokens al mes paga aproximadamente $1,500 USD en Claude Sonnet. El mismo volumen en Llama auto-hospedado puede costar $200-400 USD en cómputo de nube. Con volúmenes más altos, el ahorro se vuelve más dramático.\n\nLas ventajas del ecosistema open source van más allá del costo. Privacidad completa: los datos nunca salen de tu infraestructura. Los datos de pacientes de un hospital, los datos financieros de un banco, o los datos de usuarios de una app pueden procesarse sin que ningún proveedor externo tenga acceso. Personalización profunda: Llama puede ser fine-tuneado en datos propios con técnicas como LoRA o QLoRA que requieren GPUs relativamente modestas. Comunidad vibrante: Hugging Face, el mayor repositorio de modelos open source, tiene miles de variantes de Llama fine-tuneadas para casos específicos —médico, legal, código, español latinoamericano.\n\nLas limitaciones reales también son importantes. Desplegar y mantener Llama requiere expertise técnico que la mayoría de empresas no tiene: administración de infraestructura GPU, actualización de modelos, seguridad del servidor. El soporte es comunitario, no empresarial: cuando algo falla a las 2am, no hay un SLA ni un equipo de support. Y para muchos casos de uso en 2026, la brecha de calidad entre Llama 4 y los modelos frontier propietarios es real en razonamiento complejo, aunque se ha reducido significativamente.\n\nPara consultores en LATAM, el open source tiene un caso de uso muy específico: empresas de escala media o grande que tienen (1) volúmenes altos de tokens, (2) requisitos estrictos de privacidad de datos, y (3) al menos un ingeniero técnico en el equipo. Si las tres condiciones se cumplen, el ahorro y la privacidad justifican la complejidad operacional. Si alguna falta, el costo total de propiedad frecuentemente supera el ahorro en APIs.",
+              "analogia": "Llama es como Linux en el mundo de los sistemas operativos: no es el más pulido ni el más fácil para el usuario promedio, pero para quien tiene el conocimiento técnico, ofrece control total, costo menor y una comunidad global que lo mejora continuamente.",
+              "ejemplo_malo": "Recomendar Llama a una startup de 5 personas como primera solución de IA porque 'es gratis'. El costo de contratar un ingeniero para administrar la infraestructura GPU supera el ahorro en API por órdenes de magnitud cuando el volumen es bajo.",
+              "ejemplo_bueno": "Para una empresa de telemedicina en Brasil con 100,000 consultas mensuales y regulación LGPD que impide enviar datos de pacientes a proveedores externos, recomendar Llama fine-tuneado en datos médicos, desplegado en su propia infraestructura de nube privada.",
+              "por_que_importa": "El open source evita el vendor lock-in: si Anthropic sube precios 5×, una empresa que usa su API queda rehén. Una empresa que usa Llama puede renegociar costos de nube entre proveedores. Esa independencia tiene valor estratégico que va más allá del costo.",
+              "tip_profesional": "Para evaluar si Llama tiene sentido para un cliente, haz el cálculo de 'break-even de volumen': ¿cuántos tokens mensuales necesitan para que el costo de operar la infraestructura GPU sea menor que el costo de la API propietaria? Generalmente ese break-even está entre 100M y 500M tokens/mes dependiendo del modelo y la nube."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué decisión estratégica de Meta en 2023 cambió la industria de IA?",
+                "opciones": [
+                  "Comprar OpenAI para competir con Google",
+                  "Publicar los pesos del modelo LLaMA en acceso abierto, permitiendo a cualquiera descargarlo y modificarlo",
+                  "Lanzar un chatbot propio para WhatsApp",
+                  "Prohibir el uso de IA en sus plataformas"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Publicar los pesos del modelo LLaMA fue una decisión de alto impacto porque rompió el modelo de acceso exclusivo que OpenAI y Google habían establecido. Antes, para usar un LLM potente tenías que pagar la API de alguien. Después de LLaMA, podías descargar el modelo y ejecutarlo en tu hardware. Esto detonó un ecosistema: Hugging Face se convirtió en el 'GitHub de los modelos', miles de investigadores y empresas publicaron variantes fine-tuneadas de LLaMA para casos específicos, y la presión competitiva forzó a OpenAI y Anthropic a reducir precios. La motivación de Meta fue estratégica: Meta vende publicidad y hardware, no APIs. Un ecosistema de IA vibrante sobre sus modelos aumenta el valor de su plataforma sin los costos de operar una API pública masiva.",
+                "concepto_reforzado": "Impacto estratégico de la decisión open source de Meta"
+              },
+              {
+                "pregunta": "¿Cuál es el argumento económico principal para usar Llama en lugar de una API propietaria?",
+                "opciones": [
+                  "Llama siempre produce respuestas de mayor calidad que Claude o GPT",
+                  "Meta paga a las empresas que usan Llama en producción",
+                  "Con volúmenes altos de tokens, el costo de self-hosting en nube propia puede ser significativamente menor que el costo por token de APIs propietarias",
+                  "El gobierno colombiano subsidia el uso de modelos open source"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El argumento económico de Llama funciona por estructura de costos: las APIs propietarias cobran por token variable —pagas proporcional a cuánto usas, indefinidamente. El self-hosting tiene costo fijo de infraestructura —pagas por las GPU-horas del servidor independientemente del volumen de tokens procesados. A bajos volúmenes, la API es más barata (pagas solo lo que usas y no hay overhead de administración). A altos volúmenes, el self-hosting se vuelve más barato porque el costo marginal por token cae dramáticamente. El punto de inflexión típico en 2026 está entre 100-500 millones de tokens por mes.",
+                "concepto_reforzado": "Break-even de volumen para decisión open source vs API"
+              },
+              {
+                "pregunta": "¿En qué caso de uso el open source con Llama ofrece una ventaja que las APIs propietarias NO pueden igualar?",
+                "opciones": [
+                  "Cuando necesitas la respuesta más rápida posible",
+                  "Cuando tienes datos altamente confidenciales que no pueden salir de tu infraestructura por razones regulatorias",
+                  "Cuando quieres el modelo con mejor desempeño en benchmarks académicos",
+                  "Cuando tienes un presupuesto menor a $100 USD mensuales"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La privacidad total es la ventaja única e irreplicable del open source: cuando los datos nunca salen de tu infraestructura, no hay ningún tercero —ni Anthropic, ni OpenAI, ni Google— que tenga acceso técnico a ellos. Esto es fundamental para sectores regulados: hospitales bajo normativas de protección de datos de salud en LATAM, bancos bajo supervisión de reguladores financieros, empresas de defensa o gobierno con datos clasificados. En estos casos, usar una API externa puede ser técnicamente ilegal o imposible bajo los acuerdos de datos existentes. Llama desplegado en infraestructura propia resuelve esto estructuralmente.",
+                "concepto_reforzado": "Privacidad total como ventaja única del open source"
+              },
+              {
+                "pregunta": "¿Qué requiere el self-hosting de Llama que lo hace inadecuado para muchas organizaciones pequeñas?",
+                "opciones": [
+                  "Necesita una licencia de Meta que cuesta $10,000 anuales",
+                  "Solo funciona en hardware de Apple",
+                  "Requiere expertise técnico en administración de infraestructura GPU, actualizaciones y seguridad de servidor",
+                  "Solo está disponible en inglés"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El self-hosting de Llama no es solo descargar un archivo: requiere configurar y mantener servidores con GPUs, optimizar el modelo para inferencia eficiente, asegurar el servidor, actualizar el modelo con nuevas versiones, monitorear disponibilidad y latencia, y manejar fallos sin un SLA de soporte. Para una empresa con ingeniería competente en infraestructura, esto es manejable. Para una pyme sin ese expertise, el costo de contratar o capacitar un DevOps/MLOps frecuentemente supera el ahorro en API. La promesa del 'gratis' del open source es real pero incompleta si no se contabiliza el costo de operación.",
+                "concepto_reforzado": "Costo real del self-hosting más allá del modelo en sí"
+              },
+              {
+                "pregunta": "¿Qué es Hugging Face en el contexto del ecosistema open source de IA?",
+                "opciones": [
+                  "Una empresa que vende GPUs para entrenamiento de modelos",
+                  "El mayor repositorio de modelos open source, incluidas variantes fine-tuneadas de Llama para casos específicos",
+                  "Una red social para investigadores de IA",
+                  "El nombre de la interfaz web de Llama"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Hugging Face se convirtió en el 'GitHub de los modelos de IA' —la plataforma central donde la comunidad global publica, descarga y colabora en modelos open source. Tiene más de 500,000 modelos públicos en 2026, incluyendo miles de variantes de Llama fine-tuneadas para dominios específicos: Llama adaptado para español latinoamericano, para código Python, para documentos médicos, para análisis legal. Para un consultor en LATAM, Hugging Face es el primer lugar donde buscar si existe un modelo open source ya optimizado para el caso de uso del cliente antes de empezar un fine-tuning desde cero. La reutilización de trabajo comunitario reduce dramáticamente el tiempo y costo de implementación.",
+                "concepto_reforzado": "Hugging Face como ecosistema de modelos open source"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de seguros de salud en Perú necesita un asistente de IA para clasificar automáticamente 2 millones de registros de reclamaciones médicas al mes. Los datos incluyen diagnósticos, historiales de pacientes y montos de pago. La regulación peruana de protección de datos de salud prohíbe enviar datos de pacientes a servidores externos. El equipo técnico tiene 3 ingenieros de software competentes pero sin experiencia en ML. Presupuesto: $1,500 USD/mes.",
+              "instruccion": "Analiza si Llama con self-hosting o una API propietaria (Claude/GPT) es más apropiada. Considera: (1) el requisito regulatorio de datos, (2) el volumen de tokens mensuales y su implicación de costo, (3) la capacidad técnica del equipo, y (4) una recomendación concreta con justificación.",
+              "input_malo": "Usaría Claude porque es el mejor modelo y la empresa necesita lo mejor para clasificar reclamaciones médicas.",
+              "pista": "2 millones de clasificaciones al mes: si cada clasificación envía en promedio 500 tokens (texto del reclamo) y recibe 100 tokens de respuesta, eso son 1.2 billones de tokens totales al mes. Compara ese costo con Claude Haiku y con el costo de servidores GPU. También considera que la regulación peruana hace la API inviable independientemente del costo.",
+              "solucion": "Recomendación: Llama con self-hosting en nube privada. Justificación: (1) REGULATORIO: La prohibición de enviar datos de pacientes a servidores externos elimina todas las APIs propietarias. No es cuestión de precio sino de cumplimiento legal. Esta condición sola decide el caso. (2) COSTO: 1.2B tokens/mes en Claude Haiku costaría ~$1,440 USD/mes — casi agotaría el presupuesto sin incluir infraestructura. Llama en nube: instancias GPU cuestan ~$400-600/mes para ese volumen con un modelo Llama 8B cuantizado. (3) EQUIPO: Los 3 ingenieros necesitan capacitación específica en despliegue de modelos, pero para clasificación de texto con categorías definidas, Llama 8B fine-tuneado es técnicamente manejable. (4) MODELO: Para clasificación de reclamaciones, Llama 8B fine-tuneado en 10,000 reclamos etiquetados superará a cualquier modelo generalista sin fine-tuning.",
+              "criterios_de_exito": [
+                "Identifica el requisito regulatorio como factor determinante, no secundario",
+                "Calcula o estima el volumen de tokens y compara costos de forma numérica",
+                "Propone una solución técnica concreta que resuelve las tres restricciones simultáneamente"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Mistral: la alternativa europea",
+              "por_que_importa_despues": "Mistral es un caso único: una empresa europea que compite con modelos open source Y propietarios, con enfoque en regulación GDPR y soberanía de datos — exactamente los mismos temas que viste en este caso de uso."
             }
           }
         },
