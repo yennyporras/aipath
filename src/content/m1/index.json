@@ -6848,33 +6848,98 @@
       "lecciones": [
         {
           "id": "m1-b8-l1",
-          "titulo": "GPUs vs CPUs vs TPUs: qué hardware necesita la IA",
+          "titulo": "GPUs y TPUs: por qué importan para IA",
           "bloque": 8,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Para entender por qué la IA moderna requiere hardware especializado, necesitas entender qué operación matemática domina el entrenamiento e inferencia de modelos: la multiplicación de matrices. Cuando un LLM procesa un token, está ejecutando millones de operaciones del tipo: toma un vector de miles de números, multiplícalo por una matriz de millones de parámetros, repite esto cientos de veces en las capas del modelo. Esta operación —llamada GEMM (General Matrix Multiplication)— es perfectamente paralelizable: cada elemento del resultado puede calcularse de forma independiente.\n\n**La CPU: poderosa pero serial**\nUna CPU moderna (Intel Core i9, AMD Ryzen 9) tiene entre 8 y 32 núcleos diseñados para tareas complejas y secuenciales. Cada núcleo puede ejecutar instrucciones sofisticadas con lógica de control compleja: bucles, condiciones, llamadas a funciones. Es la herramienta perfecta para tu sistema operativo, tu navegador web, tu backend de API. Para multiplicar matrices pequeñas también funciona bien. Pero para las multiplicaciones de matrices masivas de los LLMs, la CPU es como un equipo de 16 matemáticos muy inteligentes intentando hacer el cálculo de un edificio entero de ingenieros.\n\n**La GPU: paralelismo masivo**\nUna GPU NVIDIA H100 (el chip de referencia para IA en 2026) tiene 16,896 núcleos CUDA —no tan complejos como los de una CPU, pero diseñados para ejecutar la misma operación simple en paralelo sobre miles de datos simultáneamente. Para las multiplicaciones de matrices de un LLM, esto es exactamente lo que se necesita: el mismo cálculo aplicado a millones de elementos en paralelo. Una H100 puede ejecutar aproximadamente 2,000 tera-operaciones por segundo (TFLOPS) en cálculos de entrenamiento. Una CPU de 32 núcleos hace ~2 TFLOPS. La diferencia de 1,000× explica por qué los LLMs no existirían sin GPUs.\n\nEl dominio de NVIDIA en IA se explica por CUDA —su plataforma de programación paralela lanzada en 2007. PyTorch, TensorFlow, y todos los frameworks de ML están construidos sobre CUDA. Cambiar a otro hardware implica reescribir o recompilar todo el ecosistema de software. AMD tiene GPUs competitivas (MI300X) pero su ecosistema de software (ROCm) sigue detrás de CUDA en madurez en 2026.\n\n**Las TPUs de Google: hardware diseñado solo para IA**\nLas TPUs (Tensor Processing Units) son chips diseñados por Google específicamente para operaciones de redes neuronales. Están optimizados para las operaciones de las matrices de atención (el corazón de los Transformers) con una arquitectura diferente a las GPUs de propósito general. Google usa TPUs para entrenar sus propios modelos (incluyendo Gemini) y las ofrece a través de Google Cloud. La ventaja de las TPUs sobre las GPUs: mayor eficiencia energética para cargas de trabajo específicas de ML. La desventaja: el ecosistema de software es más cerrado (principalmente JAX y TensorFlow), y no son accesibles para self-hosting físico.\n\n**Los nuevos chips de IA: la carrera de 2026**\nEn 2026, además de NVIDIA y Google, hay nuevos jugadores en el mercado de chips de IA. Amazon Trainium y Inferentia son chips diseñados para entrenamiento e inferencia en AWS con precios competitivos para cargas de trabajo específicas. Groq diseñó chips de inferencia ultra-rápida —el LPU (Language Processing Unit)— optimizados para generar tokens de LLMs a velocidades 10× mayores que las GPUs. Cerebras construyó el chip más grande del mundo (WSE-3, el tamaño de una oblea de silicio completa) diseñado para entrenamiento de modelos masivos. Para el consultor en LATAM, el conocimiento práctico es: para usar LLMs vía API, estos detalles son transparentes. Para self-hosting, las GPUs de NVIDIA (específicamente la H100, A100 o RTX 4090 para uso personal) son el estándar en 2026 por madurez del ecosistema de software.",
+              "analogia": "Una CPU es un equipo de 16 cirujanos especializados: cada uno puede hacer operaciones complejas y diferentes. Una GPU es un ejército de 16,000 soldados que siguen la misma orden simultáneamente. Para la cirugía delicada usas los cirujanos; para excavar un campo de batalla usas el ejército.",
+              "ejemplo_malo": "Intentar entrenar un modelo de clasificación de imágenes con 10 millones de ejemplos en una CPU de 8 núcleos. Lo que toma 2 horas en una GPU H100 tomaría semanas en una CPU, haciendo imposible la iteración rápida del proyecto.",
+              "ejemplo_bueno": "Para un proyecto de fine-tuning de Llama en una empresa con presupuesto limitado: usar Google Colab Pro con GPU T4 ($10/mes) para experimentar y validar el approach, luego escalar a una instancia de AWS con GPU A10G para el entrenamiento final si el resultado justifica el costo.",
+              "por_que_importa": "Como consultor de IA, no necesitas diseñar chips, pero sí necesitas entender por qué los costos de compute son tan altos, por qué las APIs de LLMs cuestan lo que cuestan, y qué implica la decisión de self-hosting vs API en términos de hardware real.",
+              "tip_profesional": "Para estimar el costo de compute de un proyecto de entrenamiento de ML, usa la regla de '1 GPU-hora = $3-5 USD en nube' como punto de partida. Un fine-tuning de Llama 7B con 1,000 ejemplos tarda ~2-4 horas en una GPU A10G = $6-20 USD. Un entrenamiento de modelo desde cero de tamaño mediano puede costar $50,000-500,000 USD en GPU-horas — ese es el moat de los laboratorios grandes."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué las GPUs son superiores a las CPUs para el entrenamiento de modelos de ML?",
+                "opciones": [
+                  "Porque las GPUs tienen mayor frecuencia de reloj que las CPUs",
+                  "Porque las GPUs tienen miles de núcleos diseñados para ejecutar la misma operación matemática simple (multiplicación de matrices) en paralelo sobre millones de datos simultáneamente",
+                  "Porque las GPUs consumen menos energía que las CPUs",
+                  "Porque las GPUs pueden acceder a más RAM que las CPUs"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La ventaja de las GPUs sobre las CPUs para ML se reduce a una diferencia arquitectónica fundamental: las CPUs tienen pocos núcleos potentes diseñados para tareas complejas y secuenciales; las GPUs tienen miles de núcleos simples diseñados para la misma tarea en paralelo. En el entrenamiento de LLMs, la operación dominante es la multiplicación de matrices — exactamente el tipo de cálculo masivamente paralelo para el que las GPUs son perfectas. Una GPU H100 de NVIDIA tiene 16,896 núcleos CUDA y puede realizar ~2,000 TFLOPS. Una CPU de 32 núcleos hace ~2 TFLOPS. Esa diferencia de 1,000× determina si entrenar un modelo toma días (GPU) o años (CPU). La paralelización funciona porque cada elemento del resultado de una multiplicación de matrices puede calcularse independientemente de los demás, permitiendo que todos los núcleos trabajen simultáneamente sin necesitar comunicarse entre ellos.",
+                "concepto_reforzado": "Paralelismo masivo de GPUs como base del compute de IA"
+              },
+              {
+                "pregunta": "¿Por qué NVIDIA domina el mercado de hardware para IA en 2026 a pesar de que AMD tiene GPUs competitivas?",
+                "opciones": [
+                  "Porque NVIDIA tiene mejores departamentos de marketing",
+                  "Porque CUDA, la plataforma de programación paralela de NVIDIA lanzada en 2007, está profundamente integrada en todos los frameworks de ML, creando un moat de ecosistema de software difícil de reemplazar",
+                  "Porque NVIDIA tiene la patente de las GPUs para uso en IA",
+                  "Porque las GPUs de AMD no pueden ejecutar PyTorch"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El dominio de NVIDIA en IA es un caso de estudio clásico de lock-in de ecosistema. En 2007, NVIDIA lanzó CUDA —una plataforma para programar GPUs en C++. Durante la siguiente década, toda la infraestructura de software de ML se construyó sobre CUDA: PyTorch, TensorFlow, cuDNN (la librería de redes neuronales), NCCL (comunicación entre GPUs), y miles de librerías de terceros. Hoy, el ecosistema es tan profundo que cambiar a otra plataforma requeriría reescribir o recompilar todo ese software. AMD tiene ROCm como alternativa a CUDA y sus GPUs MI300X son competitivas en rendimiento raw, pero el ecosistema es más joven y algunos modelos y librerías no están completamente optimizados para él. Google con TPUs tiene ventaja en ciertos workloads pero su ecosistema (principalmente JAX) es también más estrecho que CUDA. Intel con sus Gaudi 2/3 también intenta entrar al mercado. La moraleja: en tecnología, el ecosistema de software frecuentemente vale más que el hardware subyacente.",
+                "concepto_reforzado": "CUDA como moat de ecosistema de NVIDIA"
+              },
+              {
+                "pregunta": "¿Qué son las TPUs de Google y cuál es su principal ventaja sobre las GPUs?",
+                "opciones": [
+                  "Son versiones más baratas de GPUs diseñadas para uso doméstico",
+                  "Son chips diseñados específicamente por Google para operaciones de redes neuronales, con mayor eficiencia energética para cargas de trabajo de ML específicas como el entrenamiento de modelos Transformer",
+                  "Son unidades de procesamiento de texto especializadas en análisis de lenguaje natural",
+                  "Son las GPUs que Google usa en sus servidores de búsqueda"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Las TPUs (Tensor Processing Units) representan un enfoque diferente al problema del compute de IA: en lugar de adaptar hardware de propósito general (GPUs) para ML, diseñar hardware desde cero optimizado para las operaciones específicas de las redes neuronales. La primera TPU de Google (2016) fue diseñada para las operaciones de las capas de atención de los Transformers — exactamente el corazón de los LLMs modernos. Las ventajas incluyen mayor eficiencia energética por operación y mejor rendimiento en ciertos workloads de entrenamiento e inferencia. Google las usa internamente para entrenar Gemini y las ofrece vía Google Cloud (TPU v5). La limitación es el ecosistema cerrado: principalmente JAX y TensorFlow están bien soportados, mientras que PyTorch tiene soporte más limitado en TPUs comparado con GPUs. Para el consultor en LATAM, las TPUs son relevantes principalmente al considerar Google Cloud para proyectos de entrenamiento masivo.",
+                "concepto_reforzado": "TPUs como hardware especializado para redes neuronales"
+              },
+              {
+                "pregunta": "¿Por qué la multiplicación de matrices es la operación central del compute en LLMs?",
+                "opciones": [
+                  "Porque es la operación más fácil de implementar en hardware",
+                  "Porque el mecanismo de atención de los Transformers —que permite a cada token 'atender' a todos los otros tokens— se implementa como una secuencia de multiplicaciones de matrices masivas que se repiten en cada capa del modelo",
+                  "Porque la multiplicación de matrices es más rápida que otras operaciones matemáticas",
+                  "Porque los datos de entrenamiento están almacenados como matrices en el disco"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "En un modelo Transformer como los que subyacen a Claude, GPT-4 y Gemini, el mecanismo de atención calcula para cada token qué tan relevante es cada otro token en el contexto. Matemáticamente, esto se implementa como: Q × K^T / sqrt(d) — una multiplicación de matrices donde Q (queries), K (keys) y V (values) son transformaciones del input. Esta operación se repite en cada una de las decenas o cientos de capas del modelo, con matrices de millones de parámetros. Para un LLM de 70B parámetros procesando un contexto de 8,000 tokens, esto se traduce en decenas de trillones de operaciones de multiplicación en un solo forward pass (inferencia). La paralelizabilidad perfecta de la multiplicación de matrices — cada elemento del resultado se calcula independientemente — es lo que hace que las GPUs (y TPUs) sean el hardware correcto para este trabajo.",
+                "concepto_reforzado": "Multiplicación de matrices como operación central de los Transformers"
+              },
+              {
+                "pregunta": "¿Qué es Groq y qué diferencia arquitectónica tiene su LPU respecto a las GPUs de NVIDIA?",
+                "opciones": [
+                  "Groq es una startup que hace GPUs más baratas que NVIDIA",
+                  "Groq diseñó el LPU (Language Processing Unit), un chip optimizado específicamente para inferencia de LLMs a velocidades 10× mayores que las GPUs convencionales, priorizando velocidad de generación de tokens sobre flexibilidad de entrenamiento",
+                  "Groq es la división de chips de IA de Google",
+                  "Groq fabrica CPUs especializadas para entrenar modelos de lenguaje"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Groq representa una tendencia importante en hardware de IA en 2026: chips especializados para inferencia (servir el modelo a usuarios) en lugar de hardware de propósito general. La idea es que el entrenamiento (que ocurre una vez) y la inferencia (que ocurre millones de veces al día) tienen perfiles de cómputo diferentes. El LPU (Language Processing Unit) de Groq está optimizado específicamente para generar tokens secuencialmente de forma ultra-rápida. En benchmarks de 2024, Groq generó tokens de Llama 2 70B a más de 500 tokens por segundo, comparado con ~100 tokens/segundo en una GPU H100. Para aplicaciones donde la latencia importa más que la flexibilidad — chatbots en tiempo real, aplicaciones de voz — este factor de 5× en velocidad puede ser más valioso que la versatilidad de una GPU. La limitación: el LPU de Groq solo soporta modelos previamente compilados para su arquitectura, no cualquier modelo arbitrario.",
+                "concepto_reforzado": "Chips especializados para inferencia vs hardware de propósito general"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Un cliente tuyo —una empresa de retail en Cali con 50 empleados— quiere construir un sistema de IA que analice imágenes de sus productos para detectar defectos de calidad en la línea de producción. Procesan 10,000 imágenes al día. El CTO pregunta: '¿Necesitamos comprar GPUs propias o podemos usar la nube? Tenemos un presupuesto de $2,000 USD/mes para infraestructura y el sistema debe responder en menos de 2 segundos por imagen.'",
+              "instruccion": "Diseña una recomendación de infraestructura. Explica: (1) por qué este caso de uso requiere GPU y no puede hacerse con CPU, (2) si recomendarías GPU propia o nube y por qué, y (3) una estimación del costo usando GPU en nube para 10,000 imágenes/día.",
+              "input_malo": "Compren 3 GPUs NVIDIA H100 propias porque son las mejores del mercado y así no tienen costos de nube recurrentes.",
+              "pista": "10,000 imágenes/día con requerimiento de <2 segundos/imagen. Una GPU en nube (A10G, ~$1/hora) puede procesar ~10 imágenes/segundo en inferencia de visión. ¿Cuántas horas de GPU-tiempo necesitan por día? Compara ese costo con el presupuesto de $2,000/mes. Una H100 comprada cuesta ~$30,000 USD — ¿cuántos meses de nube son eso?",
+              "solucion": "Recomendación: GPU en nube (no propia). (1) POR QUÉ NECESITA GPU: Inferencia de modelos de visión para detección de defectos involucra redes neuronales convolucionales o Vision Transformers que requieren miles de operaciones paralelas por imagen. En CPU, procesar una imagen de alta resolución con un modelo de calidad puede tomar 5-15 segundos — muy por encima del requerimiento de 2 segundos. Una GPU puede procesar la misma imagen en 0.1-0.3 segundos, cumpliendo el SLA con margen. (2) NUBE vs PROPIA: Una GPU H100 propia cuesta ~$30,000 USD — son 15 meses de presupuesto de infraestructura total. Además requiere: servidor, refrigeración, mantenimiento, espacio físico. Para 10,000 imágenes/día, el workload es bajo. Con GPU en nube se paga solo por las horas que se usa. (3) ESTIMACIÓN DE COSTO: 10,000 imágenes ÷ 10 imágenes/segundo = 1,000 segundos = ~17 minutos de GPU al día. Una instancia AWS g5.xlarge (GPU A10G): ~$1.006/hora. 17 minutos × $1/60min ≈ $0.28/día. × 30 días = ~$8.5/mes en GPU puro. Incluyendo almacenamiento, transferencia de datos y servidor de API: ~$50-150/mes total. Muy por debajo del límite de $2,000. Recomendación final: instancia GPU serverless (AWS Lambda con GPU o Replicate API para el modelo de visión) para pago por uso real, con presupuesto de $2,000/mes para absorber picos y desarrollo del sistema.",
+              "criterios_de_exito": [
+                "Justifica técnicamente por qué se requiere GPU (no CPU) para el caso de uso de visión",
+                "Recomienda nube sobre GPU propia con argumento económico basado en el costo del hardware propio",
+                "Incluye estimación de costo mensual realista que demuestre que el presupuesto es suficiente"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Cloud vs local: decisión estratégica real",
+              "por_que_importa_despues": "Con el hardware claro, la siguiente lección examina la decisión estratégica de dónde corre ese hardware: en la nube de un proveedor o en infraestructura propia, con todos los trade-offs económicos, de privacidad y operacionales que eso implica."
             }
           }
         },
