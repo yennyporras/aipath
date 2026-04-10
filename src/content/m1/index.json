@@ -6161,33 +6161,98 @@
         },
         {
           "id": "m1-b7-l2",
-          "titulo": "Benchmarks clave: MMLU, HumanEval, HellaSwag, LMSYS Arena",
+          "titulo": "Accuracy, Precision, Recall y F1 con intuición",
           "bloque": 7,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Las métricas de clasificación son el vocabulario técnico más usado en proyectos de ML. Si las entiendes con intuición —no solo como fórmulas sino como qué significan para el negocio— puedes diagnosticar cualquier modelo de clasificación en minutos. Esta lección te da esa intuición de forma permanente.\n\n**La herramienta fundamental: la matriz de confusión**\nAntes de hablar de métricas, necesitas la matriz de confusión. Es una tabla 2×2 que clasifica todos los resultados del modelo en cuatro categorías:\n- Verdadero Positivo (VP): el modelo predijo positivo y era realmente positivo. ✓\n- Verdadero Negativo (VN): el modelo predijo negativo y era realmente negativo. ✓\n- Falso Positivo (FP): el modelo predijo positivo pero era negativo. ✗ (alarma falsa)\n- Falso Negativo (FN): el modelo predijo negativo pero era realmente positivo. ✗ (caso perdido)\n\nEjemplo concreto: modelo de detección de spam. Si llegan 1,000 emails: 100 son spam real, 900 son legítimos. El modelo clasifica 120 como spam. De esos 120: 85 son spam real (VP), 35 son emails legítimos marcados como spam (FP). De los 980 marcados como 'no spam': 865 son legítimos reales (VN), 15 son spam real que no detectó (FN).\n\n**Accuracy — el porcentaje de aciertos total**\nFórmula: (VP + VN) / Total = (85 + 865) / 1000 = 95%\nIntuición: de todos los emails que evaluó, el 95% los clasificó correctamente. Parece excelente.\nLimitación: oculta que perdió 15 spams reales y molestó a 35 usuarios con falsos positivos.\n\n**Precision — ¿cuándo alerta, cuántas veces acierta?**\nFórmula: VP / (VP + FP) = 85 / (85 + 35) = 85 / 120 = 70.8%\nIntuición: de cada 100 emails que el modelo marcó como spam, 71 eran spam de verdad. 29 eran emails legítimos que bloqueó injustamente.\nCuándo importa: cuando las alarmas falsas tienen un costo alto. Si bloqueas un email legítimo de un cliente importante, la Precision importa mucho.\n\n**Recall — ¿de todo el spam real, cuánto detectó?**\nFórmula: VP / (VP + FN) = 85 / (85 + 15) = 85 / 100 = 85%\nIntuición: de 100 spams reales, el modelo detectó 85. Dejó pasar 15.\nCuándo importa: cuando los casos perdidos tienen costo alto. Si cada spam que pasa puede contener malware, el Recall importa más que la Precision.\n\n**F1 — el balance entre Precision y Recall**\nFórmula: 2 × (Precision × Recall) / (Precision + Recall) = 2 × (0.708 × 0.85) / (0.708 + 0.85) = 0.773\nIntuición: F1 es la media armónica —castiga los extremos. Un modelo con Precision 1.0 y Recall 0.0 (que nunca alerta) tiene F1 = 0. Útil cuando no hay preferencia clara entre los dos tipos de error.\n\n**La regla del umbral**\nLa mayoría de los modelos no producen directamente 'spam' o 'no spam' —producen una probabilidad (ej: 0.73 de ser spam). El umbral es el punto de corte: si umbral = 0.5, todo lo que supera 0.5 se clasifica como spam. Si subes el umbral a 0.8, el modelo solo alerta cuando está muy seguro → aumenta Precision, baja Recall. Si bajas el umbral a 0.3, alerta ante cualquier sospecha → sube Recall, baja Precision. Ajustar el umbral no cambia el modelo, solo cambia el balance entre los dos tipos de error.\n\n**Para LLMs: las métricas cambian**\nLos modelos de generación de texto no tienen una respuesta binaria correcta/incorrecta. Para evaluar LLMs se usan: BLEU (cuántas palabras de la respuesta del modelo aparecen en la respuesta de referencia), ROUGE (similar pero midiendo cobertura desde la referencia), y cada vez más, evaluación humana o evaluación por otro LLM (LLM-as-a-judge). Estas métricas tienen sus propias limitaciones que se abordan en la próxima lección.",
+              "analogia": "La Precision es el radar antirrobo de una tienda: si suena mucho con personas inocentes, pierdes clientes. El Recall es el mismo radar desde la perspectiva del ladrón: si no suena con los ladrones reales, estás perdiendo. El F1 es el balance entre no molestar a los clientes y no dejar entrar a los ladrones.",
+              "ejemplo_malo": "Reportar solo F1 = 0.87 sin desagregar Precision y Recall. En un caso de diagnóstico médico, un F1 de 0.87 con Precision 0.99 y Recall 0.78 es muy diferente (muchos casos perdidos) de F1 0.87 con Precision 0.78 y Recall 0.99 (muchas alarmas falsas pero pocos casos perdidos).",
+              "ejemplo_bueno": "Reportar 'Precision 0.92, Recall 0.78, F1 0.84 — el modelo detecta 78 de cada 100 casos positivos reales con solo 8% de alarmas falsas. Para nuestro caso de uso (detección de anomalías en manufactura), priorizamos evitar parar la línea innecesariamente, por lo que Precision 0.92 es el KPI crítico.'",
+              "por_que_importa": "En cualquier reunión técnica sobre un modelo de clasificación, te preguntarán estas métricas. Entenderlas con intuición te permite responder, interpretar los números, y proponer ajustes concretos —no solo leer los valores de un dashboard.",
+              "tip_profesional": "Para comunicar estas métricas a audiencias no técnicas, usa el lenguaje del negocio: 'De cada 100 fraudes reales, detectamos 85' (Recall). 'De cada 100 alertas que generamos, 71 son fraudes reales' (Precision). Estos son exactamente los mismos números pero en el idioma que un gerente entiende y puede evaluar."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué mide la Precision de un modelo de clasificación?",
+                "opciones": [
+                  "El porcentaje total de predicciones correctas del modelo",
+                  "De todos los casos que el modelo predijo como positivos, qué porcentaje eran realmente positivos",
+                  "De todos los casos positivos reales, qué porcentaje detectó el modelo",
+                  "La media entre la tasa de verdaderos positivos y verdaderos negativos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Precision mide la 'pureza' de las alertas del modelo: VP / (VP + FP). Si el modelo generó 100 alertas de fraude y 90 eran fraudes reales, tiene Precision de 0.90. El 10% restante son falsos positivos —alarmas innecesarias. Alta Precision significa que cuando el modelo alerta, casi siempre tiene razón, pero puede estar 'siendo conservador' y perdiendo muchos casos reales (lo que mediría el Recall). En términos de negocio: un sistema de alertas con Precision alta molesta poco a los operadores porque la mayoría de las alertas requieren acción real. Un sistema con Precision baja genera 'fatiga de alertas' —los operadores dejan de tomarlo en serio porque la mayoría de las alertas son falsas.",
+                "concepto_reforzado": "Definición e interpretación de Precision"
+              },
+              {
+                "pregunta": "Un modelo de detección de plagio en trabajos universitarios tiene Recall 0.95 pero Precision 0.40. ¿Cómo interpretas esto para la universidad?",
+                "opciones": [
+                  "Excelente modelo: detecta el 95% del plagio real con buenos resultados",
+                  "El modelo detecta el 95% del plagio real, pero el 60% de sus acusaciones son incorrectas — acusa a estudiantes inocentes falsamente con mucha frecuencia",
+                  "El modelo no funciona porque Precision y Recall no coinciden",
+                  "Los números indican que el modelo está bien calibrado"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Este caso ilustra perfectamente el dilema Precision-Recall. Recall 0.95 es excelente: el modelo detecta 95 de cada 100 casos reales de plagio. Pero Precision 0.40 es problemática: de cada 100 estudiantes que el modelo acusa de plagio, solo 40 realmente plagiaron. El 60% restante son estudiantes inocentes falsamente acusados. Para una universidad, las consecuencias de acusar falsamente a un estudiante honesto (daño reputacional, estrés, potencial suspensión injusta) pueden ser más graves que no detectar un caso de plagio. Este es un caso donde bajar el Recall (ej: a 0.80) a cambio de subir la Precision (ej: a 0.85) podría ser la decisión correcta — detectar menos plagio pero con mucha mayor confianza cuando se acusa.",
+                "concepto_reforzado": "Interpretación de Precision baja y Recall alto en contexto real"
+              },
+              {
+                "pregunta": "¿Qué sucede al umbral de clasificación cuando lo subes de 0.5 a 0.8?",
+                "opciones": [
+                  "El modelo se vuelve más lento pero más preciso",
+                  "La Precision aumenta y el Recall disminuye — el modelo solo alerta cuando tiene alta confianza, generando menos alarmas pero más confiables",
+                  "Tanto Precision como Recall aumentan simultáneamente",
+                  "El modelo requiere reentrenamiento para adaptarse al nuevo umbral"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El umbral de decisión es el punto de corte de la probabilidad predicha por el modelo. Subir el umbral de 0.5 a 0.8 significa que el modelo solo clasifica algo como positivo cuando está al menos 80% seguro. Esto tiene un efecto predecible: habrá menos positivos predichos en total (solo los casos más 'obvios'), lo que sube la Precision (los que alerta son casi siempre correctos) pero baja el Recall (muchos casos reales que el modelo veía como 'probable' pero no 'muy probable' quedan sin detectar). Bajar el umbral tiene el efecto opuesto: el modelo alerta ante la menor sospecha, sube el Recall (detecta casi todo) pero baja la Precision (muchas alarmas falsas). Este ajuste es completamente postentrenamiento —no requiere volver a entrenar el modelo— y es la herramienta más inmediata para calibrar el balance Precision-Recall.",
+                "concepto_reforzado": "Efecto del umbral de clasificación en Precision y Recall"
+              },
+              {
+                "pregunta": "¿Por qué el F1 score es una 'media armónica' y no una media aritmética simple de Precision y Recall?",
+                "opciones": [
+                  "Porque la media armónica es más fácil de calcular que la media aritmética",
+                  "Porque la media armónica castiga los casos extremos: un modelo con Precision 1.0 y Recall 0.0 tendría F1=0, mientras la media aritmética daría 0.5",
+                  "Porque es una convención histórica sin justificación técnica",
+                  "Porque la media armónica siempre da un número más alto que la media aritmética"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La media aritmética simple de (Precision + Recall) / 2 tiene una falla: un modelo que nunca alerta tiene Recall 0 pero si cuando alerta siempre acierta tiene Precision 1.0, lo que da media aritmética de 0.5 — un número que sugiere desempeño mediocre cuando en realidad el modelo es completamente inútil (nunca detecta nada). La media armónica 2×P×R/(P+R) castiga los extremos: si cualquiera de los dos valores es 0, el F1 es 0. Si ambos son 1, el F1 es 1. Si hay desequilibrio grande (ej: P=0.95, R=0.20), el F1 de ~0.33 refleja mejor la inutilidad práctica del modelo que la media aritmética de 0.575. Esto hace que F1 sea más honesto como métrica única de resumen.",
+                "concepto_reforzado": "Media armónica vs media aritmética en F1"
+              },
+              {
+                "pregunta": "¿Cuál es la diferencia conceptual entre evaluar un modelo de clasificación binaria y evaluar un LLM de generación de texto?",
+                "opciones": [
+                  "No hay diferencia: ambos se evalúan con accuracy y F1",
+                  "Los LLMs son más fáciles de evaluar porque generan texto que los humanos pueden leer directamente",
+                  "Los modelos de clasificación tienen respuestas correctas/incorrectas definidas; los LLMs generan texto libre donde rara vez hay una única respuesta 'correcta', requiriendo métricas como BLEU, ROUGE o evaluación humana",
+                  "Los LLMs se evalúan exclusivamente con parámetros de velocidad y costo"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "La diferencia es fundamental. En clasificación binaria, hay una respuesta correcta predefinida: el email es spam o no lo es, el tumor está presente o no. Esto permite métricas objetivas como Precision y Recall calculadas automáticamente. En generación de texto, 'responde en dos párrafos sobre las causas del cambio climático' puede tener miles de respuestas correctas igualmente válidas. No hay ground truth único. BLEU y ROUGE intentan aproximar la calidad comparando con textos de referencia escritos por humanos, pero tienen limitaciones: pueden penalizar paráfrasis perfectas que usan vocabulario diferente, o puntuar bien textos correctos gramaticalmente pero factualmente incorrectos. Por esto la evaluación humana —o evaluación por otro LLM calibrado— sigue siendo necesaria para capturar calidad real en generación de texto.",
+                "concepto_reforzado": "Diferencias entre evaluación de clasificación y evaluación de LLMs"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de e-commerce colombiana usa un modelo para clasificar reseñas de productos como 'positiva', 'negativa' o 'neutra'. El equipo de producto quiere usar las reseñas negativas detectadas para alertar al equipo de calidad cuando hay problemas con un producto. Los resultados del modelo en el conjunto de test son: para la clase 'negativa': Precision 0.65, Recall 0.88, F1 0.75. El equipo de calidad tiene capacidad para revisar máximo 50 alertas por día. Actualmente reciben 200 alertas diarias del modelo.",
+              "instruccion": "Analiza el problema desde la perspectiva del equipo de calidad. Explica: (1) qué significa la Precision de 0.65 para su trabajo diario, (2) qué pasaría con el Recall si suben el umbral de clasificación para reducir las alertas a 50/día, y (3) qué recomendarías para balancear la situación.",
+              "input_malo": "El modelo tiene F1 de 0.75 que es bastante bueno. El equipo de calidad debería confiar en las alertas.",
+              "pista": "Precision 0.65 significa que de 200 alertas diarias, solo 130 son reseñas negativas reales. El equipo de calidad está perdiendo tiempo en 70 falsas alarmas al día. Si suben el umbral para tener solo 50 alertas diarias con alta Precision, ¿qué pasa con los 88% de negativos reales que el modelo detectaba?",
+              "solucion": "Análisis: (1) Precision 0.65 = de 200 alertas diarias, el equipo de calidad revisa 70 reseñas que NO son negativas (falsos positivos), desperdiciando ~35% de su tiempo de revisión. Con capacidad para 50 alertas/día, el problema es doble: volumen excesivo Y baja calidad de las alertas. (2) Para reducir a 50 alertas/día necesitan subir el umbral de clasificación. Si el umbral actual detecta las reseñas con >50% de probabilidad de ser negativa, subir a >85% reducirá el volumen a ~50 pero el Recall caerá probablemente de 0.88 a 0.50-0.60 — el equipo solo vería la mitad de las reseñas negativas reales. Los problemas de productos más sutiles (reseñas negativas con probabilidad 0.60-0.84) quedarán sin detectar. (3) Recomendación: implementar un sistema de priorización con dos colas. Cola A (urgente, 20 alertas/día): alta confianza del modelo (>0.85), Precision estimada >0.85, equipo actúa inmediatamente. Cola B (revisión programada, 30 alertas/día): confianza media (0.65-0.85), revisadas dos veces por semana en batch. Esto maximiza el uso de la capacidad del equipo sin reducir drásticamente el Recall en casos urgentes.",
+              "criterios_de_exito": [
+                "Traduce Precision 0.65 al impacto concreto en el trabajo del equipo de calidad (alertas falsas por día)",
+                "Explica el trade-off entre reducir volumen de alertas y el impacto en Recall",
+                "Propone una solución que balancee la capacidad del equipo con la necesidad de detectar problemas reales"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Benchmarks actuales y sus limitaciones reales",
+              "por_que_importa_despues": "Con las métricas de clasificación claras, la siguiente lección examina cómo se evalúan los LLMs a nivel de ecosistema — los benchmarks que todos citan y lo que realmente miden (y no miden)."
             }
           }
         },
