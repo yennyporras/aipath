@@ -9558,41 +9558,103 @@
               "siguiente_concepto": "LinkedIn estratégico para posicionamiento en IA",
               "por_que_importa_despues": "GitHub es tu presencia técnica y las comunidades son tu red de practitioners. LinkedIn es el puente entre tu trabajo técnico y las oportunidades profesionales formales — trabajos, clientes, conferencias, y colaboraciones. La estrategia de LinkedIn para IA es diferente de la estrategia para otros sectores: hay formatos de contenido, tipos de conexiones, y formas de posicionarse que funcionan específicamente para el ecosistema de IA."
             }
-            "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
-            }
           }
         },
         {
           "id": "m1-b11-l7",
-          "titulo": "Cómo conseguir tus primeros clientes como consultor de IA",
+          "titulo": "LinkedIn estratégico para posicionamiento en IA",
           "bloque": 11,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "LinkedIn no es un CV online — es un motor de descubrimiento donde el algoritmo decide quién te encuentra. Para un profesional de IA en 2026, usarlo bien puede ser la diferencia entre recibir tres ofertas al mes o ser invisible. Pero la estrategia que funciona para IA es diferente a la que usan los vendedores de seguros o los coaches de vida que dominan la plataforma. Esto es lo que realmente mueve la aguja.\n\n**El headline es tu primer filtro.** La mayoría de profesionales en LATAM pone su cargo actual: 'Desarrollador en Empresa X'. Eso no te hace descubrible ni memorable. Un headline efectivo para IA combina tres elementos: lo que haces (función), con qué tecnología o enfoque (especialidad), y para quién creas valor (industria o tipo de cliente). Ejemplo: 'AI Engineer | LLMs en producción para empresas medianas LATAM | Python · LangChain · Claude API'. Este headline responde las preguntas que se hace el reclutador o cliente potencial antes de hacer clic.\n\n**El 'Acerca de' tiene que contar una historia con datos.** No es un resumen de tu CV. Es tu argumento de por qué deberían contactarte. Estructura efectiva: quién eres (una línea), qué problema específico resuelves, prueba concreta de que lo has resuelto (proyecto, resultado medible, número), y llamada a la acción específica. Máximo 300 palabras, en primera persona, sin jerga corporativa. 'Resultado' no es 'Apasionado por la innovación' — es 'Reduje el tiempo de procesamiento de documentos legales un 70% usando RAG con Claude API en empresa de 500 empleados'.\n\n**Publicar contenido con consistencia es el diferencial real.** El 80% de las personas en LinkedIn solo consume. El 19% comenta ocasionalmente. El 1% publica consistentemente. Si publicas tres veces por semana durante seis meses sobre IA aplicada, estarás entre el 1% visible de tu nicho. Para IA, los formatos que funcionan mejor en 2026: posts de lecciones aprendidas en proyectos reales (falla pública + solución = credibilidad), hilos sobre comparaciones técnicas (Claude vs GPT-4 para caso X), y casos de estudio con números concretos. Lo que no funciona: compartir noticias de IA sin opinión propia, posts motivacionales genéricos, y anunciar que tomaste un curso.\n\n**La red importa más que los seguidores.** LinkedIn tiene dos métricas que confunden a la gente: conexiones (red privada) y seguidores (audiencia pública). Para posicionamiento en IA, lo que mueve tu carrera son las conexiones correctas: otros AI engineers que comparten aprendizajes, CTOs y CPOs de empresas que contratan IA, y líderes de comunidades de IA. No conectes a ciegas — envía notas de conexión específicas que mencionen por qué quieres conectar. Tasa de aceptación: los mensajes personalizados tienen 5-10 veces más aceptación que solicitudes en blanco.\n\n**Estrategia de contenido para 12 semanas.** Si empiezas desde cero, este plan funciona: semanas 1-4: documenta tu aprendizaje en M1 de AIPath, un post por clase con reflexión propia. Semanas 5-8: publica un mini-proyecto semanal con código, resultados, y lección aprendida. Semanas 9-12: escribe análisis de casos reales de IA en industrias locales — cómo una empresa colombiana podría usar RAG, qué falló en la IA de un banco, qué haría diferente. Al final de las 12 semanas tendrás 36 posts, credibilidad establecida, y una red activa que te conoce por trabajo real, no por decir que eres experto en IA.",
+              "analogia": "LinkedIn para IA es como tener un consultorio médico. No basta con saber medicina — necesitas que la gente sepa que existes, confíe en tu criterio, y sepa exactamente qué tratas. Un médico que nunca habla de su trabajo, pone 'médico' como descripción, y no publica nada sobre salud es invisible. Un médico que escribe semanalmente sobre su especialidad, muestra casos reales con resultados, y explica conceptos difíciles en lenguaje simple llena su agenda. Tu LinkedIn es tu consultorio digital: el algoritmo es la vitrina de la calle.",
+              "ejemplo_malo": "Perfil típico: Foto genérica de oficina. Headline: 'Desarrollador Full Stack | Python | JavaScript | Estudiando IA'. Acerca de: 'Soy un profesional apasionado por la tecnología con 5 años de experiencia en desarrollo de software. Me interesa la inteligencia artificial y busco nuevas oportunidades de crecimiento profesional.' Sin publicaciones en los últimos 6 meses. 300 conexiones, cero seguidores. Este perfil no dice qué problema resuelves, no tiene prueba de trabajo real, y su última señal de actividad fue hace medio año.",
+              "ejemplo_bueno": "Perfil real de AI engineer posicionado: Foto profesional con fondo neutro. Headline: 'AI Engineer | Automatización con LLMs para empresas de servicios LATAM | Claude API · LangChain · Python'. Acerca de: 150 palabras, primera persona, menciona proyecto específico con resultado ('Automaticé el análisis de contratos de una firma legal en Bogotá, reduciendo 6 horas de trabajo a 20 minutos usando RAG con Claude API'). Banner: captura de uno de sus proyectos en Hugging Face Spaces. Publica 3 veces por semana: lunes reflexión técnica, miércoles mini-tutorial, viernes caso de estudio. 2,400 seguidores después de 9 meses. Recibe 4-5 mensajes de reclutadores por semana.",
+              "por_que_importa": "En Colombia y LATAM, el mercado de IA es aún pequeño y las recomendaciones viajan por visibilidad. El profesional que aparece en LinkedIn cuando alguien busca 'AI consultant Colombia' o 'LLM engineer LATAM' tiene una ventaja estructural sobre alguien igualmente capaz pero invisible. Además, LinkedIn afecta directamente los salarios en remoto: los reclutadores de empresas de EE.UU. y Europa usan LinkedIn como primer filtro. Un perfil optimizado puede significar la diferencia entre aplicar a $3,000/mes o recibir ofertas a $12,000/mes.",
+              "tip_profesional": "Activa 'Open to work' en modo invisible (solo reclutadores pueden verlo, no tu red general). Esto te pone en resultados de búsqueda de reclutadores sin el banner público verde que puede señalizar desesperación a tu empleador actual. También activa las notificaciones de 'Creator mode' si publicas contenido — te da acceso a analytics de quién ve tu perfil y desde dónde llegaron, lo que te permite ajustar tu estrategia de contenido en tiempo real."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es el error más común en headlines de LinkedIn para profesionales de IA?",
+                "opciones": [
+                  "Poner el cargo actual sin especialidad ni propuesta de valor",
+                  "Usar demasiadas palabras clave técnicas",
+                  "Mencionar múltiples lenguajes de programación",
+                  "Incluir el nombre de la empresa actual"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "El error más frecuente es poner simplemente el cargo actual, como 'Desarrollador en Empresa ABC' o 'Data Analyst'. Esto no te hace descubrible ni diferenciable. Un headline efectivo para IA combina tres dimensiones: función (qué haces: AI Engineer, ML Engineer, AI Consultant), especialidad técnica (con qué trabajas: LLMs, RAG, fine-tuning, Computer Vision), y contexto de valor (para quién o en qué industria creas resultados). Usar muchas palabras clave técnicas es el problema opuesto — puede parecer spam. El objetivo es ser específico y memorable, no enumerar todo lo que sabes. El algoritmo de LinkedIn indexa el headline para búsquedas, así que un headline bien construido te pone en resultados cuando alguien busca exactamente tu perfil.",
+                "concepto_reforzado": "Optimización de headline de LinkedIn para visibilidad en IA"
+              },
+              {
+                "pregunta": "¿Qué tipo de contenido funciona mejor en LinkedIn para posicionarse en IA según la lección?",
+                "opciones": [
+                  "Compartir artículos de noticias de IA con comentarios propios",
+                  "Posts motivacionales sobre el futuro de la IA",
+                  "Lecciones aprendidas en proyectos reales con fallos y soluciones",
+                  "Anuncios de cursos y certificaciones completadas"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Los posts que documentan lecciones aprendidas en proyectos reales — especialmente los que muestran una falla pública y cómo se resolvió — generan la mayor credibilidad en la comunidad técnica de LinkedIn. Esto funciona por dos razones: primero, la vulnerabilidad calculada (mostrar un error y cómo lo resolviste) es más memorable y auténtica que presumir éxitos; segundo, demuestra trabajo real, no solo conocimiento teórico. Los artículos de noticias sin opinión propia no aportan valor diferenciado porque cualquiera puede compartirlos. Los posts motivacionales son ignorados por la audiencia técnica. Anunciar certificaciones es útil una vez pero si se repite constantemente señaliza que no tienes proyectos reales que mostrar. El formato ideal: contexto del problema (2-3 líneas), error que cometiste (1-2 líneas), solución que encontraste (3-5 líneas), lección transferible (1-2 líneas).",
+                "concepto_reforzado": "Estrategia de contenido en LinkedIn para credibilidad técnica en IA"
+              },
+              {
+                "pregunta": "¿Cuál es la diferencia entre conexiones y seguidores en LinkedIn, y cuál importa más para carrera en IA?",
+                "opciones": [
+                  "Son lo mismo, solo cambia el nombre según cómo conectaste",
+                  "Seguidores es la métrica más importante para conseguir empleo",
+                  "Conexiones son la red privada; ambas importan según el objetivo",
+                  "Conexiones importan más porque determinan el alcance del contenido"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "LinkedIn tiene dos sistemas paralelos: conexiones (relaciones bidireccionales, máx. 30,000) y seguidores (unidireccionales, ilimitados). Para el objetivo de carrera en IA, ambas dimensiones importan pero por razones diferentes. Las conexiones correctas — otros AI engineers activos, CTOs de empresas tech, líderes de comunidades de IA — crean capital social que se activa cuando buscas trabajo, co-fundadores, o clientes. Un mensaje de recomendación de una conexión tiene infinitamente más peso que una aplicación en frío. Los seguidores determinan el alcance del contenido que publicas — si tienes 5,000 seguidores y publicas tres veces por semana, tu audiencia crece compuesta. La estrategia óptima: construir conexiones cualitativas (500-1,000 personas relevantes) mientras creces seguidores con contenido consistente. Calidad en conexiones + cantidad en seguidores.",
+                "concepto_reforzado": "Estrategia de red en LinkedIn: conexiones vs seguidores"
+              },
+              {
+                "pregunta": "¿Qué debe incluir un 'Acerca de' efectivo en LinkedIn para un AI engineer?",
+                "opciones": [
+                  "Resumen de toda la experiencia laboral en orden cronológico",
+                  "Declaración de misión personal y valores profesionales",
+                  "Quién eres, qué problema resuelves, prueba concreta, y llamada a la acción",
+                  "Lista completa de tecnologías y certificaciones obtenidas"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El 'Acerca de' de LinkedIn no es un CV condensado ni una misión personal — es un argumento de por qué alguien debería contactarte. La estructura que funciona para AI engineers tiene cuatro elementos: (1) quién eres en una línea sin florituras ('AI Engineer especializada en RAG para empresas de servicios'), (2) el problema específico que resuelves ('ayudo a empresas medianas a implementar IA sin contratar un equipo de 10 personas'), (3) prueba concreta de que lo has resuelto ('en los últimos 18 meses automaticé procesos en 3 empresas en Bogotá, reduciendo tiempos entre 40% y 70%'), y (4) llamada a la acción específica ('si quieres explorar cómo aplicar esto en tu empresa, escríbeme'). El resumen cronológico de experiencia pertenece a la sección 'Experiencia'. Los valores sin prueba son afirmaciones vacías. Las listas de tecnologías pertenecen a 'Skills'. El 'Acerca de' es donde vendes tu valor en lenguaje humano, no técnico.",
+                "concepto_reforzado": "Redacción efectiva del resumen profesional en LinkedIn para IA"
+              },
+              {
+                "pregunta": "¿Por qué es recomendable activar 'Open to work' en modo invisible (solo reclutadores) en lugar del banner público verde?",
+                "opciones": [
+                  "El banner verde reduce el número de seguidores en la plataforma",
+                  "Los reclutadores ignoran los perfiles con banner verde por exceso de aplicaciones",
+                  "El modo invisible mantiene visibilidad para reclutadores sin señalizar búsqueda activa a empleadores actuales",
+                  "El algoritmo penaliza los perfiles con banner verde en búsquedas orgánicas"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "La función 'Open to work' en modo invisible es una de las opciones más infrautilizadas de LinkedIn. Cuando activas el banner público verde, toda tu red puede verlo — incluyendo tu jefe actual y compañeros de trabajo, lo que puede crear tensión laboral o señalizar que planeas irte antes de tener una oferta confirmada. El modo invisible solo lo ven los reclutadores de empresas que tienen LinkedIn Recruiter (la versión enterprise de LinkedIn), que son exactamente las personas que te interesan. Estos reclutadores tienen filtros de búsqueda donde 'open to work' es un criterio, así que el modo invisible te pone en esos resultados sin el costo social del banner público. Para profesionales en transición de carrera hacia IA — que aún trabajan en su empleo anterior — esta distinción es crítica: puedes estar activamente explorando oportunidades sin que tu empleador actual lo sepa.",
+                "concepto_reforzado": "Configuración estratégica de LinkedIn para búsqueda de empleo en IA"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Carlos tiene 4 años como desarrollador backend en Medellín (Python, PostgreSQL, Django). Lleva 6 meses estudiando IA por su cuenta: completó los bloques B0-B10 de M1, hizo dos proyectos pequeños (un chatbot con Streamlit y un clasificador de texto con scikit-learn), y tiene el código en GitHub pero sin README. Su LinkedIn actual: foto de perfil recortada de una foto grupal, headline 'Backend Developer | Python | Django', sin publicaciones en 8 meses, 280 conexiones. Carlos quiere hacer transición completa a AI Engineer en los próximos 12 meses y está dispuesto a publicar 2-3 veces por semana.",
+              "instruccion": "Diseña la estrategia de LinkedIn de Carlos para los primeros 90 días. Define: (1) headline optimizado, (2) estructura del 'Acerca de' en máximo 4 oraciones, (3) plan de contenido para 12 semanas con frecuencia y tipos de posts, (4) criterio para seleccionar las primeras 50 conexiones estratégicas que debería enviar. Sé específico — no pongas 'publica sobre IA', especifica qué publicaría Carlos con su background concreto.",
+              "input_malo": "Headline: 'Backend Developer con interés en IA | Python | Machine Learning'. Acerca de: 'Soy desarrollador con 4 años de experiencia interesado en la inteligencia artificial. Estoy aprendiendo ML y quiero hacer transición a AI Engineer'. Plan: publicar sobre IA 3 veces por semana. Conexiones: conectar con todos los que aparezcan en búsqueda de IA.",
+              "pista": "El headline de Carlos debe hacer invisible su pasado en backend y proyectar su presente en IA. Para el contenido, piensa: ¿qué sabe Carlos que un AI engineer sin background de backend no sabría? ¿Qué perspectiva única puede aportar? Para conexiones, ¿quién específicamente en LinkedIn te acerca a ser contratado como AI engineer en 12 meses?",
+              "solucion": "**Headline:** 'AI Engineer en formación | LLMs + backends Python para automatización empresarial | Medellín → Remote'. **Acerca de (4 oraciones):** 'Desarrollador Python de 4 años transitando a AI Engineer con foco en integración de LLMs en sistemas backend existentes. Construí dos proyectos propios: chatbot con Streamlit + Claude API y clasificador de texto con scikit-learn, ambos con documentación completa en GitHub. Mi ventaja: entiendo cómo integrar IA en producción porque vengo de construir los backends que la IA necesita. Si buscas alguien que implemente LLMs en sistemas reales sin romper lo que ya funciona, hablemos.' **Plan de contenido 12 semanas:** Semanas 1-4: 'Lo que aprendí en clase hoy' (reflexión de cada módulo de M1, con ejemplo propio de su contexto backend). Semanas 5-8: 'Proyecto en progreso' (documentar en público la mejora de sus dos proyectos con RAG, README mejorado, deploy en Hugging Face Spaces). Semanas 9-12: 'Perspectiva backend+IA' (3 posts semanales sobre cómo integrar LLMs en Django, optimizar costos de API, y patrones de arquitectura para IA en producción). **Primeras 50 conexiones:** 20 AI engineers en Colombia activos en LinkedIn (los que publican, no solo están), 10 CTOs/VPs Engineering de empresas medianas en Medellín/Bogotá, 10 reclutadores de empresas tech que contratan IA en LATAM, 10 personas del ecosistema de comunidades de IA (organizadores de meetups, líderes de Discord de IA en español).",
+              "criterios_de_exito": [
+                "El headline proyecta identidad de AI Engineer, no 'estudiante de IA' o 'backend que quiere cambiar'",
+                "El 'Acerca de' menciona proyectos concretos con tecnologías específicas, no aspiraciones genéricas",
+                "El plan de contenido aprovecha la perspectiva única de Carlos (backend + IA) en lugar de publicar lo mismo que todos",
+                "Las 50 conexiones estratégicas incluyen personas que tienen el poder de contratarlo o recomendarlo, no solo pares"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Tu roadmap personal hacia Octubre 2026",
+              "por_que_importa_despues": "Has recorrido todo el ecosistema de carrera en IA: roles, salarios, portafolio, GitHub, comunidades, visibilidad ante empresas top, y ahora LinkedIn. La última lección de M1 integra todo esto en un plan de acción personal y concreto. No un plan genérico — uno diseñado para tu punto de partida específico hoy, con hitos medibles, y con Octubre 2026 como fecha objetivo. Completar M1 sin un roadmap es como terminar un mapa del tesoro sin marcar la X."
             }
           }
         },
