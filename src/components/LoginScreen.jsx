@@ -1,11 +1,26 @@
 import { useState } from "react"
 
-const DEMO_USER = { email: "demo@estratek.com.co", password: "demo1234" }
+const USUARIOS_DEMO = [
+  { email: "demo@estratek.com.co",   password: "demo1234",     nombre: "Demo User",       rol: "estudiante" },
+  { email: "admin@estratek.com.co",  password: "admin1234",    nombre: "Administrador",   rol: "admin" },
+  { email: "paola@estratek.com.co",  password: "paola1234",    nombre: "Paola",           rol: "admin" },
+  { email: "equipo@estratek.com.co", password: "estratek2026", nombre: "Equipo Estratek", rol: "estudiante" },
+]
 const USERS_KEY = "aipath_users"
 const SESSION_KEY = "aipath_session"
 
 function getUsers() {
   try { return JSON.parse(localStorage.getItem(USERS_KEY) || "[]") } catch { return [] }
+}
+
+function findUser(email, password) {
+  // Demo users tienen prioridad
+  const demo = USUARIOS_DEMO.find(u => u.email === email && u.password === password)
+  if (demo) return demo
+  // Usuarios registrados
+  const users = getUsers()
+  const found = users.find(u => u.email === email && u.password === password)
+  return found ? { ...found, rol: "estudiante" } : null
 }
 
 export default function LoginScreen({ onLogin }) {
@@ -22,12 +37,10 @@ export default function LoginScreen({ onLogin }) {
     setLoading(true)
     setTimeout(() => {
       setLoading(false)
-      const isDemoUser = email === DEMO_USER.email && password === DEMO_USER.password
-      const users = getUsers()
-      const found = users.find(u => u.email === email && u.password === password)
-      if (isDemoUser || found) {
-        localStorage.setItem(SESSION_KEY, JSON.stringify({ email }))
-        onLogin(email)
+      const user = findUser(email, password)
+      if (user) {
+        localStorage.setItem(SESSION_KEY, JSON.stringify({ email: user.email, nombre: user.nombre, rol: user.rol || "estudiante" }))
+        onLogin(user.email)
       } else {
         setError("Credenciales incorrectas. Prueba demo@estratek.com.co / demo1234")
       }
@@ -38,7 +51,7 @@ export default function LoginScreen({ onLogin }) {
     e.preventDefault()
     setError("")
     if (password.length < 6) { setError("La contraseña debe tener al menos 6 caracteres."); return }
-    if (email === DEMO_USER.email) { setError("Ese email ya está registrado."); return }
+    if (USUARIOS_DEMO.find(u => u.email === email)) { setError("Ese email ya está registrado."); return }
     const users = getUsers()
     if (users.find(u => u.email === email)) { setError("Ese email ya está registrado."); return }
     setLoading(true)
