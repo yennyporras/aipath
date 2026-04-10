@@ -7237,33 +7237,99 @@
         },
         {
           "id": "m1-b8-l5",
-          "titulo": "Cuantización y optimización de modelos para reducir costos",
+          "titulo": "Latencia y throughput: métricas que importan",
           "bloque": 8,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Cuando despliegas IA en producción, dos métricas determinan si tu sistema es viable en el mundo real: latencia y throughput. Entenderlas no es opcional — son las métricas que definen si tu producto funciona o si los usuarios lo abandonan.\n\nLa latencia es el tiempo que tarda tu sistema en responder. Para LLMs, se descompone en componentes específicos. Time to First Token (TTFT) es el tiempo desde que envías la solicitud hasta que recibes el primer token de respuesta; esto determina cuánto tarda el usuario en ver algo en pantalla. Tokens per Second (TPS) es la velocidad de generación una vez que el modelo empieza a responder. Total response time es el tiempo completo hasta la última palabra. Para una aplicación de chat interactivo, el TTFT es lo más crítico: los usuarios toleran que el texto aparezca progresivamente (streaming), pero no toleran pantallas en blanco por 3-5 segundos antes de que empiece nada.\n\nValores de referencia reales: GPT-4o tiene TTFT típico de 500ms-1.5s. Claude Sonnet: 300ms-1s. Groq (con hardware LPU especializado): 50-200ms, notablemente más rápido. Latencia end-to-end en producción agrega red, procesamiento previo/posterior, bases de datos, etc. Un sistema bien diseñado tiene latencia percibida (TTFT) bajo 500ms para sentirse responsivo.\n\nEl throughput es cuántas solicitudes puede manejar tu sistema simultáneamente por unidad de tiempo: solicitudes por segundo o tokens por segundo en paralelo. Las APIs externas tienen límites de rate (Claude: hasta 1,000 RPM en planes estándar, más en enterprise; OpenAI similar). Si tienes picos de demanda —digamos, 500 usuarios concurrentes en una plataforma educativa— necesitas calcular si el throughput de tu backend los soporta sin errores 429 (rate limit exceeded).\n\nOtras métricas importantes: p50 (mediana) vs p95 vs p99. El p50 puede ser excelente pero si el p99 es 10 segundos, el 1% de tus usuarios tiene una experiencia terrible. En producción, el p95 suele ser el objetivo de SLA. Error rate: porcentaje de solicitudes que fallan por timeout, rate limit, o error del modelo. Una buena arquitectura de producción tiene retry logic, circuit breakers, y fallbacks para cuando el proveedor primario falla. Context window size impacta latencia: procesar 128K tokens tarda más que 2K tokens en el mismo modelo.",
+              "analogia": "La latencia es como el tiempo que tarda el mesero en traerte el menú después de sentarte. El throughput es cuántas mesas puede atender el restaurante simultáneamente. Un restaurante con latencia baja (mesero rápido) pero bajo throughput (solo 5 mesas) colapsa en hora pico. Necesitas optimizar ambas según tu patrón de uso: ¿muchos usuarios simultáneos con preguntas cortas (throughput crítico) o pocos usuarios con análisis largos (latencia crítica)?",
+              "ejemplo_malo": "Una empresa construye un asistente de atención al cliente sin medir latencia durante desarrollo. En producción con 200 usuarios concurrentes, descubren que el TTFT promedio es 4.5 segundos porque el sistema hace 3 llamadas secuenciales a la API antes de responder (primero clasifica la intención, luego busca en base de datos, luego genera la respuesta). El 40% de los usuarios abandona antes de ver la respuesta. La solución habría sido paralelizar las primeras dos llamadas y optimizar el pipeline, reduciendo TTFT a 1.2 segundos.",
+              "ejemplo_bueno": "Una plataforma de tutoring con IA en LATAM mide latencia desde el día uno. Configuran: (1) streaming para mostrar el primer token en <400ms mientras el resto sigue llegando, (2) caché de respuestas frecuentes (las 100 preguntas más comunes responden en <50ms desde caché), (3) un modelo rápido (Claude Haiku) para clasificación previa y el modelo completo (Claude Sonnet) solo cuando es necesario. Resultado: TTFT percibido de 200ms para el 80% de solicitudes, con p95 de 800ms. Engagement aumentó 35% vs la versión sin optimización.",
+              "por_que_importa": "La latencia es directamente visible para el usuario final y afecta tasas de conversión, satisfacción y retención. Amazon midió que 100ms de latencia adicional reduce ventas 1%. Para IA, los estándares son similares: usuarios abandona chatbots que tardan más de 3-4 segundos en responder. El throughput determina cuántos usuarios simultáneos puedes soportar sin degradación. Para proyectos en LATAM con presupuesto ajustado, optimizar latencia y throughput puede significar la diferencia entre necesitar 2 réplicas o 10 réplicas de un servicio, con un impacto directo en costos.",
+              "tip_profesional": "Implementa siempre streaming (stream=True en la API de Claude/OpenAI) para aplicaciones interactivas. El usuario ve texto aparecer progresivamente, lo cual se percibe como más rápido aunque el tiempo total sea el mismo. Para métricas, usa OpenTelemetry con trazas distribuidas que capturen TTFT, TPS, y latencia por componente. Prometheus + Grafana es el stack estándar para monitorear esto en producción. Define SLAs antes de lanzar: ej., 'p95 TTFT < 1 segundo, error rate < 0.5%'."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "Un usuario de un chatbot de atención al cliente se queja de que 'la respuesta tarda mucho' aunque cuando llega es completa y correcta. ¿Qué métrica específica está probablemente alta?",
+                "opciones": [
+                  "Tokens per second (TPS), porque el modelo genera texto muy lentamente",
+                  "Time to First Token (TTFT), porque el usuario espera sin ver nada antes de que empiece la respuesta",
+                  "Total context window usado, porque el modelo procesa demasiado contexto",
+                  "Error rate, porque el sistema está fallando silenciosamente antes de responder"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El TTFT (Time to First Token) es la métrica más crítica para la experiencia percibida del usuario en aplicaciones interactivas. Los usuarios humanos toleran mucho mejor ver texto que aparece progresivamente (aunque tarde 3 segundos en completarse) que esperar en una pantalla en blanco. Si el TTFT es alto — digamos 4-5 segundos antes de que aparezca el primer carácter — el usuario percibe el sistema como lento aunque la velocidad de generación posterior sea rápida. La solución típica es implementar streaming y optimizar las operaciones que ocurren antes de la primera llamada al modelo (validación, búsqueda en base de datos, construcción del prompt). El TPS alto en sí mismo raramente causa quejas si el TTFT es bajo.",
+                "concepto_reforzado": "Time to First Token (TTFT) como métrica principal de experiencia percibida en aplicaciones de IA conversacional"
+              },
+              {
+                "pregunta": "¿Qué significa un p95 de latencia de 2 segundos en un sistema de IA?",
+                "opciones": [
+                  "El 95% de las solicitudes tardan exactamente 2 segundos en procesarse",
+                  "El 95% de las solicitudes tardan 2 segundos o menos, y solo el 5% más lento tarda más",
+                  "El sistema falla el 5% del tiempo y cuando falla tarda 2 segundos en recuperarse",
+                  "En picos de carga, el sistema tarda 2 segundos, pero en condiciones normales es más rápido"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los percentiles (p50, p95, p99) son la forma correcta de medir latencia en sistemas distribuidos. El p95 de 2 segundos significa que el 95% de todas las solicitudes se procesan en 2 segundos o menos — solo el 5% más lento supera ese umbral. La mediana (p50) puede ser excelente (ej., 400ms) pero si el p99 es 15 segundos, un 1% de tus usuarios tiene una experiencia terrible, lo cual puede ser inaceptable dependiendo del volumen. Los SLAs de producción generalmente se definen en p95 o p99 porque protegen a la mayoría de usuarios, no solo al caso promedio. Usar solo el promedio para medir latencia es engañoso porque enmascara los casos extremos que más afectan la satisfacción del usuario.",
+                "concepto_reforzado": "Percentiles de latencia (p50, p95, p99) como métricas más representativas que el promedio simple"
+              },
+              {
+                "pregunta": "Una plataforma tiene 500 usuarios concurrentes enviando solicitudes a un LLM. El proveedor de API tiene un límite de 100 RPM (requests per minute). ¿Cuál es el throughput máximo posible por usuario?",
+                "opciones": [
+                  "100 RPM total entre todos, lo que equivale a aproximadamente 1 solicitud cada 5 minutos por usuario activo",
+                  "500 RPM porque cada usuario tiene su propio límite independiente",
+                  "Depende solo de la latencia de cada respuesta individual, no del rate limit",
+                  "100 RPM se distribuye automáticamente entre todos los usuarios sin impacto"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "Los rate limits de las APIs son límites globales para una API key o cuenta, no por usuario final. Con 100 RPM compartidos entre 500 usuarios concurrentes, en el peor caso solo puedes atender ~12 solicitudes por segundo (100/60 × 500/500) — es decir, cada usuario activo podría esperar varios minutos entre solicitudes si todos solicitan simultáneamente. La solución incluye: (1) múltiples API keys repartidas por grupos de usuarios, (2) cola de solicitudes con priorización, (3) caché agresivo para respuestas repetibles, (4) planes enterprise con límites más altos, o (5) self-hosting para eliminar el rate limit externo. Este tipo de cálculo de throughput es crítico antes de lanzar cualquier producto de IA a escala.",
+                "concepto_reforzado": "Rate limits como restricción de throughput compartida y estrategias para gestionar usuarios concurrentes"
+              },
+              {
+                "pregunta": "¿Por qué implementar streaming (mostrar tokens mientras se generan) mejora la experiencia del usuario aunque el tiempo total de respuesta sea el mismo?",
+                "opciones": [
+                  "Porque el streaming reduce el consumo de tokens y por lo tanto baja el costo de la API",
+                  "Porque el usuario percibe progreso inmediato y la espera se siente más corta aunque dure igual",
+                  "Porque el streaming permite cancelar la solicitud a mitad si el usuario no está satisfecho, ahorrando compute",
+                  "Porque las APIs con streaming tienen prioridad de procesamiento sobre las solicitudes normales"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El streaming es una técnica de UX tanto como una técnica técnica. Psicológicamente, los humanos toleran mucho mejor la espera cuando hay feedback visual de progreso. Ver texto aparecer carácter a carácter desde los primeros 200-300ms activa la percepción de 'el sistema está trabajando y progresando', en contraste con una pantalla en blanco que activa incertidumbre ('¿se colgó? ¿está funcionando?'). Estudios de UX muestran que los tiempos de espera percibidos son significativamente menores con feedback progresivo. El tiempo total puede ser idéntico, pero la experiencia es radicalmente diferente. La posibilidad de cancelar a mitad es un beneficio secundario real (y sí ahorra tokens de output no generados), pero no es la razón principal por la que el streaming mejora la experiencia.",
+                "concepto_reforzado": "Streaming como técnica de UX que reduce la latencia percibida independientemente de la latencia real"
+              },
+              {
+                "pregunta": "¿Cuál es la principal ventaja de Groq sobre las APIs estándar de OpenAI o Anthropic en términos de latencia?",
+                "opciones": [
+                  "Groq usa modelos más pequeños que generan texto más rápido aunque con menor calidad",
+                  "Groq tiene hardware LPU especializado que logra TTFT de 50-200ms vs 300ms-1.5s de los proveedores estándar",
+                  "Groq tiene servidores más cercanos a LATAM lo que reduce la latencia de red",
+                  "Groq procesa las solicitudes en caché en lugar de ejecutar el modelo en tiempo real"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Groq desarrolló hardware propio llamado LPU (Language Processing Unit), diseñado específicamente para inferencia de LLMs a diferencia de las GPUs que son de propósito más general. Esta especialización les permite alcanzar velocidades de inferencia notablemente más rápidas: TTFT típico de 50-200ms comparado con los 300ms-1.5s de los proveedores estándar. Esto los hace ideales para casos de uso donde la latencia ultra-baja es crítica: agentes de IA que necesitan múltiples llamadas en secuencia (donde la latencia se acumula), aplicaciones en tiempo real como transcripción o respuestas de voz, o aplicaciones móviles donde los usuarios esperan inmediatez. La limitación es que Groq sirve modelos open-source (Llama, Mixtral) cuya capacidad es inferior a GPT-4o o Claude Sonnet en tareas complejas, y tienen menor variedad de modelos.",
+                "concepto_reforzado": "Hardware especializado (LPU de Groq) como diferenciador de latencia vs GPUs de propósito general"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Eres el arquitecto de software de una plataforma de preparación para exámenes universitarios en Colombia (ICFES, admisiones). La plataforma lanzará en 3 semanas con 2,000 estudiantes en la primera cohorte. El flujo principal: el estudiante hace una pregunta de práctica → la IA explica la solución paso a paso → el estudiante puede hacer preguntas de seguimiento. Cada conversación tiene en promedio 5 intercambios. El equipo de producto exige que 'la respuesta empiece a aparecer en menos de 1 segundo'. Actualmente el prototipo tiene TTFT de 3.2 segundos porque: (1) valida el input del usuario en una primera llamada a Claude (~800ms), (2) busca el contexto del tema en una base de datos vectorial (~600ms), (3) construye el prompt y llama a Claude para la respuesta final (~1,800ms TTFT desde ese punto).",
+              "instruccion": "Analiza el pipeline actual e identifica qué optimizaciones podrías implementar para cumplir el requisito de <1 segundo de TTFT percibido. Prioriza las de mayor impacto. Considera también el throughput para 2,000 estudiantes activos en horario pico (asume que 20% están activos simultáneamente).",
+              "input_malo": "Cambiar a un modelo más rápido y listo. Si Groq es más rápido úsalo en todos los pasos.",
+              "pista": "¿Qué pasos del pipeline podrían ejecutarse en paralelo en lugar de secuencial? ¿Qué cambio de UX (sin cambiar el pipeline) podría reducir la latencia percibida? ¿Cuántos usuarios concurrentes son 20% de 2,000 y qué implica para el rate limit?",
+              "solucion": "Optimizaciones de mayor a menor impacto: (1) PARALELIZAR pasos 1 y 2: ejecutar la validación del input Y la búsqueda vectorial simultáneamente en lugar de secuencial. Esto reduce el tiempo previo de 1,400ms a ~800ms (el más lento de los dos en paralelo). (2) STREAMING en paso 3: habilitar stream=True para que los primeros tokens lleguen en ~800ms después del inicio. TTFT percibido bajaría de 3,200ms a ~1,600ms solo con esto. (3) CACHÉ de contextos frecuentes: los temas del ICFES son predecibles (matemáticas, lectura crítica, ciencias). Cachear los contextos vectoriales más consultados elimina los 600ms de búsqueda para el 60-70% de preguntas. Combinando (1)+(2)+(3): TTFT percibido ~400-600ms. Para throughput: 20% de 2,000 = 400 usuarios concurrentes. Con 5 intercambios por sesión y sesiones de ~20 minutos, el pico es ~100 RPM. El plan estándar de Claude maneja esto, pero conviene tener cola con exponential backoff para picos inesperados.",
+              "criterios_de_exito": [
+                "Identifica la paralelización de pasos 1 y 2 como optimización clave (eliminar secuencialidad)",
+                "Menciona el streaming como técnica para reducir TTFT percibido independientemente del tiempo total",
+                "Considera el throughput: calcula 400 usuarios concurrentes y evalúa si el rate limit es suficiente",
+                "Propone caché para el contexto vectorial de temas frecuentes como optimización de latencia y costo"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Edge computing con IA: el futuro cercano",
+              "por_que_importa_despues": "Entender latencia y throughput lleva naturalmente a preguntarse: ¿qué pasa si ejecutamos la IA más cerca del usuario, directamente en su dispositivo o en servidores locales? El edge computing con IA promete latencia ultra-baja y privacidad máxima porque el modelo corre sin tocar internet. La próxima lección explora cuándo esto es viable hoy y cuándo sigue siendo aspiracional."
             }
           }
         },
