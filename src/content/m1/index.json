@@ -9362,30 +9362,100 @@
         },
         {
           "id": "m1-b11-l5",
-          "titulo": "LinkedIn y visibilidad como experto en IA",
+          "titulo": "Comunidades esenciales para crecer en IA",
           "bloque": 11,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Ningún professional de IA crece en aislamiento — las comunidades son donde ocurre el aprendizaje real, las oportunidades de trabajo circulan antes de publicarse, y se construyen las conexiones que abren puertas que ninguna aplicación formal puede abrir. Pero no todas las comunidades tienen el mismo valor, y la forma de participar determina si obtienes beneficios o te quedas como lurker invisible.\n\nComunidades globales online de alto valor:\n\nHugging Face Community y Discord: la comunidad más activa de practitioners de IA en 2026. El Discord tiene canales por tema (LLMs, vision, audio, RLHF) con los autores de los papers y los creadores de las herramientas participando directamente. El foro de Hugging Face es donde se reportan issues, se discuten implementaciones, y se comparte trabajo nuevo. Para un AI engineer, estar activo aquí significa acceso directo al estado del arte.\n\nAnthropics Discord y Community Forum: Anthropic tiene comunidades donde se discuten mejores prácticas con Claude, casos de uso, y trucos de prompt engineering. Es también donde el equipo de Anthropic publica actualizaciones y responde preguntas directamente. Para quien quiere que Anthropic 'los note', esta comunidad es el lugar correcto.\n\nReddit (r/MachineLearning, r/LangChain, r/LocalLLaMA): r/MachineLearning tiene 3M+ miembros y es donde se discuten papers nuevos. r/LangChain y r/LocalLLaMA son más prácticos, orientados a implementación. La calidad del contenido es alta cuando se participa con posts substantivos.\n\nTwitter/X: la comunidad de IA más activa en tiempo real. Los investigadores de Anthropic, OpenAI, Google DeepMind, y los practicioners más visibles del mundo comparten actualizaciones diarias aquí. Seguir a Andrej Karpathy, Yann LeCun, Harrison Chase (LangChain), y los investigadores de las empresas top da acceso al conocimiento antes de que llegue a artículos. Participar con comentarios de valor (no solo likes) construye visibilidad.\n\nComunidades de LATAM específicas (en español): Existen comunidades de Slack y Discord orientadas a practitioners latinoamericanos: LatamAI, Comunidad IA Colombia, AI Latam en LinkedIn Groups. Estas son más accesibles para hacer preguntas en español, conseguir referidos para trabajos locales, y encontrar colaboradores. La calidad técnica varía más que en comunidades globales pero el valor de networking local es alto.\n\nConferencias y meetups: NeurIPS, ICLR, y ICML son las conferencias académicas top — presentar ahí es para researchers con papers. Para practitioners, las conferencias como PyCon Colombia, PyData, y los meetups locales de IA tienen mejor ROI de tiempo. En Bogotá y Medellín hay meetups mensuales de IA y ML. Presentar en un meetup local sobre un proyecto real construye credibilidad local y contactos directos.\n\nLa estrategia de participación que funciona: el lurker (quien solo lee) obtiene información pero no visibilidad. La visibilidad viene de contribuir: responder preguntas con respuestas substantivas, compartir proyectos propios con honestidad sobre lo que funciona y lo que no, reportar problemas en issues con información reproducible, y hacer preguntas que demuestran que pensaste antes de preguntar. Una respuesta bien escrita que ayuda a alguien en un foro público te hace visible ante todos los que leen el hilo — potencialmente miles de personas.",
+              "analogia": "Las comunidades de IA son como los gremios de artesanos medievales: los secretos del oficio no están en los libros — están en las conversaciones entre maestros y aprendices. Un artesano que solo lee libros de carpintería aprende menos que uno que trabaja en el taller con un maestro y otros aprendices. Las comunidades online son ese taller en el mundo moderno: el acceso a practitioners que han resuelto tu mismo problema exacto, antes de que cualquier tutorial cubra el tema.",
+              "ejemplo_malo": "Una AI engineer se une a 12 comunidades de IA en Slack, Discord y Reddit el mismo día. Las primeras 2 semanas revisa todos los mensajes pero sin responder nada — 'aún no sé suficiente para contribuir'. A los 3 meses aún no ha publicado nada. Su nombre no aparece en ninguna conversación. Cuando busca trabajo, nadie la recomienda porque nadie la conoce. Las comunidades de las que extrajo conocimiento valioso no generaron ningún retorno de visibilidad porque nunca contribuyó.",
+              "ejemplo_bueno": "Un AI engineer se une a 2 comunidades específicas (Hugging Face Discord y una comunidad LATAM en español). En la primera semana responde 3 preguntas donde realmente sabe la respuesta — con código ejecutable y explicación del por qué. Comparte un proyecto propio con honestidad: 'construí esto, funcionó bien para X pero tuvo estos problemas con Y, ¿alguien ha resuelto esto?'. En 2 meses tiene 50 conexiones de calidad, fue mencionado en una oferta de trabajo privada ('conozco a alguien que puede ayudarte'), y un researcher de Hugging Face comentó su proyecto positivamente. La estrategia: pocas comunidades, alta participación, valor real.",
+              "por_que_importa": "El 70% de los trabajos en tecnología se consiguen por referidos, no por aplicaciones directas. Las comunidades son donde se construyen esos referidos. Para LATAM, donde el mercado de IA aún está en formación y las conexiones personales tienen alto peso cultural en las decisiones de negocio, ser conocido y valorado en la comunidad local es especialmente poderoso. Una persona en una comunidad que puede decir 'conozco a alguien muy bueno en esto' vale más que cualquier proceso formal de selección.",
+              "tip_profesional": "La regla del 90/9/1 en comunidades online: el 90% solo lee, el 9% reacciona (likes, votos), y el 1% crea contenido o responde substantivamente. Para visibilidad, solo necesitas estar en el 9% consistentemente — no en el 1%. Eso significa comentar con valor en al menos 3 posts por semana en cada comunidad activa. No necesita ser largo — 'probé X approach y funcionó mejor porque [razón técnica específica]' en 3 líneas bien escritas es más valioso que un ensayo."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué el lurker (alguien que solo lee pero no contribuye) en comunidades de IA obtiene valor limitado a largo plazo?",
+                "opciones": [
+                  "Porque las comunidades tienen filtros que limitan el acceso a quienes no contribuyen activamente",
+                  "Porque la visibilidad, los referidos y las oportunidades de trabajo requieren que la comunidad te conozca, lo cual solo ocurre participando",
+                  "Porque leer sin practicar es la forma menos eficiente de aprender IA técnicamente",
+                  "Porque las comunidades penalizan el lurking con bans o restricciones de acceso"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El lurking es la forma de menor retorno de inversión de tiempo en comunidades profesionales. Obtienes información — que también puedes obtener de documentación, artículos y cursos — pero no obtienes los beneficios que solo las comunidades pueden dar: visibilidad ante practitioners que pueden referirte, retroalimentación directa en tu trabajo, acceso a oportunidades que circulan informalmente antes de publicarse, y la reputación de ser alguien confiable y valioso en el campo. El 70% de los empleos tech se consiguen por referidos — y los referidos vienen de personas que te conocen. No puedes ser referido por alguien que nunca vio tu nombre en una conversación. Contribuir no requiere ser el más experto de la sala — requiere tener algo genuinamente útil que decir, aunque sea en forma de pregunta bien articulada o de experiencia honesta compartida.",
+                "concepto_reforzado": "Participación activa vs lurking en comunidades: visibilidad y referidos como beneficios exclusivos de quienes contribuyen"
+              },
+              {
+                "pregunta": "¿Cuál es la comunidad online más apropiada para un AI practitioner en LATAM que quiere conectar con el estado del arte internacional en tiempo real?",
+                "opciones": [
+                  "LinkedIn Groups de IA en español, por la relevancia del idioma y el contexto regional",
+                  "Twitter/X, donde los investigadores de Anthropic, OpenAI, y DeepMind comparten actualizaciones diarias antes de que lleguen a artículos",
+                  "Stack Overflow, donde se resuelven preguntas técnicas específicas con alta calidad",
+                  "YouTube, donde los mejores educators de IA publican contenido gratuito de alta calidad"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Twitter/X es la plataforma donde la comunidad de investigación y desarrollo de IA es más activa en tiempo real. Andrej Karpathy (ex-Tesla, ex-OpenAI), Yann LeCun (Meta AI), los investigadores de Anthropic y OpenAI, y los maintainers de proyectos como LangChain y Hugging Face comparten actualizaciones, debates, y code snippets directamente ahí antes de que lleguen a blog posts o papers. Un paper que se publicó hoy en Arxiv ya tiene análisis y debate en Twitter/X esa misma tarde. Seguir a las personas correctas (no necesariamente las más famosas, sino las más técnicamente activas en tu área de interés) da acceso a un nivel de actualización imposible de obtener en ninguna otra plataforma. El riesgo es el ruido — la estrategia es curar cuidadosamente a quién seguir.",
+                "concepto_reforzado": "Twitter/X como plataforma de información en tiempo real del estado del arte de IA con acceso directo a investigadores líderes"
+              },
+              {
+                "pregunta": "¿Cuál es la estrategia de participación en comunidades que genera mayor retorno de visibilidad con menor inversión de tiempo?",
+                "opciones": [
+                  "Unirse al mayor número posible de comunidades para maximizar el alcance",
+                  "Publicar contenido en todas las plataformas simultáneamente con herramientas de automatización",
+                  "Participar con alta calidad en pocas comunidades seleccionadas — respuestas substantivas, proyectos propios, preguntas bien articuladas",
+                  "Ser el primero en responder todos los posts nuevos para maximizar la visibilidad temporal"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "La regla de calidad sobre cantidad aplica perfectamente a participación en comunidades. Una respuesta de 5 líneas que realmente resuelve el problema de alguien, con código que funciona y explicación del razonamiento, genera más visibilidad y credibilidad que 50 respuestas de 'sí, +1' o 'esto me ayudó'. La visibilidad en comunidades técnicas se construye por ser reconocido como alguien que aporta valor real — y esa reputación requiere consistencia en pocas comunidades, no presencia superficial en muchas. Participar en 2-3 comunidades con contribuciones de calidad semanal es más efectivo que unirse a 20 comunidades y no contribuir en ninguna. Ser el primero en responder sin asegurarse de que la respuesta es correcta puede dañar la reputación en lugar de construirla.",
+                "concepto_reforzado": "Calidad sobre cantidad en participación en comunidades: pocas comunidades con alta contribución vs muchas con presencia superficial"
+              },
+              {
+                "pregunta": "¿Por qué presentar en un meetup local de IA en Bogotá o Medellín tiene alto ROI para un practitioner colombiano?",
+                "opciones": [
+                  "Porque los meetups locales tienen más audiencia que las conferencias internacionales como NeurIPS",
+                  "Porque construye credibilidad local y contactos directos con practitioners y empresas del mercado que te interesa, con menor nivel de dificultad de acceso",
+                  "Porque las empresas colombianas solo contratan a profesionales que han presentado en meetups locales",
+                  "Porque los meetups locales son transmitidos internacionalmente y aumentan la visibilidad global"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El ROI alto de presentar en un meetup local viene de tres factores: (1) accesibilidad — una presentación de 15-20 minutos sobre un proyecto propio es accesible para cualquier practitioner, a diferencia de un paper en NeurIPS que requiere años de investigación, (2) audiencia relevante — las personas en el meetup de IA de Bogotá son exactamente las que contratan o recomiendan en el mercado local que te interesa, (3) contacto directo — después de una presentación, 5-10 personas se acercan a conversar directamente, creando conexiones de alta calidad que ninguna aplicación digital puede replicar. En LATAM, donde las relaciones personales tienen alto peso en decisiones de negocio y contratación, una red de contactos directos construida en meetups locales es un activo profesional de primer orden.",
+                "concepto_reforzado": "Meetups locales de IA como plataforma de alto ROI para construir credibilidad y contactos directos en el mercado colombiano"
+              },
+              {
+                "pregunta": "¿Cuál es la regla de participación que permite estar en el 9% activo de una comunidad online sin inversión excesiva de tiempo?",
+                "opciones": [
+                  "Publicar al menos un artículo técnico original por semana en cada comunidad activa",
+                  "Comentar con valor en al menos 3 posts por semana en cada comunidad activa, con observaciones técnicas específicas",
+                  "Responder solo preguntas sobre temas donde tienes experiencia profunda de 3+ años",
+                  "Ser activo solo durante los primeros 3 meses de unirse a la comunidad para causar una primera impresión fuerte"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La regla del 90/9/1 describe la distribución de participación en comunidades online: el 90% solo consume contenido (lurkers), el 9% reacciona y comenta, y el 1% crea contenido original. Para visibilidad profesional, estar consistentemente en el 9% es suficiente y más sostenible que intentar estar en el 1% (que requiere crear contenido original constantemente). Tres comentarios de calidad por semana en una comunidad activa equivale a ~150 contribuciones al año — suficiente para ser reconocible y valorado. La clave es 'calidad': no 'me gusta' o 'gracias' — sino observaciones técnicas específicas, experiencias propias relevantes, o preguntas que demuestran pensamiento previo. Esta cadencia es sostenible indefinidamente y genera presencia consistente que construye reputación gradualmente.",
+                "concepto_reforzado": "Regla del 90/9/1 en comunidades y estrategia de estar en el 9% activo con 3 contribuciones de calidad semanales"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Laura es una developer colombiana que está comenzando su transición hacia IA. No tiene conexiones en el ecosistema de IA, no ha participado en ninguna comunidad antes, y siente que 'aún no sabe suficiente para contribuir'. Tiene 30 minutos diarios para dedicar a actividades de comunidad. Su objetivo: en 3 meses, ser conocida en al menos una comunidad donde pueda conseguir referidos para una posición de Prompt Engineer.",
+              "instruccion": "Diseña el plan de comunidades de 3 meses para Laura. Define: cuáles 2-3 comunidades específicas elegir y por qué, qué tipo de participación inicial cuando aún 'no sabe suficiente', cómo escalar la participación en el tiempo, y cómo medir si está funcionando.",
+              "input_malo": "Unirse a todas las comunidades de IA disponibles y publicar en cada una que está 'aprendiendo IA y buscando trabajo' para conseguir referencias.",
+              "pista": "¿Cuáles comunidades tienen contenido directamente relevante para Prompt Engineering? ¿Qué puede contribuir alguien que está aprendiendo y tiene preguntas reales? Una pregunta bien articulada que no se puede resolver con una búsqueda rápida es una contribución valiosa.",
+              "solucion": "Plan 3 meses con 30 min/día: COMUNIDADES ELEGIDAS (solo 2): (1) Hugging Face Discord #llm-prompt-engineering: directamente relevante a su objetivo de Prompt Engineer, comunidad técnica de alta calidad, accesible para preguntas bien formuladas. (2) Una comunidad LATAM en español (LatamAI Discord o Comunidad IA Colombia): para networking local con menor barrera de idioma, donde conseguir referidos para el mercado colombiano. MES 1 (lurker activo → participante): Semanas 1-2: leer sin presión, identificar 5 personas cuyas respuestas son consistentemente de alta calidad. Semanas 3-4: hacer la primera pregunta real, bien articulada: 'estoy implementando un sistema de evaluación de prompts para [caso específico] y encontré que [observación], ¿alguien tiene experiencia con este approach vs [alternativa]?'. Una pregunta real bien formulada es bienvenida. MES 2 (contribución regular): Una respuesta substantiva por semana donde genuinamente sabe algo útil (basada en sus proyectos AIPath). Compartir un proyecto pequeño con honestidad. MES 3 (visibilidad establecida): Presentar su proyecto de portafolio en el canal #showcase. Ofrecer revisión de prompts de otros a cambio de feedback. MEDICIÓN: ¿tiene al menos 5 conexiones directas que respondieron positivamente a su trabajo? ¿Alguien la mencionó en una conversación sobre Prompt Engineering? Esos son los indicadores de que está funcionando.",
+              "criterios_de_exito": [
+                "Elige solo 2 comunidades específicas y relevantes al objetivo, no 10+ comunidades genéricas",
+                "Reconoce que hacer preguntas bien articuladas es una contribución válida cuando se está aprendiendo",
+                "El plan tiene progresión gradual: lurker activo → participante → contributor, no arranca publicando como experta",
+                "Define métricas concretas de éxito (conexiones directas, menciones) en lugar de métricas de vanidad (número de likes)"
+              ]
             },
+            "conexion": {
+              "siguiente_concepto": "Cómo que Anthropic y empresas top te noten",
+              "por_que_importa_despues": "Las comunidades construyen tu red local y global. Pero hay un nivel adicional: cómo hacer que las empresas más importantes del ecosistema de IA — Anthropic, OpenAI, Hugging Face, las mejores startups — te encuentren activamente. La siguiente lección enseña las estrategias específicas para posicionarte ante los employers más selectivos del mercado de IA global."
+            }
             "conexion": {
               "siguiente_concepto": "",
               "por_que_importa_despues": ""
