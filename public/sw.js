@@ -1,10 +1,9 @@
-const CACHE_NAME = 'estratek-ia-v1.0.0'
+const CACHE_NAME = 'aipath-v1'
 
 const PRECACHE_URLS = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/etk-logo-white.png',
   '/icon-192.png',
   '/icon-512.png'
 ]

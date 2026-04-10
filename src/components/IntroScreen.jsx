@@ -46,7 +46,10 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
       {/* Header — solo móvil/tablet; en desktop lo muestra la sidebar */}
       <div className="text-center mb-8 lg:mb-6">
         <div className="animate-reveal mb-5 lg:hidden">
-          <img src="/etk-logo-white.png" alt="Estratek IA Academy" className="h-14 w-auto mx-auto opacity-90" />
+          <div className="aipath-logo justify-center">
+            <span className="logo-text">AI</span>
+            <span className="logo-accent">Path</span>
+          </div>
         </div>
         <p className="font-display text-[11px] font-bold uppercase tracking-[0.3em] animate-reveal"
           style={{ color: "var(--color-text-muted)", animationDelay: "80ms" }}>
@@ -207,7 +210,7 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
           <p className="text-4xl mb-2">🏆</p>
           <p className="font-display text-lg font-bold text-gradient">¡M4 completado y certificado!</p>
           <p style={{ fontSize: "12px", color: "var(--color-text-muted)", marginTop: "4px" }}>
-            Eres Prompt Engineer Profesional Estratek
+            Eres Prompt Engineer Profesional AIPath
           </p>
         </div>
       )}

@@ -1,10 +1,10 @@
 import { useState } from "react"
 
 const USUARIOS_DEMO = [
-  { email: "demo@estratek.com.co",   password: "demo1234",     nombre: "Demo User",       rol: "estudiante" },
-  { email: "admin@estratek.com.co",  password: "admin1234",    nombre: "Administrador",   rol: "admin" },
-  { email: "paola@estratek.com.co",  password: "paola1234",    nombre: "Paola",           rol: "admin" },
-  { email: "equipo@estratek.com.co", password: "estratek2026", nombre: "Equipo Estratek", rol: "estudiante" },
+  { email: "demo@aipath.app",  password: "demo1234",  nombre: "Demo User",   rol: "estudiante" },
+  { email: "admin@aipath.app", password: "admin1234", nombre: "Admin",       rol: "admin" },
+  { email: "paola@aipath.app", password: "paola1234", nombre: "Paola",       rol: "admin" },
+  { email: "ai@aipath.app",    password: "aipath2026",nombre: "AI Learner",  rol: "estudiante" },
 ]
 const USERS_KEY   = "aipath_users"
 const SESSION_KEY = "aipath_session"
@@ -39,7 +39,7 @@ export default function LoginScreen({ onLogin }) {
         localStorage.setItem(SESSION_KEY, JSON.stringify({ email: user.email, nombre: user.nombre, rol: user.rol || "estudiante" }))
         onLogin(user.email)
       } else {
-        setError("Credenciales incorrectas. Prueba demo@estratek.com.co / demo1234")
+        setError("Credenciales incorrectas. Prueba demo@aipath.app / demo1234")
       }
     }, 600)
   }
