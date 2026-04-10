@@ -7989,7 +7989,7 @@
         },
         {
           "id": "m1-b9-l5",
-          "titulo": "Derechos de autor e IA generativa: el debate legal",
+          "titulo": "Regulación de IA en LATAM 2026",
           "bloque": 9,
           "tipo": "leccion",
           "duracion_min": 20,
@@ -8003,7 +8003,68 @@
               "por_que_importa": "",
               "tip_profesional": ""
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué país de LATAM tiene la regulación de IA más avanzada al inicio de 2026 y qué enfoque adoptó?",
+                "opciones": [
+                  "Brasil, con la Ley 14.874/2024 que regula el uso de IA con enfoque basado en riesgos similar al EU AI Act",
+                  "México, con la Ley Federal de Inteligencia Artificial aprobada en 2023",
+                  "Colombia, con el Decreto 1494/2023 que prohibió la IA en decisiones judiciales",
+                  "Argentina, con la Estrategia Nacional de IA que tiene fuerza de ley desde 2022"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "Brasil lidera la regulación de IA en LATAM. La Ley 14.874/2024 de IA (aprobada por el Senado en diciembre 2024, sancionada por el presidente Lula) adoptó un enfoque basado en riesgos inspirado en el EU AI Act: clasifica sistemas de IA según impacto potencial, establece requisitos de transparencia y no discriminación, y crea una Autoridad Nacional de IA. Brasil tiene ventaja regulatoria porque ya contaba con la LGPD (Lei Geral de Proteção de Dados de 2020, equivalente al GDPR), lo que facilitó extender ese marco a IA. México tiene iniciativas legislativas pero sin ley aprobada al inicio de 2026. Colombia publicó guías y lineamientos no vinculantes. Argentina tiene su Estrategia Nacional de IA pero sin fuerza legal vinculante. Para desarrolladores de IA en LATAM, Brasil es el único mercado con regulación vinculante específica de IA, similar a operar en Europa con el EU AI Act.",
+                "concepto_reforzado": "Estado de la regulación de IA en LATAM: Brasil como líder regional"
+              },
+              {
+                "pregunta": "Colombia publicó en 2023 los 'Lineamientos de IA' del MinTIC. ¿Qué tipo de instrumento son y qué implicación legal tienen para una startup colombiana?",
+                "opciones": [
+                  "Son guías de política pública no vinculantes: recomendaciones sin fuerza de ley, pero que señalan hacia dónde irá la regulación futura",
+                  "Son normas técnicas obligatorias equivalentes a una ley aprobada por el Congreso",
+                  "Son requisitos de certificación obligatoria para exportar software de IA a otros países",
+                  "Son contratos de adhesión que las startups deben firmar para acceder a financiación pública"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "Los Lineamientos de Política de Inteligencia Artificial del MinTIC de Colombia (2023) son documentos de política pública que establecen principios, recomendaciones y buenas prácticas. No tienen fuerza de ley porque no fueron aprobados como ley por el Congreso ni como decreto con fuerza ejecutiva. Para una startup colombiana, esto significa que técnicamente no son obligatorios — pero son señales importantes del marco regulatorio que vendrá. Ignorarlos completamente sería imprudente por tres razones: (1) establecen las expectativas del gobierno para licitaciones y contratos públicos, (2) los principios que articulan (transparencia, no discriminación, privacidad) probablemente serán la base de legislación futura, y (3) construir conforme a estos lineamientos desde el inicio es más barato que rediseñar cuando la ley llegue. El modelo LATAM actual es: guías voluntarias hoy → ley obligatoria en 2-5 años, siguiendo el camino de la LGPD brasileña.",
+                "concepto_reforzado": "Lineamientos no vinculantes de IA en Colombia y su relevancia práctica"
+              },
+              {
+                "pregunta": "¿Por qué es una ventaja competitiva para una empresa LATAM conocer la regulación de IA global (EU AI Act, Executive Order de EE.UU.) aunque opere localmente?",
+                "opciones": [
+                  "Porque las regulaciones LATAM futuras se basarán en esos marcos, y adaptarse ahora evita costos de rediseño; además abre mercados internacionales",
+                  "Porque el EU AI Act aplica directamente en Colombia y México aunque no sean miembros de la UE",
+                  "Porque EE.UU. y Europa exigen certificación de cumplimiento para cualquier API de IA importada",
+                  "Porque los inversores internacionales solo financian startups que ya tienen certificación de compliance regulatorio"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "El conocimiento de regulaciones internacionales da ventaja competitiva en LATAM por múltiples razones: (1) Convergencia regulatoria: las leyes de IA en LATAM se inspirarán en el EU AI Act y marcos similares, como la LGPD brasileña se inspiró en el GDPR. Cumplir hoy con estándares europeos es anticipar la regulación local de 2027-2030. (2) Acceso a mercados: una startup que puede demostrar compliance con EU AI Act puede vender en Europa y a multinacionales que operan en LATAM con estándares globales. (3) Diferenciación: en un mercado donde la mayoría ignora la regulación, el compliance se convierte en argumento de venta para clientes corporativos que tienen exposición internacional. (4) Fundraising: fondos de venture capital con presencia global evalúan el riesgo regulatorio de sus inversiones. Una startup que entiende y gestiona compliance reduce ese riesgo percibido. El EU AI Act no aplica directamente en Colombia, pero su influencia es inevitable.",
+                "concepto_reforzado": "Ventaja competitiva del compliance regulatorio internacional para startups LATAM"
+              },
+              {
+                "pregunta": "¿Cuál es el principal desafío de los países LATAM para regular la IA comparado con Europa?",
+                "opciones": [
+                  "Menor capacidad institucional y técnica en agencias reguladoras, lo que dificulta supervisar sistemas complejos de IA",
+                  "Las constituciones latinoamericanas prohíben regular tecnología emergente sin precedente judicial",
+                  "LATAM tiene más empresas de IA que Europa, lo que hace imposible supervisarlas todas",
+                  "Los idiomas español y portugués no tienen terminología técnica para regular IA correctamente"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "El principal desafío de la regulación de IA en LATAM es la brecha de capacidad institucional. Europa construyó el EU AI Act sobre décadas de regulación tecnológica (GDPR, directivas de e-commerce), tiene agencias de protección de datos robustas en cada país miembro, y puede contratar expertos técnicos para las autoridades supervisoras. En LATAM, muchas agencias reguladoras tienen presupuestos limitados, alta rotación de personal técnico calificado, y poca experiencia previa regulando sistemas de software complejos. Esto crea el riesgo de 'regulatory capture' (donde las mismas empresas que deben ser reguladas terminan diseñando las reglas) y de leyes que se aprueban pero no se aplican por falta de capacidad de supervisión. Adicionalmente, LATAM enfrenta el dilema de innovación vs protección: regular demasiado puede ahuyentar inversión en IA, regular poco puede permitir daños significativos. Brasil es la excepción relativa con la ANPD (Autoridad Nacional de Protección de Datos) como precedente institucional.",
+                "concepto_reforzado": "Brecha de capacidad institucional en regulación de IA en LATAM"
+              },
+              {
+                "pregunta": "Una empresa chilena usa reconocimiento facial para control de acceso de empleados. ¿Bajo qué marcos legales latinoamericanos podría estar sujeta esta práctica en 2026?",
+                "opciones": [
+                  "La Ley 21.096 (reforma constitucional de protección de datos en Chile) y la Ley 19.628 de protección de datos privados, que regulan el tratamiento de datos biométricos",
+                  "Solo el EU AI Act si exporta sus servicios a Europa, sin regulación local aplicable",
+                  "El Código Penal chileno artículo 161-B que prohíbe cualquier sistema de identificación automatizada",
+                  "Sin marco regulatorio aplicable porque Chile no tiene ley de protección de datos vigente en 2026"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "Chile tiene regulación de datos personales que aplica al reconocimiento facial. La Ley 21.096 (2018) incorporó la protección de datos a la Constitución chilena como derecho fundamental. La Ley 19.628 sobre protección de la vida privada regula el tratamiento de datos personales, y los datos biométricos como huellas dactilares o patrones faciales son categorizados como datos sensibles que requieren consentimiento explícito del titular. Adicionalmente, Chile aprobó en 2024 una nueva Ley de Protección de Datos Personales (que moderniza la 19.628) que fortalece los derechos de los titulares incluyendo datos biométricos. Para el control de acceso de empleados con reconocimiento facial, se requiere: base legal clara (contrato laboral o consentimiento explícito), finalidad específica y proporcional, medidas de seguridad adecuadas, y posibilidad de optar por alternativas de identificación. El uso desproporcionado podría constituir vulneración de derechos fundamentales.",
+                "concepto_reforzado": "Marco legal chileno para datos biométricos y reconocimiento facial"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
               "contexto": "",
