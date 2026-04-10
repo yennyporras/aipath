@@ -6743,33 +6743,98 @@
         },
         {
           "id": "m1-b7-l8",
-          "titulo": "Red teaming: cómo probar los límites de un modelo",
+          "titulo": "Evaluación continua en producción",
           "bloque": 7,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Lanzar un modelo a producción no es el final del proceso de evaluación — es el comienzo de la más importante. La evaluación en producción enfrenta desafíos que no existen en el entorno de desarrollo: el volumen es masivo, los inputs son impredecibles, y la degradación de calidad puede ocurrir de formas sutiles que los sistemas de monitoreo estándar no detectan. Esta lección te da el framework para mantener la calidad de un modelo de IA activa y visible una vez está sirviendo usuarios reales.\n\n**Por qué la evaluación no termina al lanzar**\nUn modelo evaluado con 100 ejemplos en desarrollo enfrenta miles o millones de inputs en producción. La distribución de esos inputs inevitablemente difiere de la distribución de los ejemplos de evaluación. Los usuarios hacen preguntas que nadie anticipó. Eventos del mundo real cambian el contexto (noticias, cambios regulatorios, nuevos productos). El modelo del proveedor puede actualizarse silenciosamente. Sin evaluación continua, la degradación de calidad puede pasar semanas o meses desapercibida.\n\n**Los tres tipos de problemas en producción:**\n\n1. **Data drift o distribution shift**: Los inputs que llegan al modelo en producción se alejan gradualmente de los inputs con los que fue evaluado y configurado. Un modelo de análisis de contratos configurado para contratos colombianos empieza a recibir contratos peruanos. Un clasificador de sentimiento de clientes entrenado en enero empieza a recibir mensajes sobre un producto nuevo lanzado en marzo que no existía en los datos de entrenamiento. Las métricas de calidad en los datos de entrenamiento se mantienen estables pero la calidad real cae.\n\n2. **Model drift**: El proveedor de IA actualiza silenciosamente el modelo. GPT-4o-2024-01 se convierte en GPT-4o-2024-05 con cambios en comportamiento, longitud de respuestas o manejo de edge cases. Si no monitoreas, no sabrás cuándo ocurre ni cómo afecta tu aplicación.\n\n3. **Degradación de prompt**: Los prompts que funcionaban bien inicialmente pueden degradarse cuando cambia el contexto del sistema, cuando se agregan nuevas instrucciones, o cuando se descubre que ciertos tipos de inputs explotan patrones inesperados en el prompt.\n\n**El sistema de monitoreo de producción:**\n\nCapa 1 — Métricas automáticas de alto nivel: registra para cada solicitud la latencia, el costo en tokens, la longitud de respuesta, y cualquier error o rechazo. Estos indicadores no miden calidad directamente pero detectan anomalías: si la longitud promedio de respuesta cae 50%, algo cambió. Si el costo por solicitud subió 30%, el modelo está generando más tokens.\n\nCapa 2 — Evaluación automática de calidad sobre muestra: toma una muestra aleatoria del 1-5% de las solicitudes y evalúa automáticamente criterios específicos del caso de uso. Para un modelo de clasificación, verifica que la distribución de clases se mantiene estable. Para un modelo de generación, usa LLM-as-a-Judge sobre la muestra y calcula métricas periódicas.\n\nCapa 3 — Señales de usuario (feedback loop): cuando sea posible, captura señales explícitas (el usuario dice 'esta respuesta fue útil' o 'no me sirve') e implícitas (el usuario inmediatamente reformuló la pregunta, lo que sugiere que la respuesta no fue suficiente; el usuario no siguió la recomendación del modelo). Estas señales son el indicador más directo de calidad real pero requieren diseño intencional en el producto.\n\nCapa 4 — Revisión humana periódica: una vez a la semana o al mes, un revisor experto evalúa una muestra de 20-30 solicitudes completas (input + output) y los califica con la rubrica establecida. Esto detecta problemas cualitativos que las capas anteriores no capturan.\n\n**Alertas y umbrales:**\nDefine umbrales de alerta antes de lanzar. Ejemplos: si la tasa de respuestas que usan fallback o no-sé supera el 15% (cuando esperabas 5%), alertar. Si el tiempo promedio de respuesta supera 8 segundos (cuando era 2 segundos), alertar. Si la evaluación automática de LLM-as-a-Judge baja más de 10 puntos en una semana, alertar. Estos umbrales son arbitrarios al principio pero se calibran con la experiencia operacional.\n\n**A/B testing en producción:**\nCuando quieres comparar dos versiones del sistema (nuevo prompt vs viejo, nuevo modelo vs anterior), el A/B testing en producción es el método más confiable. Rutea el 10-20% del tráfico a la versión nueva, mantén el resto en la versión original, y compara las métricas de calidad y de negocio en condiciones idénticas de producción real. Es más costoso que la evaluación offline pero produce resultados más confiables sobre impacto real.",
+              "analogia": "La evaluación continua en producción es como los controles de calidad en manufactura: no basta con probar el primer lote de producto antes de vender. Necesitas muestreo continuo de la línea de producción, alertas cuando los parámetros se salen de especificación, y revisión humana periódica de la calidad final.",
+              "ejemplo_malo": "Lanzar un modelo de generación de reportes financieros, configurarlo en enero, y no volver a evaluar la calidad hasta que un cliente se queja de un error grave en octubre. En ese tiempo, el modelo del proveedor se actualizó 3 veces y el contexto regulatorio cambió, pero nadie lo detectó.",
+              "ejemplo_bueno": "Para un asistente de soporte al cliente: monitorear diariamente el porcentaje de conversaciones donde el usuario dice 'no me ayudó' o escala a agente humano (señal implícita de calidad baja), revisar semanalmente una muestra de 30 conversaciones aleatorias, y tener un proceso de 'revisión de incidentes' cuando se detecta una conversación que resultó en un cliente muy insatisfecho.",
+              "por_que_importa": "El 70% de los problemas de calidad en sistemas de IA en producción no se detectan hasta que hay un incidente visible: un cliente importante se queja, hay un error en prensa, o un regulador audita. La evaluación continua es lo que convierte ese 70% en incidentes detectados y resueltos antes de que escalen.",
+              "tip_profesional": "El indicador más simple y poderoso de calidad en producción para muchos sistemas de IA es la tasa de 'reformulación': el porcentaje de veces que un usuario reformula inmediatamente su pregunta después de recibir una respuesta. Si un usuario pregunta, recibe respuesta, y vuelve a preguntar casi lo mismo de forma diferente, la primera respuesta no fue suficiente. Este indicador es gratuito, no requiere que el usuario haga nada explícitamente, y es altamente correlacionado con calidad percibida."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué es el 'data drift' y por qué es un problema específico de la evaluación en producción?",
+                "opciones": [
+                  "Cuando los datos de entrenamiento se corrompen después del despliegue",
+                  "Cuando los inputs que llegan al modelo en producción se alejan gradualmente de la distribución de los inputs de entrenamiento y evaluación, causando degradación de calidad que las métricas de desarrollo no detectan",
+                  "Cuando el modelo se vuelve más lento con el tiempo debido al uso intensivo",
+                  "Cuando los datos del usuario se filtran al proveedor del modelo"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El data drift ocurre porque la distribución real de inputs en producción cambia con el tiempo, mientras que el modelo fue configurado para un snapshot específico de esa distribución. Un clasificador de riesgo crediticio entrenado antes de la pandemia dejó de funcionar bien durante ella porque el comportamiento financiero de los usuarios cambió de formas no representadas en los datos de entrenamiento. Un asistente de chat configurado para preguntas sobre el producto v1 empieza a recibir preguntas sobre el producto v2. Un modelo de análisis de noticias entrenado con contexto de 2023 enfrenta eventos de 2026 con vocabulario y referencias nuevas. En todos estos casos, las métricas de calidad en los datos de evaluación originales se mantienen estables porque esos datos no cambian, pero la calidad real en producción cae. Solo la evaluación continua sobre datos de producción puede detectarlo.",
+                "concepto_reforzado": "Data drift como causa de degradación silenciosa en producción"
+              },
+              {
+                "pregunta": "¿Qué información captura la 'capa 1' de monitoreo (métricas automáticas de alto nivel) y cuál es su limitación?",
+                "opciones": [
+                  "Captura la calidad semántica de cada respuesta; su limitación es que es lenta de calcular",
+                  "Captura latencia, costo en tokens, longitud de respuesta y errores; su limitación es que no mide calidad directamente sino anomalías operacionales",
+                  "Captura las preferencias del usuario; su limitación es que requiere feedback explícito",
+                  "Captura el número de solicitudes por hora; su limitación es que no detecta problemas de seguridad"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La capa 1 de monitoreo mide indicadores operacionales, no indicadores de calidad. Latencia, costo en tokens, longitud promedio de respuesta y tasa de errores son métricas que cualquier sistema puede calcular automáticamente en tiempo real. Son útiles como señales de alerta temprana de cambios en el comportamiento del modelo: si de pronto las respuestas se vuelven 50% más cortas, puede indicar que el modelo cambió (model drift) o que los prompts están fallando. Si el costo por solicitud aumenta significativamente, el modelo puede estar generando tokens innecesarios. Pero estas métricas no dicen nada sobre si las respuestas son correctas, útiles o apropiadas — solo detectan que algo cambió. Para medir calidad real se necesitan las capas 2, 3 y 4.",
+                "concepto_reforzado": "Capa 1 de monitoreo: indicadores operacionales como señales de alerta"
+              },
+              {
+                "pregunta": "¿Qué son las señales implícitas de calidad (capa 3) y por qué son valiosas?",
+                "opciones": [
+                  "Son señales del regulador que indican que el modelo debe ser auditado",
+                  "Son acciones del usuario que revelan indirectamente la calidad de la respuesta sin requerir feedback explícito, como reformular inmediatamente la pregunta o escalar a un agente humano",
+                  "Son las métricas internas del modelo que no son visibles en la API",
+                  "Son evaluaciones hechas por empleados de la empresa sin que el usuario lo sepa"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Las señales implícitas son inferencias sobre calidad basadas en el comportamiento del usuario, sin necesitar que el usuario haga nada específico para evaluarla. Ejemplos: si un usuario de un chatbot reformula su pregunta inmediatamente después de recibir una respuesta, muy probablemente la respuesta no fue satisfactoria. Si un usuario de un asistente de recomendaciones de productos no sigue la recomendación y vuelve a buscar, la recomendación no fue útil. Si la conversación termina sin que el usuario confirme que resolvió su problema, puede haber insatisfacción. Estas señales son valiosas porque: (1) no requieren esfuerzo del usuario (diferente al botón 'fue útil?'), (2) son menos susceptibles al sesgo de respuesta educada (los usuarios a veces dicen 'gracias, fue útil' aunque no lo fuera para no parecer groseros), y (3) escalan automáticamente con el volumen del sistema.",
+                "concepto_reforzado": "Señales implícitas como indicadores de calidad en producción"
+              },
+              {
+                "pregunta": "¿Cuál es la ventaja del A/B testing en producción sobre la evaluación offline al comparar dos versiones de un sistema?",
+                "opciones": [
+                  "El A/B testing es más barato porque no requiere evaluar todos los ejemplos",
+                  "El A/B testing compara las versiones bajo condiciones idénticas de tráfico real, eliminando sesgos de los ejemplos de evaluación artificial y midiendo impacto en métricas de negocio reales",
+                  "El A/B testing es más rápido porque usa muestras más pequeñas",
+                  "El A/B testing no requiere definir métricas de evaluación previamente"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La evaluación offline compara dos versiones del sistema sobre un conjunto de ejemplos fijos predefinidos. El problema: esos ejemplos son una muestra finita que puede no representar perfectamente la distribución real de producción. El A/B testing en producción divide el tráfico real entre las dos versiones: 10-20% del tráfico va a la versión nueva (tratamiento), el resto sigue en la versión original (control). Ambas versiones enfrentan exactamente los mismos usuarios, en el mismo contexto, con los mismos inputs reales. La comparación es más honesta porque elimina el sesgo de distribución de los ejemplos de evaluación. Además, permite medir métricas de negocio reales —tasa de conversión, satisfacción del usuario, tasa de escalación— que la evaluación offline no puede medir. La desventaja es el costo: el 10-20% del tráfico recibe una versión no validada, lo que es un riesgo calculado.",
+                "concepto_reforzado": "A/B testing en producción para comparación bajo condiciones reales"
+              },
+              {
+                "pregunta": "¿Qué es la 'tasa de reformulación' y por qué es un indicador valioso de calidad en producción?",
+                "opciones": [
+                  "El porcentaje de respuestas que el modelo reformula internamente antes de mostrarlas",
+                  "El porcentaje de veces que un usuario reformula inmediatamente su pregunta después de recibir una respuesta, indicando que la respuesta no fue suficiente",
+                  "La velocidad con que el modelo genera respuestas largas",
+                  "El número de veces que el prompt del sistema fue actualizado en un mes"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La tasa de reformulación es un proxy elegante de calidad porque captura la insatisfacción del usuario sin requerir acción explícita. El patrón es: usuario hace pregunta A → modelo responde → usuario hace pregunta A' (esencialmente lo mismo con diferentes palabras) en la misma sesión. Este patrón indica que la primera respuesta no resolvió la necesidad del usuario. Es valioso porque: (1) es completamente automático — se detecta analizando las sesiones de conversación; (2) no puede 'fingirse' como un botón de feedback donde el usuario hace clic para ser educado; (3) tiene alta correlación con métricas de negocio como satisfacción y retención de usuarios. Un benchmark útil: sistemas de chatbot bien construidos tienen tasas de reformulación del 8-15%. Si tu sistema tiene 25-30%, hay un problema de calidad o de diseño de conversación que necesita atención. Monitorear esta tasa semanalmente da una señal continua de salud del sistema.",
+                "concepto_reforzado": "Tasa de reformulación como indicador implícito de calidad"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Acabas de lanzar un asistente de IA para una clínica odontológica en Cali. El asistente responde preguntas de pacientes sobre procedimientos, precios y disponibilidad de citas vía WhatsApp. Genera ~200 conversaciones diarias. El equipo de la clínica tiene 1 hora al día para revisión del sistema. El director médico quiere saber cómo van a saber si el asistente está funcionando bien después del lanzamiento.",
+              "instruccion": "Diseña un sistema de evaluación continua en producción para este caso. Define las cuatro capas de monitoreo con las métricas específicas para una clínica dental, cómo detectarías degradación de calidad con solo 1 hora diaria de revisión, y qué alertas configurarías.",
+              "input_malo": "Lanzaríamos el asistente y lo monitorearíamos cada vez que un paciente se queje. Las quejas son el mejor indicador de calidad.",
+              "pista": "1 hora al día con 200 conversaciones: no puedes revisar todo. ¿Qué 15-20 conversaciones revisarías y cuáles? Las señales implícitas (paciente que pregunta lo mismo varias veces, conversación que termina sin confirmar cita) son gratuitas. Los umbrales de alerta deben calibrarse con las expectativas del negocio odontológico.",
+              "solucion": "Sistema de evaluación continua: CAPA 1 — MÉTRICAS AUTOMÁTICAS (monitoreo 24/7 automático): latencia promedio de respuesta (alerta si >5 segundos), tasa de conversaciones con error técnico (alerta si >3%), porcentaje de conversaciones donde el asistente dice 'no puedo ayudarte con eso' o transfiere a humano (alerta si >20% — sugiere preguntas fuera de alcance). CAPA 2 — EVALUACIÓN AUTOMÁTICA DE MUESTRA (diaria, automática): usar LLM-as-a-judge en 20 conversaciones aleatorias para evaluar: ¿la información de precios mencionada es correcta? ¿La disponibilidad de citas coincide con el sistema de agenda? ¿El tono es apropiado para pacientes con posible ansiedad dental? Score promedio diario, alerta si baja >10 puntos vs semana anterior. CAPA 3 — SEÑALES IMPLÍCITAS (monitoreo automático): tasa de reformulación (paciente pregunta esencialmente lo mismo en la misma conversación), tasa de conversaciones que duran >10 turnos sin confirmar cita (posible ciclo sin resolución). CAPA 4 — REVISIÓN HUMANA (1 hora diaria, ~15-20 conversaciones): revisar automáticamente las 5 conversaciones con mayor tasa de reformulación del día + 5 con mayor longitud + 10 aleatorias. La recepcionista evalúa: ¿información correcta? ¿Tono apropiado? ¿Recomendarías esta respuesta a un familiar? Alerta inmediata: cualquier conversación donde el asistente dé información incorrecta de precio o procedimiento médico — riesgo de reputación y legal.",
+              "criterios_de_exito": [
+                "Define las cuatro capas de monitoreo con métricas específicas del contexto odontológico",
+                "Propone una estrategia de muestreo inteligente que maximize información con solo 1 hora diaria",
+                "Incluye al menos una señal implícita de calidad (tasa de reformulación u otra) además de métricas explícitas"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Ética y responsabilidad en IA (Bloque 8)",
+              "por_que_importa_despues": "Con el framework de evaluación completo —desde métricas básicas hasta monitoreo en producción— el siguiente bloque aborda la dimensión más crítica para el uso responsable: los sesgos que los modelos heredan de sus datos de entrenamiento y cómo impactan a personas reales."
             }
           }
         }
