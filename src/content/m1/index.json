@@ -9464,30 +9464,100 @@
         },
         {
           "id": "m1-b11-l6",
-          "titulo": "Salarios y mercado laboral de IA en LATAM 2026",
+          "titulo": "Cómo que Anthropic y empresas top te noten",
           "bloque": 11,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Trabajar en Anthropic, OpenAI, Hugging Face, Google DeepMind, o las mejores startups de IA del mundo es el objetivo de muchos practitioners. La pregunta es cómo lograrlo desde LATAM, sin el acceso a las redes de Silicon Valley, sin un PhD de MIT, y sin la historia de haber trabajado en empresas tech top. La respuesta existe, y no es un secreto — es trabajo consistente con una estrategia correcta.\n\nLo primero: entender qué buscan realmente estas empresas. Anthropic, OpenAI, y similares no buscan principalmente títulos o escuelas — buscan evidencia de que puedes resolver problemas difíciles en el dominio de la IA. Sus equipos de ingeniería tienen más perfiles autodidactas de alto rendimiento que cualquier otra industria. Lo que les impresiona es trabajo público verificable: papers, proyectos de código abierto con impacto real, contribuciones a herramientas del ecosistema, y capacidad demostrada para pensar claramente sobre problemas difíciles.\n\nLas rutas de visibilidad ante estas empresas:\n\nRuta 1 — Contribuciones a proyectos open source que ellos usan o mantienen. Anthropic tiene proyectos open source (Claude SDK, ANTHROPIC-model-spec, benchmarks). OpenAI tiene varios repos. Hugging Face tiene decenas de proyectos core. Una contribución significativa aceptada crea una conexión directa con los ingenieros que revisan los PRs — que son exactamente las personas que hacen referidos o contratan directamente. Esta es la ruta más directa y verificable.\n\nRuta 2 — Construir algo notable con sus herramientas y compartirlo ampliamente. Anthropic monitorea qué se construye con Claude. Un proyecto genuinamente útil o innovador que usa Claude API, bien documentado y con impacto medible, puede llegar al radar del equipo. El Developer Advocate de Anthropic activamente busca y comparte proyectos notables de la comunidad. Aparecer en sus newsletters, blogs de la comunidad, o demos oficiales no requiere contacto directo — requiere construir algo digno de atención.\n\nRuta 3 — Presencia en las comunidades donde sus equipos participan. El Discord de Anthropic, el foro de Hugging Face, y Twitter/X son donde investigadores y engineers de estas empresas participan activamente. Una persona que consistentemente hace contribuciones de alta calidad en estas plataformas eventualmente es notada por los empleados de esas empresas que participan en las mismas conversaciones.\n\nRuta 4 — Investigación y escritura técnica de calidad. Los blogs técnicos bien escritos sobre temas de frontera (evaluación de LLMs, técnicas de prompting, análisis de benchmarks) atraen la atención de practitioners en las mejores empresas. Substack, Medium, y blogs personales con posts que van a fondo en temas específicos con experimentación propia son valorados en este sector más que en cualquier otro.\n\nRuta 5 — El proceso de aplicación directo, pero bien preparado. Las mejores empresas tienen procesos de selección rigurosos: coding interviews, system design de sistemas de IA, y preguntas de ML fundamentals. La preparación sistemática (LeetCode para coding, diseño de sistemas de ML, fundamentos de estadística y álgebra lineal) sigue siendo necesaria. Pero el proceso directo funciona mucho mejor si llegaste con visibilidad previa — si un engineer en la empresa ya conoce tu trabajo, tu aplicación tiene un nivel diferente de consideración.\n\nRealidad para candidates de LATAM: estas empresas contratan globalmente en forma remota, especialmente para roles de engineering. La barrera de entrada real es demostrar calidad de trabajo a nivel global, y el proceso de visa no es un bloqueante para contratos remotos. Candidates latinoamericanos han sido contratados en Anthropic, OpenAI, y Hugging Face en posiciones remotas. Es difícil pero posible — y la clave es el trabajo público verificable.",
+              "analogia": "Que Anthropic o empresas top te noten es como ser descubierto por un gran estudio de cine. No funciona enviar tu CV esperando que alguien lo lea. Lo que funciona es aparecer en los mismos espacios donde los cazatalentos están activamente buscando: festivales de cortometrajes (comunidades de IA), actuaciones en pequeños teatros (meetups, talks), o viralizarte con una obra notable (un proyecto de código abierto que el ecosistema adopta). El descubrimiento pasivo requiere trabajo activo de visibilidad en los lugares correctos.",
+              "ejemplo_malo": "Un developer colombiano quiere trabajar en Anthropic. Aplica directamente en el sitio web de Anthropic sin ningún trabajo público verificable, sin contribuciones a proyectos de su ecosistema, y con un CV genérico que lista habilidades sin proyectos demostrables. La aplicación nunca llega a ser revisada en profundidad porque las empresas top reciben miles de aplicaciones y las filtran por señales de calidad verificables (GitHub, proyectos públicos, referencias). Aplicar sin construir visibilidad previa tiene tasa de respuesta cercana a cero.",
+              "ejemplo_bueno": "Una ML engineer de Medellín pasa 12 meses construyendo visibilidad: (1) hace 3 contribuciones a proyectos de Hugging Face (dos fixes de documentación y un feature menor), (2) construye una librería de evaluación de prompts en español que gana 200 estrellas en GitHub, (3) escribe 4 posts técnicos profundos en su blog sobre evaluación de LLMs que son compartidos por practitioners en Twitter/X, (4) participa activamente en el Discord de Anthropic respondiendo preguntas. Después de 12 meses de trabajo visible, un engineer de Anthropic le escribe directamente. Su aplicación pasa el primer filtro con recomendación interna. Consigue una entrevista técnica — y la preparación para las entrevistas es el siguiente paso.",
+              "por_que_importa": "Trabajar en las mejores empresas de IA del mundo no es solo un logro personal — es el acceso a los mejores problemas, los mejores colegas, el aprendizaje más acelerado, y el impacto más grande en el campo. Para una developer en Colombia, llegar a Anthropic o Hugging Face es perfectamente alcanzable si se trabaja con la estrategia correcta. La distancia geográfica y el contexto de LATAM no son obstáculos con trabajo remoto — la calidad del trabajo público es el único filtro real.",
+              "tip_profesional": "Empieza con el paso más concreto: contribuye a la documentación de un proyecto que uses regularmente. Encuentra un error, una explicación confusa, o un ejemplo que falta. El PR de documentación es la contribución más fácil de hacer correctamente y de que sea aceptada. Una vez que tienes un PR aceptado, tienes: (1) una conexión con el maintainer del proyecto, (2) una entrada en tu CV de contribuidor open source verificable, (3) un template de cómo funciona el proceso de contribución para ese proyecto. A partir de ese primer PR, el camino a contribuciones más técnicas está pavimentado."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la ruta de visibilidad más directa ante los equipos de ingeniería de empresas como Anthropic u OpenAI?",
+                "opciones": [
+                  "Enviar mensajes personalizados directamente a los CEOs de las empresas a través de LinkedIn",
+                  "Contribuciones significativas a proyectos open source que ellos mantienen, creando conexión directa con los ingenieros que revisan los PRs",
+                  "Obtener un máster o doctorado en IA de una universidad top como MIT o Stanford",
+                  "Tener más de 10,000 seguidores en LinkedIn demostrando influencia en el sector"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Las contribuciones a proyectos open source que las empresas mantienen son la ruta más directa porque crean interacción técnica real con los engineers de esas empresas. Cuando haces un PR a un proyecto de Anthropic o a una herramienta que su equipo usa activamente, los ingenieros que revisan y aprueban ese PR ven tu código, tu nivel de razonamiento técnico, y tu capacidad de comunicar. Si el PR es bueno, la impresión es directamente positiva con personas que tienen influencia de contratación. Esto es cualitativamente diferente de una aplicación anónima filtrada por un sistema ATS. Los CEOs raramente están involucrados en contratación técnica individual. Los títulos académicos son señales de calidad pero no cuentan como trabajo verificable. Los seguidores en LinkedIn son métricas de influencia en redes sociales, no de capacidad técnica.",
+                "concepto_reforzado": "Contribuciones a proyectos open source como ruta más directa a visibilidad ante equipos de ingeniería de empresas top de IA"
+              },
+              {
+                "pregunta": "¿Qué tipo de contenido escrito atrae la atención de practitioners en las mejores empresas de IA?",
+                "opciones": [
+                  "Resúmenes de papers de IA publicados por otros que demuestran que estás al día con el campo",
+                  "Listas de herramientas de IA para principiantes que tienen alto engagement por ser accesibles",
+                  "Posts técnicos profundos con experimentación propia sobre temas de frontera: evaluación de LLMs, técnicas de prompting, análisis de benchmarks",
+                  "Publicaciones motivacionales sobre el journey de aprendizaje de IA que generan resonancia emocional"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Los practitioners de alto nivel en las mejores empresas de IA buscan activamente contenido técnico profundo que les enseñe algo nuevo o que articule bien algo que conocen intuitivamente. Un post que describe experimentación propia — 'probé estas 5 estrategias de chunking para RAG y medí precision y recall para cada una, estos son los resultados con análisis de por qué funcionan o no' — ofrece valor real y original que no se puede encontrar en ningún otro lugar. Este tipo de contenido es compartido en Twitter/X por practitioners influyentes, llega al radar de engineers en Anthropic o Hugging Face, y establece credibilidad como alguien que hace trabajo real. Los resúmenes de papers de otros, las listas de herramientas, y el contenido motivacional son valiosos para audiencias más amplias pero no específicamente para atraer la atención de las mejores empresas técnicas.",
+                "concepto_reforzado": "Posts técnicos con experimentación propia como tipo de contenido que atrae la atención de practitioners en empresas top de IA"
+              },
+              {
+                "pregunta": "¿Por qué la barrera geográfica no es un obstáculo real para candidates de LATAM que quieren trabajar en Anthropic u OpenAI?",
+                "opciones": [
+                  "Porque estas empresas tienen oficinas en ciudades de LATAM donde contratan directamente",
+                  "Porque la regulación laboral de EE.UU. exige que las empresas tengan cuotas de contratación de candidates internacionales",
+                  "Porque contratan globalmente en formato remoto, y la calidad del trabajo técnico verificable es el filtro real, no la ubicación",
+                  "Porque el idioma inglés en LATAM es equivalente al de los candidates de EE.UU."
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Las empresas top de IA como Anthropic, OpenAI, Hugging Face, y las mejores startups del sector han adoptado el trabajo remoto global como modelo de contratación, especialmente para roles de engineering. Esto significa que un candidate en Bogotá con el mismo nivel de habilidades que uno en San Francisco tiene acceso al mismo proceso de selección. La calidad del trabajo técnico verificable — código en GitHub, contribuciones open source, proyectos documentados, escritura técnica — es el filtro primario, no la ubicación. Los aspectos logísticos (contratos de contractors vs empleados, timezone overlap, flujo de pagos internacionales) son resolubles y son bien conocidos por las empresas con equipos distribuidos. La barrera real no es geográfica — es de calidad de trabajo demostrable a nivel global.",
+                "concepto_reforzado": "Trabajo remoto global como eliminador de barreras geográficas para candidates de LATAM en empresas top de IA"
+              },
+              {
+                "pregunta": "¿Por qué un developer de LATAM debe invertir 12 meses en visibilidad antes de aplicar a Anthropic, en lugar de aplicar directamente ahora?",
+                "opciones": [
+                  "Porque Anthropic tiene una política explícita que requiere 12 meses mínimos de experiencia en IA antes de aceptar aplicaciones",
+                  "Porque construir trabajo público verificable y conexiones en el ecosistema hace que la aplicación tenga un nivel diferente de consideración, con mejor tasa de respuesta",
+                  "Porque el proceso de visa para trabajar en EE.UU. requiere ese tiempo de preparación",
+                  "Porque Anthropic solo contrata candidates que tienen experiencia previa en Google o Meta"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Las empresas top de IA reciben miles de aplicaciones por cada posición. Con ese volumen, los sistemas de filtrado priorizan señales verificables de calidad: GitHub con proyectos relevantes y activos, contribuciones a ecosistemas que la empresa usa, escritura técnica que demuestra comprensión profunda, o referencias de personas ya en la empresa. Una aplicación que llega con estas señales ya establecidas tiene una tasa de respuesta órdenes de magnitud mayor que una aplicación sin trabajo público. No es una regla explícita de Anthropic — es la realidad de cómo funciona la contratación competitiva cuando hay asimetría de información (el employer no puede evaluar a cada candidate en profundidad sin señales externas). Los 12 meses de visibilidad no son un prerequisito formal — son la inversión que hace que la aplicación formal tenga sentido hacerla.",
+                "concepto_reforzado": "Visibilidad previa como prerequisito de facto para aplicaciones exitosas a empresas top de IA con alta competencia"
+              },
+              {
+                "pregunta": "¿Cuál es el primer paso más concreto y accesible para comenzar a construir visibilidad ante empresas top de IA?",
+                "opciones": [
+                  "Publicar una investigación original sobre un tema de frontera en Arxiv",
+                  "Contribuir a la documentación de un proyecto open source de IA que uses regularmente, comenzando con correcciones de errores o mejoras de ejemplos",
+                  "Crear una startup de IA que haga pivot hacia las áreas de investigación de Anthropic",
+                  "Enviar mensajes personalizados a engineers de Anthropic en LinkedIn explicando tu interés"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Una contribución a la documentación es el punto de entrada más accesible porque: (1) no requiere ser el mejor engineer del mundo — requiere encontrar algo confuso o incorrecto y mejorarlo, (2) tiene muy alta tasa de aceptación de PRs porque los maintainers están generalmente agradecidos por mejoras de documentación, (3) el proceso de hacer el PR te enseña el workflow de contribución del proyecto (fork, branch, PR, review), (4) una vez que tienes un PR aceptado tienes una entrada verificable como contributor del proyecto, y (5) crea una conexión real con al menos un maintainer que revisó y aprobó tu contribución. Esto es radicalmente más accesible que publicar en Arxiv (requiere investigación original), crear una startup (requiere inversión y tiempo), o hacer networking frío (baja tasa de respuesta). El PR de documentación es el primer dominó que puede iniciar el camino.",
+                "concepto_reforzado": "Contribución a documentación de proyectos open source como primer paso concreto y accesible hacia visibilidad en empresas top de IA"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "María, una AI engineer de Bogotá con 2 años de experiencia usando LLMs en producción, quiere trabajar en Anthropic en los próximos 2 años. Tiene: Python sólido, experiencia con Claude API y LangChain, un proyecto de RAG desplegado para un cliente real, y buen inglés escrito (B2). No tiene trabajo público verificable (el proyecto de cliente es confidencial), no ha contribuido a proyectos open source, y no tiene presencia online en comunidades técnicas. Tiene 5 horas semanales disponibles para actividades de visibilidad.",
+              "instruccion": "Diseña el plan de visibilidad de 12 meses de María hacia el objetivo de Anthropic. Define las actividades por trimestre, los entregables concretos de cada trimestre, y cómo sabrá si está en el camino correcto al mes 12.",
+              "input_malo": "Aplicar directamente a Anthropic ahora y ver qué pasa. Si rechazan, al menos aprende del proceso.",
+              "pista": "¿Qué tiene María que puede compartir públicamente sin violar la confidencialidad del cliente? ¿Cuál es el proyecto de Anthropic al que podría contribuir más naturalmente dada su experiencia? ¿Qué tipo de escritura técnica puede generar basándose en lo que ya sabe de RAG y LLMs?",
+              "solucion": "Plan 12 meses (5h/semana): TRIMESTRE 1 (crear trabajo público): Mes 1-2: Construir y publicar un proyecto open source propio — 'RAG evaluation toolkit' — herramientas de evaluación de sistemas RAG en español con métricas de precision, recall, y faithfulness. Documentación en inglés y español. Deploy en Hugging Face Spaces. Meta: 50+ estrellas en GitHub. Mes 3: Primer post técnico en blog propio (o Medium): 'Evaluating RAG systems: lessons from production deployments' — basado en su experiencia real pero anonimizada. TRIMESTRE 2 (contribuciones y comunidad): Mes 4-5: Identificar 2-3 issues 'good first issue' en repositorios de Anthropic (claude-sdk-python) o en LangChain. Hacer al menos 1 PR aceptado. Mes 6: Ser activo en el Discord de Anthropic respondiendo preguntas de RAG donde es genuinamente experta. Segunda publicación técnica profunda. TRIMESTRE 3 (amplificación): Mes 7-8: Presentar en un meetup local o charla virtual sobre RAG evaluation con sus hallazgos reales. Conectar con speakers y organizadores. Mes 9: Tercer post técnico. TRIMESTRE 4 (aplicación): Mes 10-11: Preparación para entrevistas técnicas de Anthropic: sistema design de IA, coding challenges, ML fundamentals. Mes 12: Aplicar con todo el trabajo público ya construido + pedir referido si tiene alguna conexión en la empresa. INDICADORES DE ÉXITO al mes 12: GitHub con 100+ estrellas en su proyecto, 1+ PR aceptado en proyectos relevantes, 3 posts técnicos con engagement real, presencia reconocida en al menos 1 comunidad.",
+              "criterios_de_exito": [
+                "El plan empieza por crear trabajo público propio (toolkit de evaluación RAG) antes de contribuir a proyectos externos",
+                "Incluye contribución a proyectos de Anthropic específicamente, no solo proyectos genéricos de IA",
+                "Tiene entregables concretos medibles por trimestre, no solo actividades vagas",
+                "La aplicación directa a Anthropic llega en el mes 12 con todo el trabajo público construido, no en el mes 1"
+              ]
             },
+            "conexion": {
+              "siguiente_concepto": "LinkedIn estratégico para posicionamiento en IA",
+              "por_que_importa_despues": "GitHub es tu presencia técnica y las comunidades son tu red de practitioners. LinkedIn es el puente entre tu trabajo técnico y las oportunidades profesionales formales — trabajos, clientes, conferencias, y colaboraciones. La estrategia de LinkedIn para IA es diferente de la estrategia para otros sectores: hay formatos de contenido, tipos de conexiones, y formas de posicionarse que funcionan específicamente para el ecosistema de IA."
+            }
             "conexion": {
               "siguiente_concepto": "",
               "por_que_importa_despues": ""
