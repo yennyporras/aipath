@@ -20,7 +20,7 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "Vivimos el momento más importante en la historia de la tecnología. En 2026, la inteligencia artificial ha pasado de ser una promesa académica a transformar industrias completas en tiempo real. Lo que hace diferente este momento no es solo la tecnología: es la convergencia de modelos de lenguaje con capacidad de razonamiento, costos que cayeron 99% en 5 años, y acceso democrático desde cualquier computadora con internet. En 2020, GPT-3 demostró que los LLMs podían escribir código, razonar y crear contenido. En 2022, ChatGPT llevó esa capacidad a 100 millones de usuarios en 60 días, la adopción más rápida de cualquier tecnología en la historia. En 2024, Claude 3 Opus superó el 90% de las pruebas de razonamiento humano. En 2026, los modelos de agentes autónomos ejecutan tareas completas sin supervisión humana. Para los profesionales en LATAM, este momento representa una ventana única: la curva de aprendizaje todavía es navegable, la demanda supera la oferta, y quienes dominen estas herramientas en los próximos 18 meses serán los referentes de la próxima década.",
+              "explicacion": "Vivimos el momento más importante en la historia de la tecnología. En 2026, la inteligencia artificial ha pasado de ser una promesa académica a transformar industrias completas en tiempo real. Lo que hace diferente este momento no es solo la tecnología: es la convergencia de modelos de lenguaje con capacidad de razonamiento, costos que cayeron 99% en 5 años, y acceso democrático desde cualquier computadora con internet. En 2020, GPT-3 demostró que los LLMs podían escribir código, razonar y crear contenido. En 2022, ChatGPT llevó esa capacidad a 100 millones de usuarios en 60 días, la adopción más rápida de cualquier tecnología en la historia. En 2024, Claude 3 Opus superó el 90% de las pruebas de razonamiento humano. En 2026, los modelos de agentes autónomos ejecutan tareas completas sin supervisión humana. Para los profesionales en LATAM, este momento representa una ventana única: la curva de aprendizaje todavía es navegable, la demanda supera la oferta, y quienes dominen estas herramientas en los próximos 18 meses serán los referentes de la próxima década. La diferencia entre este momento y los anteriores ciclos de hype en IA es estructural, no superficial. Anteriormente, la IA requería equipos de científicos de datos, infraestructura millonaria y meses de desarrollo para proyectos específicos. Hoy, un profesional con conocimiento básico de APIs puede construir en una tarde lo que habría costado $500,000 y 18 meses en 2018. Esto democratiza el poder de transformación: ya no es solo para corporaciones multinacionales con presupuestos de I+D masivos. En Colombia y LATAM, esto significa que una empresa de 10 personas puede competir con las capacidades de análisis y automatización de una multinacional con 10,000 empleados. La pregunta ya no es si tu empresa debería adoptar IA, sino qué tan rápido puedes construir la capacidad interna para hacerlo antes que tu competencia directa.",
               "analogia": "Es como los primeros días del internet en 1995: quienes aprendieron HTML entonces construyeron las empresas digitales de hoy. Hoy los que aprendan IA construirán las empresas de 2035.",
               "ejemplo_malo": "Seguir esperando a que 'la IA madure más' antes de aprender — esa ventana ya se cerró varias veces.",
               "ejemplo_bueno": "La IA ya está lo suficientemente madura para resolver el 80% de los problemas de negocio que enfrenta tu empresa hoy.",
@@ -93,7 +93,7 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "La historia de la inteligencia artificial es una historia de inviernos y primaveras. El término 'Inteligencia Artificial' fue acuñado por John McCarthy en 1956 en la conferencia de Dartmouth. Los primeros 20 años fueron de optimismo: ELIZA (1966) demostró conversación básica, los primeros sistemas expertos parecían resolver todo. Luego llegó el primer invierno (1974-1980): los computadores no tenían suficiente poder. Segunda ola: redes neuronales de Backpropagation (1986), sistemas expertos en empresas. Segundo invierno (1987-1993). La revolución silenciosa: Deep Blue vence a Kasparov (1997), pero el verdadero cambio llegó con ImageNet (2012) donde AlexNet demostró que las redes neuronales profundas superaban a los métodos clásicos en visión. GPT-1 (2018) mostró que el preentrenamiento masivo funcionaba. GPT-2 (2019) fue tan bueno que OpenAI tuvo miedo de publicarlo. GPT-3 (2020) con 175B parámetros cambió todo. RLHF + InstructGPT (2022) hizo que los modelos siguieran instrucciones. ChatGPT (noviembre 2022). GPT-4 y Claude 2 (2023). Claude 3 Opus supera exámenes médicos y legales (2024). Agentes autónomos en producción (2025-2026). Cada hito no fue solo tecnológico: fue un cambio en lo que los humanos podíamos delegar a las máquinas.",
+              "explicacion": "La historia de la inteligencia artificial es una historia de inviernos y primaveras. El término 'Inteligencia Artificial' fue acuñado por John McCarthy en 1956 en la conferencia de Dartmouth. Los primeros 20 años fueron de optimismo: ELIZA (1966) demostró conversación básica, los primeros sistemas expertos parecían resolver todo. Luego llegó el primer invierno (1974-1980): los computadores no tenían suficiente poder. Segunda ola: redes neuronales de Backpropagation (1986), sistemas expertos en empresas. Segundo invierno (1987-1993). La revolución silenciosa: Deep Blue vence a Kasparov (1997), pero el verdadero cambio llegó con ImageNet (2012) donde AlexNet demostró que las redes neuronales profundas superaban a los métodos clásicos en visión. GPT-1 (2018) mostró que el preentrenamiento masivo funcionaba. GPT-2 (2019) fue tan bueno que OpenAI tuvo miedo de publicarlo. GPT-3 (2020) con 175B parámetros cambió todo. RLHF + InstructGPT (2022) hizo que los modelos siguieran instrucciones. ChatGPT (noviembre 2022). GPT-4 y Claude 2 (2023). Claude 3 Opus supera exámenes médicos y legales (2024). Agentes autónomos en producción (2025-2026). Cada hito no fue solo tecnológico: fue un cambio en lo que los humanos podíamos delegar a las máquinas. Para entender hacia dónde vamos, el patrón histórico es claro: cada vez que una nueva tecnología reduce drásticamente el costo de una tarea cognitiva, los profesionales que se adaptan primero capturan el valor desproporcionado. Los contadores que aprendieron Excel en 1985 no perdieron su trabajo — se convirtieron en analistas financieros más productivos y mejor pagados. Los diseñadores que aprendieron Photoshop en 1994 no fueron reemplazados — multiplicaron su producción. La IA de 2026 sigue exactamente ese patrón: quienes la dominen no serán reemplazados, sino que se convertirán en los profesionales de mayor demanda de la próxima década en cualquier industria.",
               "analogia": "Es como la evolución del automóvil: del Ford T (funcional pero solo para expertos) al Tesla con autopilot (accesible y autónomo). Los LLMs son el autopilot del trabajo intelectual.",
               "ejemplo_malo": "Pensar que 'la IA de hoy es como la de 2019': subestimar lo que GPT-4 y Claude pueden hacer comparado con GPT-2.",
               "ejemplo_bueno": "Usar la línea de tiempo para explicar a clientes por qué ahora es diferente: mostrar la curva exponencial de capacidades vs costo.",
@@ -166,7 +166,7 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "Los dos inviernos de IA (1974-1980 y 1987-1993) no fueron fracasos de la idea — fueron fracasos de infraestructura y datos. El primer invierno llegó cuando los computadores de la época simplemente no tenían el poder de cálculo necesario. Los investigadores sabían QUÉ querían hacer pero no PODÍAN hacerlo. El segundo invierno fue más interesante: los sistemas expertos funcionaban en laboratorio pero eran frágiles en el mundo real. Requerían que expertos humanos codificaran cada regla manualmente — no escalaban. Hoy tenemos tres ventajas que hacen imposible otro invierno a corto plazo. Primero: datos. Common Crawl tiene 250 terabytes de texto de internet. En 1990 no existían datos de entrenamiento a escala. Segundo: cómputo. Los GPUs de NVIDIA para IA son millones de veces más rápidos que los CPUs de 1990. Tercero: el paradigma cambió. En lugar de programar reglas (sistemas expertos), ahora aprendemos patrones de datos masivos. Este cambio paradigmático — de reglas explícitas a aprendizaje estadístico — es por qué no habrá un tercer invierno mientras tengamos más datos y más cómputo.",
+              "explicacion": "Los dos inviernos de IA (1974-1980 y 1987-1993) no fueron fracasos de la idea — fueron fracasos de infraestructura y datos. El primer invierno llegó cuando los computadores de la época simplemente no tenían el poder de cálculo necesario. Los investigadores sabían QUÉ querían hacer pero no PODÍAN hacerlo. El segundo invierno fue más interesante: los sistemas expertos funcionaban en laboratorio pero eran frágiles en el mundo real. Requerían que expertos humanos codificaran cada regla manualmente — no escalaban. Hoy tenemos tres ventajas que hacen imposible otro invierno a corto plazo. Primero: datos. Common Crawl tiene 250 terabytes de texto de internet. En 1990 no existían datos de entrenamiento a escala. Segundo: cómputo. Los GPUs de NVIDIA para IA son millones de veces más rápidos que los CPUs de 1990. Tercero: el paradigma cambió. En lugar de programar reglas (sistemas expertos), ahora aprendemos patrones de datos masivos. Este cambio paradigmático — de reglas explícitas a aprendizaje estadístico — es por qué no habrá un tercer invierno mientras tengamos más datos y más cómputo. El punto más importante para comunicar a stakeholders escépticos es este: los inviernos de IA anteriores ocurrieron porque la tecnología prometía más de lo que podía entregar con la infraestructura disponible. Hoy la situación es inversa — la tecnología está entregando resultados prácticos medibles, y la infraestructura (internet de alta velocidad, cloud computing, smartphones) ya está desplegada globalmente. El riesgo de un nuevo invierno no viene de limitaciones técnicas sino de regulación o de una pérdida de confianza masiva — ambos escenarios son posibles pero no probables en el corto plazo dado el ritmo actual de adopción empresarial real con ROI documentado.",
               "analogia": "Los sistemas expertos eran como contratar a un abogado para que escribiera TODAS las reglas del tráfico antes de que existieran los autos. Los LLMs son como un conductor que aprendió observando millones de conductores.",
               "ejemplo_malo": "Creer que los LLMs 'tienen reglas programadas' — es el malentendido más común. Los LLMs no tienen reglas, tienen patrones estadísticos.",
               "ejemplo_bueno": "La combinación de datos masivos + cómputo paralelo + aprendizaje por gradiente descendente resuelve problemas que las reglas explícitas nunca podrían.",
@@ -239,7 +239,7 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "El impacto económico de la IA no es una proyección futura: es una realidad medible hoy. Goldman Sachs estimó en 2023 que la IA podría automatizar el 25% de las tareas laborales globales, equivalente a 7 trillones de dólares en productividad. McKinsey calcula que entre 2024 y 2030, las empresas que adopten IA generativa verán un aumento de productividad del 40% en trabajadores del conocimiento. Pero los números más reveladores están por industria. En servicios legales: las firmas que usan IA para revisión de contratos reducen el tiempo un 80% — lo que tomaba 4 horas toma 45 minutos. En salud: los sistemas de diagnóstico asistido por IA reducen errores diagnósticos un 30% en radiología. En código: GitHub Copilot aumenta la velocidad de desarrollo 55% según estudios propios. En marketing: la generación de contenido con IA reduce costos de producción 60-70%. En LATAM específicamente: el BID estima que la IA podría añadir $1 trillion al PIB regional antes de 2030, con los mayores beneficios en Colombia, Brasil y México donde el costo laboral relativo hace el ROI de automatización especialmente atractivo.",
+              "explicacion": "El impacto económico de la IA no es una proyección futura: es una realidad medible hoy. Goldman Sachs estimó en 2023 que la IA podría automatizar el 25% de las tareas laborales globales, equivalente a 7 trillones de dólares en productividad. McKinsey calcula que entre 2024 y 2030, las empresas que adopten IA generativa verán un aumento de productividad del 40% en trabajadores del conocimiento. Pero los números más reveladores están por industria. En servicios legales: las firmas que usan IA para revisión de contratos reducen el tiempo un 80% — lo que tomaba 4 horas toma 45 minutos. En salud: los sistemas de diagnóstico asistido por IA reducen errores diagnósticos un 30% en radiología. En código: GitHub Copilot aumenta la velocidad de desarrollo 55% según estudios propios. En marketing: la generación de contenido con IA reduce costos de producción 60-70%. En LATAM específicamente: el BID estima que la IA podría añadir $1 trillion al PIB regional antes de 2030, con los mayores beneficios en Colombia, Brasil y México donde el costo laboral relativo hace el ROI de automatización especialmente atractivo. Lo que hace este análisis de impacto económico especialmente relevante para LATAM es el efecto de arbitraje. Las herramientas de IA tienen precios denominados en dólares pero los costos laborales que reemplazan están en pesos, reales o soles. Esto crea una ecuación donde el ROI de implementar IA es proporcionalmente mayor que en economías desarrolladas. Un sistema de atención al cliente con IA que cuesta $200/mes puede reemplazar trabajo que en Colombia cuesta $800/mes, pero el mismo sistema en Estados Unidos reemplaza trabajo que cuesta $4,000/mes. El ROI existe en ambos casos, pero el punto de equilibrio se alcanza mucho más rápido en LATAM.",
               "analogia": "Es como cuando el Excel llegó en 1985: en 5 años eliminó el 80% de los puestos de contador manual, pero creó 10 veces más puestos de analista financiero. La IA hace lo mismo con el trabajo del conocimiento.",
               "ejemplo_malo": "Citar solo el número grande ($7 trillones) sin contexto de qué sectores y qué tipo de tareas — hace el argumento abstracto y no convincente.",
               "ejemplo_bueno": "Al presentar ROI de IA a una empresa específica, analiza primero qué porcentaje de sus costos laborales son tareas repetitivas de conocimiento — esas son las de mayor impacto.",
@@ -385,7 +385,7 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "La pregunta que más escucho de profesionales en LATAM es: '¿No es demasiado tarde para aprender IA?' La respuesta corta es no. La respuesta larga requiere entender las diferentes ventanas de oportunidad. La primera ventana fue para los investigadores (2015-2020): construir los modelos desde cero. Esa sí se cerró — necesitas doctorado en ML y acceso a clusters de GPUs. La segunda ventana fue para los ingenieros (2020-2023): construir las primeras aplicaciones sobre los modelos. Esa está cerrando. La tercera ventana, donde estamos ahora (2024-2027), es para los profesionales de dominio que entienden sus industrias Y pueden usar IA: el abogado que automatiza revisión de contratos, el médico que construye sistemas de diagnóstico asistido, el contador que automatiza análisis financiero, el marketer que construye pipelines de contenido. Esta es la ventana más grande y la más larga. La cuarta ventana (2027+) será para las empresas que adopten IA — cuando sea tan común como el email. Tu posición ideal es el perfil T: profundidad en UNA industria o función + amplitud suficiente en IA para implementar soluciones. No necesitas ser el mejor en IA — necesitas ser el mejor en IA EN TU CAMPO.",
+              "explicacion": "La pregunta que más escucho de profesionales en LATAM es: '¿No es demasiado tarde para aprender IA?' La respuesta corta es no. La respuesta larga requiere entender las diferentes ventanas de oportunidad. La primera ventana fue para los investigadores (2015-2020): construir los modelos desde cero. Esa sí se cerró — necesitas doctorado en ML y acceso a clusters de GPUs. La segunda ventana fue para los ingenieros (2020-2023): construir las primeras aplicaciones sobre los modelos. Esa está cerrando. La tercera ventana, donde estamos ahora (2024-2027), es para los profesionales de dominio que entienden sus industrias Y pueden usar IA: el abogado que automatiza revisión de contratos, el médico que construye sistemas de diagnóstico asistido, el contador que automatiza análisis financiero, el marketer que construye pipelines de contenido. Esta es la ventana más grande y la más larga. La cuarta ventana (2027+) será para las empresas que adopten IA — cuando sea tan común como el email. Tu posición ideal es el perfil T: profundidad en UNA industria o función + amplitud suficiente en IA para implementar soluciones. No necesitas ser el mejor en IA — necesitas ser el mejor en IA EN TU CAMPO. La clave para navegar la adopción de IA en tu organización no es esperar a tener toda la infraestructura perfecta — es identificar el primer caso de uso donde el ROI es obvio y ejecutar. Las empresas que lideran en adopción de IA no empezaron con grandes transformaciones digitales; empezaron con un problema pequeño y doloroso que la IA resolvía claramente. Luego escalaron desde ese primer éxito. Este patrón de 'victoria rápida → escalar' es consistente en todos los sectores y tamaños de empresa, desde startups hasta corporaciones.",
               "analogia": "Es como saber inglés en los 90: no necesitabas ser nativo, solo necesitabas ser funcional. El profesional de negocios con inglés funcional tuvo décadas de ventaja sobre quienes lo evitaron.",
               "ejemplo_malo": "Intentar aprender TODO sobre IA antes de aplicar nada — 'análisis parálisis'. El conocimiento sin aplicación decae rápido.",
               "ejemplo_bueno": "Elegir UNA aplicación concreta en tu área de expertise y construirla. Aprendes más en 2 semanas construyendo algo real que en 6 meses leyendo.",
@@ -746,79 +746,6 @@
             "conexion": {
               "siguiente_concepto": "Mapa visual del ecosistema completo",
               "por_que_importa_despues": "Los Foundation Models son el sistema operativo de la IA moderna — todo se construye sobre ellos."
-            }
-          }
-        },
-        {
-          "id": "m1-b1-l3",
-          "titulo": "Supervisado vs no supervisado vs por refuerzo",
-          "bloque": 1,
-          "tipo": "leccion",
-          "duracion_min": 20,
-          "xp": 50,
-          "contenido": {
-            "teoria": {
-              "explicacion": "Esta lección cubre Supervisado vs no supervisado vs por refuerzo — contenido completo disponible en la próxima actualización. El tema es fundamental para entender los fundamentos de IA y su aplicación práctica en contextos empresariales latinoamericanos. Se incluirá explicación detallada, analogías y ejercicios prácticos.",
-              "analogia": "Analogía próximamente disponible.",
-              "ejemplo_malo": "Ejemplo incorrecto próximamente disponible.",
-              "ejemplo_bueno": "Ejemplo correcto próximamente disponible.",
-              "por_que_importa": "Este tema importa porque conecta los fundamentos con aplicaciones reales.",
-              "tip_profesional": "Aplica este concepto inmediatamente en tu contexto profesional."
-            },
-            "verificacion": [
-              {
-                "pregunta": "¿Cuál es el concepto central de esta lección?",
-                "opciones": [
-                  "Opción A",
-                  "Opción B correcta",
-                  "Opción C",
-                  "Opción D"
-                ],
-                "correcta": 1,
-                "explicacion_profunda": "Esta es la respuesta correcta con su explicación.",
-                "concepto_reforzado": "¿Cuál es el concepto central de esta lección?"
-              },
-              {
-                "pregunta": "¿Cómo aplica este concepto en la práctica?",
-                "opciones": [
-                  "No aplica",
-                  "Aplica en contextos empresariales",
-                  "Solo aplica en investigación",
-                  "Solo en startups"
-                ],
-                "correcta": 1,
-                "explicacion_profunda": "El concepto tiene aplicación directa en empresas de todo tamaño.",
-                "concepto_reforzado": "¿Cómo aplica este concepto en la práctica?"
-              },
-              {
-                "pregunta": "¿Qué herramienta es más relevante para este tema?",
-                "opciones": [
-                  "Excel",
-                  "Claude API + Python",
-                  "Solo papel y lápiz",
-                  "Ninguna herramienta"
-                ],
-                "correcta": 1,
-                "explicacion_profunda": "Claude API con Python es la combinación más práctica para implementar.",
-                "concepto_reforzado": "¿Qué herramienta es más relevante para este tema?"
-              }
-            ],
-            "practica": {
-              "tipo": "caso_real",
-              "contexto": "Contexto empresarial LATAM relevante al tema.",
-              "instruccion": "Aplica el concepto en un caso real.",
-              "input_malo": "Enfoque sin conocimiento del tema.",
-              "pista": "Considera el contexto latinoamericano específico.",
-              "solucion": "Solución óptima que demuestra comprensión del tema.",
-              "criterios_de_exito": [
-                "Criterio 1",
-                "Criterio 2",
-                "Criterio 3"
-              ]
-            },
-            "conexion": {
-              "siguiente_concepto": "Siguiente lección del bloque",
-              "por_que_importa_despues": "Este tema es base para los conceptos más avanzados que siguen."
             }
           }
         },
