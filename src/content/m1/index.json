@@ -5668,33 +5668,98 @@
         },
         {
           "id": "m1-b6-l7",
-          "titulo": "Cloud de IA: AWS Bedrock, Google Vertex, Azure OpenAI",
+          "titulo": "Benchmarks: MMLU, HumanEval, HELM",
           "bloque": 6,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Cada vez que un laboratorio de IA lanza un modelo nuevo, los anuncios vienen cargados de números: '92% en MMLU', 'supera el umbral humano en HumanEval', '87.5 en HELM'. Para quien no conoce estos benchmarks, son cifras sin contexto. Para quien los entiende, son el lenguaje técnico que permite comparar modelos con criterio y detectar cuando el marketing supera la realidad.\n\nUn benchmark de IA es un conjunto estandarizado de preguntas o tareas con respuestas conocidas, diseñado para medir capacidades específicas de un modelo. La idea es simple en principio: si todos los modelos responden las mismas preguntas, puedes comparar quién responde mejor. En la práctica, hay matices críticos que verás más adelante.\n\n**MMLU (Massive Multitask Language Understanding)**: Creado en 2021, MMLU es el benchmark de conocimiento general más citado. Tiene 57 áreas de conocimiento —matemáticas, historia, ciencias, medicina, derecho, filosofía, economía— con preguntas de opción múltiple de nivel universitario y profesional. Un modelo humano experto obtiene ~90% en su área de especialización. GPT-3 original obtuvo ~43% en MMLU. Claude Opus y GPT-4o en 2026 obtienen entre 86-90%. Lo que mide MMLU bien: amplitud de conocimiento factual en múltiples dominios. Lo que no mide: razonamiento sobre problemas nuevos, creatividad, o performance en tareas del mundo real con instrucciones complejas.\n\n**HumanEval (OpenAI)**: Diseñado para medir la capacidad de escribir código funcional. Tiene 164 problemas de programación en Python: el modelo recibe la firma de una función y los docstrings, y debe completar la implementación. Se evalúa si el código pasa los test cases automáticamente (pass@1: porcentaje de problemas resueltos en el primer intento). GPT-3.5 obtiene ~48%, GPT-4 y Claude Opus en 2026 obtienen ~87%. Lo que HumanEval mide bien: capacidad básica de generar código que funciona. Lo que no mide: código en proyectos reales con dependencias, refactoring, debugging de sistemas existentes, o código en lenguajes distintos a Python.\n\n**HELM (Holistic Evaluation of Language Models, Stanford)**: El más ambicioso de los tres, desarrollado por el Stanford CRFM. HELM evalúa modelos en 42 escenarios diferentes que incluyen no solo precisión (accuracy) sino también calibración (¿sabe el modelo cuándo no sabe?), robustez (¿funciona igual con pequeñas variaciones del prompt?), equidad (¿produce outputs sesgados hacia ciertos grupos?), eficiencia y toxicidad. La idea de HELM es que un modelo puede tener alta accuracy pero ser inconsistente, sesgado o costoso. Para decisiones empresariales donde el comportamiento en edge cases importa, HELM ofrece una visión más completa que MMLU o HumanEval solos.\n\n**El problema del benchmark gaming**: El desafío central de todos los benchmarks es que los modelos pueden —y algunos laboratorios lo hacen— ser entrenados específicamente para responder bien los benchmarks de referencia sin que eso se traduzca en mejor performance en tareas del mundo real. Si un modelo es entrenado con datos que incluyen o son similares a las preguntas del MMLU, su score en MMLU sube sin que el modelo sea más capaz en general. Esto se llama 'benchmark contamination' y es un tema activo de discusión y escrutinio en la comunidad de IA en 2026.\n\nPara consultores, la regla práctica es: los benchmarks son una primera señal, no la decisión final. Complementa siempre con evaluaciones en el caso de uso específico del cliente.",
+              "analogia": "Los benchmarks de IA son como el ICFES para un estudiante colombiano: mide conocimiento estándar y predice performance académico promedio, pero no te dice si el estudiante es buen líder, creativo para resolver problemas nuevos, o efectivo en el mundo laboral real.",
+              "ejemplo_malo": "Elegir un modelo exclusivamente porque tiene el mayor score en MMLU sin evaluar si ese modelo funciona bien en las tareas específicas del proyecto —por ejemplo, análisis de documentos legales en español colombiano, que MMLU no mide.",
+              "ejemplo_bueno": "Usar HumanEval como primer filtro para elegir un modelo para asistencia de código Python, luego hacer una evaluación propia con 20 ejemplos representativos de los problemas de código específicos del equipo del cliente.",
+              "por_que_importa": "Cuando presentes una recomendación de modelo a un cliente técnico, mencionarás benchmarks. Si no entiendes sus limitaciones, parecerás superficial. Si los explicas con matices, parecerás experto.",
+              "tip_profesional": "Cuando un proveedor de IA anuncia 'score de 95% en nuestro benchmark propietario', es señal de alerta: están midiendo con su propia regla. Exige ver performance en benchmarks estándar y en evaluaciones del caso de uso real. Los benchmarks propietarios son marketing hasta demostrar lo contrario."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué mide el benchmark MMLU y cuál es su limitación principal?",
+                "opciones": [
+                  "Mide velocidad de generación de texto; su limitación es que no mide calidad",
+                  "Mide amplitud de conocimiento factual en 57 áreas con preguntas de opción múltiple; su limitación es que no mide razonamiento en problemas nuevos ni performance en tareas reales",
+                  "Mide exclusivamente matemáticas y ciencias; su limitación es que no cubre humanidades",
+                  "Mide cuántos idiomas habla el modelo; su limitación es que solo evalúa inglés"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "MMLU (Massive Multitask Language Understanding) tiene 57 áreas del conocimiento con preguntas de opción múltiple de nivel universitario. Es el benchmark más citado en papers académicos y anuncios de productos precisamente porque es comprehensivo y fácil de comparar entre modelos. Pero sus limitaciones son estructurales: las preguntas de opción múltiple con respuesta correcta única miden recuperación de conocimiento memorizado, no razonamiento sobre situaciones nuevas. Un modelo puede tener 88% en MMLU y ser mediocre generando análisis creativos, siguiendo instrucciones complejas con múltiples condiciones, o manteniendo coherencia en conversaciones largas. Para consultores, MMLU es útil para screening inicial —modelos con score muy bajo (sub-70%) tienen problemas de conocimiento general— pero no es suficiente para decidir entre modelos competitivos.",
+                "concepto_reforzado": "MMLU: qué mide bien y qué no mide"
+              },
+              {
+                "pregunta": "¿Qué evalúa HumanEval y por qué pass@1 es la métrica relevante?",
+                "opciones": [
+                  "Evalúa la calidad de respuestas en inglés; pass@1 mide si la primera respuesta está en inglés correcto",
+                  "Evalúa capacidad de escribir código Python funcional que pase test cases; pass@1 es el porcentaje de problemas resueltos correctamente en el primer intento",
+                  "Evalúa si el modelo puede ejecutar código en tiempo real; pass@1 mide si la ejecución tarda menos de 1 segundo",
+                  "Evalúa documentación de código; pass@1 mide si el primer docstring es correcto"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "HumanEval tiene 164 problemas de programación Python donde el modelo recibe una función incompleta (firma + docstring) y debe completar la implementación. La evaluación es binaria y objetiva: el código pasa los test cases o no. pass@1 mide el porcentaje de problemas donde la primera respuesta del modelo es código funcional que pasa todos los tests. Esta métrica es relevante porque en producción, el desarrollador quiere que el primer intento del asistente sea funcional —si hay que hacer múltiples iteraciones para cada función, el ahorro de tiempo es marginal. La limitación de HumanEval es que sus 164 problemas son relativamente cortos y aislados: no miden lo que más importa en proyectos reales, que es trabajar con bases de código existentes, entender contexto complejo, o generar código en frameworks específicos.",
+                "concepto_reforzado": "HumanEval y la métrica pass@1"
+              },
+              {
+                "pregunta": "¿Qué hace diferente a HELM respecto a MMLU y HumanEval?",
+                "opciones": [
+                  "HELM solo evalúa modelos de imagen, no de texto",
+                  "HELM fue creado por OpenAI, mientras MMLU y HumanEval son de Google",
+                  "HELM evalúa múltiples dimensiones más allá de accuracy: calibración, robustez, equidad, eficiencia y toxicidad en 42 escenarios",
+                  "HELM es el único benchmark que evalúa modelos en español"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "HELM (Holistic Evaluation of Language Models, Stanford) fue desarrollado precisamente como respuesta a las limitaciones de los benchmarks de una sola dimensión. Su premisa: un modelo que obtiene 90% de accuracy en todas las preguntas pero que expresa certeza absoluta cuando debería estar inseguro (calibración pobre), que produce resultados muy diferentes con pequeñas variaciones del prompt (robustez baja), o que es sistemáticamente más impreciso con preguntas sobre ciertos grupos demográficos (equidad), no es un buen modelo para producción aunque tenga accuracy excelente. Para decisiones empresariales en sectores regulados —banca, salud, gobierno— estas dimensiones adicionales pueden ser más importantes que el accuracy puro. HELM es más difícil de interpretar que MMLU pero ofrece una visión más completa del comportamiento real del modelo.",
+                "concepto_reforzado": "HELM como evaluación holística multidimensional"
+              },
+              {
+                "pregunta": "¿Qué es 'benchmark contamination' y por qué es un problema en 2026?",
+                "opciones": [
+                  "Cuando datos maliciosos se agregan a los benchmarks para hacerlos más difíciles",
+                  "Cuando un modelo es entrenado con datos similares o iguales a las preguntas del benchmark, inflando artificialmente su score sin que realmente mejore en tareas generales",
+                  "Cuando el benchmark tiene errores en las respuestas correctas",
+                  "Cuando múltiples empresas usan el mismo benchmark, haciéndolo inútil por sobreuso"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Benchmark contamination es uno de los problemas más serios en la evaluación de LLMs en 2026. Como los benchmarks son públicos y los modelos se entrenan con grandes cantidades de texto de internet, hay riesgo de que los datos de entrenamiento incluyan páginas web con preguntas y respuestas de esos benchmarks. Un modelo que ha 'visto' las respuestas del MMLU durante el entrenamiento puede obtener scores altos no porque razone bien, sino porque memorizó las respuestas. Los laboratorios más rigurosos (incluyendo Anthropic y algunos de Google DeepMind) intentan auditar la contaminación de sus datos de entrenamiento, pero es técnicamente difícil garantizarla completamente. La consecuencia práctica: benchmarks más recientes o menos públicos son generalmente más confiables que benchmarks muy establecidos como MMLU, que existe desde 2021 y ha sido replicado en innumerables páginas web.",
+                "concepto_reforzado": "Benchmark contamination como problema de evaluación"
+              },
+              {
+                "pregunta": "¿Cuál es la regla práctica para usar benchmarks en una decisión de selección de modelo para un cliente?",
+                "opciones": [
+                  "Elegir siempre el modelo con el mayor score en MMLU porque es el benchmark más comprehensivo",
+                  "Ignorar todos los benchmarks porque son marketing",
+                  "Usar benchmarks como primera señal de screening, luego complementar con evaluaciones en el caso de uso específico del cliente con ejemplos reales",
+                  "Pedir al cliente que haga sus propios benchmarks antes de contratar al consultor"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El proceso correcto de selección de modelo tiene dos etapas. Primera: usar benchmarks estándar para eliminar modelos claramente inferiores —un modelo con 65% en MMLU probablemente tiene problemas de conocimiento general que afectarán cualquier caso de uso. Segunda: evaluar los modelos restantes con 20-50 ejemplos del caso de uso específico del cliente, con las métricas que importan para ese caso (¿errores factuales? ¿costo por respuesta? ¿latencia? ¿consistencia entre llamadas?). Esta segunda evaluación es más cara en tiempo pero es la única que realmente predice el performance en producción. Un modelo con 88% en MMLU puede ser mediocre en análisis de contratos colombianos; un modelo con 82% puede ser excelente en ese caso específico por cómo fue fine-tuneado. Los benchmarks generales no capturan esas diferencias.",
+                "concepto_reforzado": "Proceso de dos etapas para selección de modelo"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Un cliente te muestra este anuncio de un proveedor de IA: 'NuestroModelo X alcanzó 94.3% en nuestro SupremeBenchmark 2026, superando a todos los competidores. Además, obtuvo 91% en nuestro LanguageTest-Pro.' El cliente está considerando contratar el servicio por $2,000 USD/mes para revisar contratos de seguros en español. Te pregunta: '¿Estos números son buenos? ¿Debería contratarlo?'",
+              "instruccion": "Responde al cliente con un análisis crítico. Incluye: (1) qué aspectos de los números presentados son señales de alerta, (2) qué información adicional necesitarías ver antes de recomendar, y (3) qué evaluación propia harías antes de contratar.",
+              "input_malo": "Sí, 94.3% es excelente. Si superan a todos los competidores eso es suficiente evidencia para contratar.",
+              "pista": "Observa que los benchmarks mencionados son 'SupremeBenchmark 2026' y 'LanguageTest-Pro' —ninguno es un benchmark estándar conocido (MMLU, HumanEval, HELM). ¿Qué implica eso? Además, considera que el caso de uso es contratos de seguros en español colombiano — ¿qué tipo de evaluación específica necesitarías?",
+              "solucion": "Análisis para el cliente: (1) SEÑALES DE ALERTA: Los benchmarks son propietarios ('SupremeBenchmark 2026', 'LanguageTest-Pro') — no son estándares conocidos, lo que significa que los creó el mismo proveedor para medirse a sí mismo. Esto es como un restaurante que se premia a sí mismo. No hay forma de comparar estos números con modelos conocidos como Claude o GPT-4o. Además, 'superando a todos los competidores' no especifica a qué competidores ni bajo qué condiciones. (2) INFORMACIÓN ADICIONAL: Scores en MMLU, HumanEval y/o HELM públicos. Ejemplos de análisis de contratos de seguros en español que el modelo haya producido. Información sobre la fecha de corte de conocimiento (¿conoce regulación aseguradora colombiana reciente?). Política de privacidad de datos y si los contratos del cliente se usarán para entrenar modelos. (3) EVALUACIÓN PROPIA: Tomar 10 contratos reales de seguros del cliente con errores conocidos o cláusulas problemáticas identificadas previamente. Pedir al modelo que los analice. Evaluar si el modelo detecta los problemas reales. Comparar con Claude Sonnet o GPT-4o en los mismos contratos para tener baseline. Solo si el modelo supera al baseline en ese test específico, considerar el $2,000/mes.",
+              "criterios_de_exito": [
+                "Identifica los benchmarks propietarios como señal de alerta principal",
+                "Propone evaluación en el caso de uso real del cliente (contratos de seguros en español), no en benchmarks genéricos",
+                "Menciona comparar con un baseline conocido (Claude, GPT-4o) antes de decidir"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Cómo comparar modelos con criterio técnico",
+              "por_que_importa_despues": "Con el vocabulario de benchmarks en mente, la siguiente lección te da un framework estructurado para hacer comparaciones técnicas rigurosas entre modelos — la habilidad que más diferencia a un consultor de IA junior de uno senior."
             }
           }
         },
