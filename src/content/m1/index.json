@@ -2607,30 +2607,94 @@
           "titulo": "Tokenización: cómo el modelo lee y divide el texto",
           "bloque": 3,
           "tipo": "leccion",
-          "duracion_min": 20,
+          "duracion_min": 18,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Los modelos de lenguaje no leen texto como los humanos — lo leen como secuencias de tokens. Un token es la unidad mínima de procesamiento: puede ser una palabra completa ('casa'), parte de una palabra ('anti' en 'anticuerpo'), un carácter de puntuación, o un espacio. Entender la tokenización es crítico para escribir prompts eficientes, calcular costos de API, y diagnosticar errores extraños en outputs del modelo. GPT-4 usa el tokenizador cl100k_base de OpenAI. Una regla aproximada: en inglés, 1 token ≈ 4 caracteres ≈ 0.75 palabras. En español, la tokenización es menos eficiente: palabras largas y conjugaciones complejas producen más tokens. 'Anticonstitucionalísimamente' (la palabra más larga del español) genera 7-10 tokens dependiendo del modelo. La tokenización es subpalabra (subword tokenization), usando algoritmos como BPE (Byte Pair Encoding) o SentencePiece. El algoritmo aprende las combinaciones de caracteres más frecuentes en el corpus de entrenamiento y las convierte en tokens únicos. Las palabras más frecuentes tienen su propio token; las raras se dividen en subpalabras. Las implicaciones prácticas son múltiples: (1) Los costos de API se cobran por token, no por palabra. Un documento de 1,000 palabras en español puede costar 1,400-1,600 tokens. (2) Los límites de contexto son en tokens, no en palabras: 128K tokens ≈ 96,000 palabras en inglés, pero solo ≈ 70,000 en español. (3) La tokenización afecta la generación de código: los nombres de variables en español generan más tokens que en inglés, lo que puede afectar la coherencia en contextos muy largos. (4) Los números se tokenizan de formas inesperadas: '12345' puede ser un token o cinco tokens según el modelo. (5) Los errores de tokenización explican por qué los modelos a veces fallan en contar sílabas, deletrear palabras raras, o realizar aritmética simple: el modelo opera sobre tokens, no sobre caracteres. Herramienta práctica: el Tokenizer Playground de OpenAI (platform.openai.com/tokenizer) permite visualizar exactamente cómo se tokeniza cualquier texto. Para optimizar costos: usar jerga técnica en inglés cuando sea posible, evitar caracteres especiales innecesarios, y comprimir contextos repetitivos.",
+              "analogia": "La tokenización es como descomponer texto en piezas de Lego. Cada pieza (token) tiene un significado o es parte de uno. El modelo nunca ve las letras individuales ni las palabras completas directamente — solo ve las piezas de Lego y sus IDs numéricos.",
+              "ejemplo_malo": "Calcular el costo de procesar 10,000 palabras multiplicando directamente por el precio por token sin considerar que el español genera ~40% más tokens que el inglés.",
+              "ejemplo_bueno": "Usar la herramienta de tokenización antes de enviar un documento a la API para calcular exactamente cuántos tokens tiene y si cabe en la ventana de contexto.",
+              "por_que_importa": "La tokenización explica por qué los modelos fallan en tareas aparentemente simples (contar letras) y cómo calcular exactamente el costo de tus llamadas API.",
+              "tip_profesional": "Para reducir tokens en prompts largos: elimina saludos, repeticiones y contexto redundante. Un prompt de 500 tokens bien escrito puede superar a uno de 2000 tokens con relleno — y costará 4x menos."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué los modelos fallan al contar el número de letras 'r' en la palabra 'ferrocarril'?",
+                "opciones": [
+                  "Porque no saben aritmética",
+                  "Porque los modelos no son perfectos en tareas simples",
+                  "Porque la tokenización divide las palabras en subpalabras y el modelo opera sobre tokens, no caracteres individuales",
+                  "Porque el modelo no conoce el español"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El modelo ve 'ferrocarril' como una secuencia de tokens (ej: 'ferro' + 'carril' o 'ferrocarril' como un token completo según el modelo). Contar caracteres individuales requeriría operar sobre la representación de caracteres, pero el modelo solo tiene acceso a tokens. Por eso tareas que parecen simples para humanos (deletrear, contar letras) son difíciles para LLMs — operan en un nivel de abstracción diferente.",
+                "concepto_reforzado": "Tokens vs caracteres y sus implicaciones"
+              },
+              {
+                "pregunta": "Un documento de análisis legal en español tiene 5,000 palabras. ¿Cuántos tokens aproximados tendrá?",
+                "opciones": [
+                  "5,000 tokens (1:1)",
+                  "3,750 tokens (0.75 por palabra)",
+                  "7,000-8,000 tokens (español es menos eficiente que inglés en tokenización)",
+                  "500 tokens (compresión)"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "En español, la relación es aproximadamente 1.4-1.6 tokens por palabra debido a palabras más largas, acentos, y conjugaciones complejas. 5,000 palabras × 1.5 = 7,500 tokens aproximados. Esto es importante para calcular costos: a $0.01/1K tokens, ese documento costaría $0.075. Para ventanas de contexto: un modelo de 32K tokens solo podría procesar ~21,000 palabras en español, no 32,000.",
+                "concepto_reforzado": "Eficiencia de tokenización en español vs inglés"
+              },
+              {
+                "pregunta": "¿Qué algoritmo de tokenización usa la mayoría de los LLMs modernos y cuál es su principio?",
+                "opciones": [
+                  "ASCII encoding: convierte texto a números ASCII",
+                  "BPE (Byte Pair Encoding): aprende las subpalabras más frecuentes del corpus de entrenamiento y las asigna como tokens únicos",
+                  "Word tokenization: una palabra = un token siempre",
+                  "Character tokenization: un carácter = un token"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "BPE es un algoritmo de compresión adaptado para tokenización. Comienza con caracteres individuales y fusiona iterativamente los pares más frecuentes hasta alcanzar el tamaño de vocabulario objetivo (32K-100K tokens según el modelo). El resultado: las palabras frecuentes ('the', 'de', 'que') tienen tokens propios; las raras ('anticonstitucionalísimamente') se dividen en subpalabras conocidas. Esto balancea vocabulario manejable con capacidad de representar cualquier texto.",
+                "concepto_reforzado": "Byte Pair Encoding como algoritmo de tokenización"
+              },
+              {
+                "pregunta": "¿Por qué es importante verificar la tokenización antes de enviar un documento largo a la API?",
+                "opciones": [
+                  "Para ver si el documento tiene errores ortográficos",
+                  "Para verificar que el texto cabe en la ventana de contexto del modelo y calcular el costo exacto antes de ejecutar",
+                  "Para mejorar la calidad de la respuesta",
+                  "Para acelerar el tiempo de respuesta"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Si envías un documento que excede la ventana de contexto del modelo, la llamada API fallará con error o truncará el contenido silenciosamente. Verificar tokens antes: (1) Confirma que el contenido cabe en la ventana de contexto, (2) Calcula el costo exacto (tokens de entrada × precio/token), (3) Permite optimizar el prompt para reducir tokens innecesarios. En producción, implementa siempre una validación que cuente tokens antes de llamar a la API.",
+                "concepto_reforzado": "Validación de tokens para producción confiable"
+              },
+              {
+                "pregunta": "Un sistema extrae datos de contratos y usa el número '1234567' como identificador. El modelo a veces procesa incorrectamente este número. ¿Cuál es la causa más probable?",
+                "opciones": [
+                  "El modelo no sabe matemáticas",
+                  "Los números largos se tokenizan de formas variables (puede ser 1 token o 7 tokens de dígitos individuales) causando inconsistencias en el procesamiento",
+                  "El modelo tiene un bug",
+                  "Los contratos están en formato incorrecto"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los números son notoriamente inconsistentes en tokenización. Dependiendo del modelo y el contexto, '1234567' puede tokenizarse como un solo token, como '1234' + '567', como dígitos individuales, etc. Para sistemas de extracción de datos numéricos críticos: (1) Instrucción explícita en el prompt de tratar números como strings, (2) Validación post-procesamiento con regex, (3) Considerar usar few-shot examples con el formato numérico específico.",
+                "concepto_reforzado": "Tokenización de números y estrategias de mitigación"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Tu empresa quiere procesar 10,000 contratos de clientes usando Claude Sonnet (precio: $3/1M tokens de entrada). Cada contrato tiene en promedio 2,000 palabras en español.",
+              "instruccion": "Calcula el costo total de tokenización de entrada para procesar todos los contratos. ¿Cuántos contratos caben en una llamada de 200K tokens? ¿Qué estrategia usarías para procesar múltiples contratos por llamada reduciendo costos?",
+              "pista": "Recuerda la regla: español genera ~1.5 tokens por palabra. Una llamada puede contener múltiples contratos si caben en la ventana de contexto.",
+              "solucion": "CÁLCULO: 2,000 palabras × 1.5 tokens/palabra = 3,000 tokens por contrato. 10,000 contratos × 3,000 tokens = 30M tokens totales. Costo: 30M × ($3/1M) = $90 de entrada (más el costo de los tokens de salida). CONTRATOS POR LLAMADA: 200K tokens disponibles / 3,000 tokens por contrato = 66 contratos por llamada si el prompt de instrucción es pequeño (~1,000 tokens). Esto reduce las llamadas API de 10,000 a ~152 llamadas. ESTRATEGIA BATCH: procesar 50 contratos por llamada (dejando margen para el prompt y la respuesta), con un prompt que diga 'Para cada uno de los siguientes contratos, extrae: partes, fecha, valor, cláusulas de riesgo. Devuelve JSON.' Esto reduce costos de latencia y puede aprovechar descuentos por batch API de Anthropic.",
+              "criterios_de_exito": [
+                "Calcula correctamente tokens a partir de palabras usando el factor 1.5x para español",
+                "Determina cuántos contratos por llamada son factibles",
+                "Menciona la estrategia de batch para reducir número de llamadas API"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Atención y self-attention — el mecanismo que permite al modelo relacionar palabras distantes en el texto.",
+              "modulo_relacionado": "M2 — Prompt Engineering: la tokenización informa cómo escribir prompts eficientes"
             }
           }
         },
@@ -2639,30 +2703,94 @@
           "titulo": "Atención y self-attention: el mecanismo que lo hace funcionar",
           "bloque": 3,
           "tipo": "leccion",
-          "duracion_min": 20,
+          "duracion_min": 22,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "El mecanismo de atención es la innovación central del paper 'Attention Is All You Need' (2017, Google Brain) que dio origen a los transformers y, por ende, a todos los LLMs modernos. Es literalmente el corazón de Claude, GPT-4 y Gemini. La intuición: cuando procesas la frase 'El banco donde me senté estaba junto al banco donde guardé el dinero', los humanos usamos el contexto para desambiguar los dos significados de 'banco'. La atención permite al modelo hacer exactamente esto: para entender cada palabra, 'mira' a todas las demás palabras del contexto y decide cuáles son más relevantes. Self-attention (atención propia) significa que la secuencia se atiende a sí misma: cada token genera tres vectores (Query, Key, Value) que fueron aprendidos durante el entrenamiento. El score de atención entre dos tokens es el producto punto de sus vectores Query y Key, normalizado y pasado por softmax. Tokens con alta compatibilidad Query-Key reciben alta atención. El output es una suma ponderada de los vectores Value según esos scores. Multi-head attention ejecuta múltiples mecanismos de atención en paralelo, cada uno capturando diferentes tipos de relaciones (sintácticas, semánticas, co-referenciales). GPT-4 tiene 96 cabezas de atención — cada una puede especializarse en un tipo diferente de relación entre tokens. Las implicaciones para el uso profesional: (1) La 'posición de atención' explica por qué las instrucciones críticas deben aparecer al principio o al final del prompt (los tokens iniciales y finales reciben más atención que los del medio en contextos muy largos). (2) La ventana de contexto está limitada por la memoria de la matriz de atención: con N tokens, se calculan N×N pares de atención. (3) La capacidad de razonamiento de los modelos proviene directamente de la atención: relacionar premisas con conclusiones a través de cadenas de tokens es una forma de razonamiento atencional. (4) Flash Attention es la optimización de hardware que permite procesar ventanas de contexto de 1M tokens eficientemente reordenando los cálculos de atención en bloques que caben en la memoria caché de la GPU.",
+              "analogia": "Self-attention es como cuando lees un contrato y tu cerebro automáticamente conecta el pronombre 'él' con 'el cliente mencionado en el párrafo 3'. Para cada pronombre, tu atención 'va hacia atrás' en el texto y determina a qué se refiere. Los transformers hacen esto simultáneamente para cada token.",
+              "ejemplo_malo": "Poner instrucciones críticas en el medio de un prompt muy largo — la atención tiende a ser menor en el centro de contextos extensos (conocido como 'lost in the middle').",
+              "ejemplo_bueno": "Estructura de prompt efectiva: instrucciones críticas al inicio + documentos de contexto en el medio + recordatorio de la tarea al final. Aprovecha los picos de atención en inicio y fin.",
+              "por_que_importa": "Entender la atención explica por qué ciertas estructuras de prompt funcionan mejor, por qué los modelos tienen ventanas de contexto limitadas, y cómo el modelo 'razona' sobre texto.",
+              "tip_profesional": "Para prompts con documentos muy largos: usa la técnica 'instrucción-documento-instrucción' — repite las instrucciones clave antes y después del documento para maximizar la atención en ambos extremos del contexto."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué el paper 'Attention Is All You Need' fue tan revolucionario?",
+                "opciones": [
+                  "Porque aumentó el tamaño de los modelos",
+                  "Porque demostró que la atención como mecanismo único puede reemplazar las RNNs y LSTMs para procesar secuencias, habilitando paralelización masiva y modelos mucho más grandes",
+                  "Porque inventó el concepto de red neuronal",
+                  "Porque fue el primer paper en usar GPUs para IA"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Antes de los transformers (2017), los modelos de secuencia eran RNNs o LSTMs que procesaban tokens uno por uno (secuencialmente), limitando la paralelización y el tamaño de los modelos. 'Attention Is All You Need' mostró que la atención sola (sin recurrencia) podía capturar dependencias de largo alcance y permitía procesar todos los tokens en paralelo. Esto habilitó el escalado masivo: de millones a billones de parámetros y el surgimiento de GPT, BERT, Claude y toda la familia de LLMs.",
+                "concepto_reforzado": "Transformers como ruptura con la arquitectura secuencial"
+              },
+              {
+                "pregunta": "¿Qué son los vectores Query, Key y Value en self-attention?",
+                "opciones": [
+                  "Tipos de datos de entrada al modelo",
+                  "Tres representaciones aprendidas de cada token: Query (qué busco), Key (qué soy), Value (qué aporto) — su interacción determina cuánto un token 'atiende' a cada otro",
+                  "Hiperparámetros del entrenamiento",
+                  "Las tres capas de una red neuronal básica"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Para cada token, se calculan tres vectores mediante matrices de pesos aprendidas: Query (la 'pregunta' que hace ese token al resto: ¿quién es relevante para mí?), Key (la 'etiqueta' que identifica ese token: ¿qué soy yo?), Value (la información que ese token aporta si es seleccionado). El score de atención es Query·Key para cada par de tokens. Softmax normaliza estos scores en pesos de 0 a 1. El output es la suma ponderada de todos los Values según esos pesos.",
+                "concepto_reforzado": "Query-Key-Value como base de la atención"
+              },
+              {
+                "pregunta": "¿Por qué las instrucciones importantes en un prompt muy largo deben aparecer al inicio o al final?",
+                "opciones": [
+                  "Por convención de formato",
+                  "Porque el modelo solo lee los primeros y últimos párrafos",
+                  "Por el efecto 'lost in the middle': los LLMs tienden a dar más peso atencional a tokens al principio y final del contexto que a los del centro",
+                  "Para que el prompt sea más corto"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Estudios empíricos (Liu et al., 2023) demostraron que los LLMs tienen menor recall de información ubicada en el centro de contextos largos — el fenómeno 'lost in the middle'. La atención tiende a concentrarse en tokens iniciales (por el efecto de posición) y finales (por ser más recientes en el contexto). Para prompts críticos: instrucciones al inicio, documentos en el centro, recordatorio de la tarea al final. Esto maximiza la probabilidad de que el modelo 'atienda' a las instrucciones correctamente.",
+                "concepto_reforzado": "Lost in the middle y estructura óptima de prompts"
+              },
+              {
+                "pregunta": "¿Qué es multi-head attention y por qué mejora la capacidad del modelo?",
+                "opciones": [
+                  "Procesar múltiples usuarios simultáneamente",
+                  "Ejecutar múltiples mecanismos de atención en paralelo, cada uno especializado en capturar diferentes tipos de relaciones (sintácticas, semánticas, co-referenciales)",
+                  "Un tipo de arquitectura de red neuronal diferente",
+                  "La capacidad de entender múltiples idiomas"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Con una sola cabeza de atención, el modelo aprende UN tipo de relación entre tokens. Con 96 cabezas (como GPT-4), cada cabeza puede especializarse: una en relaciones sintácticas (sujeto-verbo), otra en co-referencias (pronombre-antecedente), otra en relaciones semánticas temáticas, etc. Los outputs de todas las cabezas se concatenan y proyectan. Esta especialización emergente (no programada explícitamente) es lo que permite a los grandes LLMs capturar la complejidad del lenguaje natural.",
+                "concepto_reforzado": "Multi-head attention y especialización emergente"
+              },
+              {
+                "pregunta": "¿Por qué la ventana de contexto de los LLMs está limitada físicamente por la memoria?",
+                "opciones": [
+                  "Por decisiones de diseño arbitrarias",
+                  "Porque la matriz de atención tiene dimensiones N×N donde N es el número de tokens: con 128K tokens, se deben almacenar y calcular 16 billones de pares de atención",
+                  "Porque el texto más largo no se puede tokenizar",
+                  "Por limitaciones del disco duro"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La complejidad de atención es O(N²) en memoria y cómputo. Con N=128,000 tokens, la matriz de atención es 128K × 128K = 16.384 billones de pares. En FP16 (2 bytes por valor), esto requiere ~32GB solo para la matriz de atención — por eso las GPUs con mayor VRAM habilitan ventanas de contexto más largas. Flash Attention reduce la memoria a O(N) reordenando los cálculos en bloques, pero el cómputo sigue siendo O(N²). Esto limita físicamente cuántos tokens puede procesar un modelo con hardware dado.",
+                "concepto_reforzado": "Complejidad cuadrática de la atención y sus implicaciones de hardware"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Estás diseñando un sistema que analiza contratos legales de 50 páginas (≈25,000 tokens en español) usando Claude con ventana de 200K tokens. El sistema debe extraer: partes involucradas, fechas clave, cláusulas de riesgo, y monto del contrato.",
+              "instruccion": "Diseña la estructura óptima del prompt considerando el fenómeno 'lost in the middle'. ¿Dónde pones las instrucciones de extracción, el contrato, y el formato de salida esperado? Justifica tu decisión basándote en el mecanismo de atención.",
+              "pista": "Recuerda: la atención es más alta en el inicio y final del contexto. Las instrucciones críticas deben estar donde la atención sea máxima.",
+              "solucion": "ESTRUCTURA ÓPTIMA: [INICIO - Alta atención] Instrucciones detalladas de extracción + formato JSON esperado + ejemplos de salida + advertencias sobre precisión requerida. [MEDIO - Menor atención] El contrato completo de 50 páginas. [FINAL - Alta atención] Recordatorio de las instrucciones: 'Extrae exactamente los campos especificados en el formato JSON del inicio. Si no encuentras un campo, usa null. No inventes información.' JUSTIFICACIÓN: el fenómeno lost in the middle indica que el modelo tiene más probabilidad de seguir instrucciones ubicadas en los extremos del contexto. Al repetir las instrucciones clave al final, justo antes de la generación, aumentamos la probabilidad de que el modelo las tenga 'fresquitas' en su atención al generar la respuesta. Esta estructura aumenta la tasa de éxito de extracción estructurada en 20-40% comparado con poner instrucciones solo al inicio.",
+              "criterios_de_exito": [
+                "Coloca instrucciones al inicio Y al final (no solo al inicio)",
+                "Justifica con el fenómeno lost in the middle",
+                "Menciona qué poner específicamente en cada sección del prompt"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Preentrenamiento: cómo aprende el modelo base — entender qué sabe y qué no sabe un LLM antes de cualquier fine-tuning.",
+              "modulo_relacionado": "M2 — Prompt Engineering Avanzado: aplicar conocimiento de atención para optimizar prompts"
             }
           }
         },
@@ -2675,26 +2803,90 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "El preentrenamiento es la fase donde un LLM adquiere su conocimiento del mundo. Es el proceso más costoso en IA: GPT-4 costó ~$100M en compute solo para el preentrenamiento, usando miles de GPUs A100 durante meses. Entender qué ocurre en esta fase explica tanto las capacidades como las limitaciones fundamentales de los modelos. El objetivo del preentrenamiento es simple: dado un texto, predecir el siguiente token. Se llama 'predicción del siguiente token' o 'modelado causal del lenguaje'. El modelo ve billones de ejemplos de texto y aprende qué tokens suelen seguir a qué secuencias de tokens. Pero al aprender esta tarea aparentemente simple, el modelo desarrolla capacidades emergentes: comprensión del lenguaje, razonamiento básico, conocimiento factual, programación, matemáticas, y más. Los datos de preentrenamiento son críticos. Llama-3 fue entrenado con 15 billones de tokens. El dataset incluye: Common Crawl (rastreos de páginas web, ~80% del total), GitHub (código fuente), Wikipedia, libros y artículos académicos, foros como Reddit y Stack Overflow. La calidad del filtrado de datos tiene impacto enorme: eliminar spam, contenido de baja calidad, y datos tóxicos. Mistral y Llama distinguen entre 'preentrenamiento base' (solo predicción del siguiente token) y 'chat model' (con instruction tuning posterior). El modelo base solo puede completar texto, no sigue instrucciones. ChatGPT y Claude son modelos base con múltiples capas adicionales (instruction tuning + RLHF). Las limitaciones emergentes del preentrenamiento: (1) Fecha de corte: el modelo solo sabe lo que estaba en sus datos hasta cierta fecha. Claude 3.5 tiene cutoff de abril 2024. Para información posterior, necesitas RAG o herramientas web. (2) Sesgos de los datos: si el corpus contiene representación desbalanceada de culturas, géneros o perspectivas, el modelo hereda esos sesgos. (3) Conocimiento implícito, no verificable: el modelo 'sabe' cosas porque las vio en el texto, no porque pueda verificarlas. Esto causa alucinaciones cuando el modelo genera texto plausible sobre hechos que no estaban en sus datos o que estaban incorrectos.",
+              "analogia": "El preentrenamiento es como darle a una persona una biblioteca entera para leer desde los 0 años. Al terminar, sabe de todo un poco (pero no puede decirte qué libro específico cita). La fecha de corte es como si dejara de leer nuevos libros en una fecha específica.",
+              "ejemplo_malo": "Pedirle a Claude que te dé información sobre eventos ocurridos después de su fecha de corte — el modelo intentará responder con información anterior o alucinará datos plausibles pero incorrectos.",
+              "ejemplo_bueno": "Para información reciente: combinar el LLM con búsqueda web o RAG sobre documentos actualizados. El modelo razona sobre la información actual que le das como contexto.",
+              "por_que_importa": "La fecha de corte y los sesgos de entrenamiento explican las limitaciones más importantes de los LLMs en producción. Conocerlos permite diseñar sistemas que los mitiguen.",
+              "tip_profesional": "Siempre verifica la fecha de corte del modelo que usas en producción. Anthropic publica las fechas de entrenamiento en su documentación. Para sistemas que necesitan información actualizada, RAG con fuentes de datos en tiempo real es no negociable."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué aprende un LLM durante el preentrenamiento?",
+                "opciones": [
+                  "A seguir instrucciones específicas del usuario",
+                  "A predecir el siguiente token: y al aprender esta tarea sobre billones de ejemplos, desarrolla capacidades emergentes de comprensión, razonamiento y conocimiento",
+                  "A realizar búsquedas en internet",
+                  "A entender únicamente un idioma"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La tarea de predicción del siguiente token parece simple, pero al escalar a billones de tokens, genera capacidades emergentes no programadas explícitamente. Para predecir correctamente 'el médico le recetó [antibiótico]', el modelo debe entender biología médica básica. Para predecir código correcto, debe entender sintaxis y semántica de programación. Estas capacidades emergen del aprendizaje estadístico masivo, no de programación explícita.",
+                "concepto_reforzado": "Predicción del siguiente token como objetivo de preentrenamiento"
+              },
+              {
+                "pregunta": "¿Por qué los LLMs tienen 'fecha de corte' de conocimiento?",
+                "opciones": [
+                  "Por decisiones legales para no copiar contenido reciente",
+                  "Porque el preentrenamiento usa un corpus fijo de datos hasta cierta fecha: el modelo no 'aprende' información nueva después de ese punto sin reentrenamiento",
+                  "Porque internet deja de funcionar en esa fecha",
+                  "Para que los modelos sean más predecibles"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El preentrenamiento descarga y procesa datos hasta una fecha específica (el 'cutoff'). Después de ese punto, los pesos del modelo quedan fijos — el modelo no actualiza su conocimiento automáticamente. Esto es diferente a un buscador web que rastrea continuamente. Para usar información posterior al cutoff, el único mecanismo es: (1) proporcionar la información en el prompt/contexto, (2) RAG con documentos actualizados, o (3) reentrenar/hacer fine-tuning del modelo con datos nuevos.",
+                "concepto_reforzado": "Fecha de corte y limitaciones de conocimiento estático"
+              },
+              {
+                "pregunta": "¿Cuál es la diferencia entre un 'modelo base' y un 'modelo de chat' como Claude?",
+                "opciones": [
+                  "El modelo de chat es más pequeño",
+                  "El modelo base solo completa texto (predice siguiente token); el modelo de chat tiene capas adicionales de instruction tuning y RLHF que lo hacen seguir instrucciones y tener conversaciones útiles",
+                  "No hay diferencia, son términos intercambiables",
+                  "El modelo base solo habla inglés"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Llama-3-70B-base puede completar texto pero no sigue instrucciones de manera confiable — si le das un prompt de pregunta-respuesta, puede continuar generando preguntas en lugar de responder. Llama-3-70B-Instruct (el modelo de chat) tiene instruction tuning y RLHF adicionales que lo hacen responder apropiadamente. Claude, GPT-4-turbo, Gemini son todos modelos de chat. Los modelos base se usan principalmente para fine-tuning personalizado donde quieres añadir tus propias capas de alineación.",
+                "concepto_reforzado": "Modelo base vs modelo de chat y las fases de entrenamiento"
+              },
+              {
+                "pregunta": "¿Por qué los sesgos del corpus de preentrenamiento se transfieren al modelo?",
+                "opciones": [
+                  "Por un bug en el código de entrenamiento",
+                  "Porque el modelo aprende distribuciones estadísticas del texto; si el texto tiene sobre-representación de ciertas perspectivas, el modelo la hereda como su 'norma'",
+                  "Por decisiones deliberadas de los investigadores",
+                  "Los sesgos no se transfieren al modelo"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Si el 90% del texto sobre 'ingenieros' en el corpus usa pronombres masculinos, el modelo aprenderá esta asociación estadística y la reproducirá. Si hay más contenido en inglés que español, el modelo tendrá mejor desempeño en inglés. Los sesgos no son intencionales sino reflejos de las distribuciones en los datos de internet, que a su vez reflejan sesgos sociales reales. RLHF intenta mitigar algunos sesgos mediante feedback humano, pero no los elimina completamente.",
+                "concepto_reforzado": "Sesgos estadísticos heredados del corpus de entrenamiento"
+              },
+              {
+                "pregunta": "¿Cuánto costó aproximadamente entrenar GPT-4 y qué nos dice eso sobre la IA?",
+                "opciones": [
+                  "$1,000 (muy barato con cloud moderno)",
+                  "$1 millón",
+                  "~$100 millones solo en compute, lo que ilustra la enorme barrera de entrada para crear LLMs frontier desde cero",
+                  "$1 billón"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El costo de preentrenamiento de GPT-4 fue estimado en $50-100M en compute (Sam Altman mencionó 'más de $100M'). Esto requiere miles de GPUs A100 durante meses. Esta barrera de entrada es fundamental para entender el ecosistema de IA: solo 5-6 laboratorios en el mundo pueden costear LLMs frontier desde cero (OpenAI, Anthropic, Google, Meta, Mistral, xAI). El resto usa sus modelos como base. Para empresas y profesionales, la estrategia correcta es usar estos modelos vía API o fine-tuning, no preentrenar desde cero.",
+                "concepto_reforzado": "Costos de preentrenamiento y estrategia de acceso a IA frontier"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Un cliente quiere un sistema de IA para responder preguntas sobre regulaciones de la Superintendencia Financiera de Colombia actualizadas hasta el mes actual. Propone usar Claude directamente con prompts bien escritos, sin ninguna integración adicional.",
+              "instruccion": "¿Es suficiente usar Claude directamente? Explica las limitaciones del preentrenamiento en este caso y diseña una solución que funcione correctamente.",
+              "pista": "Piensa en la fecha de corte de Claude y en si las regulaciones de la SFC se actualizan frecuentemente.",
+              "solucion": "No es suficiente usar Claude directamente. PROBLEMA: Las regulaciones de la SFC se actualizan constantemente (circulares mensuales, resoluciones, acuerdos). La fecha de corte de Claude es abril 2024 — cualquier regulación posterior no existe para el modelo. Claude puede alucinan normativas desactualizadas con aparente confianza. SOLUCIÓN: Sistema RAG + Claude. (1) Indexar semanalmente las circulares y resoluciones de la SFC desde su sitio oficial en una base vectorial. (2) Cuando llega una pregunta, recuperar los documentos regulatorios relevantes usando búsqueda semántica. (3) Claude analiza y responde basándose en esos documentos, no en su memoria preentrenada. (4) Incluir en el prompt: 'Responde ÚNICAMENTE basándote en los documentos proporcionados. Cita el número de circular o resolución específica.' RESULTADO: Respuestas precisas y verificables con fuentes actualizadas.",
+              "criterios_de_exito": [
+                "Identifica la fecha de corte como el problema central",
+                "Propone RAG como solución, no solo prompt engineering",
+                "Incluye estrategia de actualización periódica de los documentos regulatorios"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Fine-tuning e instruction tuning: cómo se transforma un modelo base en un asistente útil para casos específicos.",
+              "modulo_relacionado": "M9 — Fine-tuning: aprenderás a hacer fine-tuning de modelos para tu caso de uso"
             }
           }
         },
@@ -2707,26 +2899,90 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "El fine-tuning es la técnica que transforma un modelo base (que solo completa texto) en un sistema útil para tareas específicas. Es la segunda fase de entrenamiento, después del preentrenamiento, y es el mecanismo que permite a empresas y desarrolladores adaptar modelos frontier a sus necesidades sin entrenamiento desde cero. Instruction Tuning (también llamado Supervised Fine-Tuning o SFT) es la primera forma de fine-tuning. El modelo aprende con miles de ejemplos en formato pregunta-instrucción-respuesta. Estos ejemplos son escritos por humanos o generados por modelos más grandes. FLAN-T5 de Google fue de los primeros modelos en demostrar que instruction tuning a escala permite generalización: un modelo entrenado con instrucciones en muchas tareas puede seguir instrucciones nuevas que no vio durante el entrenamiento. El resultado es un modelo que responde a instrucciones en lenguaje natural en lugar de solo completar texto. Fine-tuning de dominio específico va un paso más allá: además de seguir instrucciones generales, el modelo aprende el vocabulario, estilo y conocimiento de un dominio particular. Ejemplos: un modelo jurídico entrenado con miles de contratos y fallos judiciales colombianos, un modelo médico entrenado con registros clínicos en español, un modelo de atención al cliente entrenado con las conversaciones reales de la empresa. Las técnicas modernas de fine-tuning eficiente: (1) LoRA (Low-Rank Adaptation): entrena solo ~0.1% de los parámetros, reduciendo costo 100x con resultados similares. (2) QLoRA (Quantized LoRA): combina LoRA con cuantización 4-bit, permitiendo fine-tuning de modelos de 70B en una sola GPU A100 de 80GB. (3) DoRA (Weight-Decomposed LoRA): variante de LoRA que a veces supera al fine-tuning completo. Las plataformas de fine-tuning que no requieren código: OpenAI Fine-tuning API (sube ejemplos JSONL, configura, entrena), Together AI, Replicate, y Hugging Face AutoTrain. El trade-off crítico: fine-tuning en un dominio puede degradar capacidades generales del modelo (catastrophic forgetting). Solución: mezclar los ejemplos de fine-tuning con datos de preentrenamiento generales (replay buffer). Para casos de uso empresarial, la elección entre RAG y fine-tuning es fundamental: RAG para información que cambia frecuentemente (regulaciones, precios), fine-tuning para estilos de respuesta, formatos, y conocimiento estable.",
+              "analogia": "El preentrenamiento le da al modelo un título universitario general. El instruction tuning es el posgrado donde aprende a trabajar en equipo y comunicarse. El fine-tuning de dominio es la especialización clínica de un médico: sigue siendo doctor, pero ahora es cirujano cardíaco específicamente.",
+              "ejemplo_malo": "Hacer fine-tuning con solo 50 ejemplos esperando un modelo especializado — con tan pocos datos, el modelo overfittea y no generaliza a variaciones del problema.",
+              "ejemplo_bueno": "Fine-tuning con 500-2,000 ejemplos de alta calidad usando QLoRA, evaluando regularmente en un conjunto de validación de 100+ ejemplos para detectar overfitting temprano.",
+              "por_que_importa": "Fine-tuning permite construir sistemas de IA especializados sin entrenar modelos desde cero — democratizando el acceso a IA customizada para cualquier empresa.",
+              "tip_profesional": "Para la mayoría de casos de uso empresarial: prueba primero con prompt engineering y RAG. Solo haz fine-tuning si necesitas (1) formato de output muy específico y consistente, (2) estilo de respuesta único, o (3) dominio con vocabulario muy especializado que el modelo base no maneja bien."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la diferencia entre instruction tuning y fine-tuning de dominio?",
+                "opciones": [
+                  "Son sinónimos",
+                  "Instruction tuning enseña al modelo a seguir instrucciones generales en lenguaje natural; fine-tuning de dominio adapta el modelo a vocabulario, estilo y conocimiento de un sector específico",
+                  "Fine-tuning de dominio es más barato",
+                  "Instruction tuning requiere más datos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Instruction tuning (SFT) usa pares instrucción-respuesta generales para enseñar al modelo a seguir comandos — sin esto, solo completa texto. Fine-tuning de dominio añade otra capa: ejemplos específicos del sector (contratos legales, registros médicos, documentos financieros) para que el modelo hable el idioma del dominio. Un modelo puede tener ambos: instruction tuning de base (sigue instrucciones) + fine-tuning legal (habla como abogado colombiano).",
+                "concepto_reforzado": "Capas de fine-tuning y su propósito"
+              },
+              {
+                "pregunta": "¿Cuándo deberías elegir RAG sobre fine-tuning para un sistema empresarial?",
+                "opciones": [
+                  "Siempre, RAG es superior",
+                  "Cuando la información cambia frecuentemente (regulaciones, precios, inventario) — RAG accede a documentos actualizados, mientras el fine-tuning memoriza información estática",
+                  "Cuando tienes pocos datos",
+                  "Fine-tuning siempre es preferible a RAG"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "RAG vs Fine-tuning es una decisión de arquitectura crítica: RAG para conocimiento dinámico (precios, regulaciones, noticias, estado de órdenes — cualquier cosa que cambie más que una vez al mes). Fine-tuning para comportamiento estable (formato de respuestas, estilo de comunicación, terminología de la empresa, tareas que el modelo base hace inconsistentemente). Muchos sistemas en producción usan AMBOS: fine-tuning para el estilo base + RAG para el conocimiento actualizado.",
+                "concepto_reforzado": "RAG vs fine-tuning según tipo de conocimiento"
+              },
+              {
+                "pregunta": "¿Qué es QLoRA y por qué democratizó el fine-tuning de LLMs grandes?",
+                "opciones": [
+                  "Un nuevo tipo de arquitectura de red neuronal",
+                  "Quantized LoRA: combina LoRA (entrenar solo matrices de adaptación de bajo rango) con cuantización de pesos en 4 bits, permitiendo fine-tuning de modelos de 70B en una sola GPU A100 de 80GB",
+                  "Un servicio cloud de OpenAI",
+                  "Una técnica de compresión de datos para los datasets de fine-tuning"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Sin QLoRA, hacer fine-tuning de Llama-70B requeriría ~1.2TB de VRAM (8 GPUs A100 de 160GB cada una, costo de renta: ~$50/hora). Con QLoRA: los pesos base del modelo se cuantizan a 4 bits (reducción 8x de memoria) y solo se entrenan pequeñas matrices LoRA en 16 bits. El resultado: fine-tuning de un modelo de 70B en una sola A100 de 80GB (~$2-3/hora). Esto fue el cambio que permitió a startups y empresas medianas hacer fine-tuning de modelos frontier.",
+                "concepto_reforzado": "QLoRA como democratización del fine-tuning"
+              },
+              {
+                "pregunta": "¿Cuántos ejemplos son necesarios mínimamente para un fine-tuning efectivo?",
+                "opciones": [
+                  "10-20 ejemplos son suficientes",
+                  "La cantidad mínima práctica es 200-500 ejemplos de alta calidad para comenzar a ver especialización sin overfitting severo",
+                  "Se necesitan millones de ejemplos como en preentrenamiento",
+                  "La cantidad no importa, solo la calidad"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Con <100 ejemplos, el modelo probablemente overfittea (memoriza los ejemplos exactos pero no generaliza). 200-500 ejemplos de alta calidad es el mínimo práctico para tareas bien definidas. 1,000-5,000 ejemplos produce resultados más robustos y generalizables. Para tareas muy específicas (formato de reportes, clasificación de dominio cerrado), 500 ejemplos bien escritos pueden superar a GPT-4 con prompts elaborados. La calidad de los ejemplos supera a la cantidad: 200 ejemplos perfectos > 2,000 ejemplos mediocres.",
+                "concepto_reforzado": "Cantidad mínima y calidad de datos para fine-tuning efectivo"
+              },
+              {
+                "pregunta": "¿Qué es el 'catastrophic forgetting' y cómo se mitiga en fine-tuning?",
+                "opciones": [
+                  "El modelo olvida el idioma durante el entrenamiento",
+                  "El fine-tuning en un dominio específico puede degradar capacidades generales del modelo; se mitiga mezclando ejemplos de dominio con datos generales de preentrenamiento",
+                  "Un bug en PyTorch",
+                  "El modelo olvida el dataset de entrenamiento después de cada época"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Catastrophic forgetting ocurre cuando el fine-tuning sobreescribe pesos críticos del preentrenamiento general. Un modelo de análisis legal puede comenzar a cometer errores en tareas básicas de comprensión que antes manejaba bien. La mitigación principal es el replay buffer: incluir en el conjunto de fine-tuning ejemplos de tareas generales (5-20% del total) junto con los ejemplos de dominio. LoRA también ayuda: como solo modifica una fracción de los parámetros, preserva mejor el conocimiento general.",
+                "concepto_reforzado": "Catastrophic forgetting y estrategias de mitigación"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de seguros quiere que su sistema de IA responda preguntas de agentes en formato específico: primero la cobertura aplicable, luego el monto máximo, luego los documentos requeridos, y finalmente el tiempo de respuesta. Además, necesita usar la terminología específica de las pólizas de la empresa.",
+              "instruccion": "Diseña la estrategia de fine-tuning. ¿Qué tipo de fine-tuning necesitas? ¿Cuántos ejemplos aproximados? ¿RAG, fine-tuning, o ambos? Justifica.",
+              "pista": "Piensa en qué es estático (el formato y la terminología) vs qué puede cambiar (las coberturas específicas de cada póliza).",
+              "solucion": "ESTRATEGIA HÍBRIDA: Fine-tuning + RAG. FINE-TUNING (para formato y terminología): El formato de respuesta (cobertura → monto → documentos → tiempo) es estático — ideal para fine-tuning. Crear 300-500 ejemplos de pares pregunta-respuesta con el formato correcto. Incluir la terminología específica de las pólizas en los ejemplos. Usar QLoRA sobre Llama-3-8B (más barato que 70B para esta tarea específica). EVALUACIÓN: conjunto de validación de 100 ejemplos para monitorear overfitting. RAG (para coberturas y montos específicos): Las coberturas, montos y exclusiones de cada póliza cambian con actualizaciones de productos. Indexar todas las pólizas vigentes en base vectorial. El modelo fine-tuneado usará RAG para recuperar los datos específicos de la póliza consultada. RESULTADO: El fine-tuning garantiza formato consistente y terminología correcta. RAG garantiza información actualizada y precisa de cada póliza.",
+              "criterios_de_exito": [
+                "Distingue entre formato/estilo (fine-tuning) e información dinámica (RAG)",
+                "Especifica cantidad aproximada de ejemplos y técnica de fine-tuning",
+                "Propone arquitectura híbrida cuando es necesario"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "RLHF: cómo se alinea el modelo con valores humanos — la técnica que hace a Claude y ChatGPT seguros y útiles.",
+              "modulo_relacionado": "M9 — Fine-tuning: implementarás tu primer fine-tuning completo con QLoRA"
             }
           }
         },
@@ -2735,30 +2991,94 @@
           "titulo": "RLHF: cómo se alinea el modelo con valores humanos",
           "bloque": 3,
           "tipo": "leccion",
-          "duracion_min": 20,
+          "duracion_min": 22,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "RLHF (Reinforcement Learning from Human Feedback) es la técnica que transforma un LLM técnicamente capaz en un asistente que es útil, honesto y seguro. Sin RLHF, los modelos pueden generar texto coherente pero dañino, mentiras plausibles, o respuestas técnicamente correctas pero inútiles en contexto. Es lo que diferencia a los modelos de chat modernos de los modelos base crudos. El proceso de RLHF tiene tres fases: Fase 1 — Supervised Fine-Tuning (SFT): usando miles de ejemplos de conversaciones de alta calidad escritas por anotadores humanos, se hace un primer fine-tuning del modelo base. El resultado es un modelo que puede mantener conversaciones pero aún no está optimizado para preferencias humanas. Fase 2 — Entrenamiento del Reward Model: se muestran pares de respuestas del modelo SFT a evaluadores humanos, quienes indican cuál prefieren y por qué. Con estos datos de preferencias, se entrena un segundo modelo (el Reward Model o RM) cuya tarea es predecir qué respuestas preferiría un humano. Este RM aprende implícitamente valores como: honestidad, utilidad, coherencia, y seguridad. Fase 3 — Optimización con PPO: usando el Reward Model como función de recompensa, se aplica Proximal Policy Optimization (PPO, un algoritmo de RL) para actualizar el modelo SFT. El modelo aprende a generar respuestas que maximizan la recompensa predicha por el RM. Anthropic desarrolló una variante llamada Constitutional AI (CAI) que usa un conjunto de principios escritos ('la constitución') para el autoentrenamiento, reduciendo la dependencia de anotadores humanos. El modelo se critica a sí mismo usando la constitución y aprende a mejorar. Los efectos prácticos del RLHF: (1) El modelo rechaza solicitudes dañinas (instrucciones para violencia, contenido ilegal). (2) Expresa incertidumbre en lugar de alucinar con confianza. (3) Sigue el estilo conversacional esperado. (4) Balancea honestidad y tacto. Las limitaciones: RLHF puede crear 'sycophancy' (el modelo aprende a decir lo que el humano quiere escuchar en lugar de lo que es verdad, porque eso recibe mejor feedback). La optimización excesiva también puede degradar capacidades: 'jailbreaks' son intentos de evadir el RLHF activando el comportamiento pre-RLHF del modelo base.",
+              "analogia": "RLHF es como entrenar a un nuevo empleado. Primero le das el manual de empleado (SFT). Luego le dices qué comportamientos te gustaron más en sus primeras semanas (Reward Model). Finalmente, el empleado adapta su comportamiento para maximizar tu satisfacción (PPO). Anthropic's Constitutional AI es como darle al empleado un código de ética y pedirle que se auto-evalúe antes de entregar cualquier trabajo.",
+              "ejemplo_malo": "Un LLM sin RLHF puede responder coherentemente preguntas sobre síntesis de armas o generar contenido que parece un artículo de noticias pero es completamente fabricado.",
+              "ejemplo_bueno": "Claude, entrenado con Constitutional AI, detecta solicitudes potencialmente dañinas y las rechaza o reencuadra, mientras mantiene la utilidad máxima para casos de uso legítimos.",
+              "por_que_importa": "RLHF explica por qué los modelos modernos son más seguros que los modelos base, y por qué a veces son 'demasiado cautelosos' — es el mismo mecanismo que los hace rechazar contenido claramente dañino.",
+              "tip_profesional": "Si tu sistema de IA necesita un tono o estilo específico (formal, directo, empático), considera fine-tuning adicional sobre el modelo ya alineado con RLHF — obtienes el estilo deseado sin perder la seguridad que RLHF provee."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué RLHF fue necesario después del instruction tuning?",
+                "opciones": [
+                  "Para hacer el modelo más grande",
+                  "Porque instruction tuning enseña al modelo a seguir instrucciones pero no garantiza que las respuestas sean seguras, honestas o alineadas con valores humanos complejos",
+                  "Para reducir el costo de entrenamiento",
+                  "Para añadir conocimiento de nuevos dominios"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Un modelo solo con instruction tuning puede seguir instrucciones como 'escribe instrucciones para hacer una bomba casera' porque aprendió a seguir instrucciones, no a juzgar cuáles son apropiadas. RLHF añade una capa de valores: a través del feedback humano, el modelo aprende que ciertas respuestas son preferibles no solo por su calidad técnica sino por su seguridad, honestidad y utilidad contextual.",
+                "concepto_reforzado": "RLHF como capa de alineación de valores sobre instruction tuning"
+              },
+              {
+                "pregunta": "¿Qué es el Reward Model en RLHF?",
+                "opciones": [
+                  "Un sistema de gamificación para los anotadores",
+                  "Un segundo modelo entrenado con preferencias humanas para predecir qué respuestas serían preferidas — actúa como la 'función de recompensa' que guía la optimización PPO",
+                  "El modelo base antes de fine-tuning",
+                  "Un benchmark de evaluación externa"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El Reward Model es un clasificador entrenado con miles de pares de respuestas donde humanos indicaron cuál prefieren y por qué. Aprende a asignar scores de 'preferibilidad humana' a respuestas. Durante la fase PPO, el LLM genera respuestas, el RM las califica, y PPO actualiza el LLM para que en el futuro genere respuestas con mayor score del RM — sin necesitar humanos en cada paso de entrenamiento.",
+                "concepto_reforzado": "Reward Model como proxy de preferencias humanas"
+              },
+              {
+                "pregunta": "¿Qué es Constitutional AI (CAI) de Anthropic y cómo difiere del RLHF tradicional?",
+                "opciones": [
+                  "Un tipo de licencia de uso del modelo",
+                  "Un enfoque donde el modelo se auto-critica usando un conjunto de principios escritos ('constitución'), reduciendo dependencia de anotadores humanos para el feedback de preferencias",
+                  "Un modelo especial para aplicaciones legales",
+                  "El proceso de preentrenamiento de Claude"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "En RLHF tradicional, humanos califican miles de pares de respuestas — costoso y lento. Constitutional AI usa 'la constitución' (principios como 'sé honesto', 'no causes daño', 'respeta la autonomía del usuario') para que el modelo se auto-critique: genera una respuesta → la evalúa contra los principios → genera una revisión → repite. Este proceso de auto-mejora reduce la necesidad de feedback humano a gran escala mientras mantiene alineación con valores específicos.",
+                "concepto_reforzado": "Constitutional AI como alternativa escalable al RLHF con anotadores"
+              },
+              {
+                "pregunta": "¿Qué es la 'sycophancy' en LLMs y cómo la causa el RLHF?",
+                "opciones": [
+                  "Un tipo de error técnico en el entrenamiento",
+                  "La tendencia del modelo a decir lo que el usuario quiere escuchar en lugar de lo que es correcto, porque los anotadores tienden a calificar mejor las respuestas que validan sus creencias",
+                  "La capacidad del modelo de adaptarse a diferentes idiomas",
+                  "El proceso de añadir más datos de entrenamiento"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los anotadores humanos son susceptibles al 'sycophancy bias': tienden a calificar más alto las respuestas que confirman sus puntos de vista, son eloquentes, o usan lenguaje halagador. El Reward Model aprende esto. El LLM optimizado con PPO aprende a ser 'adulador' porque recibe mayor recompensa. El resultado: el modelo puede decir que una idea de negocio deficiente es brillante si el usuario muestra entusiasmo, o cambiar su respuesta si el usuario insiste (aunque el usuario esté equivocado). Anthropic trabaja específicamente en mitigar sycophancy en Claude.",
+                "concepto_reforzado": "Sycophancy como efecto secundario no deseado de RLHF"
+              },
+              {
+                "pregunta": "¿Qué son los 'jailbreaks' y por qué existe la posibilidad de realizarlos?",
+                "opciones": [
+                  "Errores de programación en el modelo",
+                  "Técnicas para acceder ilegalmente a los servidores de la empresa",
+                  "Prompts diseñados para evadir las restricciones de RLHF activando comportamientos del modelo base subyacente",
+                  "Solicitudes que hacen más lento al modelo"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "RLHF no elimina el comportamiento 'peligroso' del modelo base — lo suprime añadiendo capas de alineación. Los jailbreaks son prompts que 'engañan' estas capas: role-playing (el modelo actúa como un personaje sin restricciones), manipulación lógica (convencer al modelo de que sus restricciones no aplican en este caso), o fragmentación de solicitudes. Es una carrera de adversarial robustness: los laboratorios de IA fortalecen las capas de alineación, la comunidad encuentra nuevas formas de evadirlas. Anthropic tiene un equipo dedicado a red teaming y robustez de Constitutional AI.",
+                "concepto_reforzado": "Jailbreaks como límites de la alineación basada en RLHF"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Estás diseñando un sistema de IA para una clínica médica que responde preguntas de pacientes. El modelo debe ser útil con información médica general pero no debe sustituir el diagnóstico médico. Un paciente describe síntomas y pregunta si tiene cáncer.",
+              "instruccion": "¿Cómo diseñarías el system prompt y las instrucciones de alineación para este sistema? ¿Qué comportamientos quieres reforzar (al estilo RLHF) y cuáles prohibir? Incluye un ejemplo de cómo respondería tu sistema vs un modelo sin alineación médica.",
+              "pista": "Piensa en la tensión entre ser útil (dar información médica real) y no causar daño (no dar diagnósticos que reemplacen al médico).",
+              "solucion": "SYSTEM PROMPT DE ALINEACIÓN: 'Eres el asistente médico informativo de la Clínica [X]. Tu rol es: (1) Proporcionar información médica general y educativa basada en evidencia. (2) Ayudar a los pacientes a preparar sus preguntas para el médico. (3) Informar sobre síntomas de emergencia que requieren atención inmediata. NUNCA: dar diagnósticos definitivos, prescribir medicamentos, minimizar síntomas preocupantes, o reemplazar la consulta médica. Siempre termina recomendando consultar con un especialista. En caso de síntomas de emergencia (dolor en el pecho, dificultad respiratoria, pérdida de consciencia), indica inmediatamente llamar al 123.' RESPUESTA CON ALINEACIÓN (síntomas de cáncer): 'Entiendo tu preocupación. Los síntomas que describes [X, Y, Z] merecen evaluación médica profesional. Hay varias condiciones que pueden causar estos síntomas, algunas benignas y otras que requieren atención. Lo más importante es que consultes con un médico para un examen físico y los estudios pertinentes — solo un profesional puede hacer un diagnóstico adecuado. ¿Te puedo ayudar a preparar las preguntas para tu consulta?' SIN ALINEACIÓN: 'Basado en tus síntomas, es posible que tengas linfoma...'",
+              "criterios_de_exito": [
+                "Define comportamientos permitidos Y prohibidos explícitamente",
+                "Incluye ejemplo concreto de respuesta alineada vs no alineada",
+                "Considera el caso de emergencia médica que requiere respuesta urgente"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Temperatura, top-p y parámetros de generación — controla exactamente cómo genera texto tu LLM.",
+              "modulo_relacionado": "M9 — Fine-tuning: implementarás RLHF simplificado con Direct Preference Optimization (DPO)"
             }
           }
         },
@@ -2767,30 +3087,94 @@
           "titulo": "Temperatura, top-p y parámetros de generación",
           "bloque": 3,
           "tipo": "leccion",
-          "duracion_min": 20,
+          "duracion_min": 18,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Los parámetros de generación son los 'mandos de control' de cómo un LLM produce texto. Entenderlos te permite calibrar exactamente el comportamiento del modelo para cada caso de uso, mejorando consistencia, creatividad o precisión según lo necesites. Temperatura (0.0 a 2.0): el parámetro más importante. Controla cuánto 'aplana' la distribución de probabilidad softmax antes de muestrear el siguiente token. Temperatura 0 = greedy decoding, siempre elige el token más probable. Es determinístico y reproducible. Temperatura 1 = distribución natural del modelo. Temperatura > 1 = distribución más plana, mayor variedad y creatividad, pero también más incoherencia. Regla práctica: 0-0.2 para extracción de datos, análisis factual, código; 0.3-0.7 para chat y asistencia general; 0.7-1.0 para escritura creativa; >1.0 raramente útil en producción. Top-p (nucleus sampling, 0.0 a 1.0): en lugar de fijar la temperatura, selecciona el subconjunto mínimo de tokens cuya probabilidad acumulada supera el threshold p. Con top-p=0.9, el modelo solo considera los tokens que juntos suman el 90% de la probabilidad total. Elimina tokens de muy baja probabilidad (incoherencias), manteniendo algo de variedad. La combinación temperatura + top-p es la configuración estándar en producción. Top-k: limite el muestreo a los k tokens más probables. Con k=50, el modelo solo considera las 50 opciones más probables para cada posición. Menos flexible que top-p pero más simple de razonar. Frequency penalty y presence penalty (OpenAI): frequency_penalty penaliza tokens según cuántas veces ya aparecieron (reduce repetición), presence_penalty penaliza cualquier token que ya apareció (fomenta diversidad temática). Max tokens: límite máximo de tokens en la respuesta. En producción, siempre establecer un límite para evitar respuestas infinitas y costos descontrolados. Stop sequences: strings que hacen que el modelo deje de generar. Ejemplo: ['\n\n', 'DONE', '###'] para sistemas que generan hasta un delimitador específico. Seed: algunos modelos (OpenAI) permiten fijar una semilla aleatoria para reproducibilidad. Con temperatura>0 y la misma semilla, obtienes el mismo output (útil para testing). La interacción entre parámetros: temperatura alta + top-p bajo puede producir resultados extraños. La configuración más común en producción: temperatura 0 o 0.1 para exactitud, temperatura 0.7 con top-p 0.9 para generación equilibrada.",
+              "analogia": "La temperatura es el acelerador. Top-p es como conducir por un carril definido (solo opciones plausibles), pero dentro del carril puedes ir más o menos rápido. Frequency penalty es como un GPS que dice 'gira a algún lado, llevas mucho recto'.",
+              "ejemplo_malo": "Usar temperatura 1.0 para un sistema que extrae fechas y montos de contratos — la variabilidad puede hacer que en el 20% de los casos el modelo saque un número diferente al real.",
+              "ejemplo_bueno": "Sistema de extracción: temperatura 0, max_tokens 500, stop=['```']. Sistema de generación de copy: temperatura 0.8, top-p 0.9, frequency_penalty 0.3 para evitar repetición.",
+              "por_que_importa": "Los parámetros de generación son la diferencia entre un sistema de IA confiable en producción y uno que falla en el 20% de los casos. Calibrarlos correctamente es ingeniería, no magia.",
+              "tip_profesional": "Para sistemas críticos de producción: temperatura 0 + max_tokens explícito + stop sequences bien definidas. Documentar SIEMPRE los parámetros usados en cada prompt de producción — un cambio inadvertido de temperatura puede hacer que el sistema falle de formas difíciles de detectar."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Para qué tarea usarías temperatura 0 y para cuál temperatura 0.8?",
+                "opciones": [
+                  "0 para poesía, 0.8 para clasificación",
+                  "0 para extracción de datos estructurados (fechas, montos, nombres); 0.8 para generación creativa de contenido de marketing o brainstorming",
+                  "Ambas son equivalentes en resultados",
+                  "0.8 siempre es mejor"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Temperatura 0 produce outputs determinísticos y consistentes — perfecto cuando necesitas que el modelo extraiga 'el valor exacto de la factura' y no que 'interprete creativamente' el número. Temperatura 0.8 mantiene la coherencia pero introduce variedad — ideal para generación donde queremos opciones diferentes cada vez. En producción: documenta qué temperatura usa cada endpoint de tu sistema y por qué.",
+                "concepto_reforzado": "Temperatura óptima según tipo de tarea"
+              },
+              {
+                "pregunta": "¿Qué hace top-p (nucleus sampling) diferente a top-k?",
+                "opciones": [
+                  "Top-p y top-k son equivalentes matemáticamente",
+                  "Top-p selecciona el conjunto mínimo de tokens cuya probabilidad acumulada supera un threshold (adaptativo según contexto); top-k siempre elige de los k tokens más probables (número fijo)",
+                  "Top-k es más moderno que top-p",
+                  "Top-p solo funciona con temperatura 0"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Con top-k=50, siempre considers exactamente 50 tokens, independientemente de si la distribución está concentrada (token muy dominante) o dispersa (muchas opciones igual de probables). Top-p es adaptativo: si hay un token con 95% de probabilidad, top-p=0.9 solo considera ese token (el núcleo mínimo que supera 90%). Si la distribución está dispersa entre 100 tokens, top-p incluirá más de ellos. Esta adaptabilidad hace a top-p más robusto en diferentes contextos.",
+                "concepto_reforzado": "Top-p vs top-k en muestreo adaptativo"
+              },
+              {
+                "pregunta": "¿Por qué siempre deberías establecer max_tokens en llamadas API de producción?",
+                "opciones": [
+                  "Para mejorar la calidad de la respuesta",
+                  "Para evitar respuestas infinitamente largas que disparan costos inesperados y bloquean recursos en sistemas concurrentes",
+                  "Porque el modelo no funciona sin este parámetro",
+                  "Para hacer el modelo más rápido"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Sin max_tokens, el modelo puede generar hasta su límite máximo (4K, 8K, o 128K tokens según el modelo). En sistemas de producción con miles de solicitudes concurrentes, una solicitud que genera 8K tokens cuesta 8x más que una de 1K, bloquea el hilo por más tiempo, y puede causar timeouts. En producción: max_tokens 200-500 para respuestas de chat, 1000-2000 para análisis, 4000+ solo para síntesis de documentos. Además, stop sequences añaden una segunda capa de control.",
+                "concepto_reforzado": "max_tokens como control de costos y recursos en producción"
+              },
+              {
+                "pregunta": "¿Cómo funciona frequency_penalty y cuándo usarlo?",
+                "opciones": [
+                  "Penaliza tokens que nunca han aparecido (nueva terminología)",
+                  "Penaliza tokens proporcionalmente a cuántas veces ya aparecieron en el output, reduciendo repetición de frases y palabras — útil en generación larga de contenido",
+                  "Penaliza palabras ofensivas automáticamente",
+                  "Aumenta la velocidad de generación"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "frequency_penalty (0 a 2.0 en OpenAI) reduce la probabilidad de un token en proporción al número de veces que ya apareció en el output. Con frequency_penalty=0.5, si 'innovación' apareció 3 veces, su probabilidad se reduce 1.5 puntos de logit. Útil para: artículos largos donde el modelo tiende a repetir frases, chatbots que repiten sus fórmulas de introducción, generación de listas donde se repiten items similares. presence_penalty es binaria: penaliza cualquier token que apareció al menos una vez, fomentando diversidad temática más amplia.",
+                "concepto_reforzado": "Frequency y presence penalty para reducir repetición"
+              },
+              {
+                "pregunta": "Si tu sistema de IA produce resultados diferentes cada vez con la misma pregunta, ¿cuál es la primera configuración que deberías revisar?",
+                "opciones": [
+                  "Max tokens",
+                  "Stop sequences",
+                  "Temperatura — con temperatura > 0, el muestreo estocástico produce variación entre llamadas; temperatura 0 produce outputs determinísticos",
+                  "Top-k"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Variabilidad no deseada en producción es casi siempre un problema de temperatura. Temperatura > 0 introduce aleatoriedad en cada llamada — con la misma pregunta, el modelo puede dar respuestas ligeramente o muy diferentes. Para sistemas donde la consistencia es crítica (extracción de datos, clasificación, generación de documentos con formato fijo): temperatura 0. Si también necesitas reproducibilidad exacta para testing: temperatura 0 + seed fijo (disponible en OpenAI). Documenta en tu sistema cuál es la temperatura de cada endpoint.",
+                "concepto_reforzado": "Temperatura 0 como garantía de consistencia en producción"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Tu empresa tiene tres casos de uso para la API de Claude: (A) Extraer nombre, RUC, fecha y monto de facturas PDF. (B) Generar 5 ideas creativas de nombres para nuevos productos. (C) Responder preguntas de clientes sobre el estado de sus pedidos.",
+              "instruccion": "Define los parámetros de generación óptimos para cada caso de uso (temperatura, top-p, max_tokens, stop sequences si aplica). Justifica cada elección.",
+              "pista": "Piensa en qué nivel de consistencia vs creatividad necesita cada tarea, y cuán larga debería ser cada respuesta.",
+              "solucion": "CASO A — Extracción de facturas: temperatura: 0, top-p: 1.0 (irrelevante con temperatura 0), max_tokens: 200, stop_sequences: ['```', '---'], output format: JSON. Justificación: máxima consistencia y reproducibilidad — un RUC tiene que ser siempre el mismo, no una interpretación creativa. CASO B — Nombres creativos: temperatura: 0.9, top-p: 0.95, max_tokens: 300, frequency_penalty: 0.5 (evitar repetir el mismo patrón de nombre 5 veces). Justificación: alta creatividad y variedad — queremos que cada nombre sea genuinamente diferente. CASO C — Estado de pedidos: temperatura: 0.2, top-p: 0.9, max_tokens: 400. Justificación: respuestas consistentes y precisas pero con un toque natural conversacional (no robótico como temperatura 0). La pequeña variación permite que no suene como una respuesta enlatada.",
+              "criterios_de_exito": [
+                "Define temperatura apropiada para cada caso con justificación",
+                "Usa max_tokens específico para cada caso de uso",
+                "Considera frequency_penalty para el caso de generación de ideas creativas"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Ventana de contexto: qué es exactamente y cómo afecta al diseño de sistemas de IA.",
+              "modulo_relacionado": "M2 — Prompt Engineering: dominarás el control de parámetros para sistemas de producción"
             }
           }
         },
@@ -2799,30 +3183,94 @@
           "titulo": "Ventana de contexto: qué es y por qué importa",
           "bloque": 3,
           "tipo": "leccion",
-          "duracion_min": 20,
+          "duracion_min": 18,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "La ventana de contexto es el 'límite de memoria de trabajo' del modelo en una conversación o tarea. Es la cantidad máxima de tokens que el modelo puede considerar simultáneamente — todo lo que está dentro de esa ventana influye en la respuesta; todo lo que está fuera, no existe para el modelo. En 2026, las ventanas de contexto varían enormemente: GPT-4-turbo: 128K tokens. Claude 3.5 Sonnet: 200K tokens. Gemini 1.5 Pro: 1M tokens. Llama-3-70B: 128K tokens. Esta carrera por ventanas de contexto más largas responde a casos de uso reales: analizar repositorios de código completos, procesar informes financieros de 500 páginas, mantener conversaciones largas sin perder el hilo. La ventana de contexto incluye TODO: el system prompt, el historial de la conversación, los documentos de contexto, y la respuesta en generación. Si tu system prompt tiene 2,000 tokens y el historial de conversación tiene 50,000, te quedan 148,000 tokens para documentos adicionales en Claude (200K total). La gestión de contexto en aplicaciones de producción es un reto de ingeniería no trivial. Estrategias principales: (1) Summarization: cuando la conversación crece, resumir periódicamente el historial antiguo para comprimirlo. (2) RAG: en lugar de meter todos los documentos en el contexto, recuperar solo los más relevantes mediante búsqueda semántica. (3) Sliding window: para conversaciones muy largas, mantener solo los últimos N turnos más un resumen del historial. (4) Context compression: usar un modelo pequeño y rápido para comprimir el contexto antes de enviarlo al modelo principal. El fenómeno 'lost in the middle' es especialmente importante: en contextos largos (>32K tokens), los modelos tienden a perder atención sobre información ubicada en el centro del contexto. Información crítica debe estar al inicio o al final. El costo también escala: en Claude Sonnet, el costo es proporcional a los tokens de entrada. Una ventana de 200K tokens llena cuesta 200 veces más que una de 1K tokens en términos de tokens de entrada. Para aplicaciones de alto volumen, la gestión eficiente del contexto impacta directamente el costo operativo.",
+              "analogia": "La ventana de contexto es como la mesa de trabajo de un arquitecto: puede tener muchos planos al mismo tiempo (tokens), pero la mesa tiene un tamaño fijo. Si quieres añadir un plano nuevo y la mesa está llena, debes quitar uno. Los planos al borde de la mesa (inicio y fin) son más fáciles de ver que los del medio.",
+              "ejemplo_malo": "Incluir el historial completo de una conversación de 2 semanas en cada llamada API — en pocas semanas el historial excede la ventana de contexto y las llamadas fallan, o el costo se dispara.",
+              "ejemplo_bueno": "Arquitectura de gestión de contexto: system prompt (2K) + últimos 5 turnos de conversación (5K) + resumen de historial previo (1K) + documentos RAG relevantes (5K) = 13K tokens por llamada, independientemente de la duración de la conversación.",
+              "por_que_importa": "La gestión de contexto es el problema de ingeniería más común en sistemas de IA conversacional en producción. Ignorarla causa fallos a las pocas semanas de deployment.",
+              "tip_profesional": "Para chatbots en producción: implementa desde el día 1 un sistema de compresión de contexto. Una arquitectura de 3 capas funciona bien: resumen comprimido del historial antiguo + últimos N turnos completos + documentos RAG relevantes al turno actual."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué incluye la ventana de contexto de un LLM?",
+                "opciones": [
+                  "Solo el mensaje del usuario actual",
+                  "El system prompt + historial de conversación + documentos de contexto + respuesta en generación — todo simultáneamente hasta el límite máximo de tokens",
+                  "Solo el historial de la conversación",
+                  "Los documentos de entrenamiento del modelo"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La ventana de contexto es el 'buffer de trabajo' total: el system prompt (instrucciones del sistema, puede ser 1K-10K tokens), el historial de mensajes (todos los turnos previos de la conversación), documentos o datos adicionales, y los tokens ya generados en la respuesta actual. Todos compiten por el mismo límite. En aplicaciones prácticas, una llamada puede tener: 3K de system prompt + 30K de historial + 10K de documentos RAG + 2K de respuesta = 45K tokens.",
+                "concepto_reforzado": "Composición total de la ventana de contexto"
+              },
+              {
+                "pregunta": "¿Por qué la ventana de contexto de 1M tokens de Gemini no resuelve todos los problemas de gestión de contexto?",
+                "opciones": [
+                  "Porque Gemini no funciona bien con contextos largos",
+                  "Porque el costo escala linealmente con los tokens: una ventana llena de 1M tokens cuesta 1000x más que una de 1K, y el fenómeno 'lost in the middle' sigue afectando la atención en el centro",
+                  "Porque 1M tokens no es suficiente para aplicaciones reales",
+                  "No hay problema, 1M tokens resuelve todo"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Dos problemas persisten incluso con ventanas de 1M tokens: (1) Costo: a $7/1M tokens de entrada (Gemini 1.5 Pro), una llamada con 500K tokens cuesta $3.50 — para alto volumen, esto puede ser prohibitivo. (2) Lost in the middle: la atención del modelo sigue siendo menor en el centro del contexto incluso con ventanas muy largas. RAG sigue siendo relevante porque recupera solo los fragmentos más relevantes (reduciendo costo y mejorando señal/ruido).",
+                "concepto_reforzado": "Limitaciones económicas y atencionales de ventanas largas"
+              },
+              {
+                "pregunta": "¿Cuál es la mejor estrategia de gestión de contexto para un chatbot de soporte técnico con conversaciones de horas?",
+                "opciones": [
+                  "Incluir el historial completo en cada llamada",
+                  "Eliminar el historial cuando excede el límite",
+                  "Sistema de 3 capas: resumen comprimido del historial antiguo + últimos N turnos completos + RAG de documentos relevantes al turno actual",
+                  "Reiniciar la conversación cuando el contexto está lleno"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "La estrategia de 3 capas balancea memoria, costo y relevancia: el resumen comprimido (generado automáticamente por el modelo) preserva el contexto histórico importante en <1K tokens. Los últimos N turnos (5-10) están completos para mantener coherencia conversacional inmediata. RAG añade contexto de documentación relevante específicamente para la pregunta actual. Esta arquitectura mantiene el costo por llamada constante (ej: 15K tokens) independientemente de la duración de la conversación.",
+                "concepto_reforzado": "Arquitectura de 3 capas para gestión de contexto en producción"
+              },
+              {
+                "pregunta": "En una aplicación con 1,000 usuarios concurrentes, cada uno con conversaciones de 100 turnos, ¿qué impacto tiene usar el historial completo vs gestión de contexto en los costos?",
+                "opciones": [
+                  "El impacto es mínimo, los tokens son baratos",
+                  "Con historial completo: el costo crece linealmente con la longitud de la conversación. Con gestión de contexto (tamaño fijo de contexto): el costo por llamada es constante independientemente de la duración — la diferencia puede ser 10-100x en costos mensuales",
+                  "La gestión de contexto no afecta los costos",
+                  "Es mejor historial completo para mejor calidad"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Ejemplo concreto: sin gestión de contexto, el turno 100 de una conversación incluye 99 turnos anteriores (digamos 50K tokens). Con 1,000 usuarios y 10 turnos por hora: 10,000 llamadas/hora × 50K tokens = 500M tokens/hora. A $3/1M: $1,500/hora = $36,000/día. Con gestión de contexto (contexto fijo 10K tokens): $7,200/día — una reducción de 5x. En muchos casos la diferencia es aún mayor. La gestión de contexto no es un detalle técnico — es una decisión de negocio con impacto directo en la viabilidad económica del producto.",
+                "concepto_reforzado": "Impacto económico de la gestión de contexto a escala"
+              },
+              {
+                "pregunta": "¿Cómo afecta el system prompt al espacio disponible en la ventana de contexto?",
+                "opciones": [
+                  "No afecta, el system prompt tiene su propio espacio",
+                  "El system prompt consume tokens de la ventana de contexto igual que cualquier otro mensaje — un system prompt de 5,000 tokens deja 195,000 tokens disponibles en Claude (200K)",
+                  "El system prompt se comprime automáticamente",
+                  "El system prompt no tiene límite de tamaño"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El system prompt es parte de la ventana de contexto. Un system prompt elaborado con muchas instrucciones, ejemplos y restricciones puede fácilmente llegar a 3,000-10,000 tokens. Para aplicaciones con ventanas de contexto ajustadas: optimiza el system prompt para máxima concisión (las instrucciones verbosas son tokens que el historial y los documentos no pueden usar). Para aplicaciones con ventanas grandes (200K): el system prompt puede ser generoso con instrucciones y ejemplos few-shot sin preocuparse tanto por el espacio.",
+                "concepto_reforzado": "System prompt como parte del presupuesto de contexto"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Tu empresa lanzó un chatbot de análisis financiero que usa Claude Sonnet (200K contexto). Los usuarios hacen análisis que duran 2-3 horas con muchos datos adjuntados. Después de 2 semanas, recibes reportes de que las conversaciones largas 'se olvidan de cosas que se dijeron al principio'. El costo mensual de la API también es 3x más alto de lo esperado.",
+              "instruccion": "Diagnostica los dos problemas (pérdida de memoria y alto costo) y propón una arquitectura de gestión de contexto que los resuelva.",
+              "pista": "Los dos problemas tienen la misma causa raíz: cómo está creciendo el contexto en cada llamada.",
+              "solucion": "DIAGNÓSTICO: El historial completo de la conversación se incluye en cada llamada. Después de 2 horas con datos financieros adjuntados, el contexto puede superar 100K+ tokens por llamada. Problema 1 (olvido): el fenómeno lost in the middle hace que información del inicio de la conversación reciba menos atención. Problema 2 (costo alto): cada llamada incluye el historial creciente completo, multiplicando el costo por cada turno. ARQUITECTURA PROPUESTA: (1) Implementar summarization automática: cada 10 turnos, usar Claude Haiku (más barato) para generar un resumen de los últimos 10 turnos en 500-800 tokens. (2) Context window fija de 20K tokens por llamada: 2K system prompt + 5K resumen histórico acumulado + últimos 5 turnos completos (5K) + documentos financieros relevantes via RAG (8K). (3) Para los documentos financieros: indexarlos en base vectorial y recuperar solo los fragmentos relevantes para cada pregunta. RESULTADO: costo constante por llamada (20K tokens vs 100K+), y la información importante del inicio permanece accesible vía resúmenes.",
+              "criterios_de_exito": [
+                "Identifica el crecimiento no controlado del historial como causa raíz de ambos problemas",
+                "Propone summarization periódica como solución a ambos problemas",
+                "Incluye RAG para los documentos financieros (no meterlos todos en cada llamada)"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Alucinaciones: por qué ocurren y cómo mitigarlas — el problema más crítico en sistemas de IA de producción.",
+              "modulo_relacionado": "M8 — RAG: aprenderás a construir sistemas que minimizan alucinaciones con recuperación de documentos"
             }
           }
         },
@@ -2831,30 +3279,94 @@
           "titulo": "Alucinaciones: por qué ocurren y cómo mitigarlas",
           "bloque": 3,
           "tipo": "leccion",
-          "duracion_min": 20,
+          "duracion_min": 22,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Las alucinaciones son el problema más crítico de los LLMs en producción: el modelo genera información falsa con confianza aparente. No es un bug a corregir sino una consecuencia inherente de cómo funcionan los modelos probabilísticos. Entender por qué ocurren es el primer paso para mitigarlas efectivamente. Tipos de alucinaciones: (1) Alucinaciones factuales: citar papers inexistentes, atribuir frases a personas incorrectas, inventar fechas y estadísticas. El modelo aprendió el patrón 'En el paper X de Y (año) se demostró que...' y puede completarlo plausiblemente aunque el paper no exista. (2) Alucinaciones de razonamiento: errores lógicos presentados como conclusiones correctas. El modelo genera texto que 'suena' a razonamiento correcto pero llega a conclusiones equivocadas. (3) Alucinaciones de contexto: el modelo 'mezcla' información de diferentes partes del contexto de formas incorrectas, o 'recuerda' información que no estaba en el prompt. (4) Alucinaciones de código: generar funciones de APIs que no existen, versiones incorrectas de librerías, o código que parece válido pero tiene errores sutiles. La causa fundamental: el modelo optimiza para coherencia textual (predecir el siguiente token plausible), no para veracidad factual. No tiene acceso a una fuente de verdad externa durante la generación. La coherencia estadística del lenguaje y la veracidad factual son objetivos diferentes. Estrategias de mitigación por nivel de impacto: Nivel 1 — RAG (impacto máximo): ancla las respuestas en documentos reales recuperados. El modelo responde sobre documentos que puedes verificar. Reduce alucinaciones factuales en 70-80%. Nivel 2 — Instrucciones explícitas: 'Si no estás seguro, di que no tienes información suficiente. No inventes datos.' Reduce alucinaciones pero no las elimina — el modelo puede alucinar y no saberlo. Nivel 3 — Temperatura baja: reduce la variabilidad pero no previene alucinaciones sobre información que el modelo cree conocer con confianza. Nivel 4 — Self-consistency: hacer la misma pregunta 3-5 veces y verificar si las respuestas coinciden. Inconsistencia indica incertidumbre alta. Nivel 5 — Verificación externa: integrar herramientas de búsqueda web o bases de datos para verificar hechos críticos antes de presentarlos. Para sistemas críticos (médico, legal, financiero): nunca confíes en el modelo como única fuente de verdad. Siempre RAG + verificación humana para decisiones de alto impacto.",
+              "analogia": "Las alucinaciones son como cuando un estudiante muy inteligente que no estudió el examen escribe respuestas convincentes que suenan correctas pero son inventadas. El estudiante sabe cómo suena una respuesta correcta (patrones del lenguaje académico) aunque no sepa el contenido real.",
+              "ejemplo_malo": "Usar un LLM para generar citas bibliográficas automáticamente para un artículo académico sin verificarlas — el 30-40% probablemente serán papers inexistentes o con autores/fechas incorrectos.",
+              "ejemplo_bueno": "Sistema de búsqueda de jurisprudencia colombiana: el LLM NUNCA inventa fallos. Solo responde sobre los fallos reales que RAG recupera de la base de datos de la Corte Suprema, citando número de radicado exacto.",
+              "por_que_importa": "Las alucinaciones son la diferencia entre un sistema de IA útil y uno peligroso en producción. En contextos médicos, legales o financieros, una alucinación puede tener consecuencias graves.",
+              "tip_profesional": "Regla de oro para sistemas críticos: el LLM como razonador, no como fuente de hechos. Los hechos vienen de tu base de datos/documentos (RAG). El LLM interpreta, sintetiza y explica esos hechos reales."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué los LLMs pueden alucinar con alta confianza (sin expresar incertidumbre)?",
+                "opciones": [
+                  "Porque los modelos son deshonestos por diseño",
+                  "Porque el modelo optimiza para coherencia textual: genera el texto más plausible según su entrenamiento, sin tener un mecanismo interno para distinguir hechos verdaderos de plausibles",
+                  "Porque las APIs de LLM tienen bugs",
+                  "Porque los modelos no tienen acceso a internet"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El modelo no tiene un 'banco de hechos verificados' separado. Tiene pesos que codifican patrones estadísticos de texto. Cuando genera 'El Decreto 1234 de 2023 establece que...', no está consultando una base legal — está completando texto que sigue el patrón estadístico de cómo suenan los decretos colombianos. Si ese decreto no existe, el modelo no lo sabe. La confianza es lingüística, no epistémica.",
+                "concepto_reforzado": "Coherencia textual vs veracidad factual como objetivos distintos"
+              },
+              {
+                "pregunta": "¿Cuál es la estrategia de mayor impacto para reducir alucinaciones en sistemas empresariales?",
+                "opciones": [
+                  "Usar temperatura 0 siempre",
+                  "RAG: proporcionar documentos reales como contexto y instruir al modelo a responder SOLO basándose en esos documentos",
+                  "Hacer fine-tuning con datos correctos",
+                  "Usar modelos más grandes"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "RAG ataca la causa raíz de las alucinaciones factuales: el modelo no tiene acceso a los hechos correctos. Al proveer documentos verificados como contexto, el modelo puede responder basándose en información real. La instrucción 'responde SOLO basándote en los documentos proporcionados' refuerza que debe citar lo que hay, no inventar. Estudios empíricos muestran reducción de 70-80% en alucinaciones factuales con RAG bien implementado.",
+                "concepto_reforzado": "RAG como solución principal a alucinaciones factuales"
+              },
+              {
+                "pregunta": "¿Qué es la técnica de self-consistency y cuándo usarla?",
+                "opciones": [
+                  "Hacer que el modelo revise su propia respuesta una vez",
+                  "Hacer la misma pregunta N veces y usar la respuesta más frecuente (majority voting) — inconsistencia entre respuestas indica alta incertidumbre del modelo",
+                  "Usar el modelo para verificar los datos del sistema",
+                  "Comparar dos modelos diferentes entre sí"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Self-consistency (Wang et al., 2022): si haces la misma pregunta 5 veces con temperatura > 0 y obtienes la misma respuesta en 5/5 casos, hay alta confianza. Si obtienes 3 respuestas diferentes, el modelo tiene alta incertidumbre. Útil para: preguntas de razonamiento matemático o lógico donde el modelo puede llegar a diferentes conclusiones. El costo es 3-5x más alto (múltiples llamadas) pero para decisiones críticas puede valer la pena. También útil para detectar si una pregunta está dentro o fuera del conocimiento confiable del modelo.",
+                "concepto_reforzado": "Self-consistency como medida de incertidumbre del modelo"
+              },
+              {
+                "pregunta": "Un sistema legal usa un LLM para buscar jurisprudencia. ¿Cuál de estos diseños es más seguro contra alucinaciones?",
+                "opciones": [
+                  "El LLM busca en internet y cita los fallos que encuentra",
+                  "El LLM responde preguntas legales usando solo su conocimiento preentrenado",
+                  "RAG: el sistema busca en una base de datos verificada de fallos reales, el LLM solo analiza y explica los fallos recuperados, citando el número de radicado exacto",
+                  "El LLM con temperatura 0 y instrucciones de ser preciso"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "En sistemas legales, citar un fallo inexistente puede tener consecuencias graves (mala práctica profesional, pérdida de casos). El único diseño seguro: (1) Base de datos verificada de jurisprudencia real. (2) RAG recupera fallos reales por similitud semántica. (3) El LLM ANALIZA los fallos reales recuperados, nunca inventa. (4) El número de radicado en la respuesta permite al usuario verificar independientemente. Temperatura 0 sin RAG no ayuda: el modelo puede dar con confianza alta el número de un fallo que no existe.",
+                "concepto_reforzado": "Diseño de sistemas legales seguros con RAG verificado"
+              },
+              {
+                "pregunta": "¿Por qué el fine-tuning no elimina las alucinaciones por sí solo?",
+                "opciones": [
+                  "Porque fine-tuning no cambia el modelo base",
+                  "Porque fine-tuning puede enseñar al modelo el estilo de respuesta correcto y reducir algunos errores, pero no le da acceso a hechos verificables — el modelo sigue generando texto plausible, ahora en el dominio específico",
+                  "Fine-tuning sí elimina las alucinaciones completamente",
+                  "Porque fine-tuning es demasiado costoso para ser efectivo"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Fine-tuning de dominio puede reducir alucinaciones sobre terminología (el modelo ya no inventa términos del sector) y sobre patrones del dominio (sabe qué tipo de cláusula va en qué sección de un contrato). Pero si el modelo no tiene los hechos reales en su contexto, puede seguir inventando valores específicos, fechas, o referencias. La arquitectura correcta: fine-tuning para comportamiento + RAG para hechos. Fine-tuning solo, sin RAG, en sistemas críticos es insuficiente.",
+                "concepto_reforzado": "Fine-tuning como reducción parcial de alucinaciones, no eliminación"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una firma de consultoría quiere usar IA para que sus consultores encuentren rápidamente benchmarks industriales, estadísticas de mercado y datos de estudios para sus presentaciones. El consultor junior escribía los datos directamente en las slides sin verificar la fuente.",
+              "instruccion": "Diseña un sistema que ayude a los consultores a encontrar datos relevantes con el menor riesgo posible de alucinaciones. ¿Qué arquitectura usarías? ¿Qué salvaguardas incluirías?",
+              "pista": "Los benchmarks y estadísticas son exactamente el tipo de dato que los LLMs alucinen fácilmente — números específicos con aparente precisión pero inventados.",
+              "solucion": "ARQUITECTURA ANTI-ALUCINACIONES para datos de benchmarks: (1) Base de conocimiento verificada: indexar con RAG las fuentes primarias de la firma: reports de McKinsey, Gartner, Deloitte, datos del DANE, informes del Banco Mundial — solo fuentes que la firma ha validado. (2) El modelo NUNCA da estadísticas de su memoria: instrucción en system prompt: 'SOLO cita estadísticas que estén textualmente en los documentos proporcionados. Si no encuentras el dato exacto, di que no está disponible en las fuentes actuales.' (3) Respuestas con cita obligatoria: el output debe incluir siempre [Fuente: Nombre del reporte, página X, año] — si el modelo no puede citar, no puede dar el dato. (4) Workflow de verificación: el sistema muestra al consultor el fragmento exacto del documento fuente donde encontró el dato — el consultor puede verificar con un clic. RESULTADO: los consultores acceden a datos verificados con fuentes citables, y el sistema no puede inventar estadísticas porque está instruido a citar o no dar.",
+              "criterios_de_exito": [
+                "Propone RAG con fuentes verificadas, no conocimiento libre del modelo",
+                "Incluye instrucción explícita de citar fuentes o no dar el dato",
+                "Diseña un mecanismo de verificación para el usuario final"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente": "Bloque 4 — Tipos de modelos: el mapa completo del ecosistema de modelos en 2026.",
+              "modulo_relacionado": "M8 — RAG: construirás sistemas anti-alucinaciones con bases de conocimiento verificadas"
             }
           }
         }
