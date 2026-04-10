@@ -7942,74 +7942,99 @@
       "lecciones": [
         {
           "id": "m1-b10-l1",
-          "titulo": "Salud: diagnóstico e imagen médica",
+          "titulo": "IA en salud: diagnóstico, acceso y drug discovery",
           "bloque": 10,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "La IA en salud es una de las aplicaciones con mayor impacto potencial y mayor responsabilidad ética. En diagnóstico por imagen, los sistemas de IA ya superan a radiólogos humanos en la detección de ciertos tipos de cáncer: un estudio de Google Health (2020) mostró que su modelo detectaba cáncer de mama con 5.7% menos falsos negativos que radiólogos de élite. En 2026, estas capacidades se han extendido a detección de retinopatía diabética, análisis de ECG, y clasificación de lesiones dermatológicas. Los LLMs están transformando la documentación clínica: los médicos dictan notas y el sistema genera documentación estructurada, resumenes de alta, y comunicaciones al paciente. Estudios en EEUU muestran que esto reduce 2-3 horas de trabajo administrativo por médico por día. En LATAM, la mayor oportunidad es el triage inteligente: el pre-screening de consultas para clasificar urgencia antes de que el médico intervenga. Con una prevalencia alta de enfermedades crónicas mal monitoreadas (diabetes, hipertensión), los sistemas de IA que identifican pacientes de alto riesgo antes de que lleguen a urgencias tienen ROI inmediato. Consideración ética clave: en salud, la IA debe amplificar al médico, nunca reemplazarlo en decisiones diagnósticas. El marco regulatorio (FDA para EEUU, INVIMA para Colombia) requiere que los sistemas de IA médica sean 'decisión de apoyo', no autónoma.",
-              "analogia": "Un radiólogo ve 80-100 imágenes por turno después de 8 horas de trabajo. La IA ve la imagen #10,000 con la misma atención que la #1. Para tareas de detección de patrones visuales específicos, esa consistencia es una ventaja real.",
-              "ejemplo_malo": "Presentar la IA médica como 'reemplazante del médico' — esto no solo es regulatoriamente incorrecto en LATAM sino éticamente inapropiado.",
-              "ejemplo_bueno": "El modelo de co-pilot: la IA hace un pre-diagnóstico con nivel de confianza explícito, el médico valida. Esto reduce el tiempo del médico sin eliminar su responsabilidad.",
-              "por_que_importa": "El mayor valor de IA en salud LATAM puede estar en los eslabones más simples: digitalización de historias clínicas con OCR inteligente, no en diagnóstico avanzado.",
-              "tip_profesional": "Para proyectos de IA en salud colombiana, el primer paso es siempre validar con el INVIMA si el sistema requiere registro como dispositivo médico."
+              "explicacion": "La salud es la industria donde la IA tiene mayor potencial de impacto humano y también los mayores riesgos si se implementa mal. En 2026, tres áreas muestran transformación real y medible: diagnóstico por imagen, acceso a salud y documentación clínica, y descubrimiento de medicamentos.\n\nEn diagnóstico por imagen, los sistemas de visión artificial ya superan o igualan a especialistas humanos en tareas específicas. Google Health demostró que su modelo detectaba cáncer de mama con 5.7% menos falsos negativos que radiólogos de élite. PathAI acelera el diagnóstico de biopsias de cáncer. Sistemas de detección de retinopatía diabética (complicación que causa ceguera) se despliegan en clínicas rurales donde no hay oftalmólogo disponible: una cámara retinal + IA da un diagnóstico preliminar en minutos. En Colombia, proyectos como el de Minsalud con IA para radiología de tórax buscan cubrir la escasez de especialistas en regiones apartadas.\n\nEn acceso a salud y documentación clínica, el impacto está siendo más rápido y menos regulado. Los médicos gastan 2-3 horas diarias documentando. Sistemas como Nuance DAX (Microsoft) y los basados en Whisper + LLMs transcriben la consulta y generan la nota clínica estructurada automáticamente. En LATAM, donde la digitalización de historias clínicas es incompleta, hay una oportunidad enorme: OCR inteligente para digitalizar expedientes físicos, chatbots de triaje que clasifican urgencia antes de la consulta, y sistemas de adherencia al tratamiento vía WhatsApp para enfermedades crónicas (diabetes, hipertensión). Proyectos como el de Bupa Colombia con chatbot de enfermería han mostrado reducción del 30% en consultas innecesarias a urgencias.\n\nEl drug discovery es el área más técnica y de mayor impacto a largo plazo. AlphaFold 2 de DeepMind (2021) resolvió el problema del plegamiento de proteínas que tardaba años de laboratorio — ahora tarda horas. Esto acelera el diseño de fármacos que se 'ajustan' a proteínas específicas. Empresas como Recursion Pharmaceuticals y Insilico Medicine usan IA para identificar candidatos a fármacos, reduciendo el tiempo de la fase de descubrimiento de 5-7 años a 1-2 años. En 2023, el primer medicamento diseñado mayormente por IA (INS018_055 de Insilico) llegó a fase 2 de ensayos clínicos.\n\nConsideración regulatoria crítica para LATAM: el INVIMA en Colombia clasifica los sistemas de IA médica según su nivel de riesgo. Un sistema que solo transcribe notas no es dispositivo médico. Un sistema que sugiere diagnósticos sí lo es. Navegar esta regulación es parte del diseño del producto, no un detalle post-lanzamiento.",
+              "analogia": "La IA en salud funciona mejor como el asistente de laboratorio que nunca se cansa, no como el médico que toma decisiones. Un asistente que procesa 10,000 imágenes con la misma concentración que la primera, que nunca olvida un formulario, y que recuerda todos los síntomas del paciente simultáneamente — eso amplifica enormemente al médico. Pero la decisión final, la empatía con el paciente, y la responsabilidad legal siguen siendo del profesional humano.",
+              "ejemplo_malo": "Un emprendedor colombiano lanza una app que usa GPT-4o para 'diagnosticar enfermedades' a partir de síntomas descritos por el usuario, sin validación clínica ni aviso de que no reemplaza al médico. Usuarios con síntomas serios confían en el diagnóstico erróneo de la IA y retrasan consultas reales. Además de ser éticamente problemático, el sistema opera ilegalmente como dispositivo médico sin registro INVIMA. El resultado: demandas, cierre forzado, y daño a pacientes.",
+              "ejemplo_bueno": "HealthIA Bogotá implementa un sistema de triaje inteligente vía WhatsApp para una EPS con 500,000 afiliados. El bot recolecta síntomas, clasifica urgencia (urgencia vital / consulta prioritaria / consulta programada), y agenda cita con el especialista correcto. Está diseñado explícitamente como 'herramienta de gestión', no diagnóstico — cada mensaje incluye 'Este sistema orienta tu consulta. Ante emergencia, llama al 123 o ve a urgencias.' Resultado: 28% reducción en consultas innecesarias a urgencias, 40% mejora en tiempo de espera para consultas de alta urgencia, sin incidentes regulatorios.",
+              "por_que_importa": "En LATAM, la escasez de especialistas médicos en regiones apartadas y la alta carga administrativa son los problemas más urgentes que la IA puede resolver hoy, antes que el diagnóstico avanzado. Colombia tiene 1.6 médicos por cada 1,000 habitantes vs 3.4 en países de la OCDE. La IA no elimina esta brecha pero puede multiplicar la capacidad de cada médico. Para developers, esto representa un mercado enorme en telemedicina, documentación clínica automatizada, y sistemas de adherencia al tratamiento.",
+              "tip_profesional": "Para empezar en IA de salud en Colombia, apunta al área de menor riesgo regulatorio: documentación y administración, no diagnóstico. Un sistema que transcribe consultas, genera notas clínicas, o automatiza la gestión de citas no requiere registro INVIMA. Valida el producto con esa versión, construye confianza con los clientes clínicos, y si el mercado lo pide, expandes a funciones de apoyo diagnóstico con el asesoramiento regulatorio apropiado."
             },
             "verificacion": [
               {
-                "pregunta": "¿Cuál fue el resultado del estudio de Google Health sobre detección de cáncer de mama?",
+                "pregunta": "¿Qué problema resolvió AlphaFold 2 de DeepMind y por qué importa para drug discovery?",
                 "opciones": [
-                  "El modelo falló peor que los radiólogos",
-                  "El modelo redujo falsos negativos en 5.7% respecto a radiólogos de élite",
-                  "El modelo fue equivalente a los radiólogos",
-                  "El estudio no fue concluyente"
+                  "Automatizó los ensayos clínicos de fase 3, que son los más costosos del proceso de desarrollo de fármacos",
+                  "Resolvió el plegamiento de proteínas en horas, lo que tardaba años de laboratorio, acelerando el diseño de fármacos",
+                  "Creó un modelo que puede predecir con 99% de precisión qué pacientes responderán a qué tratamiento",
+                  "Desarrolló el primer medicamento completamente sintetizado por IA sin intervención humana"
                 ],
                 "correcta": 1,
-                "explicacion_profunda": "El estudio de Google Health (2020) mostró que su sistema de IA detectaba cáncer de mama con 5.7% menos falsos negativos que radiólogos de élite, representando vidas potencialmente salvadas.",
-                "concepto_reforzado": "¿Cuál fue el resultado del estudio de Google Health sobre detección de cáncer de mama?"
+                "explicacion_profunda": "El problema del plegamiento de proteínas era un desafío científico de décadas: predecir la estructura 3D de una proteína a partir de su secuencia de aminoácidos. Esta estructura determina cómo la proteína interactúa con otras moléculas, lo cual es fundamental para diseñar fármacos que se 'encajen' en proteínas específicas de una enfermedad. AlphaFold 2 resolvió esto con precisión comparable a técnicas experimentales que tomaban años (cristalografía de rayos X, cryo-EM) pero en horas de cómputo. Esto no reemplaza los ensayos clínicos, pero acelera enormemente la fase de diseño y descubrimiento de candidatos a fármacos, que históricamente tomaba 5-7 años y costaba cientos de millones de dólares.",
+                "concepto_reforzado": "AlphaFold 2 como hito de IA en drug discovery al resolver el plegamiento de proteínas"
               },
               {
-                "pregunta": "¿Cuánto tiempo administrativo puede ahorrar la IA de documentación clínica por médico por día?",
+                "pregunta": "¿Por qué un sistema de triaje por WhatsApp que clasifica urgencia médica NO requiere registro como dispositivo médico ante el INVIMA?",
                 "opciones": [
-                  "30 minutos",
-                  "1 hora",
-                  "2-3 horas",
-                  "4-5 horas"
+                  "Porque opera por WhatsApp que es una plataforma de mensajería, no una plataforma médica",
+                  "Porque está diseñado como herramienta de gestión y orientación, no como sistema de diagnóstico médico",
+                  "Porque los dispositivos médicos digitales no están regulados en Colombia hasta 2028",
+                  "Porque el INVIMA solo regula hardware físico, no software o aplicaciones"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La distinción regulatoria clave del INVIMA (y de la FDA en EE.UU. para referencia) es entre software de apoyo a decisiones administrativas/de gestión y software de diagnóstico médico. Un sistema que clasifica urgencia para gestionar el flujo de pacientes ('¿a qué consulta debe ir este paciente?') se considera herramienta de gestión administrativa. Un sistema que afirma diagnosticar condiciones médicas ('usted tiene X enfermedad') es un dispositivo médico que requiere registro. Esta distinción es crítica para el diseño del producto: el lenguaje usado, las disclaimers, y las funciones del sistema determinan su clasificación regulatoria. Operar como dispositivo médico sin registro es ilegal en Colombia.",
+                "concepto_reforzado": "Distinción regulatoria entre software de gestión de salud y dispositivo médico diagnóstico en Colombia"
+              },
+              {
+                "pregunta": "¿Cuál es la mayor oportunidad de IA en salud para LATAM según el contexto de escasez de especialistas?",
+                "opciones": [
+                  "Reemplazar médicos generales con IA para reducir costos del sistema de salud",
+                  "Sistemas de diagnóstico autónomo que no requieren especialistas para funcionar",
+                  "Multiplicar la capacidad de cada médico con herramientas de documentación, triaje y detección temprana en zonas sin especialistas",
+                  "Drug discovery local para enfermedades tropicales sin investigación farmacéutica existente"
                 ],
                 "correcta": 2,
-                "explicacion_profunda": "Estudios en hospitales de EEUU con sistemas de documentación asistida por IA muestran una reducción de 2-3 horas de trabajo administrativo por médico por día, tiempo que puede dedicarse a pacientes.",
-                "concepto_reforzado": "¿Cuánto tiempo administrativo puede ahorrar la IA de documentación clínica por médico por día?"
+                "explicacion_profunda": "Colombia tiene 1.6 médicos por 1,000 habitantes vs 3.4 en países de la OCDE — la brecha no se cierra con IA reemplazando médicos, sino amplificando su capacidad. Un médico que no gasta 3 horas documentando puede ver más pacientes. Un sistema de detección de retinopatía diabética en una cámara retinal con IA permite que en una región sin oftalmólogo, la cámara + IA haga el screening primario y solo los casos positivos viajan al especialista. Estas aplicaciones de 'alcance extendido' son las que tienen mayor impacto real en el corto plazo en LATAM: no reemplazan al médico escaso sino que estiran su alcance geográfico y temporal.",
+                "concepto_reforzado": "IA como multiplicador de capacidad médica en contextos de escasez de especialistas en LATAM"
               },
               {
-                "pregunta": "¿Cuál es la consideración ética/regulatoria clave para IA en salud en Colombia?",
+                "pregunta": "¿Qué tipo de proyecto de IA en salud puedes lanzar en Colombia sin requerir validación regulatoria especial del INVIMA?",
                 "opciones": [
-                  "La IA puede diagnosticar de forma autónoma si es suficientemente precisa",
-                  "Los sistemas de IA deben ser de apoyo a la decisión médica, no autónomos",
-                  "No hay regulación específica en Colombia",
-                  "Solo aplica para hospitales públicos"
+                  "Sistema que analiza imágenes médicas y sugiere diagnósticos diferenciales al médico",
+                  "App que monitorea constantes vitales y alerta al médico si detecta valores anormales",
+                  "Sistema de transcripción automática de consultas médicas que genera notas clínicas estructuradas",
+                  "Chatbot que interpreta resultados de laboratorio y explica su significado al paciente"
                 ],
-                "correcta": 1,
-                "explicacion_profunda": "El marco regulatorio (incluyendo INVIMA en Colombia) requiere que los sistemas de IA médica sean de 'decisión de apoyo' — el médico siempre tiene la decisión final y la responsabilidad legal.",
-                "concepto_reforzado": "¿Cuál es la consideración ética/regulatoria clave para IA en salud en Colombia?"
+                "correcta": 2,
+                "explicacion_profunda": "Un sistema de transcripción que convierte el audio de una consulta en texto estructurado (nota SOAP, resumen de alta, etc.) es software de productividad médica, no un dispositivo médico diagnóstico. No emite juicios clínicos, no interpreta datos fisiológicos, no sugiere diagnósticos — solo organiza y estructura información que el médico ya expresó verbalmente. Esto está en la categoría más baja de riesgo regulatorio. Por contraste: analizar imágenes para sugerir diagnósticos, interpretar constantes vitales, o explicar resultados de laboratorio a pacientes implica generación de información clínica que puede influir en decisiones de salud — esto entra en el ámbito de dispositivo médico y requiere validación apropiada.",
+                "concepto_reforzado": "Clasificación de proyectos de IA en salud por nivel de riesgo regulatorio en Colombia"
+              },
+              {
+                "pregunta": "¿Qué resultado mostró el proyecto de triaje inteligente vía WhatsApp de una EPS colombiana?",
+                "opciones": [
+                  "Aumentó las consultas a urgencias al identificar más pacientes que necesitaban atención inmediata",
+                  "No tuvo impacto medible porque los usuarios preferían consultar directamente con médicos",
+                  "28% de reducción en consultas innecesarias a urgencias y 40% de mejora en tiempo de espera para alta urgencia",
+                  "Redujo costos operativos en 60% permitiendo la eliminación de personal de recepción"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El caso de HealthIA Bogotá ilustra cómo una aplicación de IA bien diseñada y regulatoriamente correcta puede tener impacto cuantificable en el sistema de salud. Una reducción del 28% en consultas innecesarias a urgencias significa que personas con condiciones no urgentes se redirigen a consultas programadas, liberando los servicios de urgencias para quienes realmente los necesitan. El 40% de mejora en tiempo de espera para alta urgencia es consecuencia directa: menos congestión en urgencias significa atención más rápida para emergencias reales. Este tipo de mejoras sistémicas son el impacto real de la IA en salud LATAM en el corto plazo, más tangible que los grandes proyectos de diagnóstico avanzado.",
+                "concepto_reforzado": "Impacto medible de sistemas de triaje IA en eficiencia del sistema de salud colombiano"
               }
             ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "Una clínica de 20 médicos en Cali quiere implementar IA para reducir las 4 horas diarias que cada médico gasta en documentación clínica. Presupuesto inicial: $10,000.",
-              "instruccion": "Diseña el MVP más impactante con ese presupuesto. ¿Qué implementas primero, qué tecnología usas, cuál es el ROI?",
-              "input_malo": "Implementar un sistema completo de diagnóstico asistido por IA con image recognition.",
-              "pista": "El problema más claro es la documentación (4 horas/médico/día). ¿Hay una solución de IA existente para esto? ¿O necesitan construir algo custom?",
-              "solucion": "MVP: Sistema de transcripción y estructuración de notas médicas. Herramientas: Whisper API (transcripción de voz $0.006/min) + Claude API (estructuración de nota clínica ~$0.01/consulta) + interfaz web simple. Costo API mensual estimado: 20 médicos × 20 consultas/día × 22 días × $0.016 = ~$140/mes. Implementación: 4 semanas de desarrollo ($8,000), $2,000 para training del equipo. ROI: 20 médicos × 2 horas ahorradas × $15/hora equivalente × 22 días = $13,200/mes de tiempo recuperado. Payback: < 1 mes operativo. No es un dispositivo médico bajo INVIMA porque solo transcribe y estructura, no diagnostica.",
+              "contexto": "Una red de 15 clínicas de medicina general en el Valle del Cauca quiere usar IA para mejorar su operación. Cada médico atiende 25 pacientes/día y gasta 3 horas en documentación. El 35% de sus consultas son para renovación de fórmulas de enfermedades crónicas (diabetes, hipertensión) — rutinarias y altamente predecibles. Tienen presupuesto de $15,000 USD para el proyecto. La red quiere: (A) reducir carga administrativa de médicos y (B) mejorar adherencia de pacientes crónicos a sus tratamientos.",
+              "instruccion": "Diseña dos MVPs: uno para reducción de documentación y uno para adherencia de pacientes crónicos. Para cada uno especifica: tecnología usada, costo estimado de desarrollo, costo operativo mensual, y ROI esperado. Identifica cuál priorizar con el presupuesto disponible.",
+              "input_malo": "Construir un sistema de diagnóstico con IA que analice los síntomas del paciente y recomiende el tratamiento al médico. Esto resuelve todo porque hace el trabajo del médico más eficiente.",
+              "pista": "Para documentación, hay herramientas existentes que puedes integrar vs construir desde cero. Para adherencia crónica, WhatsApp Business API es gratuita para bajo volumen. ¿Cuál tiene mayor ROI inmediato y menor riesgo regulatorio?",
+              "solucion": "MVP-A (Documentación): Integración de Whisper API + Claude API para transcripción y estructuración de notas. Costo desarrollo: $8,000 (6 semanas, 1 developer). Costo operativo: 15 médicos × 25 consultas/día × 22 días × $0.02/consulta = ~$165/mes. ROI: 15 médicos × 2 horas ahorradas/día × $12/hora × 22 días = $7,920/mes de tiempo recuperado. Payback: 1 mes. MVP-B (Adherencia crónica): Chatbot WhatsApp con recordatorios de medicación y alertas de síntomas para pacientes crónicos. Costo desarrollo: $5,000 (4 semanas). Costo operativo: WhatsApp API ~$50-100/mes para 2,000 pacientes. ROI: Reducción en crisis evitables y urgencias — más difícil de cuantificar pero estimable en $2,000-3,000/mes en costos de urgencias evitadas. PRIORIDAD: MVP-A primero. ROI inmediato y cuantificable, dentro del presupuesto, regulatoriamente simple. MVP-B inicia en paralelo con el presupuesto restante ($7,000) como fase 2.",
               "criterios_de_exito": [
-                "Identifica documentación como el problema principal y de mayor ROI",
-                "Propone herramientas existentes (no construir desde cero)",
-                "Calcula ROI con números concretos"
+                "Diseña dos soluciones separadas para los dos problemas en lugar de un sistema único que intente resolverlo todo",
+                "Para documentación, propone integración de APIs existentes (no construir modelo propio) con cálculo de ROI concreto",
+                "Para adherencia crónica, identifica WhatsApp como canal natural para LATAM con costo marginal bajo",
+                "Prioriza MVP-A por ROI más inmediato y cuantificable, considerando el presupuesto de $15,000"
               ]
             },
             "conexion": {
-              "siguiente_concepto": "Finanzas: fraud detection y trading",
-              "por_que_importa_despues": "En salud, comienza por el eslabón de menor riesgo regulatorio y mayor ROI operativo."
+              "siguiente_concepto": "IA en legal y finanzas: casos reales",
+              "por_que_importa_despues": "Salud muestra el patrón que se repite en todas las industrias reguladas: la IA tiene mayor impacto cuando empieza por los procesos de soporte (documentación, triaje, adherencia) antes de los procesos core regulados. Legal y finanzas siguen el mismo patrón pero con sus propias restricciones y oportunidades únicas."
             }
           }
         },
