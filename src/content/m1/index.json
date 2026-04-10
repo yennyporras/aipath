@@ -8138,30 +8138,100 @@
         },
         {
           "id": "m1-b10-l3",
-          "titulo": "Finanzas: detección de fraude, análisis y trading algorítmico",
+          "titulo": "IA en educación: personalización masiva",
           "bloque": 10,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "La educación es el sector donde la IA tiene el potencial de impacto social más amplio: escalar la personalización del aprendizaje de 1-a-1 (tutorías privadas) a millones de estudiantes simultáneamente. Esta promesa está empezando a materializarse en 2026, pero con importantes matices sobre qué funciona y qué es hype.\n\nEl problema fundamental de la educación masiva es que los sistemas educativos están diseñados para el alumno promedio: el mismo ritmo, los mismos contenidos, las mismas evaluaciones para todos. Un estudiante avanzado se aburre; uno que necesita más apoyo se queda atrás. La promesa de la IA es detectar en tiempo real dónde está cada estudiante y adaptar el contenido, el ritmo, y el tipo de explicación a cada uno.\n\nKhan Academy con Khanmigo (basado en GPT-4) es el caso más citado: tutores de IA que guían al estudiante con preguntas socrátizas en lugar de dar respuestas directas. En los primeros resultados de 2023-2024, estudiantes que usaban Khanmigo 30+ minutos semanales mostraban mejoras de 0.5-1 desviaciones estándar en matemáticas. Duolingo Max con IA generativa personaliza los ejercicios según los errores específicos de cada usuario. Carnegie Learning lleva dos décadas con sistemas de tutorías adaptativas para matemáticas con resultados robustos en estudios longitudinales.\n\nEn LATAM, el contexto agrega complejidades importantes. La brecha digital sigue siendo real: en Colombia, el 30% de hogares rurales no tiene internet de calidad suficiente para apps de IA intensivas. Los sistemas más efectivos son los que funcionan bien con conectividad limitada o tienen componentes offline. Adicionalmente, el español latinoamericano tiene variaciones regionales que los modelos entrenados principalmente en inglés o español peninsular no manejan igual de bien.\n\nUso de LLMs por estudiantes para hacer tareas es la tensión más discutida en educación. El debate real no es 'prohibir vs permitir' sino rediseñar la evaluación: las tareas donde la IA puede hacer el trabajo completa en vez del estudiante eran malas tareas de antemano (producción de texto genérico, respuestas memorizadas). Las buenas tareas de la era IA involucran criterio, análisis de contexto específico, creación con restricciones personales, o demostración práctica — cosas que la IA no puede hacer en nombre del estudiante.\n\nLas oportunidades concretas para developers en educación LATAM: plataformas de tutorías adaptativas para materias específicas (ICFES, preparación universitaria), sistemas de feedback automatizado para escritura (no calificación final, sino retroalimentación iterativa), generación de ejercicios personalizados según el nivel detectado, y asistentes de estudio que explican conceptos de forma alternativa cuando el estudiante no entiende la primera explicación.",
+              "analogia": "La educación tradicional es como un conferenciante hablando para 40 personas a la vez: adapta su discurso al grupo, no al individuo. Un tutor privado puede ajustar cada explicación según las señales del estudiante — confusión, aburrimiento, brillo en los ojos al entender. La IA es el primer tutor privado que puede estar disponible para millones de estudiantes simultáneamente, a cualquier hora, sin juzgar cuántas veces repites la misma pregunta. Lo que no puede hacer es lo que el tutor humano sí hace: la conexión emocional, la motivación personalizada, y entender el contexto de vida del estudiante.",
+              "ejemplo_malo": "Un colegio en Bogotá implementa un chatbot de IA que responde preguntas de los estudiantes sobre cualquier tema académico. Los estudiantes rápidamente aprenden a pedirle que complete sus tareas directamente. El rendimiento académico en evaluaciones offline cae. Los profesores reportan que los trabajos parecen 'genéricos y sin personalidad'. El colegio desactiva el sistema convencido de que 'la IA es mala para la educación'. El error no fue la IA — fue implementarla sin rediseñar las tareas y sin guiar a estudiantes y profesores sobre el uso apropiado.",
+              "ejemplo_bueno": "Una plataforma de preparación para el ICFES en Colombia usa IA adaptativa: el estudiante hace una prueba diagnóstica de 20 preguntas, el sistema identifica sus debilidades específicas (ej. 'geometría euclidiana' y 'comprensión lectora de textos científicos'), y genera un plan de estudio personalizado con ejercicios de dificultad progresiva en esas áreas. Cuando el estudiante falla, el sistema no da la respuesta — hace preguntas que llevan al estudiante a encontrarla. Cuando domina un tema, avanza al siguiente. Resultado: estudiantes que usan la plataforma 3+ horas semanales durante 3 meses muestran mejoras de 15-25 puntos en el ICFES.",
+              "por_que_importa": "Colombia tiene una de las mayores brechas educativas de LATAM entre zonas urbanas y rurales, y entre estratos socioeconómicos. La IA educativa tiene el potencial de democratizar el acceso a tutorías de calidad que hoy solo tienen los estudiantes de colegios privados de alto costo. Una plataforma de preparación ICFES con IA efectiva que llegue a estudiantes de colegios públicos podría tener impacto social medible en indicadores de movilidad social. Para developers, este sector combina impacto social con viabilidad comercial real.",
+              "tip_profesional": "Para construir IA educativa efectiva, estudia el campo de 'Intelligent Tutoring Systems' (ITS) — hay décadas de investigación en ciencias cognitivas sobre qué funciona en aprendizaje adaptativo. El principio clave es el 'Zone of Proximal Development' de Vygotsky: los ejercicios deben ser ligeramente más difíciles que el nivel actual del estudiante, no demasiado fáciles (aburrimiento) ni demasiado difíciles (frustración). Mide el aprendizaje con evaluaciones offline que la IA no pueda resolver, no solo el rendimiento dentro de la plataforma."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué resultado mostraron los estudiantes que usaban Khanmigo 30+ minutos semanales según los primeros datos de 2023-2024?",
+                "opciones": [
+                  "Mejoras de 2-3 desviaciones estándar en todas las materias, superando cualquier intervención educativa previa",
+                  "Mejoras de 0.5-1 desviaciones estándar en matemáticas, un resultado significativo en investigación educativa",
+                  "Sin diferencia estadística respecto al grupo control, sugiriendo que la IA no mejora el aprendizaje",
+                  "Mejoras en rendimiento dentro de la plataforma pero caídas en evaluaciones externas"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Una mejora de 0.5-1 desviaciones estándar es considerada un efecto grande en investigación educativa — la mayoría de intervenciones pedagógicas producen efectos mucho menores. Para contexto, el tamaño de clase reducido (de 30 a 15 estudiantes) produce ~0.2 desviaciones estándar; tutorías privadas intensivas producen ~0.4. El resultado de Khanmigo, si se confirma en estudios más robustos y longitudinales, sería comparable a las intervenciones más efectivas conocidas pero a una fracción del costo. La cautela es apropiada porque estos son resultados preliminares con potencial de sesgo de selección (estudiantes que usan la plataforma 30+ min/semana probablemente tienen mayor motivación de base).",
+                "concepto_reforzado": "Resultados iniciales de tutores IA como Khanmigo y su significado en términos de tamaño de efecto educativo"
+              },
+              {
+                "pregunta": "¿Por qué el debate sobre estudiantes usando IA para hacer tareas está mal planteado como 'prohibir vs permitir'?",
+                "opciones": [
+                  "Porque es imposible técnicamente detectar si una tarea fue hecha con IA, haciendo la prohibición inútil",
+                  "Porque las tareas donde la IA puede hacer el trabajo completo eran malas tareas de antemano, y la solución es rediseñar la evaluación",
+                  "Porque usar IA para hacer tareas es legalmente equivalente a contratar un tutor privado y no puede prohibirse",
+                  "Porque la IA siempre hace mejor las tareas que los estudiantes, haciendo inevitable su uso"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Si una tarea puede completarse satisfactoriamente por una IA sin que el estudiante intervenga, esa tarea nunca midió lo que debería medir: comprensión profunda, capacidad analítica, aplicación a contextos personales, o síntesis original. Una tarea de 'escribe un ensayo sobre la Revolución Francesa' era vulnerable a que el estudiante la copiara de Wikipedia hace 20 años — la IA hace esto más evidente pero no crea un problema nuevo. Las tareas resistentes a la IA son aquellas que requieren: reflexión sobre experiencia personal específica del estudiante, análisis de un caso presentado en clase ese día, creación con restricciones muy concretas que la IA no conoce, o demostración oral o práctica. El rediseño de evaluación es la respuesta educativamente correcta.",
+                "concepto_reforzado": "Rediseño de evaluación educativa como respuesta al uso de IA por estudiantes, no la prohibición"
+              },
+              {
+                "pregunta": "¿Cuál es el principio del 'Zone of Proximal Development' y cómo debe aplicarse en IA educativa?",
+                "opciones": [
+                  "Los ejercicios deben estar en el nivel exacto del estudiante para evitar frustración o aburrimiento",
+                  "Los ejercicios deben ser ligeramente más difíciles que el nivel actual del estudiante, sin ser tan difíciles que generen frustración",
+                  "El estudiante siempre debe avanzar al siguiente nivel después de tres respuestas correctas consecutivas",
+                  "Los ejercicios deben adaptarse al estilo de aprendizaje visual o auditivo del estudiante"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El concepto de Zona de Desarrollo Próximo de Vygotsky describe la brecha entre lo que un estudiante puede hacer solo (zona de confort) y lo que puede hacer con apoyo (zona de desarrollo). El aprendizaje óptimo ocurre en esa zona intermedia: tareas ligeramente superiores al nivel actual donde el estudiante necesita esforzarse pero puede lograrlo con guía. Demasiado fácil: el estudiante se aburre y no aprende. Demasiado difícil: se frustra y se desengacha. Los sistemas de tutorías adaptativas con IA buscan mantener al estudiante permanentemente en esa zona de desarrollo, ajustando la dificultad en tiempo real basado en el rendimiento. Este principio es anterior a la IA en décadas pero la IA es la primera tecnología que puede aplicarlo a escala masiva e individual simultáneamente.",
+                "concepto_reforzado": "Zone of Proximal Development como principio científico del diseño de IA educativa adaptativa efectiva"
+              },
+              {
+                "pregunta": "¿Cuál es la principal barrera para escalar IA educativa en zonas rurales de Colombia?",
+                "opciones": [
+                  "Los estudiantes rurales tienen menor capacidad cognitiva para beneficiarse de herramientas tecnológicas avanzadas",
+                  "La brecha digital: el 30% de hogares rurales no tiene conectividad suficiente para aplicaciones de IA intensivas",
+                  "Los docentes rurales se oponen activamente a la implementación de tecnología en sus aulas",
+                  "La falta de computadores en hogares rurales, ya que los celulares son insuficientes para plataformas educativas"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La brecha digital en Colombia es una realidad documentada: según el DANE, la cobertura de internet de calidad en zonas rurales es significativamente menor que en zonas urbanas. Aplicaciones de IA educativa que requieren streaming de video, procesamiento cloud en tiempo real, o modelos de lenguaje con alta latencia simplemente no funcionan bien con 2G o conexión intermitente. El diseño correcto para el contexto colombiano incluye: arquitectura offline-first que descarga contenido cuando hay conexión y funciona sin internet, modelos pequeños que corren localmente, y sincronización diferida del progreso. La segunda barrera son los dispositivos — la mayoría de estudiantes rurales acceden desde smartphones, no computadores, lo que requiere diseño mobile-first específico. Sobre los docentes, hay resistencia al cambio pero no es el factor principal.",
+                "concepto_reforzado": "Brecha digital como barrera primaria para escalar IA educativa en zonas rurales de LATAM"
+              },
+              {
+                "pregunta": "¿Qué diferencia a un sistema de IA educativa efectivo de uno que solo parece moderno?",
+                "opciones": [
+                  "El sistema efectivo usa los modelos de IA más grandes y recientes disponibles en el mercado",
+                  "El sistema efectivo mide mejora en aprendizaje real con evaluaciones offline, no solo rendimiento dentro de la plataforma",
+                  "El sistema efectivo tiene la interfaz más atractiva y gamificada para mantener la atención del estudiante",
+                  "El sistema efectivo responde preguntas en menos de 500ms para no interrumpir el flujo del estudiante"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El riesgo principal en EdTech con IA es el 'ilusión de aprendizaje': el sistema puede optimizar métricas que son fácilmente medibles dentro de la plataforma (respuestas correctas, puntos, niveles completados) sin que eso se traduzca en aprendizaje transferible real. Los estudiantes aprenden los patrones de la plataforma, no el concepto subyacente. La validación correcta requiere evaluaciones offline que la IA no puede resolver directamente — exámenes escritos tradicionales, aplicación en contextos nuevos, retención a largo plazo (¿recuerda el concepto 3 meses después?). Las plataformas de EdTech con IA que muestran mejoras en ICFES, en exámenes de admisión universitaria, o en cursos universitarios posteriores tienen evidencia de aprendizaje real. Las que solo muestran mejoras en sus propias métricas internas deben mirarse con escepticismo.",
+                "concepto_reforzado": "Evaluación de aprendizaje real en IA educativa vs métricas internas de plataforma como indicadores de efectividad"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una EdTech colombiana quiere lanzar una plataforma de preparación para el ICFES con IA adaptativa. Tienen $30,000 USD de presupuesto inicial y 6 meses para el primer MVP. El mercado objetivo: 200,000 estudiantes colombianos que presentan el ICFES cada semestre, principalmente de estratos 2-4, con acceso variable a internet. La plataforma debe: (1) evaluar el nivel inicial del estudiante, (2) generar un plan de estudio personalizado, (3) proveer ejercicios adaptativos, y (4) medir el progreso real hacia el ICFES.",
+              "instruccion": "Diseña el MVP de la plataforma. Define: arquitectura técnica (qué construyes vs qué usas de terceros), las 3 funciones más críticas para el primer lanzamiento, cómo mides que el sistema realmente mejora el desempeño en el ICFES (no solo en tu plataforma), y la estrategia para funcionar con conectividad limitada.",
+              "input_malo": "Construir una app con todas las materias del ICFES desde el día uno, con gamificación completa, rankings, y chat con IA en tiempo real para responder cualquier pregunta. Con $30,000 hacemos todo.",
+              "pista": "¿Cuáles son las 3 funciones que si las tienes son suficientes para que un estudiante mejore su ICFES? ¿Cómo mides el impacto real vs el rendimiento en la plataforma? Con $30,000 en 6 meses, ¿qué construyes tú y qué usas de terceros?",
+              "solucion": "MVP enfocado en 3 funciones core: (1) DIAGNÓSTICO ADAPTATIVO: prueba inicial de 40 preguntas (cubriendo las 5 áreas del ICFES) que calibra el nivel por área. Usa preguntas reales de ICFES anteriores (dominio público). La IA clasifica al estudiante en nivel bajo/medio/alto por área. Herramienta: lógica de IRT (Item Response Theory) básica. (2) PLAN PERSONALIZADO + EJERCICIOS ADAPTATIVOS: genera semanas de ejercicios en las áreas débiles identificadas, aumentando dificultad cuando el estudiante demuestra dominio. Banco de 2,000+ preguntas ICFES reales categorizado por área, tema y dificultad. La IA selecciona qué pregunta mostrar según el rendimiento reciente. Herramienta: algoritmo de spaced repetition + Claude API para explicaciones de por qué la respuesta es correcta/incorrecta. (3) SIMULACROS Y MEDICIÓN: simulacros mensuales completos bajo condiciones reales (tiempo, sin ayuda). El puntaje del simulacro es el indicador de progreso real — no el rendimiento en ejercicios diarios. CONECTIVIDAD: app React Native con SQLite local que descarga el banco de ejercicios de la semana cuando hay WiFi y funciona offline. MEDICIÓN DE IMPACTO REAL: track de usuarios que presentan el ICFES real y correlacionar uso de plataforma con puntaje obtenido. Construyes tú: frontend + sistema adaptativo ($18,000). Usas de terceros: Claude API para explicaciones ($500/mes con 5,000 usuarios activos), banco de preguntas ICFES (curaduría propia + dominio público).",
+              "criterios_de_exito": [
+                "Enfoca el MVP en las 3 funciones más críticas (diagnóstico, ejercicios adaptativos, simulacros) en lugar de construir todo",
+                "Define medición de impacto real basada en el ICFES oficial, no solo en métricas internas de la plataforma",
+                "Diseña para conectividad limitada con arquitectura offline-first que descarga contenido cuando hay conexión",
+                "Estima presupuesto de manera realista: qué construir internamente vs qué comprar/usar como servicio"
+              ]
             },
+            "conexion": {
+              "siguiente_concepto": "IA en retail y manufactura",
+              "por_que_importa_despues": "Educación muestra cómo la IA puede escalar servicios personalizados que antes requerían recursos humanos individuales. Retail y manufactura son los sectores donde la IA lleva más años en producción, con sistemas de recomendación, gestión de inventario y control de calidad que procesan millones de transacciones diarias. Entender estos casos maduros da perspectiva sobre qué esperar de la IA en otros sectores."
+            }
             "conexion": {
               "siguiente_concepto": "",
               "por_que_importa_despues": ""
