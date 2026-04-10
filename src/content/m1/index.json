@@ -8040,33 +8040,99 @@
         },
         {
           "id": "m1-b10-l2",
-          "titulo": "Legal: contratos, due diligence y compliance con IA",
+          "titulo": "IA en legal y finanzas: casos reales",
           "bloque": 10,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Legal y finanzas son dos sectores donde la IA está generando impacto masivo en 2026, y donde las consecuencias de errores son especialmente costosas. Entender qué funciona, qué falla, y por qué, es crítico para cualquier developer o consultor que trabaje en estos sectores.\n\nEn el sector legal, la IA está transformando tres procesos específicos. Primero, la revisión de contratos: herramientas como Kira Systems, Luminance, y sistemas basados en Claude o GPT-4o pueden revisar contratos de cientos de páginas en minutos, identificando cláusulas de riesgo, desviaciones de un estándar definido, y comparando versiones. Una firma de abogados colombiana en un proceso de M&A que antes tardaba 3 semanas revisando 500 contratos ahora lo hace en 3 días con revisión humana enfocada en los puntos marcados por la IA. El ROI es inmediato: una firma que cobra $300/hora por trabajo de revisión puede ofrecer servicios más rápidos o atender más clientes.\n\nSegundo, la investigación jurídica: LexisNexis, Westlaw y plataformas colombianas como La Referencia + LLMs permiten buscar jurisprudencia relevante conversacionalmente ('busca sentencias de la Corte Suprema sobre responsabilidad civil en accidentes de tránsito en los últimos 5 años'). Lo que tomaba horas de búsqueda manual se hace en minutos. La advertencia importante: los LLMs pueden alucinar citas legales — el sistema necesariamente debe verificar cada referencia en las bases de datos originales.\n\nTercero, el compliance regulatorio: con marcos regulatorios complejos (Circular Básica Jurídica de Superfinanciera, normas SARLAFT, reglamentación de la SIC), los sistemas de IA que monitorean cambios regulatorios y alertan sobre impactos en políticas internas tienen enorme valor preventivo en banca y seguros.\n\nEn finanzas, el impacto más maduro es en detección de fraude. Los modelos de ML que analizan patrones de transacciones en tiempo real son la columna vertebral de los sistemas antifraude de todos los bancos grandes. En Colombia, Bancolombia, Davivienda y Nequi tienen sistemas que procesan millones de transacciones diarias con modelos que detectan anomalías en milisegundos. Estos sistemas no son LLMs — son modelos de clasificación y detección de anomalías entrenados con datos históricos de fraude.\n\nEl scoring crediticio alternativo es la gran oportunidad para fintechs en LATAM: usar datos alternativos (comportamiento móvil, historial de pagos de servicios públicos, actividad en redes sociales con consentimiento explícito) para dar crédito a personas sin historial bancario tradicional. Empresas como Lulo Bank, Rappi Pay y Addi en Colombia usan estos modelos para llegar a segmentos desatendidos por la banca tradicional. El reto regulatorio: la Superfinanciera exige explicabilidad de los modelos de scoring — no puedes usar una caja negra para negar crédito sin justificar la decisión.",
+              "analogia": "En legal, la IA es como un paralegal junior increíblemente rápido: puede leer y marcar todos los contratos en una noche, resaltar los puntos problemáticos, y buscar jurisprudencia en segundos. Pero el abogado senior sigue siendo quien interpreta, negocia y firma. En finanzas, la IA antifraude es como el detector de metales en un aeropuerto: alerta sobre todo lo que parece sospechoso para que el agente de seguridad humano decida si es realmente peligroso. La velocidad y consistencia vienen de la máquina; el juicio final es humano.",
+              "ejemplo_malo": "Un estudio jurídico colombiano implementa un chatbot con GPT-4o que responde consultas legales directamente a clientes sin revisión de abogado. El sistema alucina citas de sentencias inexistentes y da orientación incorrecta sobre plazos de prescripción. Un cliente pierde un caso porque siguió la orientación del bot sin verificar con un abogado. El estudio enfrenta demanda por mala praxis legal. El error fue desintermediar al profesional en un contexto donde las consecuencias de error son graves y legalmente atribuibles.",
+              "ejemplo_bueno": "LegalTech Medellín desarrolla un asistente de revisión de contratos para medianas empresas colombianas. El sistema recibe un contrato, lo compara contra una biblioteca de 200 cláusulas estándar aprobadas por abogados, y genera un reporte con: (1) cláusulas que se desvían del estándar, (2) cláusulas faltantes de protección, (3) nivel de riesgo estimado por sección. Un abogado revisa el reporte en 30 minutos en lugar de 4 horas. El sistema nunca genera asesoría legal directa — siempre termina con 'este análisis es de referencia, consulte con su abogado para decisiones'. Cumplen con la regulación, agregan valor real, y el abogado sigue siendo responsable.",
+              "por_que_importa": "Colombia tiene una de las economías más litigantes de LATAM con alto costo de servicios legales. Las pequeñas y medianas empresas tienen acceso limitado a asesoría legal de calidad porque no pueden pagar firmas grandes. La IA puede democratizar el acceso a análisis legal de primera calidad. En finanzas, el scoring crediticio alternativo tiene potencial de incluir a los 14 millones de colombianos sin acceso a crédito formal — un mercado enorme para fintechs que usen IA responsablemente.",
+              "tip_profesional": "Para proyectos de IA legal en Colombia, la clave es el diseño del flujo de trabajo: la IA como herramienta de preparación y análisis, el abogado como tomador de decisiones y firmante. Nunca diseñes un sistema que sugiera que reemplaza el consejo legal. Para finanzas, si construyes modelos de scoring, desde el inicio diseña para explicabilidad (feature importance, SHAP values) — la Superfinanciera te lo pedirá en la auditoría."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué la Superfinanciera colombiana exige explicabilidad en los modelos de scoring crediticio?",
+                "opciones": [
+                  "Para verificar que los modelos usan datos del Buró de Crédito exclusivamente y no datos alternativos",
+                  "Porque la regulación de habeas data y protección al consumidor financiero exige justificar las decisiones de crédito, no solo el resultado",
+                  "Para asegurarse de que los modelos sean más precisos que los métodos tradicionales de scoring",
+                  "Porque los modelos de ML son siempre inexplicables y la Superfinanciera los prohíbe en la práctica"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La Circular Básica Jurídica de la Superfinanciera y los principios de protección al consumidor financiero colombiano exigen que cuando se niega un crédito, la entidad pueda explicar las razones de esa decisión al solicitante. Un modelo de caja negra (como una red neuronal profunda sin interpretabilidad) que dice 'negado' sin más no cumple este requisito. Las fintechs deben diseñar sus modelos para que las variables más influyentes en la decisión sean identificables y comunicables: 'su solicitud fue negada principalmente debido a X, Y, Z'. Herramientas como SHAP (SHapley Additive exPlanations) permiten calcular la contribución de cada variable a cada decisión individual, satisfaciendo el requisito de explicabilidad sin sacrificar la capacidad predictiva del modelo.",
+                "concepto_reforzado": "Explicabilidad de modelos de ML como requisito regulatorio de la Superfinanciera para scoring crediticio"
+              },
+              {
+                "pregunta": "¿Cuál es el riesgo principal de usar LLMs para investigación jurídica sin verificación adicional?",
+                "opciones": [
+                  "Los LLMs son demasiado lentos para búsqueda jurídica comparado con bases de datos especializadas",
+                  "Los LLMs pueden alucinar citas de sentencias y jurisprudencia inexistente que parecen completamente reales",
+                  "Los LLMs no tienen acceso a las bases de datos de jurisprudencia colombiana actualizada",
+                  "Los colegios de abogados prohíben el uso de IA para investigación jurídica en Colombia"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La alucinación es el riesgo más peligroso de los LLMs en contextos legales. Un modelo puede generar referencias a 'Sentencia C-123 de 2019 de la Corte Constitucional' con número de expediente, magistrado ponente y resumen detallado del fallo — que simplemente no existe. En contextos cotidianos esto es molesto; en derecho, un abogado que cita una sentencia inexistente en un escrito judicial puede enfrentar sanciones disciplinarias del Consejo Superior de la Judicatura y perder credibilidad profesional irreparablemente. Por esto, cualquier sistema de IA para investigación jurídica debe diseñar verificación obligatoria en bases de datos oficiales (Rama Judicial, Corte Constitucional, Corte Suprema) antes de usar cualquier referencia generada por el modelo.",
+                "concepto_reforzado": "Riesgo de alucinación de citas legales como falla crítica de LLMs en investigación jurídica sin verificación"
+              },
+              {
+                "pregunta": "¿Qué tipo de modelo de IA se usa principalmente para detección de fraude financiero en tiempo real, y por qué NO son LLMs?",
+                "opciones": [
+                  "LLMs que leen la descripción de cada transacción y evalúan si parece fraudulenta contextualmente",
+                  "Modelos de clasificación y detección de anomalías entrenados con patrones históricos de fraude, que procesan datos numéricos en milisegundos",
+                  "Modelos de visión por computadora que analizan screenshots de las transacciones",
+                  "Sistemas basados en reglas definidas manualmente por expertos en fraude sin componente de ML"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La detección de fraude en tiempo real tiene dos requisitos que hacen a los LLMs inadecuados para el core del sistema: (1) velocidad — una transacción debe aprobarse o bloquearse en 50-200 milisegundos, y un LLM tarda 500ms-2s solo en el TTFT; (2) tipo de datos — el fraude se detecta por patrones en datos estructurados numéricos (monto, hora, geolocalización, frecuencia, historial) no en texto. Los modelos de ML clásicos y redes neuronales especializadas (Gradient Boosting, Isolation Forest, Autoencoders para anomalías) procesan vectores numéricos en microsegundos con alta precisión. Los LLMs sí tienen un rol complementario: análisis de casos de fraude complejos donde hay comunicaciones de texto, generación de reportes, o interfaces de investigación para analistas.",
+                "concepto_reforzado": "Modelos de ML especializados vs LLMs para detección de fraude: velocidad y tipo de datos como factores determinantes"
+              },
+              {
+                "pregunta": "¿Qué hace que el scoring crediticio alternativo sea una oportunidad para fintechs en Colombia?",
+                "opciones": [
+                  "Permite dar créditos más grandes que la banca tradicional porque los datos alternativos son más confiables",
+                  "Hay 14 millones de colombianos sin historial crediticio formal que pueden recibir crédito usando datos de comportamiento alternativos",
+                  "La regulación colombiana exige que los bancos usen IA para aprobar todos los créditos desde 2025",
+                  "Los datos alternativos permiten cobrar tasas de interés más altas legalmente"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La exclusión financiera es un problema masivo en Colombia: una proporción significativa de la población no tiene acceso a crédito formal porque no tiene historial en el sistema bancario tradicional (DataCrédito, TransUnion). Sin historial, no hay crédito; sin crédito, no hay historial — un círculo vicioso que excluye a trabajadores informales, emprendedores pequeños, y personas en regiones sin sucursales bancarias. El scoring alternativo usa señales como puntualidad en pagos de servicios públicos, patrones de uso de celular, comportamiento en plataformas de e-commerce, y otros indicadores con consentimiento explícito del usuario para construir un perfil de riesgo crediticio alternativo. Fintechs como Addi (BNPL), Lulo Bank, y Rappi Pay han mostrado que estos modelos predicen comportamiento de pago con precisión comparable o superior al scoring tradicional para segmentos no bancarizados.",
+                "concepto_reforzado": "Scoring crediticio alternativo con IA como palanca de inclusión financiera para los no bancarizados en Colombia"
+              },
+              {
+                "pregunta": "¿Cuál es la diferencia clave en el diseño entre un chatbot legal que cumple regulaciones y uno que no?",
+                "opciones": [
+                  "El que cumple regulaciones usa modelos más precisos con menos errores en sus respuestas legales",
+                  "El que cumple regulaciones posiciona al sistema como herramienta de preparación con revisión humana obligatoria, nunca como reemplazo del asesor legal",
+                  "El que cumple regulaciones solo responde preguntas sobre leyes publicadas antes de 2020",
+                  "El que cumple regulaciones requiere que los usuarios sean abogados titulados para acceder al sistema"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El ejercicio ilegal de la abogacía es una figura jurídica real en Colombia (Ley 1123 de 2007, Código Disciplinario del Abogado). Un sistema que da 'consejo legal' de forma autónoma sin un abogado responsable identificable puede interpretarse como ejercicio ilegal de la profesión, especialmente si el usuario toma decisiones jurídicas basado en esas respuestas y sufre perjuicios. El diseño correcto es explícito: la IA analiza, prepara, identifica riesgos, y resume — el abogado humano interpreta, adapta al caso específico, y firma. Disclaimer obligatorio: 'Este análisis es informativo y no constituye asesoría legal. Consulte con un abogado licenciado para decisiones jurídicas.' Esta distinción de diseño no es solo ética sino legalmente necesaria para operar en Colombia.",
+                "concepto_reforzado": "Diseño de sistemas de IA legal con distinción clara entre análisis automatizado y asesoría legal que requiere profesional"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una firma de abogados colombiana con 8 abogados especializada en derecho corporativo hace due diligence para transacciones M&A y revisión de contratos para empresas medianas. Su problema actual: cada due diligence implica revisar 200-800 documentos (contratos, actas, poderes, estatutos) en 2-3 semanas, con 2-3 abogados dedicados a tiempo completo. Quieren usar IA para reducir este tiempo a 5-7 días sin reducir la calidad del análisis. Tienen presupuesto de $20,000 USD y no quieren construir tecnología propia desde cero.",
+              "instruccion": "Diseña la arquitectura del sistema de asistencia IA para due diligence. Especifica: qué herramientas/APIs usar, cómo estructuras el flujo de trabajo entre IA y abogado, qué tipos de documentos son más aptos para análisis automático, y qué no dejarías hacer a la IA sin revisión humana.",
+              "input_malo": "Usar GPT-4o para leer todos los documentos y que genere un informe de due diligence completo automáticamente que el cliente recibe directamente sin revisión del abogado.",
+              "pista": "¿Qué parte del trabajo es repetitiva y de bajo riesgo (checklist de documentos, extracción de datos específicos, comparación contra estándar)? ¿Qué parte requiere juicio del abogado (evaluación de riesgo, interpretación contextual, recomendaciones)? Divide el flujo según esto.",
+              "solucion": "Arquitectura en tres capas: (1) PROCESAMIENTO AUTOMÁTICO: Claude API o GPT-4o extrae datos estructurados de cada documento — partes firmantes, fechas, montos, plazos, garantías, cláusulas de cambio de control. Cataloga el tipo de documento y verifica que el paquete de due diligence esté completo contra un checklist estándar. Costo: ~$0.05-0.10/documento. Con 500 documentos: $25-50. Tiempo: 2-3 horas automáticas. (2) ANÁLISIS CON FLAGS: la IA compara cada cláusula contra una biblioteca de cláusulas estándar aprobadas y marca desviaciones: 'cláusula de confidencialidad no tiene plazo definido', 'no hay cláusula de no competencia', 'tasa de interés sobre el máximo legal colombiano'. Genera un reporte de hallazgos prioritizados por nivel de riesgo (alto/medio/bajo). (3) REVISIÓN HUMANA ENFOCADA: el abogado revisa el reporte de flags, valida los hallazgos de alto riesgo leyendo los documentos originales marcados, agrega interpretación contextual y redacta las recomendaciones. Tiempo estimado: 1-2 días vs 2-3 semanas. El informe final siempre lleva firma del abogado responsable. Inversión: $15,000 en desarrollo del sistema + $5,000 en entrenamiento y customización.",
+              "criterios_de_exito": [
+                "Separa claramente las tareas automatizables (extracción de datos, comparación con estándar) de las que requieren juicio del abogado",
+                "El flujo mantiene al abogado como responsable del producto final — la IA prepara, el abogado decide",
+                "Calcula el costo operativo con números reales (costo por documento de API) mostrando viabilidad económica",
+                "Identifica específicamente qué tipo de flags genera la IA para que la revisión humana sea enfocada y eficiente"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "IA en educación: personalización masiva",
+              "por_que_importa_despues": "Legal y finanzas muestran cómo la IA funciona mejor cuando amplifica al profesional experto en lugar de reemplazarlo. Educación es el sector donde esta lógica se aplica a escala masiva: un tutor de IA puede personalizar el aprendizaje para millones de estudiantes simultáneamente, algo que ningún sistema educativo humano puede lograr."
             }
           }
         },
