@@ -5086,33 +5086,98 @@
       "lecciones": [
         {
           "id": "m1-b6-l1",
-          "titulo": "Anthropic, OpenAI, Google, Meta: los jugadores que mandan",
+          "titulo": "Claude (Anthropic): fortalezas y casos de uso",
           "bloque": 6,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Claude es el modelo de lenguaje desarrollado por Anthropic, una empresa fundada en 2021 por ex-investigadores de OpenAI —entre ellos Dario Amodei y Daniela Amodei— que salieron motivados por una pregunta central: ¿cómo construir IA poderosa que sea genuinamente segura y alineada con valores humanos? Esa pregunta no es marketing: define arquitectura, entrenamiento y cada decisión de diseño del modelo.\n\nEn 2026, la familia Claude incluye tres niveles: Claude Haiku (rápido y económico, ideal para tareas de alto volumen), Claude Sonnet (equilibrio entre capacidad y costo, el más usado en producción), y Claude Opus (máxima capacidad de razonamiento, para tareas complejas). Cada variante tiene ventana de contexto extendida —hasta 200,000 tokens en algunos casos—, lo que significa que Claude puede procesar un libro entero en una sola conversación.\n\nLas fortalezas diferenciadas de Claude son cuatro. Primero, razonamiento largo y estructurado: Claude sobresale en tareas que requieren mantener coherencia a través de documentos extensos, analizar contratos legales completos, o seguir instrucciones complejas con múltiples condiciones. Segundo, escritura de alta calidad con tono natural: los textos de Claude tienen menos 'sabor a IA' que otros modelos —menos clichés, estructuras más variadas, registro más apropiado al contexto. Tercero, seguimiento de instrucciones: Claude interpreta instrucciones complejas con matices sin necesitar prompts extremadamente elaborados. Cuarto, Constitutional AI: el enfoque de Anthropic entrena al modelo para rechazar instrucciones dañinas desde principios éticos explícitos, no solo filtros de palabras.\n\nLos casos de uso donde Claude domina en 2026 incluyen: análisis de documentos legales y contratos (por su ventana de contexto y precisión), soporte al cliente de alto nivel donde el tono importa, generación de contenido técnico como documentación de código y manuales, asistentes de investigación que procesan papers científicos, y aplicaciones donde la seguridad y el cumplimiento regulatorio son críticos. Empresas de servicios financieros, salud y legal prefieren Claude precisamente porque su comportamiento es más predecible y menos propenso a alucinaciones en dominios especializados.\n\nLa API de Claude (claude.ai/api) tiene precios competitivos: en 2026 Sonnet 4.6 procesa 1 millón de tokens de entrada por aproximadamente $3 USD, con salida a $15 USD por millón. Para proyectos empresariales en LATAM, esto significa que automatizar la revisión de 1,000 documentos de clientes cuesta menos que el café de la reunión donde se decide si hacerlo o no.\n\nUna distinción crítica: Anthropic publica su investigación de safety, incluyendo el modelo constitucional que guía a Claude. Esto es inusual en la industria y permite a empresas con requisitos de auditoría entender cómo el modelo toma decisiones. Para sectores regulados en Colombia y LATAM —banca, salud, educación—, esta transparencia no es un nice-to-have sino un requisito de cumplimiento.",
+              "analogia": "Si los modelos de IA fueran consultores, Claude sería el abogado especializado: más caro que un generalista, pero cuando el contrato es complejo y los errores cuestan millones, es exactamente lo que necesitas.",
+              "ejemplo_malo": "Usar Claude para generación masiva de descripciones de productos de e-commerce de bajo valor cuando Haiku o un modelo más económico haría el trabajo al 10% del costo.",
+              "ejemplo_bueno": "Usar Claude Opus para revisar 500 contratos de proveedores en busca de cláusulas de indemnización no estándar: la precisión y la ventana de contexto justifican el costo premium frente al riesgo legal.",
+              "por_que_importa": "En 2026 el mercado tiene decenas de modelos. Elegir mal no solo cuesta dinero —cuesta credibilidad. Entender qué hace Claude diferente te permite proponer la herramienta correcta para cada cliente.",
+              "tip_profesional": "Cuando evalúes Claude para un cliente, empieza con el prompt más difícil del caso de uso real —el que tiene más condiciones y matices. Si Claude lo maneja bien ahí, el resto es trivial. No empieces por los casos fáciles."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la principal diferencia filosófica de Anthropic respecto a otras empresas de IA?",
+                "opciones": [
+                  "Que tiene los modelos más baratos del mercado",
+                  "Que fue fundada por ex-investigadores de OpenAI",
+                  "Que prioriza la seguridad y alineación como principio fundacional, no como add-on",
+                  "Que solo ofrece modelos de código abierto"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Anthropic fue fundada específicamente porque sus fundadores creían que la IA más poderosa del mundo necesitaba desarrollarse con seguridad como principio central, no como característica secundaria. Esto se traduce en Constitutional AI —un método donde el modelo aprende a rechazar instrucciones dañinas desde principios éticos explícitos, no solo filtros reactivos. Esta diferencia filosófica afecta cada decisión técnica: cómo se entrena el modelo, qué datos se usan, cómo se manejan las instrucciones ambiguas. Para empresas en sectores regulados como banca o salud en LATAM, esta transparencia y enfoque en safety es frecuentemente el argumento decisivo de compra frente a alternativas.",
+                "concepto_reforzado": "Anthropic safety-first como ventaja diferencial"
+              },
+              {
+                "pregunta": "¿Qué ventaja técnica distingue a Claude en el procesamiento de documentos largos?",
+                "opciones": [
+                  "Genera imágenes mejor que otros modelos",
+                  "Tiene ventana de contexto extendida de hasta 200,000 tokens",
+                  "Funciona sin conexión a internet",
+                  "Puede acceder a bases de datos en tiempo real"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La ventana de contexto de Claude —hasta 200,000 tokens— es una ventaja técnica concreta con impacto real en casos de uso empresariales. Para dimensionarlo: 200,000 tokens equivalen aproximadamente a 150,000 palabras, o un libro de 500 páginas completo. Esto significa que Claude puede analizar un contrato de concesión completo, una auditoría financiera anual, o toda la documentación técnica de un sistema en una sola llamada, manteniendo coherencia entre el contexto del inicio y el final del documento. Modelos con ventanas más pequeñas requieren dividir documentos en fragmentos, perdiendo el contexto global y aumentando el riesgo de contradicciones entre análisis parciales.",
+                "concepto_reforzado": "Ventana de contexto como diferenciador en análisis documental"
+              },
+              {
+                "pregunta": "¿Para cuál de estos casos de uso Claude Opus está más justificado sobre alternativas más baratas?",
+                "opciones": [
+                  "Generar 10,000 descripciones de producto estándar para e-commerce",
+                  "Responder FAQ básicas de clientes sobre horarios de atención",
+                  "Analizar cláusulas de indemnización en 300 contratos de proveedores internacionales",
+                  "Traducir correos electrónicos de inglés a español"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El análisis de contratos legales complejos es el caso de uso paradigmático para Claude Opus porque combina exactamente las fortalezas del modelo: ventana de contexto para procesar contratos largos, precisión en dominios especializados (lenguaje legal), capacidad de mantener coherencia entre múltiples cláusulas relacionadas, y bajo umbral de alucinaciones en texto técnico. Los otros tres casos son volumen alto con bajo riesgo de error: ahí un modelo más económico como Haiku entrega el 95% del valor al 10% del costo. La regla es: usa el modelo más potente cuando el error tiene consecuencias legales, financieras o de reputación graves; usa el modelo más económico para volumen donde el error es tolerable.",
+                "concepto_reforzado": "Selección de modelo según costo del error"
+              },
+              {
+                "pregunta": "¿Qué es Constitutional AI en el contexto de Claude?",
+                "opciones": [
+                  "Un sistema legal que regula el uso de IA en Antropic",
+                  "Un método donde el modelo aprende principios éticos para auto-evaluarse y rechazar instrucciones dañinas",
+                  "El nombre del chip que procesa las solicitudes de Claude",
+                  "Un tipo de fine-tuning disponible para clientes enterprise"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Constitutional AI es el método de entrenamiento desarrollado por Anthropic donde al modelo se le enseña un conjunto de principios —una 'constitución'— y luego aprende a evaluar sus propias respuestas contra esos principios antes de generar output. Esto es cualitativamente diferente a los sistemas de filtros reactivos: en lugar de bloquear palabras o patrones específicos, el modelo razona sobre si una respuesta viola principios como 'no ayudes a causar daño' o 'sé honesto'. El resultado práctico es un modelo que maneja instrucciones ambiguas de forma más predecible, que puede explicar por qué rechaza algo, y que es más difícil de 'jailbreakear' con instrucciones indirectas. Esto es especialmente valioso para empresas que necesitan auditar el comportamiento del modelo.",
+                "concepto_reforzado": "Constitutional AI como diferenciador de seguridad"
+              },
+              {
+                "pregunta": "¿Cuál es el modelo Claude más apropiado para una aplicación de soporte al cliente de alto volumen con preguntas estándar?",
+                "opciones": [
+                  "Claude Opus, porque es el más poderoso",
+                  "Siempre el más reciente disponible sin importar el costo",
+                  "Claude Haiku, por su equilibrio de velocidad y costo para tareas de alto volumen",
+                  "Claude no es apropiado para soporte al cliente"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Claude Haiku fue diseñado específicamente para casos de uso de alto volumen donde la velocidad de respuesta y el costo por transacción son críticos. Para soporte al cliente con preguntas frecuentes estándar —tracking de pedidos, políticas de devolución, horarios—, Haiku procesa la respuesta en fracciones de segundo a una fracción del costo de Opus. La regla práctica para arquitectura de soluciones: clasifica las consultas entrantes y enruta las complejas o de alto riesgo a Sonnet/Opus, y el volumen estándar a Haiku. Este patrón de 'routing inteligente' puede reducir el costo operativo de un sistema de IA en 60-80% sin degradar la calidad percibida por el usuario en los casos que importan.",
+                "concepto_reforzado": "Estrategia de selección de modelo por caso de uso"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Eres consultor de IA para una firma legal en Bogotá con 45 abogados. El gerente de tecnología te dice: 'Queremos usar IA para revisar contratos, pero no sé si usar Claude, GPT-4o o una solución más barata. El presupuesto mensual máximo es $500 USD y revisamos unos 200 contratos al mes, algunos de 80 páginas.'",
+              "instruccion": "Elabora una recomendación técnica fundamentada. Incluye: (1) qué modelo de Claude elegirías y por qué, (2) una estimación aproximada del costo mensual basada en que 80 páginas son aproximadamente 40,000 tokens, y (3) qué características específicas de Claude justifican la elección sobre alternativas genéricas.",
+              "input_malo": "Yo usaría Claude Opus porque es el mejor modelo y las firmas legales necesitan lo mejor.",
+              "pista": "Para la estimación de costo: 200 contratos × 40,000 tokens de entrada = 8 millones de tokens de entrada al mes. Claude Sonnet 4.6 cuesta aproximadamente $3 por millón de tokens de entrada. El output (el análisis generado) suele ser 10-20% del input. Calcula ambos y compara con el presupuesto de $500.",
+              "solucion": "Recomendación: Claude Sonnet 4.6 para el 80% de contratos estándar, con escalamiento a Opus solo para contratos de más de $1M o con cláusulas internacionales complejas. Estimación de costo: 8M tokens entrada × $3/M = $24 USD de entrada. Output estimado 1.6M tokens × $15/M = $24 USD. Total: ~$48/mes, muy dentro del presupuesto de $500. Justificación técnica: (1) Ventana de 200K tokens procesa contratos de 80 páginas en una sola llamada sin fragmentación, (2) Precisión en lenguaje legal especializado con menores alucinaciones que modelos generalistas, (3) Constitutional AI garantiza comportamiento predecible y auditable para cumplimiento regulatorio colombiano, (4) El costo real deja $450/mes de margen para desarrollar el sistema de routing y la interfaz de revisión.",
+              "criterios_de_exito": [
+                "Justifica la elección de modelo con características técnicas específicas, no solo 'es el mejor'",
+                "Incluye una estimación numérica del costo mensual basada en el volumen dado",
+                "Menciona al menos dos fortalezas de Claude relevantes para el contexto legal"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "GPT-4o y la familia OpenAI: el competidor más conocido",
+              "por_que_importa_despues": "Para recomendar Claude en contextos donde el cliente conoce GPT, necesitas entender las diferencias reales —no el marketing— entre ambas familias de modelos."
             }
           }
         },
