@@ -7335,33 +7335,99 @@
         },
         {
           "id": "m1-b8-l6",
-          "titulo": "Edge AI: IA en dispositivos sin necesidad de internet",
+          "titulo": "Edge computing con IA: el futuro cercano",
           "bloque": 8,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "El edge computing con IA es la tendencia de ejecutar modelos de inteligencia artificial directamente en el dispositivo del usuario o en servidores locales cercanos, en lugar de enviar datos a la nube. Esta arquitectura está pasando de ser futurista a ser viable hoy para casos de uso específicos, impulsada por dos fuerzas simultáneas: el hardware de dispositivos se vuelve más potente, y los modelos se vuelven más eficientes sin perder capacidad.\n\nLos casos de uso donde el edge ya es real en 2026: (1) Reconocimiento de voz e imagen en dispositivos móviles — iPhone usa modelos de Siri y Face ID directamente en el Neural Engine del chip A18 sin internet. (2) Autocorrección y sugerencias de texto — los teclados modernos corren modelos de lenguaje pequeños localmente. (3) Modelos de visión en manufactura — cámaras industriales con chips NVIDIA Jetson detectan defectos en tiempo real sin latencia de red, crítico para líneas de producción que no pueden permitir 200ms de delay. (4) Asistentes locales — herramientas como Ollama permiten correr Llama 3.2 3B o Phi-3 Mini en laptops modernas con CPU i7/M1 o GPU integrada, sin conexión a internet.\n\nEl hardware clave que hace esto posible: Apple Silicon (M1/M2/M3/M4) incluye Neural Engine con 15-35 TOPS (trillones de operaciones por segundo), capaz de correr modelos de hasta 7-13B parámetros a velocidad razonable. Snapdragon 8 Gen 3 en Android tiene NPU de 45 TOPS. NVIDIA Jetson Orin NX tiene 70-100 TOPS para aplicaciones industriales. Estos chips son radicalmente más eficientes en energía que GPUs de data center para inferencia.\n\nLas limitaciones reales son importantes de entender: los modelos que caben en edge son pequeños (1B-13B parámetros vs 70B+ en cloud), lo cual significa menor capacidad para tareas complejas. Llama 3.2 3B es excelente para clasificación y respuestas simples, pero no para análisis legal complejo o código sofisticado. La actualización de modelos es más compleja (hay que distribuir el modelo al dispositivo). Y para datos que necesitan agregación (analytics, entrenamiento federado), la arquitectura híbrida edge-cloud sigue siendo necesaria.\n\nPara LATAM, el edge tiene relevancia particular: zonas con conectividad intermitente (áreas rurales de Colombia, Brasil, México) donde la latencia de red puede ser 500ms-2s o la conexión se interrumpe. Aplicaciones de educación offline, diagnóstico médico en zonas remotas, o logística en zonas con cobertura deficiente son casos donde el edge no es optimización sino habilitador. WebLLM y MediaPipe permiten incluso correr modelos pequeños directamente en el navegador con WebGPU, sin instalar nada.",
+              "analogia": "El edge computing con IA es como tener un médico de familia en tu barrio vs tener que ir siempre al hospital central de la ciudad. El médico local resuelve el 80% de los casos de forma inmediata, con privacidad total y sin importar si hay tráfico. Para los casos complejos, sí necesitas el hospital. El hospital (cloud) tiene especialistas y equipos avanzados, pero no tiene sentido ir allá para pedir una aspirina. La clave es saber qué casos puede resolver el médico local y cuándo escalar.",
+              "ejemplo_malo": "Una startup colombiana de salud rural decide usar edge AI para diagnóstico de imágenes médicas. Despliegan un modelo Llama 3.2 Vision 3B en tablets de los promotores de salud. El modelo tiene 65% de accuracy en la tarea específica vs 94% del modelo cloud. Sin validación clínica adecuada, los promotores confían en el modelo edge para decisiones que requieren el 94% de accuracy del modelo mayor. Resultado: diagnosis incorrectos con consecuencias graves. El error fue usar edge donde la capacidad del modelo local era insuficiente para la criticidad de la tarea.",
+              "ejemplo_bueno": "Una empresa de logística en Colombia despliega edge AI en sus camiones de reparto para optimización de rutas en tiempo real. En zonas urbanas con buena conectividad, el sistema usa la API cloud para rutas óptimas con datos de tráfico en tiempo real. Cuando el camión entra a zona rural sin señal, el modelo edge (Phi-3 Mini corriendo en un mini PC con GPU integrada) continúa funcionando con mapas offline y datos de tráfico cacheados. La aplicación funciona offline sin interrupción. La arquitectura híbrida garantiza la mejor experiencia según la conectividad disponible.",
+              "por_que_importa": "El edge AI está redefiniendo dónde y cómo se ejecuta la inteligencia artificial. Para developers en LATAM, abre posibilidades en mercados con conectividad deficiente que antes eran inaccesibles. Para productos de consumo, la privacidad 'los datos nunca salen del dispositivo' es un diferenciador competitivo creciente. Y para aplicaciones industriales críticas (manufactura, salud, infraestructura), la baja latencia y la operación offline son requisitos no negociables que solo el edge puede satisfacer.",
+              "tip_profesional": "Empieza explorando edge AI con Ollama en tu laptop: `ollama pull llama3.2:3b` y tendrás un LLM local corriendo en minutos. Para mobile, MediaPipe LLM Inference API de Google es el punto de entrada más accesible para Android e iOS. El patrón arquitectónico correcto es 'edge-first con fallback a cloud': define qué tareas puede hacer el modelo local con suficiente calidad y solo escala al cloud cuando la tarea supera esa capacidad."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la principal razón para usar edge AI en una aplicación de diagnóstico agrícola para zonas rurales de Colombia con conectividad intermitente?",
+                "opciones": [
+                  "Los modelos edge son más precisos que los modelos cloud para imágenes agrícolas",
+                  "La aplicación debe funcionar cuando no hay conexión a internet, lo cual es frecuente en zonas rurales",
+                  "Los modelos edge son más baratos porque no pagan por tokens procesados",
+                  "Los reguladores colombianos exigen que los datos agrícolas se procesen localmente"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "En zonas rurales de LATAM, la conectividad a internet es frecuentemente intermitente o inexistente. Una aplicación que depende de una API cloud para funcionar simplemente no sirve si el agricultor está en campo abierto sin señal. El edge AI convierte esto de un bloqueante a un caso de uso habilitado: el modelo corre localmente en el dispositivo del agricultor, procesa la foto del cultivo sin necesitar internet, y da una respuesta en milisegundos. El costo es una ventaja secundaria real, y la precisión es típicamente menor en modelos edge, no mayor. No existe (hasta 2026) una regulación específica colombiana que exija procesamiento local de datos agrícolas.",
+                "concepto_reforzado": "Edge AI como habilitador para casos de uso en zonas con conectividad deficiente o inexistente"
+              },
+              {
+                "pregunta": "¿Qué chip de Apple incluye Neural Engine capaz de correr modelos de IA directamente en el dispositivo?",
+                "opciones": [
+                  "Intel Core i9, que tiene unidades de procesamiento vectorial especializadas",
+                  "Apple Silicon (M1/M2/M3/M4) con Neural Engine de 15-35 TOPS integrado",
+                  "NVIDIA RTX 4090, disponible en los MacBook Pro de alta gama",
+                  "Qualcomm Snapdragon, exclusivo de dispositivos Mac con conectividad celular"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Apple Silicon (familia M1, M2, M3, M4) incluye un Neural Engine dedicado diseñado específicamente para inferencia de redes neuronales. El M1 tiene 16 TOPS, el M2 15.8 TOPS mejorado en eficiencia, el M3 y M4 llegan a 35+ TOPS. Esta potencia permite correr modelos de lenguaje de hasta 7-13B parámetros de manera eficiente y con bajo consumo energético. Herramientas como Ollama se optimizaron específicamente para Apple Silicon usando el framework MLX de Apple. Los Intel Core i9 tienen capacidades limitadas para IA. NVIDIA RTX 4090 es una GPU de escritorio de alto rendimiento que no está en laptops Mac. Snapdragon es de Qualcomm para dispositivos Android, no Apple.",
+                "concepto_reforzado": "Apple Silicon como plataforma de edge AI para modelos de lenguaje en laptops y dispositivos móviles Apple"
+              },
+              {
+                "pregunta": "Una fábrica colombiana necesita detectar defectos en una línea de producción que opera a 200 piezas por minuto. ¿Por qué edge AI es preferible a cloud AI aquí?",
+                "opciones": [
+                  "Los modelos de visión industriales son exclusivos de hardware edge y no están disponibles como APIs",
+                  "La latencia de red haría que la respuesta llegue demasiado tarde para detener la línea antes de que pasen piezas defectuosas",
+                  "Los reguladores de manufactura colombianos prohíben enviar imágenes de producción a servidores externos",
+                  "El cloud AI no puede procesar imágenes industriales de alta resolución por limitaciones de tamaño"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "A 200 piezas por minuto, una pieza pasa cada 300 milisegundos. Si el sistema de detección tarda 200-400ms (latencia típica de una API cloud incluyendo red + procesamiento) para dar una respuesta, la pieza defectuosa ya habrá pasado el punto de control antes de que llegue la señal para detener o desviar. El edge AI con hardware como NVIDIA Jetson puede detectar defectos en 5-20ms, lo cual sí permite una respuesta en tiempo real. Este tipo de aplicación industrial crítica donde el tiempo de respuesta se mide en milisegundos y no puede tolerar interrupciones de red es el caso canónico para edge AI. No existen las restricciones regulatorias mencionadas en las otras opciones para este contexto.",
+                "concepto_reforzado": "Latencia determinística como requisito industrial que solo el edge puede garantizar"
+              },
+              {
+                "pregunta": "¿Qué herramienta permite correr modelos LLM como Llama localmente en una laptop sin configuración compleja?",
+                "opciones": [
+                  "Docker Desktop, que containeriza cualquier modelo de Hugging Face automáticamente",
+                  "Ollama, que simplifica la descarga y ejecución de modelos LLM en local con un solo comando",
+                  "Visual Studio Code con la extensión de IA que incluye modelos locales embebidos",
+                  "NVIDIA CUDA Toolkit, que se necesita instalar antes de correr cualquier modelo local"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Ollama es una herramienta diseñada específicamente para simplificar el uso de LLMs localmente. Con `ollama pull llama3.2:3b` descargas el modelo y con `ollama run llama3.2:3b` lo ejecutas, todo desde la terminal. Además expone una API local en localhost:11434 compatible con la API de OpenAI, lo que permite usarla con LiteLLM u otras herramientas sin modificar el código. Está optimizada para Apple Silicon (usa MLX), NVIDIA GPUs (CUDA), y CPU. Docker Desktop es una herramienta de containerización general que puede usarse para IA pero no simplifica el proceso de la misma manera. VS Code no incluye modelos locales embebidos. CUDA Toolkit es necesario para GPU NVIDIA pero no es suficiente por sí solo para correr un LLM.",
+                "concepto_reforzado": "Ollama como herramienta de entrada para edge AI en laptops de desarrollo"
+              },
+              {
+                "pregunta": "¿Cuál es la principal limitación de los modelos edge comparados con modelos cloud para tareas complejas?",
+                "opciones": [
+                  "Los modelos edge son más lentos porque el hardware de dispositivo es menos potente que los data centers",
+                  "Los modelos edge son significativamente más pequeños (1B-13B parámetros) y menos capaces que los modelos cloud de frontera",
+                  "Los modelos edge requieren conexión a internet para descargar los pesos del modelo en cada sesión",
+                  "Los modelos edge no pueden procesar texto, solo imágenes y voz"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La limitación fundamental del edge AI es el tamaño del modelo que puede correr en hardware de dispositivo. Un smartphone o laptop puede correr modelos de 1B-7B parámetros razonablemente. Con hardware especializado (Apple M4 Max, NVIDIA Jetson) se puede llegar a 13B-30B. Pero GPT-4o, Claude Sonnet, y Gemini Pro son modelos de 70B-1T+ parámetros corriendo en clusters de GPUs de data center. Esta diferencia de escala se traduce en capacidad significativamente menor para razonamiento complejo, código avanzado, análisis profundo, o tareas que requieren comprensión matizada. Para tareas simples (clasificación, respuestas FAQ, análisis de imagen básico), los modelos edge son suficientes y a veces preferibles. La velocidad de respuesta en edge puede ser muy buena, especialmente para modelos pequeños en hardware optimizado.",
+                "concepto_reforzado": "Capacidad reducida de modelos edge vs cloud como trade-off fundamental en la decisión arquitectónica"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una ONG colombiana quiere crear una aplicación de diagnóstico nutricional para comunidades rurales en el Pacífico colombiano. Los promotores de salud usan smartphones Android (Snapdragon 8 Gen 1, 8GB RAM). La app toma una foto de los alimentos en el plato y estima el perfil nutricional. El 70% del tiempo los promotores están en zonas sin conexión a internet. Los análisis nutricionales básicos (identificar alimento, estimar porción) son tareas de dificultad media. Los casos complejos (diagnósticos de desnutrición severa) requieren consultar con médicos en ciudad.",
+              "instruccion": "Diseña la arquitectura edge-cloud para esta aplicación. Determina: (1) qué tareas van al modelo edge vs cloud, (2) qué hardware/modelo usarías para edge, (3) cómo manejas la sincronización cuando se recupera la conexión, (4) qué limitación de accuracy debes comunicar claramente a los promotores.",
+              "input_malo": "Usar solo un modelo cloud que sea el mejor disponible para dar la mejor accuracy posible. Si no hay internet, la app simplemente no funciona.",
+              "pista": "¿Qué porcentaje de los casos de uso puede resolver el modelo edge con suficiente calidad? ¿Qué casos REQUIEREN la capacidad del cloud? El Snapdragon 8 Gen 1 tiene 26 TOPS en su NPU — ¿qué modelos entran en ese hardware?",
+              "solucion": "Arquitectura híbrida edge-first: (1) EDGE para el 70%+ de tareas: identificación de alimentos comunes colombianos/pacíficos y estimación de porciones con MobileNet o EfficientNet-Lite (modelos de visión de 10-50MB, 90%+ accuracy en alimentos comunes, corren en <200ms en Snapdragon 8 Gen 1). Datos cacheados de tablas nutricionales locales. (2) CLOUD para casos que lo requieren: alimentos no reconocidos por el modelo local, casos de potencial desnutrición severa (escala a médico), generación de reportes detallados. Se encola la solicitud y se procesa cuando hay conexión. (3) SINCRONIZACIÓN: arquitectura offline-first con cola local. Los análisis realizados offline se sincronizan automáticamente al recuperar conexión. Los datos de seguimiento nutricional por paciente se guardan localmente y se sincronizan con el servidor central. (4) COMUNICACIÓN de limitaciones: la app debe mostrar claramente 'Análisis offline — precisión estimada para alimentos comunes. Para casos complejos, conectarse a internet.'",
+              "criterios_de_exito": [
+                "Propone arquitectura híbrida edge-first que funciona sin internet para el caso de uso principal",
+                "Especifica tipo de modelo para edge (visión ligera como MobileNet/EfficientNet, no un LLM grande)",
+                "Define claramente qué casos escalan al cloud y por qué (limitación de capacidad del modelo local)",
+                "Incluye estrategia de sincronización offline-first para cuando se recupera la conexión"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Optimización de costos: hacer más con menos",
+              "por_que_importa_despues": "El edge computing es una estrategia de optimización, pero no la única. La siguiente lección explora el arsenal completo de técnicas para reducir costos de IA sin sacrificar calidad: desde caché inteligente y selección del modelo correcto para cada tarea, hasta técnicas de compresión como cuantización y destilación de modelos. Hacer más con menos es la habilidad central del AI engineer pragmático."
             }
           }
         },
