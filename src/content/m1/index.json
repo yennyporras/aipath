@@ -5280,33 +5280,98 @@
         },
         {
           "id": "m1-b6-l3",
-          "titulo": "Herramientas no-code de IA: Make, Zapier, n8n",
+          "titulo": "Gemini y el ecosistema Google AI",
           "bloque": 6,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Google lleva más de dos décadas siendo la empresa de IA más investigadora del mundo. Antes de que ChatGPT existiera, Google inventó el Transformer —la arquitectura en la que se basan todos los LLMs modernos, publicada en el paper 'Attention is All You Need' en 2017. También desarrolló BERT, T5, y PaLM. Pero la ironía histórica es que OpenAI tomó esa investigación, la comercializó más rápido, y Google llegó al mercado de LLMs consumidor con retraso. Bard (el primer chatbot de Google) tuvo un lanzamiento accidentado en 2023. Gemini, el rebrand y modelo sucesor, es la apuesta de Google para recuperar el terreno perdido.\n\nEn 2026, la familia Gemini incluye: Gemini Flash (ultra-rápido y económico, el modelo más barato del mercado entre los top-tier), Gemini Pro (uso general, comparable a GPT-4o y Claude Sonnet), y Gemini Ultra (máxima capacidad, disponible en Gemini Advanced). Lo que distingue a Gemini arquitectónicamente es que fue diseñado desde cero como modelo nativo multimodal —no como un modelo de texto al que se le añadió visión, sino como un modelo que procesa texto, imagen, audio y video de forma integrada desde el principio.\n\nLas fortalezas diferenciales de Google Gemini son cuatro. Primero, la integración con Google Workspace: Gmail, Docs, Sheets, Drive y Meet tienen funcionalidad de Gemini nativa en 2026. Para empresas que viven en Google Workspace —muy común en startups y pymes latinoamericanas— la adopción es directa. Segundo, Google Search y datos en tiempo real: a diferencia de Claude y GPT-4o que tienen fecha de corte de conocimiento, Gemini tiene acceso a Google Search integrado, lo que le permite responder con información actualizada. Esto es crítico para casos de uso donde la información cambia rápidamente: precios de mercado, noticias recientes, regulaciones actualizadas. Tercero, Gemini Flash como modelo más económico del segmento premium: en 2026, Flash es notablemente más barato por token que los equivalentes de OpenAI y Anthropic con calidad comparable para tareas estándar. Cuarto, ventana de contexto de 1 millón de tokens en Gemini 1.5 Pro —la más grande disponible comercialmente en 2026, equivalente a aproximadamente 750,000 palabras o el contenido completo de la trilogía del Señor de los Anillos.\n\nLas limitaciones de Gemini también son reales. La consistencia de respuestas ha sido más variable que Claude o GPT-4o en tareas de razonamiento estructurado. La disponibilidad de la API en LATAM ha tenido interrupciones. La documentación para desarrolladores, aunque ha mejorado, sigue siendo menos madura que el ecosistema de OpenAI. Y Google DeepMind, la división de investigación, a veces genera expectativas con modelos de investigación (como AlphaCode) que no siempre están disponibles en la API pública inmediatamente.\n\nPara consultores en LATAM, Google Gemini tiene un caso de uso particular muy relevante: empresas que ya pagan Google Workspace Business o Enterprise obtienen créditos de Gemini incluidos en su suscripción. Esto hace que el costo marginal de adopción sea cero para esos clientes, un argumento económico difícil de superar.",
+              "analogia": "Google con Gemini es como el chef que inventó la receta pero perdió el restaurante a alguien que la ejecutó antes. Ahora está de vuelta con la cocina más equipada —su infraestructura de búsqueda y datos en tiempo real— que sus competidores no pueden replicar fácilmente.",
+              "ejemplo_malo": "Ignorar Gemini Flash para proyectos de alto volumen con presupuesto limitado solo porque 'Claude y GPT son los conocidos'. Flash puede ser 3-5× más barato que alternativas comparables para texto estándar.",
+              "ejemplo_bueno": "Para un cliente que necesita un chatbot que responda preguntas sobre noticias y regulaciones financieras actualizadas diariamente, recomendar Gemini Pro con acceso a Search porque los competidores tendrían información desactualizada.",
+              "por_que_importa": "Google tiene la infraestructura de datos más grande del mundo. Cuando Gemini accede a Search en tiempo real, no está haciendo una búsqueda web genérica: está accediendo al índice más completo y actualizado que existe. Para casos de uso donde la actualidad de la información importa, esa ventaja es difícil de compensar.",
+              "tip_profesional": "Para proyectos con Google Workspace ya instalado, siempre verifica si el cliente tiene el plan Business o Enterprise con Gemini incluido. Activar el asistente de IA en Gmail y Docs es una victoria rápida que genera valor inmediato sin costo adicional y abre la conversación para proyectos más ambiciosos."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué paper de investigación de Google, publicado en 2017, es la base arquitectónica de todos los LLMs modernos incluyendo Claude, GPT y Gemini?",
+                "opciones": [
+                  "PageRank: un nuevo algoritmo de búsqueda",
+                  "BERT: Pre-training of Deep Bidirectional Transformers",
+                  "Attention is All You Need, que presentó la arquitectura Transformer",
+                  "AlphaGo: Mastering the Game of Go"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El paper 'Attention is All You Need' (Vaswani et al., 2017), publicado por investigadores de Google Brain, introdujo la arquitectura Transformer que revolucionó el procesamiento de lenguaje natural. La innovación clave fue el mecanismo de 'atención' —un método para que el modelo aprenda qué partes del texto son relevantes para qué otras partes, sin necesitar procesar el texto secuencialmente como hacían las redes RNN anteriores. Esta arquitectura permitió el escalamiento masivo que hace posibles los LLMs modernos. La ironía histórica es que Google publicó este trabajo en acceso abierto, OpenAI lo usó para construir GPT, y Google llegó al mercado de chatbots con retraso. En 2026, toda la industria LLM —Claude, GPT-4o, Gemini, LLaMA— se basa en variantes del Transformer original.",
+                "concepto_reforzado": "Google como origen intelectual de los LLMs modernos"
+              },
+              {
+                "pregunta": "¿Cuál es la ventaja más única de Gemini respecto a Claude y GPT-4o en términos de acceso a información?",
+                "opciones": [
+                  "Tiene el modelo con más parámetros del mercado",
+                  "Acceso integrado a Google Search para responder con información en tiempo real y actualizada",
+                  "Puede procesar archivos de Excel sin conversión",
+                  "No tiene límite de tokens por consulta"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Claude y GPT-4o tienen una fecha de corte de conocimiento —el punto hasta donde llegaron los datos de entrenamiento. Para preguntas sobre eventos recientes, regulaciones actualizadas o precios de mercado, estos modelos o no saben la respuesta o pueden alucinar información desactualizada. Gemini con acceso a Google Search resuelve esto estructuralmente: puede buscar en tiempo real antes de responder. La diferencia no es trivial para casos de uso empresariales: un asistente jurídico que necesita citar jurisprudencia reciente, un analista financiero que necesita precios actuales de materias primas, o un equipo de marketing que necesita información sobre un competidor que acaba de lanzar un producto. En estos contextos, la 'freshness' de la información es tan importante como la calidad del razonamiento.",
+                "concepto_reforzado": "Acceso a información en tiempo real como diferenciador de Gemini"
+              },
+              {
+                "pregunta": "¿Por qué Gemini Flash es relevante para proyectos de IA con presupuesto limitado en LATAM?",
+                "opciones": [
+                  "Porque es el único modelo que funciona en español",
+                  "Porque es open source y no tiene costo de API",
+                  "Porque en 2026 es notablemente más económico por token que alternativas comparables en el segmento premium",
+                  "Porque no requiere conexión a internet para funcionar"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Gemini Flash ocupa un espacio estratégico en el mercado: es un modelo del mismo fabricante que Gemini Ultra/Pro pero diseñado específicamente para minimizar latencia y costo por token. En benchmarks de 2026, Flash procesa tareas estándar de comprensión de texto, resumen y Q&A a calidad comparable con GPT-4o Mini o Claude Haiku, pero frecuentemente a menor precio. Para proyectos en LATAM con restricciones presupuestarias reales —startups, pymes, proyectos de impacto social—, la diferencia de costo puede determinar si un proyecto es financieramente viable o no. El patrón recomendado es: evaluar primero con Flash, escalar a Pro/Ultra solo si la diferencia de calidad en el caso de uso específico lo justifica.",
+                "concepto_reforzado": "Gemini Flash como opción económica en el segmento premium"
+              },
+              {
+                "pregunta": "¿Cuál es el caso de uso más directo para Gemini en empresas que ya usan Google Workspace?",
+                "opciones": [
+                  "Reemplazar todas sus aplicaciones por productos de Google",
+                  "Activar funcionalidades de Gemini integradas en Gmail, Docs y Drive sin costo adicional en planes Business/Enterprise",
+                  "Migrar sus datos a Google Cloud para reducir costos",
+                  "Usar Gemini para administrar su infraestructura de servidores"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Esta es la victoria fácil más frecuente en consultoría de IA para empresas latinoamericanas: muchas pymes y startups ya pagan Google Workspace Business o Enterprise y tienen Gemini incluido sin saberlo. Activar 'Gemini for Workspace' en Gmail (redacción asistida, resumen de hilos), en Docs (generación de contenido, edición), en Sheets (fórmulas en lenguaje natural) y en Drive (búsqueda semántica) es un proceso de administración de minutos, no un proyecto de implementación. El impacto inmediato en productividad —reducción de tiempo en redacción de correos, resumen de documentos— es medible en semanas. Esta victoria rápida construye confianza del cliente para proyectos de IA más complejos y justifica tu valor como consultor antes de proponer inversiones mayores.",
+                "concepto_reforzado": "Activación de Gemini for Workspace como victoria rápida"
+              },
+              {
+                "pregunta": "¿Qué hace única a la ventana de contexto de Gemini 1.5 Pro respecto a los competidores en 2026?",
+                "opciones": [
+                  "Es la única que soporta idiomas latinoamericanos",
+                  "Tiene 1 millón de tokens — la más grande disponible comercialmente, equivalente a la trilogía completa del Señor de los Anillos",
+                  "No tiene límite de tokens si pagas el plan enterprise",
+                  "Procesa tokens a mayor velocidad que los competidores"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La ventana de contexto de 1 millón de tokens de Gemini 1.5 Pro es una ventaja técnica concreta que habilita casos de uso que ningún otro modelo puede hacer en una sola llamada. Para dimensionarlo: 1 millón de tokens son aproximadamente 750,000 palabras. Eso es la grabación completa de 10 horas de reuniones transcritas, toda la base de conocimiento de una empresa mediana, o el código fuente completo de una aplicación empresarial. En contraste, Claude Opus tiene hasta 200,000 tokens y GPT-4o hasta 128,000 en 2026. El caso de uso paradigmático: una empresa de servicios financieros quiere que el modelo analice 5 años de transacciones de un cliente para detectar patrones anómalos. Con ventanas de contexto menores, necesitas fragmentar y procesar en partes; con 1M tokens, puedes enviar todo y obtener análisis global.",
+                "concepto_reforzado": "Ventana de contexto de 1M tokens como ventaja técnica de Gemini"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una startup de agritech en Cali con 12 personas te contacta. Usan Google Workspace (plan Business Starter). Quieren dos cosas: (1) un asistente que responda preguntas de sus agricultores sobre precios de mercado de productos agrícolas actualizados diariamente, y (2) ayuda para redactar más rápido sus reportes de campo en Google Docs. Presupuesto disponible para IA: $200 USD/mes.",
+              "instruccion": "Diseña una solución con Google Gemini para los dos casos de uso. Indica: (1) qué activarías sin costo adicional usando lo que ya tienen, (2) qué API de Gemini usarías para el asistente de precios y por qué (Flash vs Pro), y (3) por qué Gemini es la elección correcta aquí sobre Claude o GPT-4o.",
+              "input_malo": "Les recomendaría ChatGPT Enterprise porque es la solución más profesional y los agricultores necesitan la mejor IA disponible.",
+              "pista": "Recuerda: Google Workspace Business Starter incluye funcionalidades básicas de Gemini. El asistente de precios necesita información en tiempo real. Flash es más barato que Pro. El presupuesto de $200/mes es el factor limitante.",
+              "solucion": "Solución en dos partes: (1) SIN COSTO ADICIONAL: Activar Gemini for Workspace en Google Docs. El equipo puede usar 'Ayúdame a escribir' en Docs para generar borradores de reportes de campo a partir de notas crudas. Esto está incluido en el plan Business Starter que ya pagan. (2) ASISTENTE DE PRECIOS: Gemini Flash API con acceso a Search habilitado. La razón de Gemini Flash: el caso de uso es preguntas de texto estándar sobre precios, no razonamiento complejo — Flash maneja esto a menor costo. La razón de Google Search: los precios agrícolas cambian diariamente, Claude y GPT-4o responderían con precios de su fecha de corte de entrenamiento. Con $200/mes, Flash puede procesar ~50 millones de tokens de entrada — más que suficiente para cientos de consultas diarias de agricultores. (3) Ventaja sobre Claude/GPT: ninguno tiene acceso a precios en tiempo real sin una integración de búsqueda externa adicional, lo que complicaría la arquitectura y elevaría el costo.",
+              "criterios_de_exito": [
+                "Identifica y activa lo que está disponible sin costo adicional en Workspace",
+                "Elige Gemini Flash (no Pro) para el asistente con justificación de costo",
+                "Explica por qué el acceso a Search en tiempo real es crítico para precios agrícolas"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Llama y la apuesta open source de Meta",
+              "por_que_importa_despues": "Mientras Claude, GPT y Gemini son modelos propietarios con API de pago, Meta tomó una decisión radical: hacer sus modelos de código abierto. Entender esa apuesta y sus implicaciones cambia cómo piensas en costos, privacidad y control."
             }
           }
         },
