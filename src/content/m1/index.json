@@ -8444,30 +8444,100 @@
         },
         {
           "id": "m1-b10-l6",
-          "titulo": "Manufactura: quality control y predictive maintenance",
+          "titulo": "IA en gobierno y sector público",
           "bloque": 10,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "El gobierno y el sector público son quizás el dominio más complejo para aplicar IA: las decisiones afectan a ciudadanos que no pueden elegir un proveedor diferente, los errores tienen consecuencias en derechos fundamentales, y la rendición de cuentas democrática exige niveles de transparencia que ningún sector privado necesita. Y sin embargo, el potencial de eficiencia y mejora de servicios es enorme.\n\nLos casos de uso que están funcionando bien son los de bajo riesgo: atención ciudadana y consultas de trámites. Los chatbots de IA para resolver preguntas sobre documentos, requisitos, fechas y procesos están reduciendo tiempos de espera en ventanillas y call centers de entidades públicas. El Bot de GovTech Colombia para consultas de la DIAN, los chatbots de Secretarías de Hacienda distritales, y los sistemas de respuesta automatizada de SURA para trámites de EPS son ejemplos de IA pública de bajo riesgo con alto volumen de servicio. La clave: estas herramientas informan, no deciden — el ciudadano siempre puede hablar con un funcionario.\n\nLas aplicaciones de mayor riesgo son las de decisiones sobre ciudadanos. Sistemas de scoring de riesgo para concesión de beneficios sociales, algoritmos de vigilancia para detección de fraude tributario, y herramientas de evaluación de solicitudes de visas o permisos son áreas donde la IA ya se usa en algunos países, con controversias significativas. El problema central es el bias algorítmico: si el modelo fue entrenado con datos históricos que reflejan discriminaciones pasadas (por raza, género, estrato, zona geográfica), el sistema automatiza y escala esa discriminación. Un estudio de investigadores de la Universidad de los Andes sobre scoring de riesgo en el sistema SISBEN identificó correlaciones problemáticas con raza y género que el algoritmo perpetuaba.\n\nEn Colombia específicamente, hay iniciativas de govtech que están generando resultados: el Sistema de Alertas Tempranas de la Contraloría General usa ML para detectar patrones de posible corrupción en contratos públicos. La Agencia Nacional de Contratación (Colombia Compra Eficiente) explora IA para detectar irregularidades en Secop. La Procuraduría usa NLP para monitorear noticias y detectar situaciones de riesgo de derechos humanos. Estos usos de IA para supervisión y control (no para tomar decisiones directas sobre ciudadanos) tienen menos controversia ética.\n\nEl marco regulatorio de IA en sector público está emergiendo. La Unión Europea, con su EU AI Act (2024), clasifica los usos de IA gubernamental en categorías de riesgo: alto riesgo (sistemas de justicia penal, beneficios sociales) requieren auditorías, explicabilidad y supervisión humana obligatoria. Colombia está en proceso de desarrollar su marco regulatorio de IA desde 2023, con el CONPES de IA como punto de partida. Para developers y consultores trabajando con entidades públicas, entender este marco no es opcional.",
+              "analogia": "La IA en gobierno es como automatizar los procedimientos de un banco central: puede ahorrar enormes recursos y reducir tiempos, pero si el algoritmo tiene un error, afecta a millones de personas simultáneamente en lugar de a un cliente individual. La velocidad y escala que son ventajas en el sector privado se convierten en amplificadores de riesgo cuando hablamos de derechos de ciudadanos. Por eso el estándar de escrutinio debe ser más alto, no más bajo.",
+              "ejemplo_malo": "Una alcaldía colombiana implementa un sistema de IA para priorizar a quiénes recibir un subsidio de vivienda basado en múltiples variables socioeconómicas. El modelo fue entrenado con datos históricos de adjudicaciones pasadas que tenían sesgo de género (históricamente los hombres recibían más subsidios de ciertos tipos). El sistema automatiza este sesgo, rechazando sistemáticamente más solicitudes de mujeres jefas de hogar. La alcaldía ni siquiera sabe que esto está pasando porque el modelo es una caja negra sin auditoría. Cuando un periodista hace el análisis, el escándalo político es enorme y el programa se suspende.",
+              "ejemplo_bueno": "La Secretaría de Movilidad de Bogotá implementa IA para optimizar los tiempos de los semáforos en tiempo real basado en datos de cámaras y sensores de tráfico, reduciendo el tiempo promedio de desplazamiento en 12% en corredores críticos. El sistema es completamente transparente: el algoritmo es auditado públicamente, los datos usados son anonimizados, y las decisiones del sistema (cuánto dura cada ciclo semafórico) son revisadas por ingenieros de tránsito mensualmente. No hay decisiones sobre derechos individuales de ciudadanos — solo optimización logística con datos agregados. Este es el tipo de aplicación de IA gubernamental con alta aceptabilidad pública y bajo riesgo ético.",
+              "por_que_importa": "El gobierno colombiano es uno de los mayores empleadores y compradores de servicios tecnológicos del país. Las licitaciones de gobtech son oportunidades reales para empresas de IA de todos los tamaños. Entender el marco ético y regulatorio no es solo 'lo correcto' — es un requisito para ganar contratos y mantenerlos. Los escándalos de sesgo algorítmico en sistemas gubernamentales generan consecuencias políticas y legales que ningún proveedor tecnológico puede ignorar.",
+              "tip_profesional": "Si trabajas con entidades públicas en proyectos de IA, desde el inicio documenta: (1) qué datos usaste para entrenar, (2) cómo probaste por sesgo antes del despliegue, (3) cómo el sistema puede ser auditado por terceros, (4) qué mecanismo tiene el ciudadano para impugnar una decisión del sistema. Este nivel de documentación no solo es éticamente correcto — te protege legalmente cuando el proyecto es auditado por la Contraloría o cuestionado políticamente."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué los estándares éticos para IA en sector público deben ser más altos que en sector privado?",
+                "opciones": [
+                  "Porque el gobierno tiene más presupuesto y puede permitirse implementaciones más costosas y cuidadosas",
+                  "Porque los ciudadanos afectados no pueden elegir un proveedor alternativo y los errores pueden violar derechos fundamentales a escala masiva",
+                  "Porque los reguladores monitorean más estrictamente el sector público que el privado",
+                  "Porque los empleados del gobierno son menos capacitados técnicamente y necesitan más supervisión"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "En el sector privado, un usuario afectado por un sistema de IA defectuoso o sesgado puede dejar de usar el servicio, quejarse, o elegir un competidor. Esta presión de mercado genera (imperfectamente) incentivos para mejorar. Un ciudadano afectado por un sistema de IA gubernamental que determina si recibe un subsidio, si le conceden una visa, o si es identificado como riesgo de fraude tributario no tiene esa opción — el gobierno tiene monopolio sobre esos servicios. Además, los errores se escalan a toda la población simultáneamente en lugar de a clientes individuales. La asimetría de poder entre el Estado y el ciudadano, combinada con la posibilidad de que los errores violen derechos constitucionales, justifica estándares de escrutinio, transparencia y rendición de cuentas significativamente más altos.",
+                "concepto_reforzado": "Asimetría de poder ciudadano-Estado como razón para mayor escrutinio ético de IA gubernamental"
+              },
+              {
+                "pregunta": "¿Qué es el bias algorítmico en el contexto de sistemas de IA gubernamental y cómo se origina?",
+                "opciones": [
+                  "Errores de programación en el código que hacen que el sistema tome decisiones incorrectas aleatoriamente",
+                  "Cuando el modelo fue entrenado con datos históricos que reflejan discriminaciones pasadas, automatizando y escalando esa discriminación",
+                  "La preferencia de los algoritmos por personas con mayor nivel educativo que proveen mejor calidad de datos",
+                  "La tendencia de los sistemas de IA a favorecer a usuarios que interactúan más frecuentemente con el sistema"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El bias algorítmico es uno de los problemas más serios y menos obvios de la IA en contextos de alto riesgo. Si un sistema fue entrenado con decisiones históricas humanas (qué solicitudes de subsidio se aprobaban, qué contratos se concedían, a quién se investigaba por fraude), y esas decisiones históricas reflejaban sesgos de los humanos que las tomaban (discriminación racial, de género, geográfica o de clase), el modelo aprende esos patrones como si fueran correctos. Luego los aplica a nuevas solicitudes a escala y velocidad que ningún proceso humano podría igualar. El resultado es discriminación sistémica automatizada que puede ser más difícil de detectar y corregir que la discriminación humana, porque el modelo se percibe como 'objetivo'. El caso del SISBEN en Colombia es un ejemplo local documentado de este fenómeno.",
+                "concepto_reforzado": "Origen del bias algorítmico en datos históricos discriminatorios y su amplificación en sistemas gubernamentales"
+              },
+              {
+                "pregunta": "¿Qué tipo de aplicación de IA gubernamental tiene menor riesgo ético y mayor aceptabilidad pública?",
+                "opciones": [
+                  "Sistemas que deciden automáticamente la concesión de beneficios sociales para reducir burocracia",
+                  "Herramientas de vigilancia masiva de ciudadanos para prevenir crímenes antes de que ocurran",
+                  "Optimización de servicios logísticos y de infraestructura (semáforos, rutas, mantenimiento) con datos agregados anonimizados",
+                  "Algoritmos de priorización en listas de espera de hospitales para decisiones de triage"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Las aplicaciones de IA gubernamental con menor riesgo ético son aquellas que: (1) operan sobre datos agregados anonimizados, no sobre perfiles individuales de ciudadanos, (2) optimizan procesos logísticos o de infraestructura, no toman decisiones sobre derechos o beneficios de personas específicas, (3) son transparentes y auditables públicamente, y (4) no tienen consecuencias irreversibles para individuos. La optimización de semáforos en tiempo real cumple todos estos criterios: los datos son de tráfico agregado, nadie pierde un derecho si el semáforo cambia su ciclo, y el resultado (menos congestión) es un bien público visible. Por contraste, decisiones sobre beneficios sociales, vigilancia predictiva, y triage médico involucran juicios sobre individuos con consecuencias en sus derechos y vida, requiriendo los estándares más altos.",
+                "concepto_reforzado": "Clasificación de riesgo de aplicaciones de IA gubernamental según impacto en derechos individuales"
+              },
+              {
+                "pregunta": "¿Qué hace el Sistema de Alertas Tempranas de la Contraloría General de Colombia con IA?",
+                "opciones": [
+                  "Monitorea en tiempo real las redes sociales de funcionarios públicos buscando signos de corrupción",
+                  "Usa ML para detectar patrones de posible corrupción en contratos públicos del Secop",
+                  "Automatiza la investigación y sanción de funcionarios acusados de malversación de fondos",
+                  "Predice qué ciudadanos tienen mayor probabilidad de cometer fraude tributario basado en su historial"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El Sistema de Alertas Tempranas de la Contraloría General de la República de Colombia aplica ML para analizar datos del Sistema Electrónico de Contratación Pública (Secop) — la base de datos de todos los contratos públicos del país — buscando patrones anómalos que puedan indicar irregularidades: contratos fraccionados para evadir umbrales de licitación, concentración sospechosa de contratos en un mismo proveedor, precios significativamente alejados de valores de mercado, adjudicaciones a empresas recién creadas, etc. Este es un uso de IA para supervisión y control (identificar casos que merecen investigación humana) en lugar de para tomar decisiones directas sobre ciudadanos o funcionarios. La investigación y la sanción siguen siendo procesos humanos con todas las garantías del debido proceso. Este patrón de 'IA como herramienta de detección, humano como decisor' es el modelo más apropiado para contextos de alto riesgo.",
+                "concepto_reforzado": "IA para supervisión de contratación pública como modelo de uso gubernamental responsable en Colombia"
+              },
+              {
+                "pregunta": "¿Qué cuatro elementos debe documentar un proveedor de IA al trabajar con entidades públicas colombianas para protección ética y legal?",
+                "opciones": [
+                  "Costo total del proyecto, tiempo de desarrollo, número de usuarios y versión del modelo de IA usado",
+                  "Datos de entrenamiento usados, pruebas de sesgo realizadas, mecanismo de auditoría por terceros, y proceso de impugnación por el ciudadano",
+                  "Nombre del proveedor de cloud, acuerdos de confidencialidad firmados, seguros de responsabilidad, y garantías de uptime",
+                  "Curriculum vitae del equipo técnico, certificaciones ISO del proveedor, referencias de otros proyectos públicos, y código fuente completo"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Estos cuatro elementos forman la base de la gobernanza responsable de IA en sector público. (1) Qué datos se usaron para entrenar: permite identificar si el dataset podría tener sesgos históricos y bajo qué condiciones de privacidad se obtuvieron. (2) Cómo se probó el sesgo antes del despliegue: demuestra que se hizo un análisis proactivo de equidad, por ejemplo midiendo tasas de aprobación/rechazo por grupo demográfico en el set de prueba. (3) Cómo puede ser auditado por terceros: la Contraloría o un investigador externo debe poder revisar el funcionamiento del sistema, no solo confiar en el proveedor. (4) Cómo puede impugnar el ciudadano: el derecho al debido proceso exige que una decisión automatizada desfavorable pueda ser cuestionada ante un funcionario humano. Estos no son requisitos burocráticos vacíos — son protecciones contra los daños reales que los sistemas de IA pueden causar en contextos gubernamentales.",
+                "concepto_reforzado": "Documentación de gobernanza de IA gubernamental: datos, sesgo, auditoría e impugnación como componentes obligatorios"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una alcaldía de tamaño mediano en Colombia (ciudad de 400,000 habitantes) quiere implementar IA para mejorar dos servicios: (1) su centro de atención ciudadana (actualmente recibe 3,000 llamadas/día sobre trámites, con tiempo de espera promedio de 18 minutos), y (2) la priorización de obras de mantenimiento vial (tienen 2,000 km de vías y no pueden arreglar todo a la vez, actualmente la priorización es manual por criterio político). Presupuesto: $80,000 USD.",
+              "instruccion": "Evalúa el nivel de riesgo ético de cada proyecto y diseña la solución con los controles apropiados para cada nivel. ¿Cuál requiere más salvaguardas? ¿Qué documentación de gobernanza necesita cada uno?",
+              "input_malo": "Implementar un sistema de IA que también priorice quién recibe atención primero en el centro de atención basado en el historial del ciudadano — así los ciudadanos 'VIP' no esperan tanto.",
+              "pista": "¿Cuál de los dos proyectos toma decisiones sobre derechos individuales de ciudadanos? ¿Cuál opera sobre datos de infraestructura pública? La distinción define el nivel de riesgo y los controles necesarios.",
+              "solucion": "Análisis de riesgo: PROYECTO 1 (chatbot atención ciudadana): RIESGO MEDIO. Informa sobre trámites, no toma decisiones sobre derechos. Salvaguardas: (a) el bot siempre ofrece hablar con un funcionario, (b) disclaimer claro de que es IA, (c) métricas de satisfacción y escalados a humano monitoreadas mensualmente, (d) no almacena datos personales más allá de la sesión. Implementación: Claude API + WhatsApp Business + PQRS integrado. Costo: $25,000. Impacto estimado: reducción de tiempo de espera de 18 a 6 minutos para consultas FAQ (70% del volumen). PROYECTO 2 (priorización vial): RIESGO BAJO. Opera sobre datos de infraestructura, no sobre derechos ciudadanos individuales. Salvaguardas: (a) el modelo es auditado anualmente por ingenieros independientes, (b) el Concejo Municipal aprueba el plan de obras basado en el análisis (no lo decide el algoritmo solo), (c) los criterios del modelo son públicos. Implementación: modelo de scoring con variables: daño estructural (sensores/fotos drones), tráfico diario, número de accidentes, tiempo sin mantenimiento, costo-beneficio. ML básico (Gradient Boosting). Costo: $40,000. Presupuesto restante ($15,000): capacitación y cambio de gestión. El input_malo se rechaza explícitamente: priorizar ciudadanos por historial crea discriminación institucionalizada.",
+              "criterios_de_exito": [
+                "Distingue correctamente el nivel de riesgo de cada proyecto: chatbot (medio) vs priorización vial (bajo)",
+                "Define salvaguardas específicas apropiadas al nivel de riesgo de cada proyecto",
+                "Rechaza explícitamente el input_malo con justificación ética: priorizar ciudadanos por historial es discriminación",
+                "Asigna el presupuesto de forma realista entre los dos proyectos más capacitación"
+              ]
             },
+            "conexion": {
+              "siguiente_concepto": "Startups de IA en LATAM: casos reales 2026",
+              "por_que_importa_despues": "El sector público muestra los límites y responsabilidades de la IA cuando afecta a millones de personas. El siguiente contraste es el ecosistema emprendedor de LATAM: startups que están construyendo sobre IA con casos de uso específicos del contexto regional, con las ventajas y restricciones de operar en economías emergentes."
+            }
             "conexion": {
               "siguiente_concepto": "",
               "por_que_importa_despues": ""
