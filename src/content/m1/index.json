@@ -9260,30 +9260,100 @@
         },
         {
           "id": "m1-b11-l4",
-          "titulo": "Cómo construir tu portafolio de IA desde cero",
+          "titulo": "GitHub para AI Engineers: estrategia completa",
           "bloque": 11,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "GitHub es mucho más que un repositorio de código para un AI engineer: es tu CV técnico, tu herramienta de networking, y la plataforma donde los mejores empleadores y colaboradores del mundo buscan activamente talento. La mayoría de AI engineers subutilizan GitHub porque lo usan como storage de código en lugar de como plataforma de visibilidad profesional. Esta lección enseña la estrategia completa para maximizar tu presencia.\n\nEl perfil de GitHub como primera impresión: el README de tu perfil (archivo README.md en un repositorio con el mismo nombre que tu usuario) es lo primero que ven los visitantes. Un perfil de alto impacto incluye: quién eres en una oración, en qué te especializas en IA, tus proyectos más importantes con links directos, cómo contactarte, y tus contribuciones recientes relevantes. Muchos perfiles de GitHub tienen solo la foto y nada más — el README de perfil ya te diferencia de la mayoría.\n\nLa calidad de los repositorios importa más que la cantidad. Un employer que revisa tu GitHub quiere ver: (1) READMEs completos que expliquen qué hace el proyecto y por qué, (2) código organizado con estructura de directorios lógica, (3) commits con mensajes descriptivos (no 'fix', no 'update' — 'add RAG retrieval with semantic search for improved accuracy'), (4) tests cuando el proyecto los justifica, (5) requirements.txt o pyproject.toml para reproducibilidad. Los repositorios privados con muchos commits y los públicos sin README son señales negativas.\n\nLas contribuciones a proyectos open source de IA son el diferenciador más fuerte: contribuir a LangChain, LlamaIndex, Hugging Face Transformers, o cualquier proyecto de IA activo con más de 1,000 estrellas es una señal de que eres un contributor serio. No necesitas contribuciones grandes — incluso fixes de documentación, traducciones al español, o tests bien escritos son valorados. El proceso: fork → identifica un issue good-first-issue → implementa la solución → PR bien documentado. Una contribución aceptada a un proyecto relevante aparece permanentemente en tu historial y es inmediatamente verificable.\n\nEl grafo de contribuciones (el tablero verde de la pantalla principal de tu perfil) es visible y juzgado. No se trata de hacer commits vacíos para tener el tablero verde — se trata de que la consistencia de commits reales refleja hábito de trabajo. Un developer que hace commits semanales consistentes durante 6 meses demuestra disciplina. La estrategia: cuando trabajas en un proyecto, haz commits atómicos y frecuentes con mensajes descriptivos en lugar de un mega-commit al final.\n\nEstrategias de visibilidad adicionales: (1) Stardear y hacer watching en repositorios relevantes de IA te conecta con su comunidad. (2) Crear issues bien articulados en proyectos que usas (reportar bugs o proponer features con contexto claro) te hace visible ante los maintainers. (3) Responder preguntas en issues de otros users demuestra expertise. (4) GitHub Discussions en repositorios grandes es una comunidad activa de practitioners. (5) Crear tus propios proyectos con licencias permisivas (MIT) invita a otros a contribuir y amplifica tu visibilidad.\n\nPara el mercado de LATAM específicamente: los proyectos en español con documentación de calidad tienen muy baja competencia y alta búsqueda. Si construyes herramientas para el contexto colombiano o latinoamericano (normativas locales, datasets en español, integraciones con APIs locales), tienes un nicho donde puedes ser el referente fácilmente.",
+              "analogia": "GitHub para un AI engineer es como la vitrina de una joyería: el valor real está en las joyas (tus proyectos), pero si la vitrina está sucia, mal iluminada o vacía, nadie entra. Un perfil de GitHub bien cuidado con READMEs excepcionales y proyectos bien estructurados es la vitrina que hace que las joyas brillen. El trabajo de cuidar la vitrina (documentación, organización, presencia de perfil) no es secundario al trabajo técnico — es lo que hace que el trabajo técnico sea visible.",
+              "ejemplo_malo": "Un AI engineer con proyectos realmente buenos tiene GitHub con: repositorios nombrados 'proyecto1', 'test', 'mi-chatbot'; README de cada uno es una sola línea 'este es mi proyecto de NLP'; commits con mensajes 'arreglando cosas' y 'update'; el perfil no tiene README de perfil. Cuando se postula a trabajos y dan su GitHub, los reclutadores técnicos pasan 30 segundos mirando, no encuentran nada fácilmente entendible, y continúan con el siguiente candidato. El trabajo real no está visible porque no está presentado.",
+              "ejemplo_bueno": "Una developer de IA tiene GitHub con: README de perfil que dice 'AI Engineer especializado en LLMs y RAG para el contexto legal colombiano | 3 proyectos open source | Actualmente trabajando en [proyecto]'; sus repositorios tienen nombres descriptivos ('rag-jurisprudencia-colombia', 'llm-contract-analyzer'); README de cada uno con problema, arquitectura, demo link, y métricas; commits con mensajes como 'feat: add semantic chunking strategy for legal documents (+12% retrieval accuracy)'; 2 contribuciones aceptadas en LangChain. Cuando aplica a trabajos, cualquier revisor técnico puede evaluar su capacidad en 5 minutos. Recibe respuestas positivas del 40% de las empresas a las que aplica.",
+              "por_que_importa": "El 70% de los puestos tech se llenan por referidos o búsqueda activa de talento, no por aplicaciones inbound. Los recruiters y hiring managers de empresas de IA buscan activamente en GitHub usando keywords como 'RAG', 'LangChain', 'Claude API', o contribuciones a proyectos específicos. Un perfil de GitHub bien optimizado genera oportunidades pasivamente — recibes mensajes de reclutadores sin aplicar activamente. Para el mercado latinoamericano, donde el networking es aún más importante que en EE.UU., tu presencia técnica online es la forma más escalable de construir reputación.",
+              "tip_profesional": "Crea el README de tu perfil hoy — tarda 30 minutos y te diferencia del 80% de los perfiles de GitHub. Usa este template como base: una línea de quién eres y en qué te especializas, 3-5 proyectos más importantes con links y una frase de descripción cada uno, badges de las tecnologías que usas (shields.io es gratis), y links a LinkedIn y contacto. Revisa y actualiza el README de perfil cada vez que completes un proyecto significativo. Es tu landing page profesional técnica."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué contribuir a proyectos open source de IA como LangChain o Hugging Face es el diferenciador más fuerte en un perfil de GitHub?",
+                "opciones": [
+                  "Porque significa que trabajas gratis para grandes empresas y eso demuestra compromiso",
+                  "Porque es una señal verificable de que eres un contributor serio aceptada por maintainers expertos en el proyecto relevante",
+                  "Porque aumenta el número de estrellas en tu perfil lo cual mejora el ranking de búsqueda",
+                  "Porque los proyectos open source son los únicos que los reclutadores revisan en GitHub"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Una contribución aceptada a un proyecto open source de IA tiene un nivel de señal de credibilidad muy alto porque requiere pasar la revisión de maintainers que son expertos en el área. Si tus cambios fueron revisados y aceptados en LangChain, significa que expertos en frameworks de LLM validaron que tu código es correcto, sigue los estándares del proyecto, y agrega valor. Esto es fundamentalmente diferente a proyectos propios donde solo tú evalúas la calidad. La contribución no necesita ser grande — una corrección de bug bien documentada, una mejora de documentación con ejemplos claros, o tests bien escritos ya demuestran que puedes trabajar con código base de otros, entender convenciones de proyectos serios, y comunicar técnicamente de forma efectiva en una comunidad internacional.",
+                "concepto_reforzado": "Contribuciones a proyectos open source de IA como señal verificable de calidad técnica validada por expertos externos"
+              },
+              {
+                "pregunta": "¿Cuál es el elemento más importante que diferencia un perfil de GitHub de AI engineer de uno mediocre?",
+                "opciones": [
+                  "El número de repositorios — más de 50 repositorios demuestra productividad",
+                  "El número de estrellas recibidas en los proyectos propios",
+                  "READMEs completos y narrativos que explican qué resuelve cada proyecto, por qué, y cómo",
+                  "El tablero de contribuciones completamente verde sin días sin commits"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Los READMEs son el primer punto de contacto de cualquier persona que visita un repositorio. Un README que dice 'este es mi proyecto de ML' en una sola línea transmite que el author no puede (o no se molestó en) articular qué hace su proyecto. Un README que explica el problema con contexto real, la arquitectura técnica con diagramas si aplica, las métricas de evaluación, cómo instalar y usar, y las limitaciones honestas, demuestra capacidad técnica y comunicativa simultáneamente. Para reclutadores técnicos que revisan decenas de perfiles, el README es el primer filtro — si no pueden entender el proyecto en 60 segundos de lectura, pasan al siguiente. Tener muchos repositorios sin READMEs es activamente peor que tener pocos con READMEs excelentes.",
+                "concepto_reforzado": "READMEs completos y narrativos como el elemento diferenciador más importante de un perfil de GitHub de AI engineer"
+              },
+              {
+                "pregunta": "¿Qué mensaje de commit tiene mayor calidad y por qué importa?",
+                "opciones": [
+                  "'update' — breve y al punto, sin información innecesaria",
+                  "'arreglando bug en la función de embeddings' — en español y descriptivo",
+                  "'feat: add semantic chunking strategy for legal documents (+12% retrieval accuracy)' — tipo + descripción + impacto medible",
+                  "'WIP' — indica que es trabajo en progreso para que los revisores lo sepan"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Los mensajes de commit son la historia del proyecto — alguien que lee el historial de commits puede entender cómo evolucionó el código y por qué. Mensajes vagos como 'update' o 'fix' hacen el historial inútil para cualquier colaborador futuro (incluyendo tu yo del futuro). El formato Conventional Commits (feat:, fix:, docs:, test:, refactor:) agrega estructura inmediatamente parseable. Incluir el impacto medible en el mensaje ('...+12% retrieval accuracy') va un paso más: transforma el commit de 'qué cambió' a 'por qué importó'. Para un portafolio, el historial de commits cuenta la historia de cómo llegaste a la solución — un historial con mensajes detallados demuestra proceso de engineering riguroso, no solo resultado final. Es especialmente relevante para roles en empresas maduras donde el code review y el historial de git son parte del flujo de trabajo estándar.",
+                "concepto_reforzado": "Mensajes de commit descriptivos con formato Conventional Commits e impacto medible como práctica de engineering de calidad visible"
+              },
+              {
+                "pregunta": "¿Qué ventaja tienen los proyectos de IA en español y con contexto latinoamericano en GitHub?",
+                "opciones": [
+                  "Ninguna — el mercado de IA es global y los proyectos en inglés siempre tienen más visibilidad",
+                  "Alta visibilidad con baja competencia en un nicho específico donde puedes ser el referente fácilmente",
+                  "GitHub penaliza los proyectos en inglés de usuarios latinoamericanos para promover contenido local",
+                  "Solo tienen ventaja para conseguir trabajos en empresas colombianas, no para el mercado internacional"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La mayoría de recursos técnicos de IA están en inglés — incluidos los tutoriales, los proyectos de ejemplo, y las implementaciones de referencia. Esto crea un nicho con alta demanda y baja oferta: developers colombianos y latinoamericanos que buscan ejemplos de RAG sobre la normativa de la DIAN, o implementaciones de chatbot con el contexto de la banca colombiana, encuentran muy poco. Un proyecto bien documentado en español con contexto local específico puede tener más impacto regional que un proyecto genérico en inglés compitiendo con miles de implementaciones similares. Ser 'el referente en RAG para contexto legal colombiano en GitHub' es un nicho alcanzable que genera visibilidad orgánica, contactos del sector específico, y diferenciación que los perfiles genéricos no tienen.",
+                "concepto_reforzado": "Proyectos en español con contexto latinoamericano como nicho de alta visibilidad y baja competencia en GitHub"
+              },
+              {
+                "pregunta": "¿Qué información debe incluir el README de perfil de GitHub de un AI engineer?",
+                "opciones": [
+                  "Solo el nombre, la foto y el lugar de trabajo para mantener el perfil profesional y limpio",
+                  "Una descripción de especialización en IA, proyectos principales con links, tecnologías que usa, y cómo contactarlo",
+                  "La lista completa de todos los proyectos en GitHub con descripción de cada uno",
+                  "Solo los logros académicos y certificaciones para establecer credibilidad técnica"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El README de perfil en GitHub es una landing page técnica personal — la primera cosa que ve cualquier visitante al perfil. Debe responder en 30 segundos: ¿quién es esta persona? ¿en qué se especializa? ¿qué ha construido? ¿cómo la contacto? Una descripción de especialización ('AI Engineer especializado en LLMs y RAG para aplicaciones empresariales en LATAM') comunica el value proposition inmediatamente. Los proyectos principales con links directos permiten navegar al trabajo relevante sin buscar entre todos los repositorios. Las tecnologías que usa (badges visuales de shields.io) dan contexto del stack. El contacto (LinkedIn, email profesional) facilita la conversión de visita a oportunidad. No incluir toda la lista de proyectos en el perfil — ese nivel de detalle va en cada README de repositorio individual. El perfil debe ser un índice navegable, no una enciclopedia.",
+                "concepto_reforzado": "README de perfil de GitHub como landing page técnica personal con especialización, proyectos principales y contacto"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Ana tiene un perfil de GitHub con 30 repositorios de proyectos de estudio (mayoría sin README), sin README de perfil, y commits con mensajes 'update' o 'fix'. Lleva 8 meses aprendiendo IA y tiene 3 proyectos realmente buenos que podrían demostrar sus habilidades si estuvieran bien presentados. Quiere mejorar su GitHub en 2 semanas para postularse a una posición remota de Prompt Engineer en una startup española. Tiene 1 hora diaria disponible.",
+              "instruccion": "Diseña el plan de acción de 2 semanas para transformar el GitHub de Ana. Prioriza las acciones de mayor impacto para el objetivo específico (posición de Prompt Engineer remota). Define qué hacer en qué orden y cuánto tiempo asignar a cada actividad.",
+              "input_malo": "Crear 10 nuevos repositorios con proyectos de Prompt Engineering para demostrar que sabe mucho. Cantidad demuestra dedicación.",
+              "pista": "¿Qué ve primero un reclutador técnico cuando visita un perfil de GitHub? ¿Cuál de los 30 repositorios debería ser el primero que los visitantes encuentran? ¿Qué tarda menos en impactar más?",
+              "solucion": "Plan 2 semanas (1h/día = 14 horas totales): SEMANA 1 — alto impacto, bajo tiempo: DÍA 1 (1h): Crear README de perfil con especialización clara en Prompt Engineering + LLMs, links a los 3 mejores proyectos, badges de Python/Claude/LangChain, link a LinkedIn. DÍA 2-3 (2h): Seleccionar el MEJOR de los 3 proyectos. Escribir README completo: problema + arquitectura + demo si existe + métricas + limitaciones + cómo usar. Este se convierte en el proyecto 'featured' pinned al inicio del perfil. DÍA 4-5 (2h): Hacer el mismo README para el segundo mejor proyecto. DÍA 6-7 (2h): Archivar o privatizar los 27 repositorios de estudio que no demuestran nada. Dejar solo los 3 buenos + los que tienen valor de referencia. SEMANA 2 — proyección y mejora: DÍA 8-10 (3h): Agregar README al tercer proyecto + mejorar el código de los 3 con estructura de directorios, requirements.txt, y comments básicos. DÍA 11-12 (2h): Identificar un issue 'good first issue' en LangChain o Claude SDK. Intentar contribuir aunque sea documentación. DÍA 13-14 (2h): Preparar el perfil para aplicaciones: verificar que todos los links funcionan, que los demos son accesibles, que el README de perfil está actualizado. Resultado esperado: de 0 impacto a un perfil que comunica claridad de especialización en 2 semanas.",
+              "criterios_de_exito": [
+                "Prioriza crear el README de perfil el día 1 — mayor impacto por tiempo invertido",
+                "Reduce la cantidad de repositorios visibles archivando los de estudio sin valor, dejando calidad sobre cantidad",
+                "Asigna la mayor parte del tiempo a documentar los 3 proyectos buenos, no a crear proyectos nuevos",
+                "El plan es ejecutable con 1 hora diaria en 2 semanas — realista dado la constraint de tiempo"
+              ]
             },
+            "conexion": {
+              "siguiente_concepto": "Comunidades esenciales para crecer en IA",
+              "por_que_importa_despues": "GitHub optimizado es tu presencia técnica online. Pero el crecimiento de carrera en IA no ocurre solo — ocurre en comunidades donde se comparte conocimiento, se consiguen oportunidades, y se construyen conexiones que abren puertas. La siguiente lección mapea las comunidades más valiosas para un AI practitioner en LATAM, cómo participar de forma que te beneficie, y cómo construir presencia sin ser un lurker invisible."
+            }
             "conexion": {
               "siguiente_concepto": "",
               "por_que_importa_despues": ""
