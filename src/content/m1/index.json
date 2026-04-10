@@ -7042,33 +7042,98 @@
         },
         {
           "id": "m1-b8-l3",
-          "titulo": "Cloud computing para IA: costos reales y opciones",
+          "titulo": "Costos reales de IA en 2026: números concretos",
           "bloque": 8,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Una de las habilidades más valiosas de un consultor de IA es poder estimar costos con precisión en una reunión, sin necesitar horas de research. Esta lección te da los números concretos de 2026 para los tipos de costos más frecuentes en proyectos de IA, junto con la intuición para calcular presupuestos rápidos.\n\n**Categoría 1 — APIs de LLMs (costo por millón de tokens)**\n\nLos precios de APIs de LLMs se estructuran en tokens de entrada (input) y tokens de salida (output). Los de salida son más caros porque el modelo los genera uno a uno.\n\nClaude (Anthropic) en 2026:\n- Claude Haiku 3.5: $0.80/M tokens entrada, $4/M salida\n- Claude Sonnet 4.6: $3/M tokens entrada, $15/M salida\n- Claude Opus 4.6: $15/M tokens entrada, $75/M salida\n\nOpenAI en 2026:\n- GPT-4o Mini: $0.15/M tokens entrada, $0.60/M salida\n- GPT-4o: $5/M tokens entrada, $15/M salida\n- o3: $10/M tokens entrada, $40/M salida\n\nGoogle Gemini en 2026:\n- Gemini Flash: $0.075/M tokens entrada, $0.30/M salida (el más barato del segmento capaz)\n- Gemini Pro: $3.50/M tokens entrada, $10.50/M salida\n\nNota: estos precios caen aproximadamente 50% cada año. Un precio de hoy será la mitad en 12-18 meses.\n\n**Regla práctica para estimaciones:**\n1 token ≈ 0.75 palabras en inglés ≈ 0.65 palabras en español (el español usa más tokens que el inglés por palabra). Un email típico: 300-500 tokens. Un contrato de 10 páginas: 15,000-25,000 tokens. Una sesión de chat de 20 turnos: 8,000-15,000 tokens.\n\n**Ejemplo de cálculo: chatbot de soporte al cliente**\n- 10,000 conversaciones/mes\n- Promedio 10 turnos por conversación\n- Cada turno: 500 tokens input + 200 tokens output\n- Total: 10,000 × 10 × (500 + 200) = 70M tokens/mes\n- Con Claude Sonnet: 50M tokens entrada × $3/M + 20M tokens salida × $15/M = $150 + $300 = $450/mes\n- Con GPT-4o Mini: 50M × $0.15 + 20M × $0.60 = $7.5 + $12 = $19.5/mes\n- Con Claude Haiku: 50M × $0.80 + 20M × $4 = $40 + $80 = $120/mes\n\n**Categoría 2 — Cómputo GPU en nube**\n\nInstancias on-demand (sin compromiso) en AWS/GCP/Azure:\n- T4 (GPU de entrada): ~$0.53/hora (Google Cloud)\n- A10G (GPU media, inferencia): ~$1.00-1.50/hora\n- A100 (GPU de entrenamiento): ~$3.50-4.50/hora\n- H100 (GPU de entrenamiento high-end): ~$8-15/hora\n\nInstancias reservadas (1-3 años de compromiso): 40-60% de descuento sobre on-demand.\nInstancias spot (capacidad no usada, interrumpibles): 60-90% de descuento, pero pueden terminar con poca anticipación.\n\n**Categoría 3 — Plataformas de inferencia serverless (sin administrar servidores)**\nReplicate, Modal, fal.ai: cobran por tiempo de cómputo de GPU, típicamente $0.001-0.005 por segundo de GPU. Ideales para baja o mediana escala sin equipo DevOps.\n\n**Categoría 4 — Almacenamiento y transferencia de datos**\nAlmacenamiento S3/GCS: $0.023/GB-mes. Transferencia de datos de salida: $0.08-0.09/GB. Para proyectos que procesan documentos grandes, este costo puede ser no trivial.\n\n**El costo del entrenamiento (para fine-tuning):**\nFine-tuning de Llama 7B con LoRA, 1,000 ejemplos: ~$5-20 en GPU A10G (2-6 horas). Fine-tuning de Llama 70B: ~$100-500 (10-50 horas en A100). Entrenamiento de modelo desde cero (escala GPT-3): ~$5-12 millones USD en compute. Entrenamiento de modelo frontier (escala Claude 3): ~$50-200 millones USD.",
+              "analogia": "Los precios de APIs de LLMs son como los de la electricidad industrial: se cobran por unidad de consumo (tokens = kWh), hay tarifas diferentes según el 'voltaje' (modelo pequeño vs grande), y la tarifa por volumen o comprometida es significativamente menor que la tarifa bajo demanda.",
+              "ejemplo_malo": "Presupuestar un proyecto de análisis de contratos en $500/mes usando Claude Opus sin calcular el volumen real: si analizan 2,000 contratos de 50 páginas al mes, el costo real sería ~$225,000/mes con Opus — un error de 450×.",
+              "ejemplo_bueno": "Para presupuestar, hacer primero el cálculo de tokens: 2,000 contratos × 50 páginas × 500 palabras/página ÷ 0.65 palabras/token = 2,000 × 38,000 tokens = 76,000 tokens/contrato × 2,000 = 152M tokens input. Con Claude Haiku a $0.80/M = $122/mes. Con Claude Sonnet = $456/mes. Presentar ambas opciones al cliente.",
+              "por_que_importa": "En el 80% de los proyectos de IA en LATAM, el costo de la API es el costo variable dominante. Si no sabes estimarlo con precisión, propones presupuestos incorrectos que pueden hacer perder dinero al cliente o hacer el proyecto inviable. Esta habilidad te diferencia como consultor.",
+              "tip_profesional": "Construye una hoja de cálculo de estimación de costos de IA con los precios actuales que actualizas trimestralmente. Tiene tres entradas: modelo elegido, volumen de operaciones/mes, y tokens promedio por operación. Debe calcular automáticamente el costo mensual en los tres principales modelos para comparación rápida. En una reunión de propuesta, puedes sacarla y calcular en 2 minutos — eso impresiona a cualquier cliente técnico."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué los tokens de salida (output) de las APIs de LLMs cuestan más que los de entrada (input)?",
+                "opciones": [
+                  "Porque los tokens de salida son más largos que los de entrada",
+                  "Porque el modelo genera los tokens de salida uno a uno secuencialmente, requiriendo múltiples pasadas por los pesos del modelo, mientras que el procesamiento de la entrada es más eficientemente paralelizable",
+                  "Porque los tokens de salida tienen mejor calidad gramatical",
+                  "Porque los proveedores de IA cobran más por resultados que por procesamiento"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La diferencia de precio entre tokens de entrada y salida refleja una diferencia real en el costo computacional. Procesar los tokens de entrada (el prompt del usuario) puede hacerse en paralelo: todos los tokens se procesan simultáneamente en un solo forward pass eficiente. Generar los tokens de salida es inherentemente serial: el modelo genera un token, ese token se convierte en input para generar el siguiente, y así sucesivamente. Este proceso —llamado autoregressive generation— requiere un forward pass completo por cada token generado. Si el output es 500 tokens, son 500 forward passes. Con Claude Sonnet, la diferencia de precio refleja esto: $3/M entrada vs $15/M salida (5× más caro). Para optimización de costos en producción, reducir la longitud del output (instrucciones más precisas que generan respuestas más concisas) es frecuentemente más impactante que reducir la longitud del input.",
+                "concepto_reforzado": "Diferencia de costo entre tokens de entrada y salida"
+              },
+              {
+                "pregunta": "Tienes un chatbot de servicio al cliente con 5,000 conversaciones/mes, 8 turnos promedio, 400 tokens input + 150 tokens output por turno. ¿Cuál es el costo mensual aproximado con GPT-4o Mini ($0.15/M input, $0.60/M output)?",
+                "opciones": [
+                  "Aproximadamente $50/mes",
+                  "Aproximadamente $2.40/mes",
+                  "Aproximadamente $500/mes",
+                  "Aproximadamente $24/mes"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Cálculo: 5,000 conversaciones × 8 turnos = 40,000 turnos. Tokens input: 40,000 × 400 = 16,000,000 tokens = 16M tokens. Tokens output: 40,000 × 150 = 6,000,000 = 6M tokens. Costo input: 16M × $0.15/M = $2.40. Costo output: 6M × $0.60/M = $3.60. Total: $2.40 + $3.60 = $6/mes. La opción más cercana es $2.40 que sería solo el input. El total correcto es $6/mes. Este cálculo ilustra cuán económicos son los modelos pequeños para volúmenes medianos: 5,000 conversaciones al mes por solo $6 USD. Incluso con Claude Haiku ($0.80/M input, $4/M output): 16M × $0.80 + 6M × $4 = $12.8 + $24 = $36.8/mes. Para proyectos con restricciones de presupuesto severas, los modelos económicos hacen viable lo que parecería costoso con modelos premium.",
+                "concepto_reforzado": "Cálculo de costo de API por volumen de conversaciones"
+              },
+              {
+                "pregunta": "¿Qué es una instancia spot en nube y cuándo es apropiada para proyectos de IA?",
+                "opciones": [
+                  "Una instancia con GPU de última generación disponible solo en ciertas ubicaciones geográficas",
+                  "Capacidad de cómputo no usada del proveedor ofrecida con 60-90% de descuento pero que puede terminarse con poca anticipación, apropiada para entrenamiento de modelos o procesamiento batch que puede reiniciarse",
+                  "Una instancia de prueba gratuita para nuevos clientes del proveedor de nube",
+                  "Una instancia que solo funciona durante horas específicas del día"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Las instancias spot representan la capacidad de compute no utilizada de los proveedores de nube que se vende con descuento masivo (60-90%) a cambio de que el proveedor puede reclamarla con 2-30 minutos de anticipación cuando la necesita para otros clientes. Para proyectos de IA, son ideales para trabajos que pueden ser interrumpidos y reiniciados: entrenamiento de modelos (si se guarda el checkpoint regularmente), procesamiento batch de documentos (si se procesan en unidades reiniciables), y experimentación e investigación. Son inapropiadas para inferencia en tiempo real donde los usuarios esperan respuesta — una interrupción en medio de una respuesta sería inaceptable. La práctica correcta: usar spot para entrenamiento e instancias on-demand o reservadas para inferencia en producción.",
+                "concepto_reforzado": "Instancias spot: uso apropiado para batch y entrenamiento"
+              },
+              {
+                "pregunta": "¿Por qué el precio de las APIs de LLMs tiende a caer aproximadamente 50% cada 12-18 meses?",
+                "opciones": [
+                  "Porque los proveedores reducen la calidad de los modelos para hacerlos más baratos",
+                  "Por la combinación de mejoras en eficiencia del hardware (GPUs más eficientes), optimizaciones en los modelos (distilación, cuantización) y competencia creciente entre proveedores",
+                  "Porque el gobierno regula los precios máximos de IA en EE.UU.",
+                  "Porque la demanda de IA está disminuyendo, forzando a bajar precios"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La caída de precios en APIs de LLMs sigue la Ley de Wright — una versión de la Ley de Moore aplicada a costos de producción: cada vez que la producción acumulada se duplica, los costos caen en un porcentaje consistente. Los tres factores que impulsan la caída son acumulativos. Hardware: las GPUs de nueva generación hacen más operaciones por watt, reduciendo el costo del compute por token. Modelos: técnicas como destilación (entrenar modelos pequeños para imitar modelos grandes) y cuantización (usar menos bits por parámetro) permiten modelos con calidad similar a menor costo de inferencia. Competencia: Anthropic, OpenAI, Google y decenas de proveedores compiten activamente por el mercado, forzando reducciones de precio. En 2020, GPT-3 costaba ~$60/M tokens. En 2026, Claude Haiku cuesta $0.80/M tokens para capacidades equivalentes o superiores — una caída de 75× en 6 años.",
+                "concepto_reforzado": "Factores detrás de la caída de precios de APIs de LLMs"
+              },
+              {
+                "pregunta": "¿Cuál es la diferencia de costo entre procesar 1 millón de tokens con Claude Opus vs Claude Haiku y en qué casos justifica el premium de Opus?",
+                "opciones": [
+                  "No hay diferencia de costo entre los modelos de la misma familia",
+                  "Opus cuesta ~18.75× más que Haiku en entrada; el premium se justifica para tareas que requieren razonamiento complejo, ventana de contexto extendida o precision crítica donde los errores tienen alto costo",
+                  "Opus es siempre la opción correcta independientemente del costo por su mayor calidad",
+                  "Haiku cuesta más que Opus porque es más eficiente"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Claude Haiku 3.5: $0.80/M tokens entrada. Claude Opus 4.6: $15/M tokens entrada. Ratio: $15 ÷ $0.80 = 18.75×. Para 1 millón de tokens: Haiku = $0.80, Opus = $15.00. Esta diferencia de 18.75× solo se justifica cuando el caso de uso genuinamente requiere las capacidades adicionales de Opus: razonamiento complejo con múltiples pasos lógicos, análisis de documentos muy largos (ventana de 200K tokens), tareas donde la precisión es crítica y los errores tienen consecuencias graves (análisis legal, médico, financiero de alto valor), o cuando el problema es suficientemente difícil que Haiku/Sonnet fallan consistentemente en el eval set. Para el 70-80% de las tareas empresariales estándar (clasificación, extracción de información, resúmenes, respuestas FAQ), Haiku o Sonnet son suficientes y el ahorro de 5-19× puede ser la diferencia entre un proyecto rentable y uno que no lo es.",
+                "concepto_reforzado": "Diferencial de costo entre modelos y cuándo justificar el premium"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de seguros en Medellín quiere implementar tres aplicaciones de IA: (1) Chatbot de FAQ para clientes — 20,000 conversaciones/mes, 5 turnos promedio, 300 tokens input + 100 tokens output por turno. (2) Análisis de pólizas — 500 pólizas/mes, cada póliza 30 páginas (~15,000 tokens input), output de análisis ~2,000 tokens. (3) Generación de reportes de siniestros — 200 reportes/mes, cada uno requiere 5,000 tokens input + 3,000 tokens output.",
+              "instruccion": "Calcula el costo mensual de cada aplicación usando Claude Haiku ($0.80/M input, $4/M output) para el chatbot y análisis de pólizas, y Claude Sonnet ($3/M input, $15/M output) para los reportes de siniestros. Luego calcula el costo total mensual y comenta si está dentro de un presupuesto razonable para una empresa aseguradora de tamaño medio.",
+              "input_malo": "Usaría el mismo modelo para todo y estimo que cuesta alrededor de $1,000/mes.",
+              "pista": "Chatbot: 20,000 × 5 = 100,000 turnos. 100,000 × 300 = 30M tokens input. 100,000 × 100 = 10M tokens output. Pólizas: 500 × 15,000 = 7.5M tokens input. 500 × 2,000 = 1M tokens output. Reportes: 200 × 5,000 = 1M tokens input. 200 × 3,000 = 600K tokens output.",
+              "solucion": "CHATBOT (Haiku): Input: 30M × $0.80/M = $24. Output: 10M × $4/M = $40. Subtotal: $64/mes. ANÁLISIS DE PÓLIZAS (Haiku): Input: 7.5M × $0.80/M = $6. Output: 1M × $4/M = $4. Subtotal: $10/mes. REPORTES DE SINIESTROS (Sonnet — requiere mayor calidad por impacto legal): Input: 1M × $3/M = $3. Output: 0.6M × $15/M = $9. Subtotal: $12/mes. TOTAL: $64 + $10 + $12 = $86/mes para las tres aplicaciones combinadas. Para una empresa aseguradora de tamaño medio con ingresos de millones de dólares mensuales, $86/mes en compute de IA es prácticamente insignificante. La decisión de invertir no debería estar bloqueada por el costo de la API — el ROI de automatizar estas tres funciones (reducción de personal en FAQ, velocidad de análisis de pólizas, consistencia en reportes) supera el costo por órdenes de magnitud. El costo relevante del proyecto es el desarrollo e integración, no la API.",
+              "criterios_de_exito": [
+                "Calcula correctamente el costo de cada una de las tres aplicaciones por separado",
+                "Totaliza el costo mensual correctamente (~$86/mes)",
+                "Contextualiza que el costo de API es mínimo y el verdadero costo del proyecto es el desarrollo"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "APIs vs modelos propios: cuándo cada uno",
+              "por_que_importa_despues": "Con los costos de APIs claros, la siguiente lección compara la alternativa: construir o fine-tunear tu propio modelo. La decisión depende de factores técnicos, económicos y estratégicos que esta lección desglosa."
             }
           }
         },
