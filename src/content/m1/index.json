@@ -6549,33 +6549,98 @@
         },
         {
           "id": "m1-b7-l6",
-          "titulo": "Cómo evaluar LLMs en tu caso de uso específico",
+          "titulo": "Comparar modelos objetivamente sin sesgos",
           "bloque": 7,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Comparar dos modelos de IA de forma objetiva es más difícil de lo que parece. Los sesgos cognitivos, metodológicos y organizacionales contaminan las comparaciones constantemente. Esta lección te da el marco metodológico para hacer comparaciones que resistan el escrutinio técnico y sean defendibles ante clientes y equipos.\n\n**Por qué las comparaciones informales son peligrosas**\nEl error más común: probar tres o cuatro prompts con cada modelo, quedar más impresionado con uno, y declararlo ganador. Este proceso tiene múltiples fallas: los ejemplos elegidos pueden ser no representativos, el evaluador puede ser inconsistente en sus criterios, y el orden en que se ven las respuestas influye en la percepción. La comparación informal produce falsa certeza: crees que elegiste objetivamente pero elegiste basado en ancla, sesgo de confirmación, o simplemente en qué modelo respondió primero.\n\n**Principio 1: comparación ciega (blind evaluation)**\nCuando sea posible, evalúa sin saber qué modelo generó cada respuesta. Esto elimina el sesgo de marca —la tendencia a preferir respuestas de modelos con mejor reputación independientemente de la calidad real. Herramientas como Chatbot Arena hacen esto sistemáticamente: los usuarios evalúan dos respuestas anónimas. Para tus propias evaluaciones, puedes shufflear las respuestas y remover cualquier identificador del proveedor antes de pasarlas a los evaluadores.\n\n**Principio 2: criterios definidos antes de ver las respuestas**\nAntes de ejecutar cualquier evaluación, define por escrito: (1) qué dimensiones vas a medir (factualidad, completitud, concisión, tono, seguimiento de instrucciones), (2) cómo medirás cada dimensión (escala 1-5 con descriptores para cada puntaje), y (3) qué ejemplos de respuestas buenas y malas para cada nivel de la escala. Este proceso —llamado rubric design— parece burocrático pero elimina la ambigüedad que lleva a evaluaciones inconsistentes.\n\n**Principio 3: conjunto de evaluación representativo**\nLos ejemplos de evaluación deben ser representativos del caso de uso real, no los casos fáciles ni los más difíciles. Incluye: inputs típicos (el 80% del volumen esperado), inputs en los límites (casos ambiguos), y inputs adversariales (los que más pueden fallar). Si solo evalúas con los casos fáciles, cualquier modelo parecerá bueno. Si solo evalúas con los difíciles, cualquier modelo parecerá malo.\n\n**Principio 4: métricas de evaluación alineadas con objetivos de negocio**\nLa métrica de comparación debe medir lo que el negocio necesita, no lo que es fácil de calcular. Para un asistente de soporte al cliente, no basta con medir 'coherencia gramatical' — mide si el cliente recibiría la respuesta como satisfactoria o necesitaría escalar a un agente humano. Esta alineación requiere conversación con los stakeholders antes de diseñar la evaluación.\n\n**Principio 5: significancia estadística**\nCon pocos ejemplos, las diferencias entre modelos pueden ser ruido estadístico. Un modelo con 85% en 20 ejemplos y otro con 80% en 20 ejemplos: esa diferencia de 5 puntos porcentuales es 1 ejemplo — podría ser azar. Con 100 ejemplos, 5 puntos de diferencia es estadísticamente más significativo. La regla práctica: necesitas al menos 50-100 ejemplos para que las diferencias pequeñas (menos de 10 puntos porcentuales) sean confiables.\n\n**Protocolo completo de comparación de modelos:**\n1. Define el caso de uso y las métricas de negocio relevantes.\n2. Construye un eval set de 50-100 ejemplos representativos del caso de uso real.\n3. Define la rubrica de evaluación por escrito antes de ver los resultados.\n4. Ejecuta todos los modelos sobre el mismo eval set con los mismos prompts.\n5. Evalúa de forma ciega si hay evaluación humana involucrada.\n6. Calcula las métricas acordadas para cada modelo.\n7. Verifica que las diferencias son estadísticamente significativas.\n8. Documenta las condiciones de la evaluación (fecha, versión del modelo, prompts usados) para reproducibilidad.",
+              "analogia": "Comparar modelos sin un protocolo formal es como hacer una cata de vinos donde sabes cuál es el más caro antes de probarlo. El conocimiento del precio contaminará tu percepción del sabor. La cata ciega es incómoda pero honesta.",
+              "ejemplo_malo": "Probar 5 prompts con Claude y 5 con GPT-4o, elegir los que más te gustaron de cada uno, y declarar que 'Claude es mejor para escritura creativa' basándote en esa muestra sesgada de ejemplos seleccionados post-hoc.",
+              "ejemplo_bueno": "Construir un eval set de 80 prompts representativos del proyecto de escritura (20 emails, 20 resúmenes, 20 posts, 20 borradores de presentación), ejecutar ambos modelos sobre todos los 80, tener dos revisores evaluando sin saber qué modelo generó qué, y reportar: 'Claude obtuvo 4.1/5 promedio vs GPT-4o 3.8/5 en la dimensión de naturalidad de tono, con diferencia estadísticamente significativa (p<0.05).'",
+              "por_que_importa": "Cuando recomiendas un modelo a un cliente y un ingeniero técnico del cliente pregunta '¿cómo lo evaluaste?', tu respuesta define si eres un consultor riguroso o uno que opera por preferencia personal. Un protocolo documentado es tu respaldo profesional.",
+              "tip_profesional": "Para comparaciones rápidas donde no tienes tiempo para un protocolo completo, usa el 'test de los 3 casos difíciles': identifica los 3 tipos de inputs que más probablemente fallarán en el caso de uso real, prueba esos específicamente con cada modelo, y elige basado en ese resultado. No es el protocolo ideal pero es mejor que probar los casos fáciles."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué es la evaluación ciega (blind evaluation) y por qué es importante?",
+                "opciones": [
+                  "Evaluar el modelo sin leer las respuestas, solo calculando métricas automáticas",
+                  "Evaluar las respuestas sin saber qué modelo las generó, eliminando el sesgo de marca que lleva a preferir modelos con mejor reputación independientemente de la calidad real",
+                  "Hacer la evaluación de noche para evitar distracciones",
+                  "Evaluar con los ojos cerrados para agudizar otros sentidos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El sesgo de marca en evaluación de IA es real y documentado: cuando los evaluadores saben que una respuesta viene de un modelo con mejor reputación (ej: Claude Opus vs un modelo desconocido), tienden a percibir la respuesta de mejor calidad aunque las respuestas sean intercambiadas. El experimento de Chatbot Arena demostró esto a escala: los mismos usuarios que preferían las respuestas de modelos 'top' en evaluación abierta, a veces elegían los mismos modelos de forma diferente en evaluación ciega. La evaluación ciega elimina esta fuente de sesgo: el evaluador juzga el texto en sí, no la reputación del proveedor. Para implementarla: asigna letras (Modelo A, Modelo B) en lugar de nombres, shufflea el orden de presentación, y solo revela qué es qué después de completar todas las evaluaciones.",
+                "concepto_reforzado": "Evaluación ciega para eliminar sesgo de marca"
+              },
+              {
+                "pregunta": "¿Por qué es crítico definir la rubrica de evaluación ANTES de ver los resultados?",
+                "opciones": [
+                  "Para ahorrar tiempo al evaluar",
+                  "Para evitar el sesgo de anclaje: si ves los resultados primero, ajustas inconscientemente los criterios para favorecer lo que ya viste y te pareció bueno",
+                  "Porque la rubrica cambia después de ver los resultados en todos los casos",
+                  "Por requisito legal de las normas ISO de evaluación de IA"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El sesgo de anclaje en evaluación es sutil pero poderoso: si ves primero las respuestas del modelo que esperas que sea mejor, inconscientemente ajustas tus criterios para que esas respuestas califiquen bien. 'Ah, da respuestas más elaboradas — voy a valorar la profundidad'. Luego cuando ves las respuestas del otro modelo que son más concisas, 'ah, son más cortas — están incompletas'. La rubrica definida antes obliga a especificar: ¿es 'elaborado' o 'conciso' la dimensión que importa para este caso de uso? ¿Cuánto vale cada uno? Esta claridad previa también permite que múltiples evaluadores usen el mismo criterio de forma consistente, lo que es necesario para que la evaluación sea reproducible.",
+                "concepto_reforzado": "Rubrica pre-definida para eliminar sesgo de anclaje"
+              },
+              {
+                "pregunta": "¿Cuántos ejemplos necesitas típicamente en un eval set para que las diferencias pequeñas entre modelos sean estadísticamente confiables?",
+                "opciones": [
+                  "5-10 ejemplos bien elegidos son suficientes",
+                  "Al menos 50-100 ejemplos para que diferencias menores a 10 puntos porcentuales sean estadísticamente significativas",
+                  "Más de 10,000 ejemplos para cualquier evaluación confiable",
+                  "El número de ejemplos no importa si son representativos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La significancia estadística depende del tamaño de la muestra. Con 20 ejemplos, una diferencia de 5 puntos porcentuales (4 vs 3 respuestas correctas) puede ser completamente aleatoria —tiene un intervalo de confianza muy amplio. Con 100 ejemplos, la misma diferencia de 5 puntos (95 vs 90 correctas) es estadísticamente más significativa. La regla práctica: para diferencias grandes entre modelos (>20 puntos), 20-30 ejemplos pueden ser suficientes. Para diferencias pequeñas (5-10 puntos) que son las más comunes entre modelos comparables, necesitas 50-100 ejemplos para confiar en el resultado. En proyectos con recursos limitados, prioriza la representatividad sobre el tamaño: 50 ejemplos bien elegidos son más valiosos que 200 ejemplos sesgados hacia los casos fáciles.",
+                "concepto_reforzado": "Tamaño mínimo de eval set para significancia estadística"
+              },
+              {
+                "pregunta": "¿Qué tipo de ejemplos deben incluirse en un eval set representativo para comparar modelos?",
+                "opciones": [
+                  "Solo los ejemplos más fáciles para que ambos modelos muestren su mejor versión",
+                  "Solo los ejemplos más difíciles para revelar las debilidades de los modelos",
+                  "Una mezcla: inputs típicos del 80% del volumen, inputs en los límites (casos ambiguos), e inputs adversariales (los que más pueden fallar)",
+                  "Los ejemplos que el cliente elige manualmente basándose en su intuición"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Un eval set sesgado hacia los casos fáciles produce evaluaciones demasiado optimistas: cualquier modelo razonable pasa los casos fáciles. Un eval set sesgado hacia los casos difíciles produce evaluaciones demasiado pesimistas y no refleja la experiencia del usuario promedio. La mezcla óptima incluye los tres tipos. Inputs típicos (70-80% del eval set): los casos más frecuentes que el sistema manejará en producción — si el 80% de las consultas son preguntas estándar, el 80% del eval set debe ser consultas estándar. Inputs en los límites (10-15%): casos ambiguos donde un error puede ir en cualquier dirección — evalúan la robustez del modelo ante ambigüedad. Inputs adversariales (10-15%): los que específicamente pueden hacer fallar al modelo — preguntas con doble sentido, inputs muy cortos o muy largos, inputs en un idioma con acento regional. Este perfil reflejará el performance real en producción más honestamente que cualquier otra distribución.",
+                "concepto_reforzado": "Composición óptima del eval set para evaluación representativa"
+              },
+              {
+                "pregunta": "¿Qué documenta un protocolo de evaluación y para qué sirve esa documentación?",
+                "opciones": [
+                  "El protocolo documenta los resultados finales del modelo; sirve para presentarlos al cliente",
+                  "El protocolo documenta las condiciones de evaluación (fecha, versión del modelo, prompts usados, rubrica); sirve para reproducibilidad, defensa de decisiones y comparaciones futuras",
+                  "El protocolo documenta los costos del proyecto de evaluación; sirve para facturación",
+                  "El protocolo no necesita documentarse si el consultor recuerda cómo se hizo"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La documentación del protocolo de evaluación tiene tres funciones críticas. Reproducibilidad: si en 6 meses un nuevo modelo sale y quieres compararlo con el que elegiste hoy, necesitas poder ejecutar exactamente la misma evaluación. Sin documentación, la comparación se hace con condiciones diferentes que invalidan los resultados. Defensa de decisiones: cuando un cliente o colega cuestione por qué elegiste el modelo A sobre el B, puedes mostrar el protocolo exacto, los ejemplos, la rubrica, y los resultados. Esto transforma una decisión de 'me pareció mejor' en una decisión técnica documentada. Detección de regresiones: si el proveedor actualiza el modelo (cosa que ocurre frecuentemente en 2026), puedes comparar el performance actual con el baseline documentado al momento de la evaluación original.",
+                "concepto_reforzado": "Importancia de documentar el protocolo de evaluación"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Un startup de legaltech en Bogotá quiere elegir entre Claude Sonnet y GPT-4o para un sistema que extrae cláusulas clave de contratos de arrendamiento comercial en Colombia. El CTO ha probado ambos modelos informalmente con 3-4 contratos y dice: 'GPT-4o se ve mejor'. El CEO quiere tomar la decisión esta semana basado en un costo mensual máximo de $300 USD. El sistema procesará ~1,000 contratos al mes, cada uno de ~15 páginas (~7,500 tokens).",
+              "instruccion": "Diseña el protocolo de evaluación para esta decisión. Incluye: (1) por qué la evaluación informal del CTO con 3-4 contratos es insuficiente, (2) cómo construirías un eval set representativo para este caso específico, (3) qué dimensiones evaluarías y con qué escala, y (4) cómo incluirías el factor de costo en la decisión final.",
+              "input_malo": "Confiaría en la evaluación del CTO con los 3-4 contratos que ya tiene. Tiene más experiencia técnica que yo y dice que GPT-4o se ve mejor.",
+              "pista": "7,500 tokens/contrato × 1,000 contratos = 7.5M tokens de entrada/mes. Claude Sonnet: $3/M = $22.50/mes. GPT-4o: $5/M = $37.50/mes. Ambos dentro del presupuesto de $300. El costo no diferencia aquí. El diferenciador será la calidad en la tarea específica. 4 contratos es muestra demasiado pequeña — ¿cómo construyes un eval set de 50?",
+              "solucion": "Protocolo de evaluación: (1) INSUFICIENCIA DE 3-4 CONTRATOS: Con 4 contratos, la diferencia de 1 contrato bien analizado puede cambiar el resultado completamente. Además, el CTO sabe qué modelo generó qué respuesta (sin evaluación ciega), lo que introduce sesgo de marca. Y los 4 contratos pueden no ser representativos del rango de contratos que el sistema procesará. (2) EVAL SET DE 50 CONTRATOS: Seleccionar del archivo de la empresa 50 contratos con distribución representativa: 35 contratos estándar del 80% típico (arrendamientos de oficinas, locales comerciales), 10 contratos con cláusulas inusuales o ambiguas (subarrendamiento, renovación automática con condiciones especiales), 5 contratos con errores o inconsistencias que el sistema debe detectar. Para cada contrato, el equipo legal marca manualmente las cláusulas clave como ground truth antes de ejecutar los modelos. (3) DIMENSIONES DE EVALUACIÓN (escala 1-3): Completitud: ¿detectó todas las cláusulas clave marcadas? (1=perdió más de 2, 2=perdió 1-2, 3=detectó todas). Precisión: ¿las cláusulas marcadas son realmente las clave? (1=más del 20% son irrelevantes, 2=10-20% irrelevantes, 3=<10% irrelevantes). Formato de extracción: ¿el texto extraído es directamente utilizable? (1=requiere edición mayor, 2=requiere edición menor, 3=listo para uso). EVALUACIÓN CIEGA: Letras A/B, evaluadores del equipo legal sin saber cuál es cuál. (4) FACTOR COSTO: Ambos modelos cuestan ~$22-38/mes para el volumen, muy por debajo del límite de $300. El costo no es diferenciador. La decisión se basa en calidad únicamente. Reportar el resultado con el modelo que obtenga mayor puntaje promedio en las 3 dimensiones con significancia estadística sobre 50 ejemplos.",
+              "criterios_de_exito": [
+                "Identifica al menos 2 fallas metodológicas de la evaluación informal del CTO",
+                "Propone un eval set con distribución representativa (casos típicos + límite + adversariales)",
+                "Incluye el cálculo de costo mensual que demuestra que el costo no es el factor decisivo aquí"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Sesgos en la evaluación: cómo evitarlos",
+              "por_que_importa_despues": "Con el protocolo de comparación definido, la siguiente lección profundiza en los tipos específicos de sesgo que contaminan las evaluaciones de IA —algunos sutiles y difíciles de detectar sin un marco explícito."
             }
           }
         },
