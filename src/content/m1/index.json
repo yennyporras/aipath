@@ -459,26 +459,91 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "En 2026 conviven dos narrativas sobre la inteligencia artificial igualmente dañinas: el pánico catastrófico y el entusiasmo acrítico. Ninguna te ayuda a tomar decisiones profesionales correctas. Lo que necesitas es un mapa de la realidad basado en evidencia. Empecemos por los mitos más peligrosos.\n\nMito 1: \"La IA va a reemplazar todos los empleos en 5 años.\" Realidad: La IA automatiza tareas específicas, no roles completos. Un abogado que hace revisión de contratos verá automatizado el 70% de esa tarea específica, pero el juicio, la negociación y la estrategia legal siguen siendo humanas. McKinsey (2024) estima que el 60% de los empleos tienen al menos 30% de tareas automatizables — pero eso no significa que esos empleos desaparecerán, sino que se transformarán.\n\nMito 2: \"La IA entiende lo que dice.\" Realidad: Los LLMs no comprenden, predicen. Generan texto estadísticamente coherente basado en patrones aprendidos. La diferencia importa: un LLM puede darte una respuesta médica convincente que sea completamente incorrecta porque \"suena\" correcta dado el contexto. Siempre verifica afirmaciones críticas con fuentes primarias.\n\nMito 3: \"ChatGPT y Claude son lo mismo.\" Realidad: Hay diferencias técnicas y filosóficas fundamentales. Claude fue entrenado con Constitutional AI (proceso de alineación diferente a RLHF estándar), tiene ventana de contexto más grande, y está diseñado específicamente para tareas de trabajo del conocimiento prolongado. GPT-4o tiene integraciones nativas con más herramientas. Gemini tiene ventajas en contexto largo y Google Search. Elegir el modelo correcto para cada tarea puede hacer una diferencia del 40% en calidad de resultados.\n\nMito 4: \"Necesitas saber programar para usar IA productivamente.\" Realidad: Para el 80% de los casos de uso profesionales, programar no es necesario. Las APIs de Claude, ChatGPT y Gemini están diseñadas para ser usadas a través de interfaces no-código. Lo que sí necesitas es saber diseñar prompts efectivos, entender las capacidades y limitaciones de cada modelo, y saber cuándo el output necesita verificación humana.\n\nMito 5: \"La IA siempre mejora con el tiempo sin supervisión.\" Realidad: Los modelos son estáticos después del entrenamiento. Claude Sonnet 4.5 tiene un corte de conocimiento de agosto 2025 y no aprende de tus conversaciones. Las mejoras vienen de nuevas versiones de modelos, no de uso continuado.\n\nMito 6: \"La IA es objetiva porque es matemática.\" Realidad: Los modelos heredan los sesgos de sus datos de entrenamiento. Si los datos históricos muestran que ciertos grupos acceden menos a crédito, el modelo reproducirá ese patrón. La IA es tan sesgada como los humanos que produjeron los datos, a veces más, porque escala ese sesgo.\n\nEntender estos mitos no es pesimismo — es la base para usar IA de manera efectiva y responsable.",
+              "analogia": "Es como aprender a conducir: el optimismo de que un auto te lleva a cualquier lugar y el miedo de que siempre habrá accidentes son igualmente inútiles. Lo útil es entender cómo funciona el vehículo, sus límites reales, y cuándo necesitas un mecánico.",
+              "ejemplo_malo": "Decirle a un cliente: 'La IA lo hará todo por ustedes automáticamente' — promesa sin matices que genera expectativas irreales y proyectos fallidos.",
+              "ejemplo_bueno": "Decirle a un cliente: 'La IA puede automatizar el 65% de su proceso de revisión documental, reduciendo el tiempo de 8 horas a 2.8 horas, pero el 35% restante — casos excepcionales y decisiones de alto riesgo — seguirá requiriendo tu equipo legal.'",
+              "por_que_importa": "Un AI Engineer que no puede separar mito de realidad pierde credibilidad con clientes y toma decisiones de implementación equivocadas. Este conocimiento te posiciona como el adulto en la sala cuando todos están o en pánico o en hype.",
+              "tip_profesional": "Cuando alguien en una reunión haga una afirmación absoluta sobre IA ('la IA va a reemplazar X' o 'la IA nunca podrá Y'), pregunta: '¿En qué timeline? ¿Con qué nivel de supervisión? ¿Para qué subconjunto de tareas?' Esas preguntas convierten el ruido en conversaciones productivas."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la diferencia fundamental entre cómo un LLM procesa lenguaje vs cómo un humano lo comprende?",
+                "opciones": [
+                  "Los LLMs procesan más rápido",
+                  "Los LLMs predicen patrones estadísticos sin comprensión real del significado",
+                  "Los humanos son más precisos",
+                  "Los LLMs tienen más memoria"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los LLMs son máquinas de predicción estadística. Dado un contexto, predicen cuál es la siguiente token más probable. No tienen modelo del mundo, no tienen intenciones, no tienen comprensión semántica genuina. Esto explica por qué pueden generar afirmaciones falsas con perfecta fluidez — la fluidez proviene de patrones lingüísticos, no de conocimiento verificado. Esta distinción es crítica para saber cuándo confiar en el output de un modelo y cuándo verificarlo.",
+                "concepto_reforzado": "Límites fundamentales de los LLMs"
+              },
+              {
+                "pregunta": "Según McKinsey (2024), ¿qué porcentaje de empleos tiene al menos un 30% de tareas automatizables?",
+                "opciones": [
+                  "20%",
+                  "40%",
+                  "60%",
+                  "80%"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El 60% de los empleos actuales tienen una porción significativa de tareas automatizables con IA. Sin embargo, la automatización de tareas no implica eliminación de roles. La mayoría de los empleos se transformarán: las tareas rutinarias y predecibles serán automatizadas, mientras que el juicio, la creatividad, la negociación y las relaciones interpersonales — que requieren contexto humano — permanecerán como responsabilidades humanas.",
+                "concepto_reforzado": "Impacto real de la IA en el empleo"
+              },
+              {
+                "pregunta": "¿Por qué es un error afirmar que 'la IA es objetiva porque es matemática'?",
+                "opciones": [
+                  "Porque la matemática no es precisa",
+                  "Porque los modelos heredan y pueden amplificar los sesgos presentes en sus datos de entrenamiento",
+                  "Porque los modelos no usan matemáticas reales",
+                  "Porque los humanos supervisan todo el proceso"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los datos de entrenamiento reflejan la realidad histórica, que está llena de sesgos sistémicos. Si los datos históricos muestran que ciertas comunidades reciben menos préstamos (por discriminación histórica), el modelo aprenderá ese patrón y lo reproducirá. Lo peligroso es que la IA puede escalar este sesgo a millones de decisiones simultáneas, y la apariencia de objetividad matemática puede hacer que los sesgos sean más difíciles de cuestionar.",
+                "concepto_reforzado": "Sesgos en datos y modelos de IA"
+              },
+              {
+                "pregunta": "¿Cuál es el mito más peligroso sobre los modelos de IA en contexto profesional?",
+                "opciones": [
+                  "Que son muy caros",
+                  "Que aprenden y mejoran automáticamente con cada conversación que tienes con ellos",
+                  "Que son difíciles de usar",
+                  "Que requieren internet"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El mito de que los LLMs aprenden de tus interacciones en tiempo real es especialmente peligroso porque lleva a confiar en que el modelo 'recordará' preferencias o aprenderá de errores pasados. Los modelos son estáticos después del entrenamiento: Claude Sonnet 4.5 tiene el mismo conocimiento en la conversación 1 que en la conversación 1,000,000. Las mejoras solo vienen de nuevas versiones. Conocer esto te ayuda a diseñar sistemas correctos: si necesitas que el sistema 'recuerde', debes implementar memoria explícita.",
+                "concepto_reforzado": "Modelos estáticos vs aprendizaje continuo"
+              },
+              {
+                "pregunta": "¿Cuál es la afirmación más precisa sobre la diferencia entre Claude y ChatGPT?",
+                "opciones": [
+                  "Son idénticos con distinto nombre",
+                  "Claude y ChatGPT tienen diferencias técnicas y filosóficas reales que los hacen más adecuados para diferentes casos de uso",
+                  "ChatGPT siempre es mejor",
+                  "Claude siempre es mejor"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Claude usa Constitutional AI para alineación, tiene ventana de contexto más grande en muchas configuraciones, y está optimizado para razonamiento profundo en tareas largas. GPT-4o tiene integraciones nativas más amplias y velocidad en tareas cortas. Gemini tiene ventajas en contexto muy largo y búsqueda en tiempo real. Ningún modelo es universalmente superior: elegir correctamente según la tarea puede mejorar los resultados un 30-40%.",
+                "concepto_reforzado": "Diferencias entre modelos de IA principales"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Eres consultor de IA y un directivo de una empresa manufacturera te dice en reunión: 'Leí que la IA va a reemplazar el 80% de nuestros empleados en 2 años. ¿Deberíamos contratar menos gente ahora?'",
+              "instruccion": "Formula una respuesta que corrija el mito sin desestimar la preocupación del directivo, use datos concretos, y reoriente la conversación hacia una decisión empresarial productiva.",
+              "input_malo": "No se preocupe, eso es exagerado. La IA no va a reemplazar nada tan pronto.",
+              "pista": "Separa tareas de roles, usa datos específicos de la industria manufacturera si puedes, y propone una acción concreta para evaluar el impacto real en SU empresa específica.",
+              "solucion": "Excelente preocupación — pero hay una distinción importante: la IA automatiza tareas, no roles completos. En manufactura, el 40-50% de tareas repetitivas de control de calidad visual pueden automatizarse con computer vision, pero los técnicos que interpretan anomalías complejas, coordinan con proveedores y toman decisiones de parada de línea siguen siendo esenciales. La recomendación no es contratar menos — es hacer un mapeo de tareas en los próximos 30 días: identificar qué tareas específicas en su planta son candidatas a automatización (repetitivas, predecibles, basadas en patrones visuales o de datos) vs cuáles requieren juicio humano. Eso nos da un plan real, no una reacción a un titular.",
+              "criterios_de_exito": [
+                "Distingue claramente entre tareas y roles",
+                "Usa datos específicos del sector, no generalidades",
+                "Propone una acción concreta y de bajo riesgo como siguiente paso"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Cómo aprender IA de forma efectiva",
+              "por_que_importa_despues": "Con los mitos despejados, puedes construir un plan de aprendizaje basado en realidad, no en expectativas distorsionadas."
             }
           }
         },
@@ -491,26 +556,91 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Hay una forma correcta y una incorrecta de aprender IA en 2026. La incorrecta: consumir pasivamente cursos en video, coleccionar certificados, y esperar a \"entender todo\" antes de construir algo. La correcta: aprender en espiral, con proyectos reales desde el día uno.\n\nEl campo de la IA se mueve tan rápido que la información que aprendes tiene una vida útil promedio de 18-24 meses para conocimiento técnico específico (qué modelo usar, qué framework está de moda) y de 5-10 años para principios fundamentales (cómo funcionan los transformers, qué son los embeddings, cómo evaluar un modelo). Tu estrategia de aprendizaje debe reflejar esta diferencia.\n\nEl Framework de Aprendizaje en Capas para IA:\n\nCapa 1 — Fundamentos inmutables (prioridad máxima, vida útil 10+ años): Cómo funcionan las redes neuronales a nivel conceptual. Qué son los embeddings y por qué importan. Qué es la atención y cómo permite a los transformers funcionar. Cómo se entrena un modelo (gradiente descendente conceptual). Cómo se evalúa un modelo. Por qué los LLMs alucinan. Estas ideas no van a cambiar aunque Claude 10 salga mañana.\n\nCapa 2 — Habilidades prácticas de alto impacto (vida útil 3-5 años): Prompt engineering avanzado. Cómo diseñar sistemas con LLMs (RAG, agentes). Cómo usar APIs de IA de forma efectiva. Cómo evaluar outputs de IA para tu caso de uso específico. Cómo calcular ROI de implementaciones de IA.\n\nCapa 3 — Herramientas y frameworks actuales (vida útil 1-2 años): Qué modelos usar hoy para qué tareas. Qué frameworks (LangChain, LlamaIndex) están vigentes. Qué plataformas (Cursor, Claude Code) son las más productivas. Esta capa la actualizas leyendo newsletters semanalmente, no con cursos.\n\nEl Principio del Proyecto Ancla: Desde el día uno de aprendizaje, necesitas un proyecto real que te importe. No un ejercicio académico — algo que resolverías para tu trabajo, negocio o vida. Este proyecto es tu ancla: cada nuevo concepto que aprendes, lo intentas aplicar inmediatamente. El ciclo es: concepto → intento → fracaso → diagnóstico → ajuste → éxito parcial → siguiente concepto.\n\nLa Regla del 20/80 Invertido: En IA, el 20% del conocimiento técnico te da el 80% de la capacidad práctica. Ese 20% clave: entender LLMs (cómo funcionan, cuándo fallan), prompt engineering (técnico, no básico), APIs y evaluación. El 80% restante (matemáticas profundas de optimización, teoría de grafos de transformers, etc.) es para quien quiere investigar o hacer fine-tuning propio.\n\nVelocidad de aprendizaje realista: Un developer web con dedicación de 10 horas semanales puede estar construyendo aplicaciones funcionales con IA en 3 meses. En 6 meses, puede hacer consultoría. En 12 meses, puede ser referente en su comunidad. En 24 meses, puede estar en el top 5% de practitioners en LATAM. Este no es hype — es el ritmo real que se observa en quienes aprenden con proyecto ancla.",
+              "analogia": "Aprender IA es como aprender a cocinar: puedes leer 100 libros de cocina (cursos pasivos) o puedes cocinar una cena real esta semana y aprender 10 veces más en el proceso. Los mejores chefs aprenden cocinando, no leyendo.",
+              "ejemplo_malo": "Completar 5 cursos de IA en Coursera, obtener certificados, y esperar 'estar listo' para construir algo. Resultado: 6 meses después tienes conocimiento desactualizado y ningún proyecto que mostrar.",
+              "ejemplo_bueno": "Elegir UN proyecto concreto (automatizar el seguimiento de leads de tu empresa) y construirlo iterativamente mientras aprendes solo lo necesario para esa siguiente funcionalidad. En 2 meses tienes algo funcionando Y has aprendido los fundamentos que importan.",
+              "por_que_importa": "El ritmo de avance del campo de IA hace que la estrategia de aprendizaje sea tan importante como el contenido. Alguien con la estrategia correcta aprenderá 3-5 veces más rápido que alguien con la estrategia incorrecta, incluso con el mismo tiempo disponible.",
+              "tip_profesional": "Define tu Proyecto Ancla antes de terminar este módulo. Debe ser: algo que ya conoces bien (tu industria, tu empresa), un problema real con fricción medible, y alcanzable con IA en 2-4 semanas de trabajo parte-tiempo. Este proyecto va a acelerar todo tu aprendizaje posterior."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la vida útil aproximada de conocimiento técnico específico sobre herramientas y frameworks de IA?",
+                "opciones": [
+                  "6 meses",
+                  "18-24 meses",
+                  "5 años",
+                  "10 años"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El conocimiento sobre herramientas específicas (qué framework usar, qué API es la mejor para X) tiene una vida útil de 18-24 meses en promedio. LangChain era el estándar en 2023, en 2024 muchos lo reemplazaron con soluciones más simples. Por eso, esta capa de conocimiento debe actualizarse continuamente con newsletters y experimentación, no con cursos formales. En cambio, los fundamentos (transformers, embeddings, evaluación) duran 10+ años.",
+                "concepto_reforzado": "Estrategia de aprendizaje por capas"
+              },
+              {
+                "pregunta": "¿Qué es un 'Proyecto Ancla' en el contexto de aprendizaje de IA?",
+                "opciones": [
+                  "Un proyecto académico de certificación",
+                  "Un proyecto real y personal que motiva el aprendizaje y permite aplicación inmediata de conceptos",
+                  "El proyecto final de un curso",
+                  "Un proyecto empresarial de gran escala"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El Proyecto Ancla es la diferencia entre aprendizaje activo y pasivo. Debe ser algo que genuinamente te importe resolver, en un dominio que ya conoces bien, con un problema real y medible. Cuando tienes un proyecto ancla, cada nuevo concepto que aprendes tiene un contexto de aplicación inmediata: no aprendes RAG en abstracto, lo aprendes para resolver específicamente cómo hacer que tu sistema de soporte al cliente acceda a tu documentación interna.",
+                "concepto_reforzado": "Aprendizaje basado en proyectos reales"
+              },
+              {
+                "pregunta": "Según la Regla del 20/80 invertido en IA, ¿cuál es el 20% de conocimiento que da el 80% de capacidad práctica?",
+                "opciones": [
+                  "Matemáticas avanzadas de optimización",
+                  "Cómo funcionan los LLMs, prompt engineering técnico, APIs y evaluación",
+                  "Historia de la IA",
+                  "Teoría de grafos de transformers"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El 20% crítico que genera el 80% de valor práctico son cuatro áreas: entender LLMs (cómo funcionan conceptualmente y cuándo fallan), prompt engineering técnico (no básico), trabajar con APIs de IA efectivamente, y evaluar outputs para tu caso de uso. Las matemáticas profundas, la teoría detallada de transformers, y los algoritmos de optimización avanzados son importantes para investigadores y quienes hacen fine-tuning propio, pero para el 90% de aplicaciones prácticas no son necesarias.",
+                "concepto_reforzado": "Priorización de conocimiento en IA"
+              },
+              {
+                "pregunta": "¿Cuál es el ritmo de aprendizaje realista para un developer web con 10 horas semanales de estudio?",
+                "opciones": [
+                  "Construir apps con IA en 1 semana",
+                  "Construir apps funcionales en 3 meses, consultoría en 6, referente en 12",
+                  "Necesita 3 años antes de hacer algo funcional",
+                  "Depende exclusivamente del background técnico previo"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Este timeline se basa en patrones observados en practitioners reales con background de desarrollo web. A los 3 meses: primera aplicación funcional con IA (chatbot con contexto, sistema de análisis de documentos). A los 6 meses: suficiente comprensión para ofrecer consultoría de implementación. A los 12 meses: capacidad de posicionarse como referente en su comunidad o empresa. El prerequisito es el Proyecto Ancla — sin proyecto real, el timeline se duplica o triplica.",
+                "concepto_reforzado": "Timeline realista de aprendizaje de IA"
+              },
+              {
+                "pregunta": "¿Por qué el conocimiento de fundamentos (transformers, embeddings) tiene una vida útil de 10+ años mientras que el conocimiento de herramientas específicas tiene solo 18-24 meses?",
+                "opciones": [
+                  "Los fundamentos son más fáciles de aprender",
+                  "Las herramientas cambian rápido pero los principios matemáticos y conceptuales en que se basan los modelos son estables",
+                  "Los fundamentos no cambian porque no importan",
+                  "Las herramientas son más complejas"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los transformers como arquitectura se describieron en 2017 y siguen siendo el backbone de todos los LLMs de 2026. Los embeddings como representación matemática del significado son un principio que no va a cambiar. En cambio, el framework específico que usas para orquestar llamadas a APIs (LangChain, LlamaIndex, código propio) puede quedar obsoleto en 18 meses. Esta distinción te ayuda a priorizar: dedica tiempo profundo a fundamentos y tiempo superficial/continuo a herramientas.",
+                "concepto_reforzado": "Durabilidad del conocimiento en IA"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Eres developer web con 5 años de experiencia en WordPress y PHP. Quieres entrar al mundo de IA. Tienes 10 horas semanales disponibles y te proponen dos caminos: A) Tomar el certificado de Machine Learning de Stanford en Coursera (12 semanas, muy técnico), o B) Empezar a construir un chatbot para el sitio de un cliente usando Claude API mientras aprendes los fundamentos en paralelo.",
+              "instruccion": "Argumenta cuál camino elegirías y por qué, usando los principios de aprendizaje del módulo. Incluye qué proyecto ancla específico elegirías.",
+              "input_malo": "Tomaría el certificado de Stanford primero porque necesito tener la base teórica sólida antes de hacer cualquier cosa práctica.",
+              "pista": "Piensa en tu background existente (WordPress/PHP = manejo de APIs, lógica de negocio, entender clientes). ¿Qué proyecto real podrías hacer para un cliente existente en las próximas 4 semanas?",
+              "solucion": "Elegiría el camino B con la siguiente estructura: Semana 1-2: Hacer funcionar una integración básica de Claude API con PHP (que ya sé). Proyecto ancla: chatbot de soporte para uno de mis clientes de WordPress. Semana 3-4: Aprender prompt engineering técnico mientras construyo el primer prototipo. Semana 5-8: Completar el chatbot funcional y simultáneamente estudiar los fundamentos de LLMs (M1 de AIPath). El certificado de Stanford tiene valor, pero está optimizado para quienes quieren ser investigadores o ML Engineers. Para mi objetivo (ser AI Engineer práctico en LATAM), el aprendizaje basado en proyectos reales con clientes reales es 3x más efectivo. Además, en 8 semanas tengo algo que mostrar.",
+              "criterios_de_exito": [
+                "Identifica el camino más efectivo para su contexto específico (developer web)",
+                "Propone un proyecto ancla concreto y alcanzable",
+                "Menciona cómo usaría sus habilidades existentes como ventaja"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "IA vs ML vs DL: las diferencias reales",
+              "por_que_importa_despues": "Con la estrategia correcta de aprendizaje en mente, ahora profundizamos en los conceptos fundamentales que tienen mayor vida útil."
             }
           }
         }
@@ -823,26 +953,91 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "La distinción entre IA Estrecha (ANI), IA General (AGI) y Superinteligencia (ASI) no es solo filosófica — define el horizonte de lo que las herramientas de hoy pueden y no pueden hacer, y por qué los debates sobre \"riesgo existencial de IA\" y \"IA que ya está aquí\" no se contradicen.\n\nIA Estrecha (Artificial Narrow Intelligence) es lo que existe hoy y es todo lo que existe hoy. Un modelo de ANI es extraordinariamente bueno en un dominio específico o conjunto limitado de dominios, pero carece de las capacidades de transferencia y adaptación que los humanos consideran \"inteligencia general\". GPT-4, Claude Sonnet, Gemini Ultra — todos son ANI. Son mejores que cualquier humano en generar texto, resumir documentos y escribir código en lenguajes específicos, pero si les pides hacer algo físico en el mundo real sin herramientas adicionales, no pueden. Son contexto-dependientes: necesitan que les des información que \"fuera de la pantalla\" asumirías implícita.\n\nUn ejemplo revelador: Claude puede escribir código perfecto para calcular la ruta más corta entre dos ciudades usando algoritmos de grafos, pero no puede mirarte a los ojos durante una negociación y detectar que estás nervioso. Un humano promedio puede hacer ambas cosas (probablemente peor en la programación, mucho mejor en la negociación). Eso es ANI.\n\nIA General (Artificial General Intelligence) es el nivel donde un sistema IA puede aprender a hacer cualquier tarea cognitiva que un humano pueda hacer, con la misma flexibilidad y transferencia de conocimiento entre dominios. Esto no existe todavía. El debate en la comunidad investigadora está en si GPT-5 o Claude 4 estarán \"cerca\" de AGI o si hay saltos cualitativos que aún no sabemos cómo lograr. La mayoría de investigadores serios piensan que AGI está entre 5 y 20 años. Algunos (Yann LeCun, entre otros) argumentan que los LLMs actuales no son la arquitectura que llevará a AGI.\n\nSuperinteligencia (ASI) es un sistema IA que supera a los humanos en virtualmente todas las dimensiones cognitivas y puede mejorar su propio diseño. Este es el nivel sobre el que hablan los teóricos de riesgo existencial como Nick Bostrom. ASI no existe, no está cerca, y hay desacuerdo genuino sobre si es inevitable, posible, o un escenario de ciencia ficción.\n\nPara tu trabajo como AI Engineer en 2026: todo lo que construirás usa ANI. Entender sus limitaciones (falta de memoria persistente sin implementación explícita, falta de acceso al mundo físico, alucinaciones, dependencia del contexto) te permite diseñar sistemas más robustos. No esperes AGI para empezar — la ANI actual ya es suficientemente poderosa para resolver el 80% de los problemas de negocio de cualquier empresa.",
+              "analogia": "ANI es como un gran maestro de ajedrez que solo sabe jugar ajedrez: imbatible en ese dominio específico, pero no sabe conducir. AGI sería alguien que puede aprender cualquier juego de mesa en una tarde y también conducir. ASI sería alguien que inventa juegos que los humanos no podrían imaginar.",
+              "ejemplo_malo": "Pensar que porque Claude puede escribir código en 10 lenguajes, 'pronto' podrá diseñar el plan de negocio de tu startup sin supervisión — eso confunde capacidad lingüística con razonamiento estratégico general.",
+              "ejemplo_bueno": "Usar Claude específicamente para las tareas en las que los LLMs son mejores que los humanos (síntesis rápida, generación de borradores, análisis de texto a escala) y reservar el juicio estratégico, la lectura de contexto político y las relaciones interpersonales para humanos.",
+              "por_que_importa": "Entender que estamos en la era de ANI evita dos errores costosos: subestimar lo que la IA actual puede hacer (y perder ventaja competitiva) y sobreestimar sus capacidades (y construir sistemas que fallarán en producción).",
+              "tip_profesional": "Cuando un cliente te pregunta si la IA 'va a pensar por sí misma', explica ANI vs AGI en 30 segundos: 'Lo que existe hoy es extremadamente bueno en tareas específicas pero no tiene iniciativa propia ni juicio general. Para que haga algo, tú defines exactamente qué.'"
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la principal diferencia entre ANI y AGI?",
+                "opciones": [
+                  "ANI es más costosa",
+                  "ANI está optimizada para dominios específicos mientras AGI podría transferir conocimiento y aprender cualquier tarea cognitiva humana",
+                  "AGI ya existe en algunos laboratorios",
+                  "ANI requiere más datos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La diferencia fundamental es la transferencia de conocimiento entre dominios y la flexibilidad de aprendizaje. ANI (todo lo que existe hoy) es extraordinariamente buena en su dominio de entrenamiento pero no puede adaptarse genuinamente a dominios completamente nuevos sin reentrenamiento. AGI hipotéticamente tendría la misma flexibilidad cognitiva que un humano — aprender golf después de aprender tenis, o aprender derecho después de aprender medicina, transfiriendo conocimiento estructural.",
+                "concepto_reforzado": "ANI vs AGI"
+              },
+              {
+                "pregunta": "¿Qué significa que un modelo como Claude sea 'context-dependent'?",
+                "opciones": [
+                  "Que solo funciona en inglés",
+                  "Que necesita que el usuario provea la información contextual que un humano asumiría implícita fuera de la conversación",
+                  "Que necesita más memoria RAM",
+                  "Que es más lento"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La dependencia del contexto es una limitación clave de los LLMs actuales. Un humano en una reunión tiene acceso a señales no verbales, historia de la relación, conocimiento implícito del sector, y contexto de la conversación anterior. Un LLM solo tiene lo que está en su ventana de contexto. Si no le dices que eres CTO de una startup de 10 personas en Colombia, no lo puede inferir y puede darte respuestas optimizadas para un escenario completamente diferente.",
+                "concepto_reforzado": "Limitaciones de contexto en LLMs"
+              },
+              {
+                "pregunta": "¿Cuál es el consenso más extendido entre investigadores sobre el timeline para AGI?",
+                "opciones": [
+                  "AGI ya existe",
+                  "Entre 5 y 20 años, con gran incertidumbre",
+                  "Nunca será posible",
+                  "En exactamente 2030"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La honestidad intelectual sobre AGI requiere reconocer la incertidumbre. Las predicciones van desde 'ya casi' (Altman, Demis Hassabis) hasta 'en décadas' (LeCun, Turing Award winners) hasta 'nunca con arquitecturas actuales'. Lo que podemos decir con confianza: no existe hoy, el debate es genuino entre los mejores investigadores del mundo, y para decisiones de negocio en 2026, trabajamos con ANI.",
+                "concepto_reforzado": "Timeline de AGI"
+              },
+              {
+                "pregunta": "Para un AI Engineer práctico en 2026, ¿cuál de estas consideraciones sobre ANI es más relevante?",
+                "opciones": [
+                  "Que ANI es inferior a AGI",
+                  "Que ANI tiene limitaciones específicas (alucinaciones, dependencia del contexto, sin memoria persistente) que deben diseñarse explícitamente en los sistemas",
+                  "Que ANI va a desaparecer pronto",
+                  "Que ANI no puede hacer nada útil"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Conocer las limitaciones específicas de ANI es crítico para diseñar sistemas robustos. Las alucinaciones requieren verificación humana o sistemas de validación. La falta de memoria persistente requiere implementar sistemas de memoria explícita (bases de datos, RAG). La dependencia del contexto requiere diseñar prompts con toda la información relevante. Cada limitación tiene una solución de ingeniería — pero primero debes conocer la limitación.",
+                "concepto_reforzado": "Diseño de sistemas con ANI"
+              },
+              {
+                "pregunta": "¿Por qué Yann LeCun y otros investigadores argumentan que los LLMs podrían no ser la arquitectura que lleve a AGI?",
+                "opciones": [
+                  "Porque los LLMs son demasiado costosos",
+                  "Porque los LLMs aprenden patrones estadísticos de texto sin modelos del mundo que permitan razonamiento causal y planificación a largo plazo",
+                  "Porque son demasiado lentos",
+                  "Porque no pueden procesar imágenes"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El argumento de LeCun y otros es que la inteligencia general requiere modelos del mundo — representaciones causales de cómo las acciones producen efectos — no solo patrones estadísticos de texto. Un LLM puede decirte 'si empujas una pelota en una pendiente, rueda hacia abajo' porque lo leyó millones de veces, pero no tiene el modelo físico que le permitiría razonar sobre situaciones completamente nuevas. Esta limitación arquitectural podría requerir enfoques complementarios o alternativos.",
+                "concepto_reforzado": "Limitaciones arquitecturales de LLMs"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Un cliente de manufactura te pregunta: '¿Podemos usar IA para que el sistema decida automáticamente si parar la línea de producción cuando detecte anomalías, sin supervisión humana?' La línea produce componentes médicos críticos.",
+              "instruccion": "Responde usando tu comprensión de ANI vs AGI para explicar qué puede y no puede hacer la IA actual en este contexto, y qué nivel de autonomía es recomendable.",
+              "input_malo": "Sí, la IA ya puede tomar decisiones autónomas perfectamente. Implementemos un sistema completamente automatizado.",
+              "pista": "Piensa en qué tipos de anomalías puede detectar ANI (patrones que ya vio en datos de entrenamiento) vs cuáles no puede (anomalías genuinamente nuevas). ¿Qué pasa si el sistema falla en un componente médico?",
+              "solucion": "La ANI actual puede detectar anomalías conocidas con alta precisión — si hemos entrenado el modelo con ejemplos de los tipos de defectos que queremos detectar, puede hacerlo mejor que un humano en velocidad y consistencia. Sin embargo, recomendaría un sistema de autonomía parcial para componentes médicos: la IA detecta y alerta con alta confianza, pero la decisión de parar la línea permanece con un operario humano por dos razones. Primera: ANI no puede razonar sobre anomalías genuinamente nuevas que no vio en entrenamiento — puede generar falsos negativos peligrosos. Segunda: en dispositivos médicos críticos, la responsabilidad legal requiere supervisión humana documentada. Diseño propuesto: IA con umbral de alerta al 85% de confianza → operario revisa → aprueba parada. Esto captura el 90% del valor (velocidad de detección) mientras mantiene el juicio humano donde el riesgo es crítico.",
+              "criterios_de_exito": [
+                "Distingue claramente qué puede hacer ANI (detección de patrones conocidos) vs qué no puede (generalización a anomalías desconocidas)",
+                "Justifica la necesidad de supervisión humana con argumentos técnicos Y regulatorios",
+                "Propone un diseño de sistema concreto que maximice valor dentro de las limitaciones reales"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "IA simbólica vs conexionista",
+              "por_que_importa_despues": "Entender las dos filosofías fundamentales de la IA te da contexto para entender por qué los LLMs funcionan diferente a los sistemas expertos y cuándo usar cada enfoque."
             }
           }
         },
@@ -855,26 +1050,91 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "La historia de la IA es fundamentalmente la historia de dos enfoques filosóficos opuestos sobre qué es la inteligencia y cómo replicarla. Entender esta división te ayuda a entender por qué los LLMs modernos son revolucionarios, pero también por qué tienen limitaciones específicas que los sistemas simbólicos no tienen.\n\nIA Simbólica (también llamada GOFAI — Good Old-Fashioned AI): La idea es que la inteligencia se puede representar completamente como manipulación de símbolos con reglas explícitas. Si defines todas las reglas del conocimiento humano de forma lógica, el sistema puede razonar. Los sistemas expertos de los años 80 eran IA simbólica: un experto médico pasaba meses codificando reglas del tipo \"SI el paciente tiene fiebre > 38.5° Y tos seca ENTONCES considerar influenza\". Prolog, los sistemas de lógica de primer orden, y los sistemas de razonamiento formal son IA simbólica. Sus ventajas: son interpretables (puedes trazar exactamente qué regla llevó a qué conclusión), son verificables formalmente, y son correctos dentro de su dominio de reglas. Sus desventajas: necesitan que humanos expertos codifiquen explícitamente todo el conocimiento, no escalan a dominios complejos y ambiguos, son frágiles ante variaciones no anticipadas.\n\nIA Conexionista: La idea es que la inteligencia emerge de redes de nodos simples (neuronas artificiales) que aprenden patrones de datos sin que nadie les programe las reglas explícitamente. Las redes neuronales, el deep learning, y los LLMs son IA conexionista. En lugar de que un experto codifique \"esto es un gato\", la red neuronal ve millones de imágenes de gatos y aprende a reconocer los patrones visuales que constituyen un gato. Sus ventajas: aprende de datos masivos sin intervención humana por cada regla, generaliza a variaciones no vistas, puede manejar dominios donde las reglas son difíciles de articular (lenguaje natural, visión). Sus desventajas: es una caja negra (difícil saber por qué tomó una decisión específica), puede alucinaciones (aprendió un patrón incorrecto del ruido en los datos), necesita enormes cantidades de datos para entrenarse.\n\nLa síntesis actual — Sistemas Neuro-Simbólicos: El campo está evolucionando hacia sistemas que combinan ambos enfoques. Anthropic, por ejemplo, usa Constitutional AI que incorpora principios explícitos (simbólicos) para guiar el entrenamiento del modelo conexionista. Los sistemas de RAG (Retrieval Augmented Generation) combinan recuperación simbólica (búsqueda en base de datos estructurada) con generación conexionista (LLM).\n\nPara ti como AI Engineer: cuando construyas sistemas con LLMs, probablemente necesites añadir capas simbólicas para compensar las limitaciones conexionistas. ¿Necesitas que el sistema siempre siga ciertas reglas de negocio? Añade validación simbólica. ¿Necesitas explicabilidad? Añade logging de razonamiento. ¿El LLM alucina en un dominio específico? Añade una base de conocimiento estructurada con RAG.",
+              "analogia": "IA simbólica es como un abogado que tiene un libro de leyes y las aplica lógicamente. IA conexionista es como un juez experimentado que ha visto miles de casos y desarrolló intuición sobre qué es justo — pero no siempre puede explicar exactamente por qué tomó una decisión.",
+              "ejemplo_malo": "Usar solo un LLM (conexionista) para un sistema de compliance bancario donde cada decisión debe ser auditable y seguir regulaciones explícitas — el LLM puede dar respuestas correctas pero no documentables.",
+              "ejemplo_bueno": "Sistema híbrido: LLM para entender la consulta del cliente en lenguaje natural + motor de reglas simbólico para verificar contra regulaciones explícitas + LLM para generar la respuesta final. Lo mejor de ambos mundos.",
+              "por_que_importa": "Cuando diseñes sistemas de IA en producción, inevitablemente enfrentarás casos donde el LLM solo no es suficiente. Conocer el paradigma simbólico te da las herramientas para diseñar el componente que falta.",
+              "tip_profesional": "Pregúntate en cada sistema de IA que diseñes: ¿Hay reglas de negocio absolutas que el sistema NUNCA debe violar? Esas van en código simbólico, no en el prompt del LLM. Los prompts son conexionistas — probabilísticos. El código es simbólico — determinístico."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la ventaja principal de los sistemas simbólicos sobre los conexionistas?",
+                "opciones": [
+                  "Son más rápidos",
+                  "Son interpretables: puedes trazar exactamente qué regla llevó a cada decisión",
+                  "Necesitan menos datos",
+                  "Son más fáciles de entrenar"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La interpretabilidad es la ventaja crítica de los sistemas simbólicos. En dominios donde la explicabilidad es legal o éticamente requerida — medicina, derecho, finanzas reguladas — los sistemas simbólicos tienen una ventaja que los LLMs no pueden igualar fácilmente. Puedes mostrar exactamente qué regla llevó a qué conclusión, lo que facilita la auditoría, la corrección de errores y la responsabilidad.",
+                "concepto_reforzado": "Interpretabilidad en IA simbólica"
+              },
+              {
+                "pregunta": "¿Por qué los sistemas expertos de los años 80 (IA simbólica) fallaron como solución general?",
+                "opciones": [
+                  "Eran demasiado caros",
+                  "Requerían que expertos humanos codificaran manualmente cada regla, lo que no escalaba a dominios complejos",
+                  "No tenían suficiente memoria",
+                  "No podían conectarse a internet"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El cuello de botella de los sistemas expertos era el 'knowledge engineering' — el proceso de extraer conocimiento de expertos humanos y codificarlo como reglas. Para cada nuevo dominio, necesitabas meses de trabajo de expertos. Además, el lenguaje natural y el mundo real son tan ambiguos y variados que ninguna lista finita de reglas puede capturarlos completamente. Cuando el sistema encontraba una variación no anticipada, fallaba sin gracefulidad.",
+                "concepto_reforzado": "Limitaciones de IA simbólica"
+              },
+              {
+                "pregunta": "¿Qué son los sistemas Neuro-Simbólicos?",
+                "opciones": [
+                  "Una nueva empresa de IA",
+                  "Sistemas que combinan redes neuronales conexionistas con componentes simbólicos para obtener ventajas de ambos enfoques",
+                  "Un tipo de robot",
+                  "Software médico"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los sistemas neuro-simbólicos representan el estado del arte actual del campo. Constitutional AI de Anthropic usa principios explícitos (simbólicos) para guiar el entrenamiento conexionista. RAG combina recuperación estructurada (simbólica) con generación de lenguaje (conexionista). AlphaGo combinó redes neuronales profundas con Monte Carlo Tree Search (búsqueda simbólica). La tendencia es que las soluciones más robustas usan ambos paradigmas.",
+                "concepto_reforzado": "Sistemas neuro-simbólicos"
+              },
+              {
+                "pregunta": "¿Cuándo debería un AI Engineer preferir añadir una capa simbólica en lugar de depender solo del LLM?",
+                "opciones": [
+                  "Siempre",
+                  "Cuando hay reglas de negocio absolutas que deben cumplirse determinísticamente, o cuando la auditabilidad es legalmente requerida",
+                  "Nunca, los LLMs pueden hacer todo",
+                  "Solo en sistemas médicos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Las capas simbólicas son esenciales cuando: (1) el sistema tiene reglas de negocio que no pueden violarse probabilísticamente (un LLM puede 'olvidar' una regla con baja probabilidad, y eso es inaceptable en muchos contextos), (2) la auditoría requiere trazabilidad exacta, (3) el dominio tiene reglas formales bien definidas. Ejemplo: un sistema de préstamos puede usar LLM para entender la solicitud, pero un motor de reglas determinístico para verificar criterios de elegibilidad legales.",
+                "concepto_reforzado": "Cuándo usar IA simbólica vs conexionista"
+              },
+              {
+                "pregunta": "¿Por qué un LLM como Claude se considera IA conexionista?",
+                "opciones": [
+                  "Porque usa conexiones de internet",
+                  "Porque es una red neuronal que aprendió patrones estadísticos de grandes cantidades de datos sin reglas explícitas programadas",
+                  "Porque conecta diferentes tipos de datos",
+                  "Porque trabaja con múltiples usuarios simultáneamente"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Claude, como todos los LLMs modernos, es una red neuronal transformer de miles de millones de parámetros que fue entrenada prediciendo el siguiente token en enormes corpus de texto. Nadie programó explícitamente que 'sustantivo + verbo = oración válida' — el modelo aprendió la gramática, el contexto, el razonamiento y el conocimiento del mundo a través de la exposición masiva a datos. Esto lo hace poderoso (generaliza bien) pero también lo hace una caja negra difícil de auditar.",
+                "concepto_reforzado": "LLMs como IA conexionista"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Estás diseñando un sistema de IA para una aseguradora que debe: (1) entender consultas de clientes en lenguaje natural, (2) verificar elegibilidad según pólizas específicas, (3) generar respuestas claras. Tienes $500/mes de presupuesto de API.",
+              "instruccion": "Diseña la arquitectura del sistema especificando qué partes serían conexionistas (LLM) y qué partes serían simbólicas (reglas, bases de datos), y por qué.",
+              "input_malo": "Usaría solo Claude con un prompt muy detallado que incluya todas las reglas de las pólizas.",
+              "pista": "Las pólizas tienen condiciones exactas (si el cliente tiene X cobertura y el evento Y ocurrió, entonces Z está cubierto). ¿Esas condiciones exactas deben ser probabilísticas o determinísticas?",
+              "solucion": "Arquitectura en 3 capas: Capa 1 (Conexionista/LLM): Claude entiende la consulta del cliente en lenguaje natural, extrae entidades clave (tipo de evento, fecha, número de póliza) y las convierte a parámetros estructurados. Esta parte sí es adecuada para LLM porque el lenguaje natural es el dominio donde brilla. Capa 2 (Simbólica/Motor de reglas): Un sistema de reglas determinístico verifica las condiciones exactas de la póliza contra los parámetros extraídos. Esta parte NO debe ser LLM porque las decisiones de cobertura deben ser auditables y 100% consistentes — si la condición X se cumple, siempre se cubre, sin probabilidad. Capa 3 (Conexionista/LLM): Claude genera la respuesta final al cliente de forma clara y empática, explicando la decisión de la capa 2 en lenguaje humano. Beneficios: auditabilidad (la capa 2 es trazable), experiencia de usuario (las capas 1 y 3 son conversacionales), cumplimiento regulatorio (las decisiones son determinísticas y documentables).",
+              "criterios_de_exito": [
+                "Identifica correctamente qué partes del sistema deben ser determinísticas (simbólicas) y cuáles probabilísticas (conexionistas)",
+                "Justifica el uso de cada paradigma basado en los requisitos específicos",
+                "Propone una arquitectura de 3 capas o similar que combine ambos enfoques"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Modelos discriminativos vs generativos",
+              "por_que_importa_despues": "Esta distinción técnica explica por qué los mismos datos de entrenamiento pueden producir modelos con propósitos completamente diferentes."
             }
           }
         },
@@ -887,26 +1147,91 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Cuando la gente dice \"IA generativa\" están usando una distinción técnica importante que define dos familias completamente diferentes de modelos de IA, con propósitos, arquitecturas y casos de uso distintos. Entender esta diferencia te ayuda a elegir el tipo de modelo correcto para cada problema.\n\nModelos Discriminativos: Aprenden a distinguir entre categorías. Dado un input, responden: ¿A qué categoría pertenece esto? El clásico ejemplo es un clasificador de spam. Se entrena con miles de emails etiquetados como spam o no-spam, y aprende los patrones que distinguen una categoría de la otra. Técnicamente, aprenden P(categoría | input) — la probabilidad de que un input pertenezca a cada categoría dado el input. Modelos discriminativos comunes: clasificadores de sentimiento, detección de objetos en imágenes, clasificación de documentos, detección de fraude, diagnóstico médico binario. La pregunta que responden es SIEMPRE una variación de \"¿qué es esto?\" o \"¿a qué grupo pertenece?\"\n\nModelos Generativos: Aprenden la distribución completa de los datos. No solo saben distinguir categorías — saben generar nuevos ejemplos que \"pertenecen\" a esa distribución. Técnicamente, aprenden P(input) — la probabilidad de que cualquier punto de datos sea parte de la distribución aprendida. Esto les permite generar texto nuevo, imágenes nuevas, audio nuevo. GPT-4, Claude, Stable Diffusion, DALL-E, Midjourney — todos son modelos generativos. La pregunta que responden es \"¿cómo sería un nuevo ejemplo de esto?\"\n\nPor qué la distinción importa en la práctica: Si quieres clasificar si un email es phishing o legítimo, un modelo discriminativo entrenado específicamente para esa tarea será más eficiente y preciso que pedirle a Claude (un modelo generativo) que clasifique. Si quieres generar borradores de respuesta a emails de clientes, un modelo generativo como Claude es la herramienta correcta.\n\nLos LLMs modernos son generativos por naturaleza: predicen la distribución de probabilidad sobre el siguiente token. Pero pueden usarse de forma discriminativa. Si le preguntas a Claude \"¿Este email es spam? Responde solo Sí o No\", estás forzando al modelo generativo a comportarse como discriminativo. Funciona, pero generalmente hay clasificadores especializados que son más precisos y económicos para esa tarea específica.\n\nLa era de la IA Generativa (GenAI): El término \"IA generativa\" se popularizó en 2022-2023 para referirse específicamente a los modelos que generan contenido nuevo de alta calidad (texto, imagen, audio, video, código). No es un término técnico preciso — es un término de mercado que captura la característica más visible de los modelos actuales. Cuando escuchas \"herramientas de GenAI\", piensan en modelos que crean, no que clasifican.",
+              "analogia": "Un modelo discriminativo es como un sommelier que puede identificar si un vino es de Borgoña o Rioja. Un modelo generativo es como un viticultor que puede crear un nuevo vino con las características de Borgoña. Ambos conocen el vino — pero hacen cosas diferentes con ese conocimiento.",
+              "ejemplo_malo": "Usar Claude (modelo generativo) para clasificar miles de documentos por categoría cuando hay clasificadores discriminativos específicos disponibles — innecesariamente caro y potencialmente menos preciso.",
+              "ejemplo_bueno": "Usar un clasificador discriminativo para filtrar primero (spam/no-spam) y luego Claude (generativo) para generar la respuesta personalizada al email no-spam — cada modelo donde tiene ventaja.",
+              "por_que_importa": "En arquitecturas de sistemas de IA reales, típicamente combinas ambos tipos. Entender la diferencia te permite elegir el modelo correcto para cada componente y evitar usar un mazo cuando necesitas un bisturí.",
+              "tip_profesional": "Regla práctica: ¿El problema es 'categorizar' o 'crear'? Si categorizar, considera un clasificador discriminativo especializado. Si crear (texto, código, imágenes, análisis), usa un modelo generativo. Muchos problemas tienen ambas fases."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la diferencia fundamental entre un modelo discriminativo y uno generativo?",
+                "opciones": [
+                  "Los generativos son más modernos",
+                  "Los discriminativos aprenden a clasificar entre categorías; los generativos aprenden la distribución completa de datos y pueden crear nuevos ejemplos",
+                  "Los discriminativos son más baratos",
+                  "Los generativos solo funcionan con texto"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La diferencia es conceptual y matemática. Un clasificador discriminativo aprende P(y|x) — la probabilidad de la etiqueta dado el input. Solo puede decirte en qué categoría cae algo. Un modelo generativo aprende P(x) — la distribución completa de los datos, lo que le permite generar nuevos puntos de datos realistas. Esta capacidad de generación es lo que hace posibles los LLMs, DALL-E, Stable Diffusion y todos los modelos de 'IA generativa'.",
+                "concepto_reforzado": "Discriminativo vs Generativo"
+              },
+              {
+                "pregunta": "¿Por qué Claude (modelo generativo) puede usarse para clasificar, pero hay casos en que un clasificador específico es mejor?",
+                "opciones": [
+                  "Claude no puede clasificar",
+                  "Los clasificadores discriminativos entrenados específicamente para una tarea son más precisos y económicos en ese dominio que un modelo generativo de propósito general",
+                  "Claude solo funciona en inglés",
+                  "Los clasificadores son más modernos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Usar Claude para clasificar spam funciona, pero un clasificador BERT fine-tuned específicamente para spam detectará patrones más sutiles con mayor precisión y menor costo por inferencia. La razón es que Claude está optimizado para generación de texto de calidad general, mientras que un clasificador específico dedicó toda su capacidad de aprendizaje a esa tarea puntual. En producción, la elección correcta puede significar 10x menos costo y 15% más precisión.",
+                "concepto_reforzado": "Elección correcta de modelo"
+              },
+              {
+                "pregunta": "¿Qué tienen en común GPT-4, Claude y Stable Diffusion que los hace a todos 'modelos generativos'?",
+                "opciones": [
+                  "Todos son de la misma empresa",
+                  "Todos aprenden distribuciones de datos y pueden generar nuevos ejemplos (texto o imágenes) que parecen provenir de la misma distribución",
+                  "Todos son gratuitos",
+                  "Todos usan la misma arquitectura"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Aunque GPT-4 y Claude generan texto y Stable Diffusion genera imágenes, los tres son generativos porque aprenden la distribución estadística de sus datos de entrenamiento y pueden muestrear de esa distribución para generar nuevos ejemplos. La diferencia es el tipo de datos (texto vs imágenes) y la arquitectura específica (transformers vs diffusion models), pero el concepto subyacente de 'aprender para generar' es el mismo.",
+                "concepto_reforzado": "Modelos generativos en diferentes dominios"
+              },
+              {
+                "pregunta": "¿Cuándo es apropiado forzar a un modelo generativo como Claude a comportarse como clasificador (ej: 'responde solo Sí o No')?",
+                "opciones": [
+                  "Nunca, los modelos generativos no pueden clasificar",
+                  "Cuando la clasificación no es el core del sistema o cuando ya tienes Claude integrado y el volumen no justifica un clasificador separado",
+                  "Siempre, es más sencillo",
+                  "Solo para texto en español"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Forzar a Claude a clasificar con outputs binarios funciona y es razonable en contextos como: prototipos, sistemas de baja escala, cuando la calidad de clasificación no es crítica, o cuando el LLM ya está integrado y añadir otro modelo añade complejidad innecesaria. En producción a escala donde la clasificación es el bottleneck o donde la precisión es crítica, vale la pena el modelo especializado.",
+                "concepto_reforzado": "Uso pragmático de modelos generativos como clasificadores"
+              },
+              {
+                "pregunta": "¿Qué es técnicamente lo que aprende un modelo discriminativo expresado como P(y|x)?",
+                "opciones": [
+                  "La probabilidad de los datos de entrenamiento",
+                  "La probabilidad de la etiqueta y dado el input x — es decir, qué categoría corresponde a cada input",
+                  "La probabilidad de generar texto nuevo",
+                  "La velocidad de procesamiento"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "P(y|x) es la notación matemática para 'probabilidad condicional de y dado x'. En un clasificador de spam, y es la categoría (spam/no-spam) y x es el email. El modelo aprende a estimar qué tan probable es cada categoría para cada input posible. Esto contrasta con P(x) que aprende un modelo generativo — la probabilidad de que cualquier punto de datos sea parte de la distribución aprendida.",
+                "concepto_reforzado": "Probabilidad condicional en modelos discriminativos"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de e-commerce quiere implementar IA en su proceso de atención al cliente. Tienen dos necesidades: (1) clasificar automáticamente los tickets de soporte por categoría (devolución, problema técnico, queja, información), y (2) generar respuestas personalizadas para cada ticket según su categoría.",
+              "instruccion": "Diseña la solución técnica especificando qué tipo de modelo usarías para cada necesidad y por qué.",
+              "input_malo": "Usaría Claude para todo: le pido que clasifique el ticket y luego que genere la respuesta.",
+              "pista": "¿Cuántos tickets procesan por día? Si son miles, ¿importa el costo por clasificación? ¿Qué precisión necesita la clasificación para que el sistema funcione bien?",
+              "solucion": "Solución en dos fases: Fase 1 — Clasificación (Modelo Discriminativo): Usar un clasificador BERT fine-tuned en los tickets históricos de la empresa (probablemente tienen miles ya etiquetados). Costo: inferencia de clasificador es 20-50x más barato que Claude. Precisión: 92-95% para 4 categorías bien definidas. Velocidad: ms por clasificación vs segundos con LLM. Fase 2 — Generación de respuesta (Modelo Generativo / Claude): Una vez clasificado el ticket, pasar a Claude con el contexto: tipo de ticket, historial del cliente, políticas de la empresa, y pedir respuesta personalizada. Aquí sí vale el costo del LLM porque la respuesta de calidad es el valor diferenciador. Resultado: 95% de tickets clasificados automáticamente + respuestas personalizadas de alta calidad + costo optimizado (clasificación barata + generación donde importa).",
+              "criterios_de_exito": [
+                "Identifica correctamente que la clasificación es tarea discriminativa y la generación de respuesta es tarea generativa",
+                "Justifica la elección de cada tipo de modelo con argumentos de precisión, costo y escala",
+                "Diseña un flujo de dos fases que combina ambos tipos optimamente"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Multimodalidad: texto, imagen, audio, video y código unidos",
+              "por_que_importa_despues": "La multimodalidad representa la convergencia de todos los tipos de modelos en sistemas unificados — el siguiente paso después de entender los tipos individuales."
             }
           }
         },
@@ -919,26 +1244,91 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "La multimodalidad es el desarrollo más transformador de los últimos 2 años en IA práctica. Un modelo multimodal puede entender y generar múltiples tipos de información — texto, imágenes, audio, video, código — de forma integrada, no como sistemas separados conectados, sino como un único sistema que puede razonar sobre todos estos tipos de datos simultáneamente.\n\nEl camino hacia la multimodalidad: Hasta 2021, los mejores modelos de IA eran uni-modales. GPT-3 solo procesaba texto. DALL-E 1 solo generaba imágenes. Whisper (2022) transcribía audio. Cada modelo era excelente en su dominio, pero no había integración real. El salto llegó con GPT-4V (2023), Claude 3 (2024) y Gemini (2023): modelos que podían recibir texto e imágenes simultáneamente y razonar sobre ambos de forma integrada. El siguiente salto: GPT-4o (2024) y Gemini 1.5 Ultra pueden procesar texto, imágenes, audio y video en tiempo real. Claude 3.5 puede razonar sobre imágenes complejas incluyendo gráficas, screenshots y diagramas.\n\nPor qué la multimodalidad es diferente a \"conectar sistemas separados\": Si conectas OCR + LLM + sistema de imágenes, cada pieza ve una representación diferente del mismo dato y pierde contexto al pasar entre sistemas. Un modelo multimodal nativo tiene representaciones internas que integran toda la información desde el principio. Puede razonar: \"esta gráfica muestra una tendencia que contradice lo que dice el texto en el párrafo anterior\" — algo que un sistema conectado no puede hacer sin pipes complejos y pérdida de información.\n\nCasos de uso concretos que cambian procesos reales: Análisis de documentos médicos: Un modelo multimodal puede leer simultáneamente el texto del historial clínico y la imagen del scan, y razonar sobre ambos. Revisión de contratos con tablas: Entender texto legal y las tablas numéricas embebidas como un todo coherente. Debugging de interfaces: Tomar un screenshot del error en producción y el mensaje de error juntos. Análisis de videos de reuniones: Transcribir, entender el contexto visual, identificar quién habla cuándo. Arquitectura de software desde diagramas: Interpretar un diagrama de arquitectura y generar el código correspondiente.\n\nLo que viene: Modelos nativamente multimodales de audio y video en tiempo real (ya en beta en 2024-2025). La convergencia es hacia un único sistema que pueda manejar cualquier tipo de input y output de forma fluida. Esto no es ciencia ficción — es la dirección clara de todos los grandes laboratorios.\n\nLimitaciones actuales importantes: Los modelos multimodales actuales siguen siendo mejores con texto que con imagen o audio. El razonamiento espacial en imágenes complejas todavía comete errores. El video a escala (> 30 minutos) todavía tiene limitaciones de contexto. La generación de video de alta calidad aún no está completamente integrada en los modelos de texto.",
+              "analogia": "Un modelo uni-modal es como un especialista que solo habla un idioma. Puedes contratar un traductor para comunicarte, pero pierdes matices. Un modelo multimodal es como alguien que es nativo en todos los idiomas y puede razonar en todos simultáneamente sin pérdida de contexto.",
+              "ejemplo_malo": "Construir un sistema para analizar facturas: OCR extrae el texto → LLM analiza el texto → sistema separado valida las tablas numéricas → otro sistema verifica el logo de la empresa. Cuatro sistemas, tres puntos de fallo, pérdida de contexto entre cada paso.",
+              "ejemplo_bueno": "Enviar la imagen de la factura directamente a Claude o GPT-4o: 'Analiza esta factura, extrae los ítems, calcula el subtotal, verifica que los cálculos son correctos, e identifica cualquier anomalía.' Un solo paso, contexto completo, resultado en segundos.",
+              "por_que_importa": "La multimodalidad elimina categorías enteras de sistemas complejos y pipes de procesamiento que antes requerían múltiples herramientas especializadas. Para un AI Engineer, significa que puedes resolver problemas más complejos con menor complejidad de sistema.",
+              "tip_profesional": "Antes de construir un pipeline complejo de procesamiento de documentos, prueba siempre primero: ¿puede Claude o GPT-4o resolver esto directamente enviando el documento/imagen? En el 70% de los casos, la respuesta es sí y ahorras semanas de desarrollo."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la diferencia fundamental entre un sistema multimodal 'conectado' y un modelo nativo multimodal?",
+                "opciones": [
+                  "Solo la velocidad",
+                  "Un sistema conectado pierde contexto al pasar entre modelos separados; un modelo nativo integra todos los tipos de datos en representaciones internas unificadas desde el inicio",
+                  "El costo",
+                  "La cantidad de modelos usados"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La integración nativa es cualitativamente diferente porque el modelo tiene representaciones internas que capturan la relación entre modalidades. Cuando Claude ve una gráfica junto a texto, no 'convierte la imagen a descripción y luego analiza el texto de la descripción' — razona sobre ambos como un todo coherente. Esto permite detectar contradicciones entre modalidades, algo imposible con sistemas separados sin pipes muy elaborados.",
+                "concepto_reforzado": "Multimodalidad nativa vs conectada"
+              },
+              {
+                "pregunta": "¿Qué hito del 2023-2024 marcó el inicio de la era verdaderamente multimodal?",
+                "opciones": [
+                  "El lanzamiento de Stable Diffusion",
+                  "GPT-4V, Claude 3 y Gemini — modelos que podían procesar texto e imágenes de forma integrada y razonar sobre ambos",
+                  "El primer smartphone con IA",
+                  "Whisper de OpenAI"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "GPT-4V (Vision) fue el primer modelo ampliamente disponible que podía recibir imágenes junto con texto y razonar sobre ambos de forma integrada, no solo describir imágenes. Claude 3 y Gemini siguieron con capacidades similares o superiores. Esto fue un salto cualitativo porque permitió casos de uso completamente nuevos: análisis de documentos complejos, debugging visual, comprensión de diagramas.",
+                "concepto_reforzado": "Hitos de la multimodalidad"
+              },
+              {
+                "pregunta": "¿Cuál es un caso de uso donde la multimodalidad ofrece ventaja clara sobre un LLM de solo texto?",
+                "opciones": [
+                  "Traducción de idiomas",
+                  "Análisis de una factura con tablas y texto donde el modelo necesita razonar sobre la relación entre texto y números simultáneamente",
+                  "Generación de código",
+                  "Responder preguntas de historia"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Una factura tiene texto (descripción de ítems, condiciones de pago) y tablas numéricas (precios, cantidades, subtotales, IVA). Para verificar que los cálculos son correctos, necesitas razonar sobre la relación entre el texto y los números. Un LLM de solo texto vería la factura transcrita como texto plano y perdería la estructura visual de las tablas. Un modelo multimodal ve la imagen completa y puede razonar sobre la estructura, detectar errores de cálculo y anomalías.",
+                "concepto_reforzado": "Casos de uso de multimodalidad"
+              },
+              {
+                "pregunta": "¿Cuál de estas es una limitación real de los modelos multimodales actuales en 2026?",
+                "opciones": [
+                  "No pueden procesar texto",
+                  "El razonamiento espacial en imágenes complejas todavía comete errores, y el video a escala larga tiene limitaciones de contexto",
+                  "No pueden generar respuestas en español",
+                  "Solo funcionan con documentos PDF"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los modelos multimodales actuales son excelentes con texto e imágenes simples, pero tienen limitaciones reales: el razonamiento espacial preciso (¿cuántos objetos hay en el cuadrante superior derecho?) todavía comete errores, especialmente en imágenes densas. El video de larga duración supera las ventanas de contexto actuales. La generación de video de alta calidad integrada con texto todavía está en desarrollo. Conocer estas limitaciones evita sobrediseñar sistemas que asumen capacidades que aún no existen robustamente.",
+                "concepto_reforzado": "Limitaciones de multimodalidad actual"
+              },
+              {
+                "pregunta": "¿Qué estrategia práctica recomienda el módulo antes de construir un pipeline complejo de procesamiento de documentos?",
+                "opciones": [
+                  "Siempre construir el pipeline completo desde el inicio",
+                  "Probar primero si Claude o GPT-4o pueden resolver el problema directamente enviando el documento o imagen — en el 70% de los casos funciona y ahorra semanas",
+                  "Usar siempre sistemas separados para mayor control",
+                  "Esperar a que la tecnología madure más"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La regla del 'multimodal primero' ahorra semanas de desarrollo en muchos casos. Antes de construir: OCR → parser → validador → LLM, prueba primero: envía la imagen directamente a un modelo multimodal. Si funciona con la calidad requerida, has ahorrado la complejidad de 3-4 sistemas. Si no funciona perfectamente, ahora tienes información específica sobre qué parte del pipeline necesitas optimizar.",
+                "concepto_reforzado": "Estrategia práctica con modelos multimodales"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una firma de contabilidad tiene 500 facturas de proveedores que llegan mensualmente en diferentes formatos (PDF escaneados, fotos de facturas en papel, PDFs digitales). Actualmente un contador junior pasa 3 días al mes extrayendo datos de estas facturas a una hoja de Excel para conciliación.",
+              "instruccion": "Diseña un sistema con IA multimodal que reduzca este proceso de 3 días a menos de 3 horas. Especifica qué modelo usarías, cómo lo integrarías con el sistema actual, y cuáles son los puntos que aún requerirían revisión humana.",
+              "input_malo": "Implementar OCR para extraer el texto y luego un LLM para procesar el texto extraído.",
+              "pista": "Las facturas tienen texto, tablas y a veces logos o marcas de agua. ¿Cuánto contexto se pierde al convertir primero a texto?",
+              "solucion": "Sistema de procesamiento multimodal: Paso 1 — Ingesta: Todas las facturas (PDF, imágenes) se envían directamente como imágenes a Claude claude-sonnet-4-6 con el prompt: 'Extrae en JSON: proveedor, RUT, fecha, número de factura, ítems con descripción y valor, subtotal, impuestos, total. Si algo es ilegible o parece incorrecto, márcalo con flag:true.' Paso 2 — Validación automática: Script en Python verifica que los totales calculados coincidan con el total declarado, que el RUT tenga formato válido, y que la fecha sea razonable. Flaggea cualquier discrepancia. Paso 3 — Exportación: Los registros sin flags se exportan automáticamente al Excel. Estimación de tiempo: 500 facturas a 15 segundos cada una = ~2 horas de procesamiento. Paso 4 — Revisión humana (30-60 min): El contador revisa solo las facturas flaggeadas (estimado 5-10% con algún problema). Resultado: De 3 días → 2-3 horas. Ventaja vs OCR+LLM: el modelo multimodal maneja la estructura visual de tablas, logos de verificación y formatos irregulares sin pipeline adicional.",
+              "criterios_de_exito": [
+                "Propone usar un modelo multimodal nativo en lugar de OCR + LLM",
+                "Diseña el sistema de flags/excepciones para mantener supervisión humana donde el sistema no está seguro",
+                "Estima el tiempo realistically y distingue procesamiento automático de revisión humana"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Agentes autónomos: la nueva frontera de la IA",
+              "por_que_importa_despues": "Los agentes son la capa que convierte modelos multimodales pasivos en sistemas que pueden tomar acciones en el mundo — el salto de herramienta a colaborador."
             }
           }
         },
@@ -951,26 +1341,91 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Hasta 2024, los LLMs eran fundamentalmente reactivos: respondían a preguntas. Los agentes autónomos representan el salto hacia sistemas que pueden planificar, tomar acciones en el mundo real, y completar objetivos de múltiples pasos sin supervisión humana en cada paso.\n\n¿Qué es un agente de IA? Un agente es un sistema de IA que tiene: (1) Percepción — puede recibir inputs del entorno (texto, datos, resultados de herramientas), (2) Razonamiento — puede planificar una secuencia de pasos para lograr un objetivo, (3) Acción — puede ejecutar herramientas o tomar acciones con efectos reales, (4) Memoria — puede mantener contexto a través de múltiples pasos, y (5) Evaluación — puede verificar si sus acciones lograron el objetivo.\n\nLa diferencia entre LLM y agente: Pedirle a Claude \"escribe un email de seguimiento para este cliente\" es usar un LLM como herramienta. Darle a Claude \"gestiona el seguimiento de todos los leads de esta semana: revisa el CRM, identifica quién necesita seguimiento, escribe emails personalizados, y programa los envíos\" — eso es un agente. El agente usa herramientas (acceso al CRM, acceso al servicio de email, calendario) y completa el objetivo en múltiples pasos.\n\nFrameworks de agentes actuales: Claude Computer Use (2024): Claude puede controlar directamente un navegador y computadora. Puede navegar sitios web, hacer clic, llenar formularios, tomar screenshots y razonar sobre lo que ve. LangChain Agents: Framework para construir agentes que pueden usar herramientas definidas por el desarrollador. AutoGen (Microsoft): Framework para sistemas multi-agente donde múltiples LLMs colaboran. CrewAI: Especializado en agentes con roles definidos que trabajan en equipo. Claude Code (2025): Agente especializado en desarrollo de software que puede editar archivos, correr tests y resolver bugs de forma autónoma.\n\nCasos de uso reales en 2026: Investigación de mercado autónoma: El agente busca en múltiples fuentes, extrae datos, los compara y genera el reporte. Marketing automatizado: El agente monitorea menciones de marca, genera respuestas, las publica y reporta resultados. Desarrollo de software: El agente lee los requisitos, escribe el código, corre los tests, corrige los errores detectados, y hace el pull request. Soporte al cliente de nivel 1: El agente lee el ticket, consulta la base de conocimiento, verifica el estado en el sistema, y resuelve o escala con contexto completo.\n\nRiesgos de los agentes y cómo mitigarlos: El poder de los agentes viene con riesgos nuevos. Un agente que puede tomar acciones reales puede cometer errores reales. Principios de diseño seguro: Human-in-the-loop para acciones de alto impacto (no automatices borrar datos o hacer pagos sin aprobación), scope limitado (dale al agente solo las herramientas que necesita), logging completo de todas las acciones, y rollback capability cuando sea posible.",
+              "analogia": "La diferencia entre un LLM y un agente es como la diferencia entre un consultor que te da recomendaciones en una reunión y un gerente de proyectos que ejecuta el proyecto completo. Ambos son expertos — uno te dice qué hacer, el otro lo hace.",
+              "ejemplo_malo": "Crear un agente con acceso completo a todos los sistemas de la empresa (CRM, emails, bases de datos, APIs de pago) sin aprobación humana requerida para ninguna acción, esperando que el LLM 'tenga buen juicio'.",
+              "ejemplo_bueno": "Agente de seguimiento de leads con: acceso de lectura al CRM, capacidad de generar borradores de email, pero con aprobación humana requerida antes de cada envío — captura el valor de la automatización con supervisión donde importa.",
+              "por_que_importa": "Los agentes son donde la IA pasa de ser una herramienta de productividad personal a ser un colaborador que puede completar tareas completas de negocio. Quien sepa diseñar y desplegar agentes correctamente tendrá ventaja competitiva significativa en 2026-2027.",
+              "tip_profesional": "Para tu primer agente, elige una tarea completamente interna y reversible — donde un error no tenga consecuencias externas. Ejemplo perfecto: agente que genera borradores de contenido para redes sociales que tú revisas antes de publicar. Aprende el patrón con bajo riesgo."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la diferencia fundamental entre usar un LLM como herramienta y un agente autónomo?",
+                "opciones": [
+                  "El costo",
+                  "Un LLM responde preguntas; un agente planifica y ejecuta secuencias de acciones con herramientas reales para lograr objetivos de múltiples pasos",
+                  "La velocidad de respuesta",
+                  "El lenguaje de programación usado"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La distinción clave es la agencia — la capacidad de actuar en el mundo, no solo de generar texto. Un agente tiene herramientas que producen efectos reales (enviar emails, modificar bases de datos, navegar la web), puede planificar secuencias de pasos, y puede auto-evaluar si sus acciones están logrando el objetivo. Esto lo convierte en un sistema que puede completar tareas completas, no solo responder preguntas.",
+                "concepto_reforzado": "LLM vs Agente"
+              },
+              {
+                "pregunta": "¿Cuáles son los 5 componentes que definen un agente de IA?",
+                "opciones": [
+                  "Velocidad, precisión, costo, memoria, escala",
+                  "Percepción, razonamiento, acción, memoria y evaluación",
+                  "Texto, imagen, audio, video, código",
+                  "Entrenamiento, fine-tuning, deployment, monitoring, retirement"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los 5 componentes del framework de agentes (PRAME): Percepción (recibir inputs), Razonamiento (planificar pasos), Acción (ejecutar herramientas con efectos reales), Memoria (mantener contexto), Evaluación (verificar si el objetivo se logró). Un sistema que tiene los 5 puede ser considerado un agente. Si falta alguno, es una herramienta más limitada. Por ejemplo, sin memoria, no puede mantener el contexto de un proceso de múltiples días.",
+                "concepto_reforzado": "Componentes de un agente de IA"
+              },
+              {
+                "pregunta": "¿Cuál de estos ejemplos representa mejor un agente autónomo vs un LLM como herramienta?",
+                "opciones": [
+                  "'Resume este artículo' (agente) vs 'Investiga el mercado y genera un reporte de competidores' (herramienta)",
+                  "'Investiga el mercado y genera un reporte de competidores accediendo a múltiples fuentes' (agente) vs 'Resume este artículo' (herramienta)",
+                  "Ambos son igual de agénticos",
+                  "Ninguno es agéntico"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El primer ejemplo requiere planificación multi-paso, uso de herramientas externas (búsqueda web, bases de datos), y capacidad de sintetizar información de múltiples fuentes autónomamente. El segundo ejemplo ('resume este artículo') es una tarea de un solo paso sin herramientas externas — es un LLM funcionando como herramienta de productividad, no como agente.",
+                "concepto_reforzado": "Identificar agentes vs herramientas"
+              },
+              {
+                "pregunta": "¿Qué principio de diseño de agentes mitiga mejor el riesgo de errores con consecuencias irreversibles?",
+                "opciones": [
+                  "Usar el LLM más inteligente disponible",
+                  "Human-in-the-loop para acciones de alto impacto: requerir aprobación humana antes de ejecutar acciones con consecuencias significativas o difícilmente reversibles",
+                  "Usar más memoria",
+                  "Ejecutar múltiples agentes en paralelo para votación"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Human-in-the-loop (HITL) es el principio de diseño más importante para agentes en producción. No todas las acciones necesitan aprobación — enviar un mensaje interno, crear un borrador, hacer una búsqueda son generalmente seguros. Pero enviar un email externo a un cliente, hacer una transacción financiera, eliminar datos, o publicar contenido en redes sociales deberían requerir revisión humana. HITL te da el valor de la automatización con la seguridad del juicio humano donde importa.",
+                "concepto_reforzado": "Human-in-the-loop en agentes"
+              },
+              {
+                "pregunta": "¿Qué hace que Claude Computer Use (2024) sea significativo para los agentes?",
+                "opciones": [
+                  "Es más barato",
+                  "Permite a Claude controlar directamente un navegador y computadora real, ejecutando cualquier tarea que un humano haría con esos instrumentos",
+                  "Es más rápido",
+                  "Solo funciona en Mac"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Claude Computer Use representa un salto cualitativo: en lugar de que el agente use APIs específicas para cada herramienta, puede controlar directamente la interfaz visual de cualquier aplicación que un humano usaría. Puede navegar cualquier sitio web, usar cualquier software de escritorio, interactuar con formularios y sistemas legacy. Esto elimina la necesidad de APIs específicas para cada herramienta y abre la automatización a sistemas que no tienen API.",
+                "concepto_reforzado": "Claude Computer Use"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Eres AI Engineer en una agencia de marketing digital. El equipo de social media pasa 2 horas diarias haciendo: monitoreo de menciones de marca en Twitter/X, identificando las que requieren respuesta, redactando respuestas, y publicándolas. Te piden automatizar el proceso.",
+              "instruccion": "Diseña un agente para este proceso. Especifica: qué herramientas necesita, qué pasos ejecuta autónomamente, dónde requiere aprobación humana, y qué riesgos mitigas con ese diseño.",
+              "input_malo": "El agente monitorea, redacta Y publica respuestas automáticamente sin supervisión humana para maximizar velocidad.",
+              "pista": "Una respuesta incorrecta o inapropiada de la marca en redes sociales puede ir viral de forma negativa. ¿Cuál es el peor escenario posible si el agente comete un error?",
+              "solucion": "Diseño del agente con HITL estratégico: Herramientas del agente: API de Twitter para lectura de menciones, clasificador de sentimiento/urgencia, base de conocimiento de la marca (tono, FAQs, políticas), servicio de notificación para el equipo, y API de Twitter para ESCRITURA (solo con aprobación). Flujo autónomo (sin aprobación): 1. Monitorea menciones cada 15 minutos. 2. Clasifica por tipo (queja, pregunta, elogio, neutral) y urgencia. 3. Filtra menciones que no requieren respuesta. 4. Para las que requieren respuesta, genera un borrador personalizado. 5. Notifica al equipo con la mención + borrador + clasificación. Human-in-the-loop obligatorio: El equipo revisa el borrador, lo edita si necesita, y aprueba antes de publicar. Justificación del HITL: Una respuesta de marca mal redactada puede viralizarse negativamente, afectar la reputación, y costar más en relaciones públicas de lo que ahorró la automatización. Resultado: El agente automatiza el 80% del trabajo (monitoreo, clasificación, borradores) y el humano hace el 20% de alto valor (juicio editorial y aprobación final). Tiempo estimado: de 2 horas a 30 minutos diarios.",
+              "criterios_de_exito": [
+                "Diseña el agente con HITL específico en el punto de publicación",
+                "Justifica el HITL con el análisis de riesgo del peor escenario",
+                "Especifica qué partes son completamente autónomas y por qué esas son seguras"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "El mapa visual del ecosistema completo de IA en 2026",
+              "por_que_importa_despues": "Con todos los tipos de IA claros, es momento de ver el ecosistema completo — todos los jugadores, herramientas y cómo se relacionan."
             }
           }
         },
@@ -983,26 +1438,91 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Para tomar decisiones inteligentes sobre qué aprender, qué herramientas usar y dónde posicionarte profesionalmente, necesitas una visión del ecosistema completo de IA en 2026. Este mapa tiene 5 capas que van desde la infraestructura física hasta las aplicaciones que los usuarios finales usan.\n\nCapa 1 — Hardware e Infraestructura Compute: NVIDIA domina con sus GPUs (H100, H200, Blackwell). AWS, Google Cloud, y Azure son los principales proveedores de cómputo en la nube para IA. Microsoft, Google y Amazon compiten por ser el proveedor preferido de infraestructura para entrenar y desplegar modelos. Esta capa es donde se gasta el dinero más grande — entrenar un modelo de frontera cuesta cientos de millones de dólares.\n\nCapa 2 — Modelos Fundacionales: Los laboratorios que entrenan los modelos base. Anthropic (Claude), OpenAI (GPT-4o, o1), Google (Gemini), Meta (LLaMA), Mistral, y una docena de laboratorios más pequeños. Estos modelos son la materia prima del ecosistema. Tienen capacidades que ninguna empresa individual podría replicar sin inversiones masivas. Para el 99% de los AI Engineers, el trabajo comienza en esta capa, no por debajo.\n\nCapa 3 — Frameworks y Plataformas: Las herramientas que permiten construir aplicaciones sobre los modelos fundacionales. LangChain y LlamaIndex para orquestación de LLMs. Hugging Face como hub de modelos open source. Pinecone, Weaviate y pgvector para bases de datos vectoriales. Weights & Biases para experiment tracking. Esta capa está en constante cambio — los frameworks populares de 2023 pueden quedar obsoletos en 2024.\n\nCapa 4 — IDEs y Herramientas de Desarrollo Aumentado con IA: Cursor, Windsurf, GitHub Copilot (para desarrollo de software). Perplexity (búsqueda con IA). Notion AI, Grammarly (productividad). Esta capa está transformando el trabajo de los developers: un developer con Cursor + Claude Code es 2-4x más productivo que sin ellas.\n\nCapa 5 — Aplicaciones y Verticales: Las herramientas de usuario final para industrias específicas. Jasper (marketing), Harvey (legal), Nabla (salud), Klarna (finanzas). En LATAM, la oportunidad está en construir estas aplicaciones verticales para mercados locales donde los grandes jugadores globales no están adaptados.\n\nLos jugadores estratégicos clave en 2026: Anthropic: Referente en seguridad, Constitutional AI, Claude Code, y APIs para empresas. Fuerte en casos de uso de alto stakes. OpenAI: La marca más reconocida, ecosistema de plugins, integración con Microsoft 365. Google: Gemini integrado en todos los productos de Google, ventaja en búsqueda en tiempo real, Google Workspace. Meta: LLaMA como open source — permite correr modelos localmente sin API, crítico para casos de privacidad. Mistral: La alternativa europea, modelos eficientes, open source.\n\nPara AI Engineers en LATAM: Las mejores oportunidades están en la Capa 5 (aplicaciones verticales), usando las Capas 2 y 3 como infraestructura. No necesitas competir con los grandes laboratorios — construyes sobre su trabajo para resolver problemas específicos de tu mercado.",
+              "analogia": "El ecosistema de IA es como el ecosistema del automóvil: hay quienes minan el acero (hardware), quienes fabrican motores (modelos fundacionales), quienes diseñan las fábricas (frameworks), quienes construyen los autos (apps) y quienes los manejan (usuarios). Tú como AI Engineer probablemente construyes autos, no minas acero.",
+              "ejemplo_malo": "Intentar competir en la Capa 2 (entrenar modelos fundacionales) sin capital de cientos de millones de dólares y equipo de cientos de investigadores — una startup no puede ganar ahí.",
+              "ejemplo_bueno": "Construir una aplicación vertical (Capa 5) usando Claude API (Capa 2) y LlamaIndex (Capa 3) para automatizar procesos legales en Colombia — donde hay ventaja de conocimiento local y los grandes players no tienen presencia.",
+              "por_que_importa": "Conocer el ecosistema te ayuda a elegir en qué parte posicionarte, qué herramientas elegir para qué propósito, y dónde están las oportunidades de negocio reales para tu perfil y ubicación.",
+              "tip_profesional": "Suscríbete a The Rundown AI y AI Breakfast (newsletters gratuitas) para mantenerte al día con la Capa 3 (frameworks) y Capa 5 (aplicaciones). Puedes estudiar las Capas 1 y 2 más profundamente con menor frecuencia, porque cambian más lentamente."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿En qué capa del ecosistema de IA debería enfocarse la mayoría de los AI Engineers en LATAM para maximizar su impacto?",
+                "opciones": [
+                  "Capa 1: Hardware e infraestructura",
+                  "Capa 5: Aplicaciones verticales para mercados locales, usando Capas 2 y 3 como infraestructura",
+                  "Capa 2: Entrenamiento de modelos fundacionales",
+                  "Capa 3: Desarrollo de frameworks"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La Capa 5 es donde está la oportunidad para AI Engineers en LATAM porque: (1) requiere conocimiento local que los grandes players globales no tienen, (2) no requiere capital masivo para competir, (3) los problemas de negocio locales están bien definidos y los clientes están dispuestos a pagar. La Capa 2 requiere cientos de millones y equipos de cientos de researchers. La Capa 3 está dominada por jugadores bien financiados con bases de usuarios establecidas.",
+                "concepto_reforzado": "Oportunidades para AI Engineers en LATAM"
+              },
+              {
+                "pregunta": "¿Qué representa la Capa 3 (Frameworks y Plataformas) y por qué es la capa que cambia más rápido?",
+                "opciones": [
+                  "Hardware de NVIDIA — cambia con cada generación de chip",
+                  "Herramientas como LangChain, bases vectoriales y Hugging Face que permiten construir sobre modelos fundacionales — cambian rápido porque el mercado de herramientas es muy competitivo y la tecnología subyacente evoluciona rápido",
+                  "Los modelos de OpenAI y Anthropic",
+                  "Las aplicaciones de usuario final"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los frameworks de la Capa 3 tienen alta volatilidad porque: están construidos sobre modelos que cambian (y deben actualizarse), el mercado es competitive y los ganadores cambian, y la comunidad open source innova rápidamente. LangChain era dominante en 2023, muchos proyectos lo reemplazaron en 2024 con alternativas más simples. Por eso, en esta capa se aprende el concepto (orquestación de LLMs) más que la herramienta específica.",
+                "concepto_reforzado": "Volatilidad de la Capa 3"
+              },
+              {
+                "pregunta": "¿Cuál es la ventaja estratégica de Meta con LLaMA en el ecosistema de IA?",
+                "opciones": [
+                  "Es el modelo más inteligente",
+                  "LLaMA es open source, lo que permite correr modelos localmente sin API externa — crítico para casos donde la privacidad de datos o los costos de API son restricciones",
+                  "Es gratuito para todas las empresas",
+                  "Tiene mejor interfaz de usuario"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La ventaja de LLaMA no es ser el mejor modelo sino ser open source y corrível localmente. Esto lo hace crítico para: sectores con datos sensibles (salud, legal, gobierno) donde enviar datos a APIs externas es problemático, empresas que necesitan control total sobre sus datos, casos donde el volumen de inferencia hace las APIs demasiado caras, y developers que quieren experimentar sin costo de API. Ollama permite correr LLaMA y otros modelos en una laptop moderna.",
+                "concepto_reforzado": "Ventaja estratégica de LLaMA"
+              },
+              {
+                "pregunta": "¿Por qué Anthropic se destaca en el ecosistema a pesar de no tener la marca más reconocida?",
+                "opciones": [
+                  "Por ser la empresa más antigua",
+                  "Por su enfoque en seguridad (Constitutional AI), rendimiento en tareas de largo contexto, y Claude Code para AI Engineers",
+                  "Por ser la más barata",
+                  "Por tener más usuarios"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Anthropic se distingue por su investigación en AI Safety y Constitutional AI, que resulta en modelos que son más consistentes, menos propensos a jailbreak, y más confiables para casos de uso empresariales de alto stakes. Claude tiene la ventana de contexto más grande del mercado en varios modelos, crítico para análisis de documentos largos. Claude Code (2025) está redefiniendo el desarrollo de software asistido por IA para un segmento técnico sofisticado.",
+                "concepto_reforzado": "Posicionamiento de Anthropic"
+              },
+              {
+                "pregunta": "¿Qué distingue a las aplicaciones de Capa 5 (verticales) de los modelos fundacionales de Capa 2?",
+                "opciones": [
+                  "Las aplicaciones son más baratas de entrenar",
+                  "Las aplicaciones resuelven problemas específicos de industria o mercado local usando los modelos fundacionales como infraestructura — requieren conocimiento del dominio más que capital masivo",
+                  "Los modelos fundacionales son más inteligentes",
+                  "Las aplicaciones no necesitan IA"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La distinción es similar a la diferencia entre construir una autopista (Capa 2) y construir un servicio de taxi (Capa 5). Los modelos fundacionales requieren capital masivo y son de propósito general. Las aplicaciones verticales requieren conocimiento profundo del problema específico, relaciones con el cliente, y capacidad de customizar la solución — ventajas que los grandes laboratorios no tienen por su naturaleza de propósito general.",
+                "concepto_reforzado": "Diferencia entre Capas 2 y 5"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Eres AI Engineer freelance en Colombia y quieres construir un negocio de consultoría de IA. Tienes 6 meses para posicionarte. El ecosistema local incluye muchas pymes que no han implementado IA, algunas empresas medianas con proyectos piloto, y pocas grandes empresas con equipos de datos.",
+              "instruccion": "Usando el mapa de capas del ecosistema, define en qué capa(s) te enfocarás, qué oportunidad específica atacarás primero, y por qué esa elección tiene sentido dado tu contexto.",
+              "input_malo": "Voy a entrenar mi propio modelo de lenguaje para el mercado colombiano — los modelos actuales no están adaptados a Colombia.",
+              "pista": "¿Qué capa requiere menos capital inicial? ¿Dónde tu conocimiento del mercado local es una ventaja vs un player global? ¿Qué tipo de cliente tiene más capacidad de pago y más urgencia?",
+              "solucion": "Foco en Capa 5 con especialización vertical: Elección: Aplicaciones para el sector legal colombiano. Justificación: (1) El derecho colombiano es específico (código civil vs common law, normativa local) — los LLMs globales no están optimizados para esto. (2) Las firmas legales tienen dinero, tienen problema claro (revisión de contratos es tiempo intensivo), y están empezando a explorar IA. (3) No compito con OpenAI ni Anthropic — construyo SOBRE ellos. Stack técnico: Claude API (Capa 2) + bases vectoriales para documentos legales colombianos (Capa 3) + interfaz web simple (Capa 5). Propuesta de valor: 'Revisión de contratos bajo derecho colombiano 5x más rápido con IA'. Primer cliente: una firma de 10-20 abogados dispuesta a ser referencia. En 6 meses: 3-5 clientes, caso de estudio documentado, posicionamiento como 'el AI Engineer que entiende el sector legal colombiano'.",
+              "criterios_de_exito": [
+                "Elige correctamente la Capa 5 (no intenta competir en Capa 2)",
+                "Identifica una vertical específica con ventaja de conocimiento local",
+                "Define el primer cliente y propuesta de valor concreta"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Por qué necesitas matemáticas y cuántas exactamente",
+              "por_que_importa_despues": "Con el mapa del ecosistema claro, entramos a las herramientas matemáticas que te permiten entender cómo funcionan los modelos desde adentro."
             }
           }
         }
