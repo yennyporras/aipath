@@ -8342,30 +8342,100 @@
         },
         {
           "id": "m1-b10-l5",
-          "titulo": "Educación: tutoría personalizada y evaluación automática",
+          "titulo": "IA en medios y creatividad",
           "bloque": 10,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Ningún sector ha sentido la disrupción de la IA de forma tan visible y controvertida como medios y creatividad. En menos de 3 años, las capacidades de generación de texto, imagen, audio y video han pasado de curiosidades técnicas a herramientas usadas en producción por millones de creadores. Esto ha generado tanto oportunidades reales como conflictos profundos sobre autoría, empleo y propiedad intelectual.\n\nEn generación de imagen, la evolución fue explosiva. DALL-E 2 (2022) fue la primera señal seria; Midjourney v5 (2023) alcanzó calidad fotorrealista; Stable Diffusion 3.5 y Flux (2024-2025) democratizaron la generación de alta calidad de código abierto. En 2026, generadores de imagen como Midjourney, Adobe Firefly y herramientas integradas en Canva son parte del flujo de trabajo estándar de diseñadores gráficos, marketers y creadores de contenido. Un diseñador que antes tardaba 2 días en crear un set de imágenes para una campaña ahora lo hace en 2 horas. El debate: ¿estas herramientas fueron entrenadas con el trabajo de artistas sin su consentimiento y sin compensación?\n\nEn texto y contenido, los LLMs transformaron la producción editorial. Las agencias de contenido usan Claude y GPT-4o para primeros borradores que luego son editados por humanos. Buzzfeed usó IA para generar contenido de quiz masivo (con resultados comerciales mixtos). The Washington Post y AP usan IA para generar automáticamente artículos de resultados deportivos y reportes financieros a partir de datos estructurados — esto no es escritura creativa sino transformación de datos en narrativa.\n\nEn audio, ElevenLabs y herramientas similares permiten clonación de voz con 30 segundos de muestra. Esto tiene usos legítimos (doblaje de contenido educativo, accesibilidad, producción de podcasts) y usos profundamente problemáticos (deepfakes de voz, fraudes). Suno y Udio generan canciones completas — con letra, melodía e instrumentación — a partir de un prompt de texto. La calidad ya supera lo que la mayoría de personas podría componer manualmente.\n\nEn video, Sora (OpenAI) y Runway Gen-3 generan video de varios segundos de alta calidad desde texto o imagen. Esto está transformando producción de publicidad, donde tomas de establecimientos de marca o productos pueden generarse sin locación física. Sin embargo, la generación de video coherente de más de 30-60 segundos sigue siendo técnicamente difícil en 2026.\n\nEl impacto en empleo es real pero matizado: las profesiones que realizaban trabajo repetitivo de producción creativa (stock photos, copywriting genérico, ilustraciones técnicas simples) están bajo presión severa. Las profesiones que requieren dirección creativa, criterio editorial, comprensión profunda del cliente, y storytelling original se amplían con las herramientas. La narrativa 'la IA reemplaza a todos los creativos' es tan incorrecta como 'la IA no afecta a nadie en creatividad'.",
+              "analogia": "La IA en creatividad es como la llegada de la fotografía a finales del siglo XIX. Los pintores de retratos enfrentaron competencia directa — ¿quién necesita un retrato pintado cuando una fotografía es más rápida y más fiel? Muchos pintores sufrieron. Pero la fotografía también liberó a la pintura para explorar formas más abstractas y expresivas que nunca habrían existido si la representación realista seguía siendo el objetivo principal. El arte evolucionó. El mismo proceso está ocurriendo hoy con los creativos y la IA.",
+              "ejemplo_malo": "Una agencia de publicidad colombiana reemplaza su equipo de copy con IA, publicando contenido generado directamente sin edición humana. Los primeros meses el costo baja dramáticamente. A los 6 meses, los clientes empiezan a quejarse: el contenido es 'técnicamente correcto pero genérico', sin la voz de la marca, sin referencias culturales locales, sin el humor específico de la audiencia colombiana. Tres clientes importantes cancelan. La agencia tiene que reconstruir el equipo creativo. El error fue eliminar al humano del flujo de trabajo en lugar de usarlo como amplificador.",
+              "ejemplo_bueno": "Una productora de contenido en Bogotá usa IA generativa para escalar su operación: Claude para primeros borradores de guiones y artículos, Midjourney para conceptos visuales y storyboards, ElevenLabs para demos de voz en audiolibros. Sus creadores humanos se enfocan en dirección, edición, y los elementos que requieren conocimiento cultural colombiano específico (referencias locales, tono regional). El equipo de 5 personas ahora produce el volumen de contenido que antes requería 15. Los clientes ven el mismo nivel de calidad y autenticidad porque los humanos siguen siendo los responsables del producto final.",
+              "por_que_importa": "Para LATAM, la IA en creatividad tiene un ángulo de democratización importante: antes, producir contenido de alta calidad (videos profesionales, diseño gráfico, fotografía) requería equipos costosos inaccesibles para pequeñas empresas y creadores independientes. Ahora un emprendedor en Bucaramanga puede producir material de marketing al nivel visual de marcas multinacionales. Esto nivela el campo de juego. Para quienes trabajan en creatividad, entender estas herramientas no es opcional — es la diferencia entre ser relevante o ser reemplazado.",
+              "tip_profesional": "Si trabajas en creatividad o con clientes creativos, establece un flujo de trabajo explícito de 'IA + humano': la IA genera opciones rápidas (5 conceptos en 10 minutos), el humano elige, adapta y da contexto cultural. Documenta cuándo usas IA para transparencia con clientes. Para proyectos con clientes grandes, verifica las políticas de propiedad intelectual de las herramientas que usas — Adobe Firefly está entrenado con contenido con licencia propia; Midjourney tiene términos distintos para uso comercial."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué la narrativa 'la IA reemplaza completamente a todos los creativos' es incorrecta?",
+                "opciones": [
+                  "Porque la IA generativa aún no tiene la calidad técnica suficiente para trabajo profesional en 2026",
+                  "Porque las tareas que requieren dirección creativa, criterio editorial y comprensión profunda del cliente se amplifican con IA, no se reemplazan",
+                  "Porque las leyes de propiedad intelectual en LATAM prohíben el uso comercial de contenido generado por IA",
+                  "Porque los clientes siempre prefieren trabajo humano y pagarán más por él aunque la IA sea igual de buena"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La IA generativa en 2026 es efectivamente capaz de producir texto, imágenes y audio de alta calidad técnica. Lo que no puede hacer de forma autónoma es: entender el contexto cultural específico de la audiencia objetivo (humor colombiano, referencias locales), tomar decisiones de dirección estratégica ('¿este tono comunica los valores de la marca?'), construir una relación de confianza con el cliente, o generar conceptos verdaderamente originales que no sean recombinaciones de lo existente. Las profesiones creativas que sufren más presión son las que realizaban trabajo de producción repetitiva (copywriting genérico, stock photos, ilustraciones técnicas). Las que se amplifican son las que requieren ese criterio y dirección que la IA no tiene. El resultado neto es: menos personas haciendo trabajo de producción bajo, más oportunidades para quienes pueden dirigir y editar el output de la IA con criterio.",
+                "concepto_reforzado": "Impacto diferenciado de IA en creatividad: presión en trabajo de producción repetitiva, amplificación de roles de dirección"
+              },
+              {
+                "pregunta": "¿Para qué caso de uso legítimo se usa la clonación de voz con herramientas como ElevenLabs?",
+                "opciones": [
+                  "Exclusivamente para aplicaciones de entretenimiento y videojuegos, no tiene usos serios",
+                  "Doblaje de contenido educativo, accesibilidad para personas con discapacidades de habla, y producción de audiolibros y podcasts",
+                  "Creación de audiolibros automáticos sin necesidad de un narrador humano para reducir costos de producción",
+                  "Solo para investigación académica sobre síntesis de voz, no para aplicaciones comerciales"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La clonación y síntesis de voz de alta calidad tiene aplicaciones legítimas valiosas. En educación, permite doblar el mismo contenido a múltiples idiomas o dialectos sin grabar con decenas de locutores. En accesibilidad, personas con esclerosis lateral amiotrófica u otras condiciones que afectan el habla pueden preservar su voz al inicio de la enfermedad y usarla con un sintetizador cuando ya no pueden hablar. En producción de audiolibros y podcasts, permite que autores con voz no profesional tengan un resultado de calidad. En empresas, permite crear guías de onboarding en video con la voz del CEO sin requerir su tiempo de grabación. Los usos problemáticos (deepfakes de voz para fraude o desinformación) existen y son serios, pero no invalidan los usos legítimos. El marco ético correcto es consentimiento explícito y transparencia sobre el uso de voz sintética.",
+                "concepto_reforzado": "Usos legítimos de clonación de voz con IA en educación, accesibilidad y producción de contenido"
+              },
+              {
+                "pregunta": "¿Qué debate de propiedad intelectual rodea a los generadores de imágenes como Midjourney y Stable Diffusion?",
+                "opciones": [
+                  "Los modelos fueron entrenados sin consentimiento ni compensación con millones de obras de artistas con derechos de autor",
+                  "Los usuarios que generan imágenes con IA no pueden usar los resultados comercialmente bajo ninguna circunstancia",
+                  "Las imágenes generadas por IA son automáticamente propiedad de las empresas que desarrollan los modelos",
+                  "Solo existe debate en EE.UU.; en LATAM las leyes de propiedad intelectual no cubren imágenes generadas por IA"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "El debate central es que los modelos de imagen generativa fueron entrenados con enormes datasets de imágenes de internet, la mayoría creadas por artistas humanos con derechos de autor, sin que estos artistas fueran consultados, dieran su consentimiento, o recibieran compensación. Los artistas argumentan que los modelos 'aprendieron' su estilo artístico único, su técnica y su trabajo de décadas para generar imágenes que compiten directamente con ellos en el mercado. Las demandas colectivas de artistas contra Stability AI y Midjourney están en curso en tribunales estadounidenses en 2026. Adobe Firefly intentó diferenciarse entrenando exclusivamente con contenido Adobe Stock licenciado o de dominio público. La resolución legal de este debate definirá el futuro del sector y puede afectar los modelos de negocio de las principales plataformas.",
+                "concepto_reforzado": "Debate de propiedad intelectual en IA generativa: datos de entrenamiento sin consentimiento de artistas"
+              },
+              {
+                "pregunta": "¿Cuál es la diferencia entre el uso de IA de AP/Washington Post para artículos deportivos y el trabajo periodístico creativo?",
+                "opciones": [
+                  "No hay diferencia — si la IA puede escribir un artículo deportivo puede escribir cualquier tipo de periodismo",
+                  "Los artículos deportivos y financieros son transformación de datos estructurados en narrativa; el periodismo creativo requiere investigación, contexto y juicio editorial",
+                  "AP y Washington Post usan IA porque es más barata, no porque los resultados sean mejores que los periodistas",
+                  "Los artículos de IA en AP tienen errores frecuentes pero se publican de todas formas por la velocidad de publicación"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Existe una distinción técnica importante entre tipos de escritura. Un artículo de resultados deportivos tiene una estructura extremadamente predecible: 'el equipo X venció al equipo Y por Z-W, el jugador P anotó Q goles' — es esencialmente transformación de datos estructurados (estadísticas del partido) en un template narrativo. Esto es perfecto para automatización: rápido, sin errores factuales si los datos son correctos, y el lector solo quiere la información. Un reportaje de investigación sobre corrupción requiere: fuentes humanas, juicio sobre qué es noticia, comprensión del contexto político, ética sobre qué publicar y cuándo, y la capacidad de 'leer entre líneas' en documentos. El periodismo que expone el poder requiere habilidades que ningún LLM tiene hoy. La IA reemplaza el trabajo mecánico de transformación de datos en texto; no reemplaza el periodismo que cambia el mundo.",
+                "concepto_reforzado": "Distinción entre transformación de datos en narrativa (automatizable con IA) y periodismo investigativo (requiere juicio humano)"
+              },
+              {
+                "pregunta": "Para una pequeña empresa en Colombia que quiere usar IA en su producción de contenido de marketing, ¿qué consideración es más crítica al elegir la herramienta?",
+                "opciones": [
+                  "Usar siempre los modelos más avanzados disponibles para garantizar la mayor calidad posible",
+                  "Verificar las políticas de uso comercial y propiedad intelectual de la herramienta antes de usarla en campañas de clientes",
+                  "Usar exclusivamente herramientas de código abierto para evitar cualquier costo de licencia",
+                  "Asegurarse de que el modelo fue entrenado principalmente con contenido en español latinoamericano"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Las políticas de uso comercial varían significativamente entre herramientas y tienen implicaciones legales reales. Midjourney: el plan gratuito no permite uso comercial; el plan Pro sí, y el usuario retiene los derechos del output. Stable Diffusion (código abierto): uso comercial generalmente permitido pero depende de los pesos del modelo usado. Adobe Firefly: uso comercial explícitamente permitido con indemnización legal de Adobe para sus clientes Enterprise (esto es un diferenciador clave). DALL-E 3 vía API: uso comercial permitido según los términos de OpenAI. Para agencias que producen contenido para clientes, usar una herramienta con política comercial ambigua puede exponer al cliente a demandas de propiedad intelectual. La verificación de licencias no es burocracia — es protección legal básica para el negocio.",
+                "concepto_reforzado": "Políticas de uso comercial de herramientas de IA generativa como consideración legal crítica para empresas"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una agencia de marketing digital en Cali con 8 empleados produce contenido para 15 clientes: artículos de blog (2-3/semana por cliente), posts de redes sociales (diario), y diseño gráfico para campañas mensuales. Actualmente tardan: 3h por artículo de blog, 30min por post de redes, 8h por campaña gráfica mensual. Quieren implementar IA para duplicar su capacidad de producción sin contratar más personal.",
+              "instruccion": "Diseña el flujo de trabajo con IA para los tres tipos de contenido. Especifica: qué herramienta para cada tipo, cómo queda el proceso humano vs IA, y cuánto tiempo estimado ahorras por pieza de contenido. Identifica qué parte del proceso el humano SIEMPRE debe hacer.",
+              "input_malo": "Usar IA para generar todos los artículos y posts automáticamente y publicarlos sin revisión para máxima velocidad. Los clientes no van a notar la diferencia.",
+              "pista": "Divide cada tipo de contenido en fases: investigación, borrador, edición, adaptación a voz de marca. ¿En cuáles fases la IA ahorra más tiempo? ¿Cuáles requieren que el humano agregue valor específico que la IA no puede?",
+              "solucion": "Flujos de trabajo optimizados: (1) ARTÍCULOS DE BLOG (3h → 1h): IA (Claude) genera borrador completo con outline + investigación básica en 10min. Humano: revisa hechos, adapta a voz del cliente, agrega ejemplos locales/colombia-específicos, edita en 50min. Ahorro: 2h/artículo × 2.5 artículos/semana × 15 clientes = 75h/semana. (2) POSTS REDES SOCIALES (30min → 10min): IA genera 5 versiones de post con diferentes tonos a partir del artículo del blog o brief del cliente. Humano: elige la mejor versión, adapta hashtags y menciones locales, revisa en 10min. Ahorro: 20min × 1 post/día × 15 clientes = 75h/semana. (3) DISEÑO GRÁFICO (8h → 3h): IA (Midjourney/Adobe Firefly) genera 10-15 conceptos visuales en 30min. Humano: selecciona 3 mejores, adapta con la identidad visual del cliente en Canva/Figma, entrega en 2.5h. Ahorro: 5h/campaña × 15 clientes = 75h/mes. Lo que el humano SIEMPRE hace: validar hechos y cifras, adaptar referencias culturales locales, aprobar el tono con la voz de marca específica del cliente, y la relación con el cliente.",
+              "criterios_de_exito": [
+                "Define flujos de trabajo donde la IA genera el borrador/opciones y el humano edita y adapta, no donde la IA reemplaza todo el proceso",
+                "Identifica específicamente qué agrega el humano que la IA no puede: voz de marca, referencias locales, validación de hechos",
+                "Cuantifica el ahorro de tiempo de forma realista por tipo de contenido",
+                "Especifica las herramientas concretas para cada tipo de contenido (Claude para texto, Midjourney/Firefly para imágenes)"
+              ]
             },
+            "conexion": {
+              "siguiente_concepto": "IA en gobierno y sector público",
+              "por_que_importa_despues": "Los medios y la creatividad muestran la tensión entre democratización (más personas pueden crear más contenido de calidad) y disrupción (trabajos de producción creativa bajo presión). El sector público enfrenta estas mismas tensiones pero con mayor responsabilidad: cuando la IA toma o apoya decisiones sobre ciudadanos, los estándares de transparencia y equidad deben ser los más altos posibles."
+            }
             "conexion": {
               "siguiente_concepto": "",
               "por_que_importa_despues": ""
