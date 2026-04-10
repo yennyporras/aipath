@@ -8082,7 +8082,7 @@
         },
         {
           "id": "m1-b9-l6",
-          "titulo": "Desinformación, deepfakes y manipulación a escala",
+          "titulo": "Responsabilidad legal en sistemas de IA",
           "bloque": 9,
           "tipo": "leccion",
           "duracion_min": 20,
@@ -8096,7 +8096,68 @@
               "por_que_importa": "",
               "tip_profesional": ""
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "Un sistema de diagnóstico médico con IA recomienda un tratamiento incorrecto que daña a un paciente. ¿Quién tiene responsabilidad legal primaria en la mayoría de marcos legales actuales?",
+                "opciones": [
+                  "El médico que tomó la decisión final basándose en la recomendación de la IA, ya que la supervisión humana no puede delegarse",
+                  "La empresa que desarrolló el algoritmo, con responsabilidad objetiva por producto defectuoso",
+                  "El hospital que compró el sistema, ya que adquirió un producto que resultó defectuoso",
+                  "Nadie, porque los sistemas de IA autónomos crean un vacío legal de responsabilidad establecido jurisprudencialmente"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "En los marcos legales actuales (2026), la responsabilidad recae principalmente en el profesional humano que tomó la decisión clínica final. El principio de supervisión humana —que los sistemas de apoyo a la decisión médica requieren que un médico evalúe y apruebe las recomendaciones— significa que el médico es responsable de cómo usa la herramienta. Sin embargo, la responsabilidad es frecuentemente compartida y depende de los hechos: si el sistema tenía un defecto de diseño conocido, el fabricante puede tener responsabilidad por producto defectuoso (product liability). Si el hospital no entrenó correctamente al personal en las limitaciones del sistema, puede tener responsabilidad por negligencia organizacional. La tendencia regulatoria del EU AI Act y marcos similares es clarificar esta distribución: los sistemas médicos de alto riesgo requieren documentación de limitaciones, y los operadores (hospitales) deben garantizar supervisión humana adecuada.",
+                "concepto_reforzado": "Responsabilidad distribuida en decisiones médicas apoyadas por IA"
+              },
+              {
+                "pregunta": "¿Qué es la 'Directiva de Responsabilidad por IA' de la UE (AI Liability Directive) y qué problema específico busca resolver?",
+                "opciones": [
+                  "Facilita a las víctimas de daños por IA acceder a compensación invirtiendo la carga de la prueba: el proveedor debe demostrar que no hubo negligencia, no la víctima",
+                  "Establece un fondo de compensación europeo que paga daños causados por IA independientemente de la culpa",
+                  "Prohíbe a las empresas de IA operar sin seguro de responsabilidad civil obligatorio de mínimo 50 millones de euros",
+                  "Crea tribunales especializados en IA en cada país miembro con jueces con formación técnica obligatoria"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "La AI Liability Directive (propuesta por la Comisión Europea en 2022, en proceso legislativo en 2024-2026) aborda el principal obstáculo legal para víctimas de IA: la carga de la prueba. En el derecho tradicional de responsabilidad por negligencia, la víctima debe demostrar que el sistema fue defectuoso y causó el daño — algo extremadamente difícil cuando el sistema es una caja negra compleja. La Directiva introduce: (1) Presunción de causalidad: si se demuestra que el proveedor incumplió obligaciones del EU AI Act y el sistema causó el tipo de daño que la norma busca prevenir, se presume que la negligencia causó el daño (el proveedor debe refutar esto). (2) Acceso a evidencia: los tribunales pueden ordenar a los proveedores revelar documentación del sistema para facilitar las reclamaciones. Esto equilibra la asimetría de información entre desarrolladores con acceso técnico total y víctimas que solo ven el resultado dañino.",
+                "concepto_reforzado": "AI Liability Directive: inversión de la carga de la prueba para víctimas de IA"
+              },
+              {
+                "pregunta": "Un agente de IA autónomo contrata servicios de terceros en nombre de una empresa, pero el proveedor alega que el contrato no es válido porque fue firmado por una IA, no una persona. ¿Qué problema legal fundamental ilustra este escenario?",
+                "opciones": [
+                  "Los sistemas de IA no tienen personalidad jurídica, lo que genera incertidumbre sobre la validez de actos jurídicos autónomos realizados por agentes de IA",
+                  "Los contratos digitales firmados con IA siempre requieren ratificación humana en un plazo de 48 horas según derecho contractual",
+                  "Este problema no existe porque los contratos por agente (como los firmados por empleados) ya tienen marco legal establecido que aplica directamente",
+                  "La IA puede tener personalidad jurídica limitada si está registrada como empresa en el país donde opera"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "La personalidad jurídica es el reconocimiento legal de una entidad como sujeto de derechos y obligaciones — solo personas físicas y jurídicas (empresas, fundaciones) la tienen. Los sistemas de IA, incluidos los agentes autónomos más sofisticados, no tienen personalidad jurídica en ningún sistema legal del mundo en 2026. Esto crea problemas cuando un agente de IA actúa de forma autónoma: ¿quién es parte del contrato? ¿quién responde por los daños? La solución actual es el principio de mandato/agencia: se considera que el agente de IA actúa en nombre de la empresa que lo desplegó, por lo que esa empresa asume las consecuencias. Pero esto no resuelve todos los casos, especialmente cuando la IA tomó decisiones que ningún humano habría autorizado conscientemente. El Parlamento Europeo exploró crear una 'personalidad electrónica' para IA avanzada en 2017 pero la idea fue rechazada por la mayoría de expertos legales.",
+                "concepto_reforzado": "Ausencia de personalidad jurídica de la IA y problema de agencia autónoma"
+              },
+              {
+                "pregunta": "¿Qué diferencia existe entre responsabilidad subjetiva (por culpa) y responsabilidad objetiva (estricta) en el contexto de sistemas de IA?",
+                "opciones": [
+                  "La subjetiva requiere probar negligencia del desarrollador; la objetiva hace al fabricante responsable por el daño independientemente de si actuó con cuidado o no",
+                  "La subjetiva aplica a IA débil; la objetiva aplica a IA fuerte o superinteligencia",
+                  "La subjetiva la determina un juez; la objetiva la determina un algoritmo de IA regulatorio",
+                  "Son equivalentes pero la objetiva requiere además que el daño sea económico, no físico"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "La distinción es fundamental en derecho de daños. Responsabilidad subjetiva (por culpa o negligencia): la víctima debe probar que el desarrollador actuó con descuido, que no tomó precauciones razonables que un profesional competente habría tomado. Es difícil de probar en IA porque es complicado demostrar qué era 'razonable' en sistemas complejos. Responsabilidad objetiva (strict liability): el fabricante es responsable si el producto causó el daño, sin importar si actuó con toda la diligencia posible. Es el modelo aplicado en muchos países a productos peligrosos (productos farmacéuticos, vehículos). Para IA, la discusión es: ¿deben los sistemas de alto riesgo (vehículos autónomos, sistemas médicos) tener responsabilidad objetiva? El argumento a favor: incentiva al fabricante a maximizar la seguridad porque no puede exculparse siendo 'cuidadoso'. El argumento en contra: puede inhibir innovación si cualquier daño genera responsabilidad aunque no hubiera forma de evitarlo.",
+                "concepto_reforzado": "Responsabilidad subjetiva vs objetiva aplicada a sistemas de IA"
+              },
+              {
+                "pregunta": "Una startup desarrolla un modelo de IA y lo publica como open source. Otro desarrollador toma ese modelo y lo usa en una aplicación que causa daños. ¿Tiene la startup original responsabilidad legal?",
+                "opciones": [
+                  "Generalmente no, si publicó con licencia adecuada, documentó limitaciones y riesgos, y no tuvo control sobre el uso downstream — pero el análisis depende de la jurisdicción y el nivel de riesgo del modelo",
+                  "Sí siempre, porque al publicar el modelo acepta responsabilidad solidaria por todos sus usos",
+                  "No nunca, porque open source implica renuncia completa a toda responsabilidad en cualquier jurisdicción",
+                  "Solo si el modelo tiene más de 1 billón de parámetros, umbral definido en el EU AI Act para GPAI"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "La responsabilidad del desarrollador original de un modelo open source es una de las áreas legales más activamente debatidas en 2026. La posición general en la mayoría de jurisdicciones es que publicar código open source con una licencia apropiada (MIT, Apache, etc.) y con documentación de limitaciones transfiere responsabilidad al usuario downstream. Las licencias open source típicamente incluyen cláusulas de 'AS IS' sin garantía y exclusión de responsabilidad. Sin embargo, esto no es absoluto: (1) Si el modelo tiene riesgos previsibles graves y la startup no los documentó, puede haber negligencia. (2) El EU AI Act tiene disposiciones específicas para modelos open source de propósito general (GPAI) con excepciones para modelos pequeños pero obligaciones para modelos de alto impacto sistémico. (3) En EE.UU., la evolución de la jurisprudencia sobre product liability para software podría aplicarse a modelos. La conclusión práctica: publicar open source con licencia clara, README con limitaciones explícitas, y modelo card documentando casos de uso no recomendados reduce significativamente el riesgo legal.",
+                "concepto_reforzado": "Responsabilidad legal de desarrolladores de modelos open source de IA"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
               "contexto": "",
