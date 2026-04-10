@@ -8240,30 +8240,100 @@
         },
         {
           "id": "m1-b10-l4",
-          "titulo": "Marketing: contenido, personalización y analytics con IA",
+          "titulo": "IA en retail y manufactura",
           "bloque": 10,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Retail y manufactura son los sectores donde la IA lleva más tiempo en producción con casos de uso maduros y bien documentados. No es hype — es infraestructura operativa que mueve miles de millones de dólares diariamente. Entender estos casos da perspectiva real sobre qué significa 'IA en producción'.\n\nEn retail, los sistemas de recomendación son el caso más antiguo y exitoso de IA aplicada. El 35% de los ingresos de Amazon viene de su motor de recomendaciones. Netflix atribuye $1 billón de dólares anuales en retención de suscriptores a su sistema de recomendación. Spotify descubre cada semana nueva música para 600 millones de usuarios con sus modelos de filtrado colaborativo. Estos sistemas no son LLMs — son combinaciones de filtrado colaborativo, factorización matricial, y redes neuronales especializadas entrenadas con billones de interacciones históricas. Para retailers LATAM, el punto de entrada práctico es mucho más accesible: Shopify tiene recomendaciones básicas incorporadas, y herramientas como Algolia o constructores de sistemas de recomendación de código abierto permiten implementar esto sin investigación original.\n\nLa gestión de inventario con IA es otro caso con ROI demostrado. Los modelos de forecasting de demanda (Facebook Prophet, ARIMA con ML, o Transformer-based forecasting) predicen qué productos vender en qué cantidades y cuándo reordenar, reduciendo tanto el overstock (capital muerto) como el stockout (ventas perdidas). Zara usa IA para diseñar y producir colecciones en 2 semanas vs 6 meses de la industria tradicional. La cadena de supermercados chilena Falabella reportó reducción de 15-20% en pérdidas por caducidad de productos perecederos con modelos de predicción de demanda.\n\nEn manufactura, el control de calidad por visión artificial es transformador. Las líneas de producción de semiconductores (TSMC, Samsung), automotriz (Toyota, BMW) y alimentos (Nestlé) usan cámaras con modelos de visión que detectan defectos imperceptibles para el ojo humano a velocidades que ningún inspector podría igualar. Un inspector humano detecta el 80-85% de defectos; sistemas de visión bien calibrados superan el 99%. El mantenimiento predictivo es el segundo gran caso: sensores en maquinaria industrial + modelos de ML predicen cuándo va a fallar una pieza antes de que ocurra la falla catastrófica. GE reporta que su plataforma Predix reduce el tiempo de inactividad no planeada en 10-20% en clientes industriales.\n\nEn Colombia y LATAM, el retail digital está creciendo pero la mayoría de empresas no tiene la escala de Amazon. Las oportunidades prácticas son: chatbots de atención al cliente para e-commerce (reducción de carga en soporte), pricing dinámico basado en demanda y competencia para marketplaces, y análisis de sentimiento de reseñas de productos para identificar problemas de calidad antes de que sean crisis. En manufactura, las pymes industriales colombianas pueden comenzar con herramientas de visión pre-entrenadas (Azure Custom Vision, Roboflow) para control de calidad sin necesitar investigadores de ML.",
+              "analogia": "El sistema de recomendación de Amazon es como un vendedor que ha atendido a 300 millones de clientes, recuerda cada compra de todos, y después de cada transacción pregunta 'a clientes que compraron esto, ¿qué les compré después que les gustó?'. Ningún equipo humano de ventas puede acumular y actuar sobre ese conocimiento a esa escala. El control de calidad por visión en manufactura es como tener un inspector que nunca se cansa, nunca parpadea, y aplica exactamente el mismo criterio a la pieza #1 que a la #100,000.",
+              "ejemplo_malo": "Un supermercado de cadena mediana en Medellín contrata a una consultora para implementar 'IA de recomendaciones' con un presupuesto de $500,000 USD. La consultora construye un sistema de recomendación custom desde cero con un equipo de ML durante 18 meses. El sistema nunca llega a producción porque los datos históricos de ventas son insuficientes para entrenar el modelo con calidad, y la integración con el POS legacy es más compleja de lo esperado. El presupuesto se agota. La solución correcta habría sido implementar las herramientas de recomendación incorporadas en su plataforma de e-commerce (WooCommerce o Shopify tienen estas funciones) y mejorarlas iterativamente.",
+              "ejemplo_bueno": "Una empresa manufacturera de piezas metálicas en Barranquilla con 200 empleados implementa control de calidad por visión artificial con Roboflow + modelos pre-entrenados customizados con 500 fotos de sus propias piezas (defectuosas y no defectuosas). El proyecto tarda 8 semanas y cuesta $15,000 USD en desarrollo + $200/mes en infraestructura. Su tasa de defectos que pasan al cliente baja de 0.8% a 0.1%, evitando devoluciones costosas y dañando su reputación. ROI en 4 meses de operación.",
+              "por_que_importa": "Retail y manufactura juntos representan más del 30% del PIB colombiano. La adopción de IA en estos sectores no es opcional a largo plazo — los competidores internacionales ya la tienen. Para developers, estos sectores ofrecen proyectos con ROI cuantificable y ciclos de venta relativamente cortos (los dueños entienden rápido el argumento del dinero). El control de calidad por visión y los chatbots de atención al cliente son los proyectos más accesibles para empezar a construir experiencia en IA aplicada.",
+              "tip_profesional": "Para proyectos de visión en manufactura en LATAM, empieza con Roboflow para gestión de datasets y entrenamiento de modelos de detección. Con 300-500 imágenes etiquetadas de tu caso específico puedes tener un modelo funcional en días. Usa YOLO v8 o v9 como arquitectura base — es el estándar de la industria para detección en tiempo real. El 80% del trabajo en estos proyectos es recolección y etiquetado de datos de calidad, no el modelado en sí."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué porcentaje de los ingresos de Amazon viene de su motor de recomendaciones?",
+                "opciones": [
+                  "5-10%, importante pero no determinante para el negocio",
+                  "35%, siendo una de las mayores fuentes de ingresos de la compañía",
+                  "60%, siendo la función más crítica de su plataforma de e-commerce",
+                  "15-20%, equivalente a lo que generan los servicios de AWS"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El 35% de los ingresos de Amazon provenientes de su motor de recomendaciones es uno de los datos más citados en literatura de negocio sobre IA aplicada, reportado por Amazon en múltiples presentaciones a inversores. Esto significa que por cada $100 de ventas en Amazon, $35 vienen directamente de que el sistema sugirió el producto al comprador — no porque el cliente lo buscara activamente. Netflix reporta un número similar de impacto: su sistema de recomendación evita cancelaciones de suscripciones por valor de $1 billón anual al mantener a los suscriptores enganchados con contenido relevante. Estos números ilustran el ROI masivo que puede generar la personalización bien implementada, y explican por qué estos sistemas son el core tecnológico de las plataformas de contenido y e-commerce más exitosas del mundo.",
+                "concepto_reforzado": "Impacto económico de los sistemas de recomendación en e-commerce: el 35% de ingresos de Amazon"
+              },
+              {
+                "pregunta": "¿Por qué los sistemas de recomendación de Amazon y Netflix NO son LLMs?",
+                "opciones": [
+                  "Porque los LLMs son más caros y las empresas prefieren tecnologías más económicas para este uso",
+                  "Porque los LLMs no pueden procesar datos estructurados de comportamiento de usuarios, solo texto",
+                  "Porque los sistemas de recomendación requieren velocidad de procesamiento en milisegundos y entrenamiento con billones de interacciones históricas de comportamiento, para lo que hay modelos más especializados",
+                  "Porque los LLMs aún no son lo suficientemente inteligentes para predecir preferencias de consumidores"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Los sistemas de recomendación son uno de los casos donde los modelos especializados (filtrado colaborativo, factorización matricial, Two-Tower models) son superiores a los LLMs para el caso específico. Las razones técnicas son concretas: (1) escala de datos — entrenan con billones de interacciones históricas de comportamiento (clics, compras, tiempo viendo) en patrones que no son texto; (2) velocidad — deben generar recomendaciones en <50ms para millones de usuarios concurrentes; (3) tipo de datos — el 'idioma' de estos modelos son vectores de preferencias y matrices de interacciones, no tokens de texto. Los LLMs sí tienen un rol complementario: generar descripciones de productos, responder preguntas conversacionales sobre recomendaciones, o explicar por qué se recomienda algo — pero el motor central de recomendación es un sistema especializado diferente.",
+                "concepto_reforzado": "Modelos especializados de recomendación vs LLMs: cada tipo tiene su dominio de aplicación óptimo"
+              },
+              {
+                "pregunta": "¿Qué ventaja tiene un sistema de control de calidad por visión artificial respecto a inspectores humanos en manufactura?",
+                "opciones": [
+                  "Es más barato que pagar salarios de inspectores, haciendo el mismo trabajo a menor costo",
+                  "Puede detectar más del 99% de defectos vs 80-85% de inspectores humanos, con consistencia perfecta en turno #1 y turno #100",
+                  "Puede aprender de cada defecto nuevo automáticamente sin necesidad de reentrenamiento",
+                  "Elimina completamente la necesidad de ingenieros de calidad en la planta de producción"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La ventaja del sistema de visión sobre el inspector humano no es solo el costo — es la consistencia. Un inspector humano es muy efectivo las primeras horas del turno pero su concentración y tasa de detección bajan después de 4-6 horas de trabajo repetitivo. El sistema de visión aplica exactamente el mismo criterio a la pieza #1 y a la pieza #100,000, sin fatiga, sin variabilidad entre inspectores, y a velocidades que pueden superar la capacidad de inspección humana (hasta 1,000 piezas/minuto en líneas rápidas). La tasa de detección del 99%+ vs 80-85% humano puede parecer pequeña pero en una línea que produce 1 millón de piezas/mes, significa 150,000-190,000 defectos detectados adicionales que antes pasaban al cliente. El sistema no elimina al equipo de calidad pero libera a los ingenieros de la inspección repetitiva para trabajo de análisis de causas raíz y mejora de procesos.",
+                "concepto_reforzado": "Consistencia y tasa de detección del control de calidad por visión vs inspección humana en manufactura"
+              },
+              {
+                "pregunta": "¿Cuál es el punto de entrada más práctico para una pyme manufacturera colombiana que quiere implementar control de calidad con IA?",
+                "opciones": [
+                  "Contratar un equipo de investigadores de ML para desarrollar un modelo custom desde cero con sus datos",
+                  "Herramientas como Roboflow + modelos pre-entrenados (YOLO) con 300-500 fotos propias etiquetadas, sin necesitar investigadores de ML",
+                  "Comprar un sistema industrial de visión de fabricantes europeos o americanos con soporte incluido",
+                  "Esperar a que la IA de visión madure más antes de implementar, ya que los errores del sistema son costosos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El ecosistema de visión por computadora en 2026 hace que lo que antes requería un equipo de investigadores ahora sea accesible para developers con conocimientos básicos de ML. Roboflow es una plataforma que simplifica el pipeline completo: subir imágenes, etiquetarlas (marcar dónde está el defecto), aumentar el dataset (rotaciones, cambios de brillo), entrenar un modelo YOLO, y desplegarlo en una cámara o API. Con 300-500 imágenes de tus defectos específicos bien etiquetadas, se puede tener un modelo funcional en 1-2 semanas. YOLO v8/v9 son arquitecturas de detección de objetos state-of-the-art que balancean velocidad y precisión — el estándar de la industria para aplicaciones en tiempo real. Este enfoque puede costar $10,000-20,000 USD en desarrollo (incluyendo setup de cámara e integración) vs los $200,000-500,000 de sistemas industriales tradicionales.",
+                "concepto_reforzado": "Democratización del control de calidad por visión con herramientas como Roboflow y YOLO para pymes industriales"
+              },
+              {
+                "pregunta": "¿Qué logró Zara con IA en su cadena de suministro y cuál es la implicación para la industria?",
+                "opciones": [
+                  "Automatizó completamente sus tiendas físicas eliminando cajeros y empleados de piso",
+                  "Redujo el ciclo de diseño-producción de 6 meses a 2 semanas, dando ventaja competitiva estructural en fast fashion",
+                  "Implementó precios dinámicos que cambian cada hora según la demanda de cada prenda en cada tienda",
+                  "Predice con 95% de precisión qué colores estarán de moda 2 años antes de la temporada"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El modelo Zara/Inditex es uno de los casos más estudiados de ventaja competitiva construida sobre capacidades operativas con tecnología. Mientras la industria de moda tradicional diseña colecciones 6-12 meses antes de la temporada (y apuesta a qué estará de moda), Zara monitorea en tiempo real qué se vende en sus tiendas, qué tendencias emergen en redes sociales, y qué piden los clientes. Con fábricas en España, Portugal y Marruecos (no en Asia), puede producir y tener en tiendas nuevas colecciones en 2 semanas. Los modelos de ML analizan datos de ventas diarias de todas las tiendas del mundo y generan señales de diseño y producción. El resultado: menos inventario no vendido (una de las mayores ineficiencias del retail de moda), más relevancia para el consumidor, y márgenes superiores. Esta estrategia de 'dato-velocidad' es lo que les da ventaja sobre competidores con costos de producción más bajos en Asia.",
+                "concepto_reforzado": "Ciclo de diseño rápido de Zara con IA como modelo de ventaja competitiva basada en velocidad de respuesta a datos"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una cadena de tiendas de ropa colombiana con 25 locales en 5 ciudades tiene los siguientes problemas: (1) 18% de inventario no se vende cada temporada y debe liquidarse con descuento, (2) su chatbot de atención al cliente responde solo FAQ básico y no puede ayudar con consultas de tallas, disponibilidad o colores por ciudad, (3) no tienen e-commerce propio, solo venden en Falabella.com y Mercado Libre. Presupuesto: $25,000 USD para un año de proyectos de IA.",
+              "instruccion": "Prioriza los tres problemas y diseña una solución para el de mayor impacto económico. Estima el ROI de tu propuesta y justifica por qué lo priorizas sobre los otros dos.",
+              "input_malo": "Construir los tres sistemas simultáneamente: sistema de recomendación, chatbot mejorado y predicción de inventario al mismo tiempo para maximizar el impacto.",
+              "pista": "Calcula el impacto económico de cada problema: 18% de inventario liquidado a qué descuento implica cuánto dinero perdido? ¿Cuántas ventas se pierden por chatbot deficiente? ¿Qué volumen de ventas tienen por e-commerce? El de mayor impacto económico tiene prioridad.",
+              "solucion": "Prioridad: problema de inventario (18% sin vender). Asumiendo $5M COP en ventas mensuales × 25 tiendas × 6 meses de temporada = $750M COP de inventario, el 18% son $135M COP que deben liquidarse con 40% de descuento = pérdida neta de $54M COP por temporada (~$13,500 USD). Solución: sistema de predicción de demanda por tienda, producto y temporada. Herramienta: Prophet (Facebook) o LightGBM con features de: historial de ventas por SKU/tienda, temperatura, eventos (Black Friday, fiestas patrias), tendencias de búsqueda de Google Trends. Costo de desarrollo: $15,000 (8-10 semanas, 1 developer). Costo operativo: $100-200/mes en cómputo cloud. ROI: si reduce el inventario sin vender de 18% a 12%, ahorra $36M COP (~$9,000 USD) por temporada. Payback: 2 temporadas. Con el presupuesto restante ($10,000): mejorar el chatbot con Claude API para consultas de disponibilidad con acceso a sistema de inventario (proyecto de $7,000). E-commerce propio: queda para fase 2 — necesita más presupuesto y es el proyecto más complejo.",
+              "criterios_de_exito": [
+                "Calcula el impacto económico de los tres problemas y justifica numéricamente cuál tiene mayor valor",
+                "Prioriza el problema de inventario y propone predicción de demanda con herramientas específicas (Prophet, LightGBM)",
+                "Estima el ROI de la solución con números concretos basados en la reducción del porcentaje de inventario sin vender",
+                "No intenta resolver los tres problemas simultáneamente — enfoca el presupuesto en el de mayor impacto"
+              ]
             },
+            "conexion": {
+              "siguiente_concepto": "IA en medios y creatividad",
+              "por_que_importa_despues": "Retail y manufactura muestran la IA en su versión más madura: sistemas en producción con ROI medido durante años. El siguiente contraste es la IA en medios y creatividad, donde la disrupción es más reciente, más visible para el consumidor, y más cargada de debates sobre autoría, empleo y ética que en cualquier otro sector."
+            }
             "conexion": {
               "siguiente_concepto": "",
               "por_que_importa_despues": ""
