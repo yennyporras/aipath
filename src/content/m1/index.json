@@ -4421,74 +4421,74 @@
         },
         {
           "id": "m1-b5-l2",
-          "titulo": "Tipos de datos: estructurados, texto, imagen, audio, video",
+          "titulo": "Datasets famosos y qué los hace valiosos",
           "bloque": 5,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "Los datos que alimentan los sistemas de IA vienen en cinco formas fundamentales, cada una con sus características y desafíos únicos. Entender estas diferencias es clave para diseñar soluciones de IA que realmente funcionen.\n\nDatos estructurados son los más ordenados: viven en tablas con filas y columnas bien definidas. Una hoja de cálculo de ventas, una base de datos de clientes, un reporte financiero. Cada campo tiene un tipo, un rango esperado, y una relación clara con los otros campos. Los modelos clásicos de ML como XGBoost y Random Forest se especializaron en este tipo. En IA empresarial, el 60% de los datos disponibles son estructurados — son el punto de entrada más fácil para proyectos de ML.\n\nDatos de texto (no estructurados) son la materia prima de los LLMs. Emails, contratos, chats de soporte, reseñas de clientes, posts en redes sociales. La clave es que el significado no está en la estructura sino en el lenguaje natural. El procesamiento requiere tokenización, embeddings y los transformers que revolucionaron el campo. Los LLMs como Claude fueron preentrenados en billones de tokens de texto.\n\nImágenes alimentan modelos de visión computacional (CV). Un pixel es un número; una imagen es una matriz 3D (alto × ancho × canales RGB). Modelos como CLIP y Stable Diffusion manejan este tipo. Aplicaciones: detección de defectos en manufactura, análisis de imágenes médicas, reconocimiento facial.\n\nAudio se convierte a espectrogramas (representación visual de frecuencias en el tiempo) para que los modelos lo procesen. Whisper de OpenAI convierte audio a texto con precisión sobresaliente. Aplicaciones: transcripción de llamadas de servicio al cliente, análisis de sentimiento en voz, comandos de voz.\n\nVideo es el más complejo: es audio más imágenes en secuencia temporal. Requiere entender no solo qué hay en cada frame sino las relaciones entre frames. Modelos como Gemini 1.5 Pro pueden procesar horas de video. Aplicaciones: análisis de seguridad, moderación de contenido, educación.\n\nEl gran avance de 2024-2026 son los modelos multimodales: Claude 3, GPT-4V y Gemini pueden procesar múltiples tipos simultáneamente. Puedes enviar una imagen más texto y obtener análisis integrado. Para empresas en LATAM, esto significa que si tienes datos de imagen Y texto —por ejemplo, fotos de productos más descripciones— puedes construir sistemas mucho más poderosos que usando solo uno de los dos.",
-              "analogia": "Los tipos de datos son como idiomas diferentes. Un modelo entrenado solo en español no entiende chino. Un modelo de texto no 'entiende' imágenes — necesita ser entrenado en ese 'idioma visual'. Los modelos multimodales de 2026 son los primeros verdaderamente políglotas.",
-              "ejemplo_malo": "Intentar usar un modelo de NLP para clasificar imágenes de defectos en una fábrica — necesitas un modelo de visión computacional para eso. Usar la herramienta equivocada garantiza resultados malos independientemente de la calidad de los datos.",
-              "ejemplo_bueno": "Usar un modelo multimodal para analizar fotos de siniestros de vehículos más el texto del informe del ajustador simultáneamente, obteniendo evaluaciones de daño más precisas que con imagen o texto solos.",
-              "por_que_importa": "Identificar qué tipo de datos tiene tu empresa determina qué modelos y arquitecturas son aplicables. Elegir el tipo de modelo equivocado para el tipo de dato equivocado es el error más costoso y frecuente en proyectos de IA empresarial.",
-              "tip_profesional": "En proyectos empresariales reales, los mejores resultados vienen de combinar tipos. Un chatbot de soporte que procesa texto más imágenes de pantallazos del error reporta resolución en primer contacto 40% mayor que solo texto. Siempre pregunta: ¿qué otros tipos de datos podrían enriquecer este problema?"
+              "explicacion": "Detrás de cada avance histórico en IA hubo un dataset que lo hizo posible. No es exageración: sin MNIST no habría revolución en visión computacional, sin ImageNet no existiría el deep learning moderno, y sin Common Crawl no habría LLMs. Estudiar los datasets más influyentes de la historia de la IA te enseña qué hace que los datos sean verdaderamente valiosos.\n\nMNIST (1998) es el 'Hola Mundo' de la IA. Creado por Yann LeCun en Bell Labs, contiene 70,000 imágenes en escala de grises de dígitos escritos a mano (0-9) de 28×28 píxeles. Durante 20 años fue el benchmark estándar para clasificación de imágenes. Su valor: perfectamente limpio, bien etiquetado, tamaño manejable y problema claramente definido. Hoy cualquier modelo nuevo se prueba en MNIST como primer test de cordura.\n\nImageNet (2009) cambió el mundo. Fei-Fei Li de Stanford organizó a 50,000 personas para etiquetar 14 millones de imágenes en 1,000+ categorías (perros, aviones, sillas, enfermedades de plantas). En 2012, AlexNet entrenado con ImageNet ganó el concurso ILSVRC reduciendo el error de clasificación de 26% a 15% — el momento que lanzó el boom del deep learning. ImageNet demostró que los datos a escala masiva combinados con redes neuronales profundas podían superar todos los algoritmos de visión anteriores.\n\nCommon Crawl es el sustento de los LLMs modernos. Este proyecto sin fines de lucro ha rastreado internet desde 2008 acumulando 250TB de texto web. GPT-3, LLaMA, Mistral y prácticamente todos los modelos base usan Common Crawl filtrado como su corpus principal. La clave no es solo el volumen sino la diversidad: texto científico, conversaciones, código, noticias, libros. Esta diversidad le da a los modelos la capacidad de generalizar a dominios muy diferentes.\n\nIMDB Movie Reviews (2011) fue el dataset referencia para análisis de sentimiento durante una década. 50,000 reseñas de películas clasificadas como positivas o negativas. Simple pero perfectamente adecuado para su propósito: medir si un modelo entiende el sentimiento humano expresado en lenguaje natural. Hoy se usa para benchmark de NLP básico.\n\nSQuAD (Stanford Question Answering Dataset, 2016) revolucionó los sistemas de preguntas y respuestas. 100,000 preguntas sobre artículos de Wikipedia donde las respuestas son fragmentos del texto. Definió cómo evaluar la comprensión de lectura en modelos de NLP y fue el entrenamiento base de los primeros sistemas de QA empresariales.\n\nHugging Face Datasets Hub centraliza hoy más de 50,000 datasets públicos listos para usar, cubriendo 100+ idiomas y decenas de tareas. Es el GitHub de los datos para ML. Para proyectos en español/LATAM, hay datasets de sentimiento en español, corpus legales latinoamericanos y datasets médicos en castellano que antes eran imposibles de encontrar.\n\nLo que hace a un dataset verdaderamente valioso no es el tamaño: es la combinación de escala suficiente + etiquetas de calidad + diversidad representativa + licencia clara + documentación honesta de limitaciones. Un dataset de 10,000 ejemplos perfectamente curados y representativos de tu caso de uso empresarial vale más que millones de ejemplos genéricos de internet.",
+              "analogia": "Los datasets famosos son como los experimentos fundacionales de la ciencia: así como la doble hélice del ADN requirió las fotografías de Rosalind Franklin, cada avance en IA requirió un dataset específico que hiciera posible medir el progreso. Sin el experimento correcto, no hay descubrimiento.",
+              "ejemplo_malo": "Buscar un dataset público de internet genérico para entrenar un modelo de detección de fraude financiero en Colombia — los patrones de fraude son específicos por región, institución y año. Un dataset genérico de fraude de EEUU de 2015 puede tener correlaciones completamente distintas a las que necesitas.",
+              "ejemplo_bueno": "Usar el IMDB dataset como punto de partida para entender cómo funciona el análisis de sentimiento, y luego construir tu propio dataset de reseñas en español de tu industria específica, beneficiándote de los años de investigación que ese benchmark representa.",
+              "por_que_importa": "Conocer los datasets históricos te permite evaluar con criterio los benchmarks que usan los proveedores de IA. Cuando alguien dice 'nuestro modelo tiene 95% de accuracy', la pregunta clave es: ¿en qué dataset? Un modelo con 95% en MNIST puede tener 40% en tu caso de uso real.",
+              "tip_profesional": "Hugging Face (huggingface.co/datasets) tiene 50,000+ datasets listos para usar con una línea de código Python: `from datasets import load_dataset; ds = load_dataset('imdb')`. Antes de recopilar datos desde cero, siempre busca primero si existe un dataset público que puedas usar como base o benchmark de referencia."
             },
             "verificacion": [
               {
-                "pregunta": "¿Qué tipo de dato es una hoja de Excel con ventas mensuales por producto?",
+                "pregunta": "¿Cuál fue el impacto histórico del dataset ImageNet en el campo de la IA?",
                 "opciones": [
-                  "No estructurado",
-                  "Estructurado",
-                  "Semiestructurado",
-                  "Multimodal"
+                  "Permitió entrenar los primeros modelos de lenguaje grande (LLMs)",
+                  "El concurso ImageNet 2012 demostró que deep learning podía superar todos los algoritmos de visión anteriores, lanzando el boom del deep learning",
+                  "Fue el primer dataset de audio para reconocimiento de voz",
+                  "Introdujo el concepto de aprendizaje no supervisado por primera vez"
                 ],
                 "correcta": 1,
-                "explicacion_profunda": "Los datos estructurados son información organizada en tablas con filas, columnas y tipos de campo definidos. Una hoja de Excel con ventas tiene columnas como fecha, producto, monto — cada campo tiene un tipo bien definido (fecha, texto, número). Este es el tipo de dato más común en empresas y el punto de entrada más accesible para proyectos de ML clásico. XGBoost, Random Forest y regresión logística están optimizados para este formato.",
-                "concepto_reforzado": "Clasificación de tipos de datos según su estructura"
+                "explicacion_profunda": "ImageNet fue fundamental: Fei-Fei Li de Stanford organizó 50,000 personas para etiquetar 14 millones de imágenes en 1,000+ categorías. En 2012, AlexNet entrenado con este dataset ganó el concurso ILSVRC reduciendo el error de clasificación del 26% al 15% — una mejora tan dramática que convenció al mundo académico y empresarial de apostar por redes neuronales profundas. Sin ImageNet, el boom del deep learning que trajo los LLMs de hoy habría llegado años más tarde. Demostró que la escala de datos más arquitecturas correctas superaba cualquier ingeniería manual de características.",
+                "concepto_reforzado": "Rol de los datasets en los avances históricos de IA"
               },
               {
-                "pregunta": "¿Cómo procesan los modelos de audio como Whisper la señal de audio?",
+                "pregunta": "¿Qué hace valioso a MNIST como dataset de referencia después de 25 años?",
                 "opciones": [
-                  "Leen la señal eléctrica directamente como números binarios",
-                  "Convierten el audio a espectrogramas (representación visual de frecuencias) y los procesan como imágenes",
-                  "Transcriben fonema por fonema usando reglas lingüísticas",
-                  "Comparan el audio con grabaciones de referencia almacenadas"
+                  "Tiene 100 millones de imágenes de altísima resolución",
+                  "Es limpio, bien etiquetado, tamaño manejable y problema claramente definido — ideal como test de cordura de cualquier modelo nuevo",
+                  "Contiene imágenes de todos los países del mundo",
+                  "Fue creado por Google usando búsquedas de usuarios"
                 ],
                 "correcta": 1,
-                "explicacion_profunda": "Los modelos de audio como Whisper convierten la señal de audio a espectrogramas — representaciones visuales que muestran las frecuencias del sonido en el tiempo usando un mapa de calor. Esta transformación convierte el problema de audio en un problema de visión computacional, permitiendo usar redes convolucionales optimizadas para imágenes. El espectrograma captura tanto el contenido lingüístico como las características acústicas del hablante, habilitando no solo transcripción sino identificación de hablante y análisis de emoción.",
-                "concepto_reforzado": "Procesamiento de datos de audio mediante espectrogramas"
+                "explicacion_profunda": "MNIST tiene 70,000 imágenes de dígitos escritos a mano en 28×28 píxeles. Su longevidad como benchmark no viene del tamaño sino de sus propiedades: perfectamente limpio (sin errores de etiqueta), bien balanceado (clases representadas igualmente), problema claro (clasificar 0-9) y resoluble en minutos con hardware moderno. Estas características lo convierten en el 'control de calidad' universal: si tu modelo nuevo falla en MNIST, hay un problema fundamental. Si funciona bien, puedes evaluar en tareas más complejas con confianza. El concepto se aplica a cualquier dataset de referencia empresarial.",
+                "concepto_reforzado": "Características que hacen valioso a un dataset de benchmark"
               },
               {
-                "pregunta": "¿Cuál es el principal avance de los modelos multimodales de 2024-2026?",
+                "pregunta": "¿Por qué hay que evaluar críticamente la afirmación '95% de accuracy' de un proveedor de IA?",
                 "opciones": [
-                  "Son más baratos que los modelos de un solo tipo de dato",
-                  "Procesan múltiples tipos de datos (texto, imagen, audio) simultáneamente en una sola consulta",
-                  "Tienen más parámetros que cualquier modelo anterior",
-                  "Funcionan completamente sin conexión a internet"
+                  "Porque el 95% es siempre una exageración",
+                  "Porque la accuracy depende del dataset específico usado — 95% en un benchmark estándar puede traducirse en 40% en tu caso de uso real con tu propia distribución de datos",
+                  "Porque los proveedores nunca reportan métricas reales",
+                  "Porque el 95% solo aplica a modelos de visión, no de lenguaje"
                 ],
                 "correcta": 1,
-                "explicacion_profunda": "Los modelos multimodales como Claude 3.5 Sonnet, GPT-4V y Gemini pueden recibir y razonar sobre múltiples tipos de datos en la misma consulta. Esto permite análisis imposible con modelos unimodales: analizar una imagen médica junto al historial del paciente, revisar un contrato PDF y compararlo con base legal, o analizar un video de entrenamiento y generar materiales de estudio. Representa el mayor salto en aplicabilidad empresarial desde GPT-3 y explica por qué las soluciones de IA de 2026 son dramáticamente más poderosas que las de 2022.",
-                "concepto_reforzado": "Capacidades y ventajas de los modelos multimodales"
+                "explicacion_profunda": "El benchmark importa tanto como el número. Un modelo con 99% de accuracy en MNIST puede tener 60% en dígitos manuscritos de tu formulario específico porque los estilos de escritura difieren. Un modelo con 92% de F1 en SQuAD puede tener 50% respondiendo preguntas sobre tus documentos legales colombianos porque el dominio y vocabulario son completamente distintos. Siempre pide al proveedor: ¿en qué dataset se midió? ¿Qué tan similar es ese dataset a mi caso de uso? ¿Puedo evaluar en mis propios datos antes de contratar? Esto diferencia a los compradores sofisticados de IA de los que toman decisiones basadas en marketing.",
+                "concepto_reforzado": "Evaluación crítica de métricas de rendimiento en IA"
               }
             ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "Una empresa de seguros colombiana quiere usar IA para tres procesos: (1) clasificar siniestros de vehículos por las fotos del accidente y el informe del ajustador, (2) analizar contratos de pólizas en PDF para extraer cláusulas clave, (3) predecir renovaciones basándose en historial de pagos y siniestros de cada cliente.",
-              "instruccion": "Para cada proceso, identifica qué tipo de dato se necesita, qué tipo de modelo es más apropiado, y si podrías combinar tipos para obtener mejores resultados.",
-              "input_malo": "Usar el mismo modelo de lenguaje genérico para los tres procesos — simplemente darle texto descriptivo de cada situación y esperar que responda bien en todos los casos.",
-              "pista": "Proceso 1 = imágenes + texto (multimodal), proceso 2 = texto largo (LLM con contexto largo), proceso 3 = datos estructurados de historial (ML clásico). ¿Cuál proceso se beneficia más de un modelo multimodal versus uno especializado?",
-              "solucion": "Proceso 1 (fotos siniestros): Modelo multimodal (Claude 3.5 o GPT-4V) que procese simultáneamente imagen del accidente + texto del informe del ajustador. Combinar ambos tipos mejora la precisión de evaluación del daño en ~40% vs solo imagen. Proceso 2 (análisis contratos): LLM con contexto largo (Claude Sonnet con 200K tokens). RAG si los contratos superan el contexto máximo — dividir en chunks y recuperar cláusulas relevantes. Proceso 3 (predicción renovaciones): Modelo ML clásico (XGBoost o LightGBM) sobre datos estructurados: historial de pagos, número de siniestros, tipo de póliza, antigüedad. Nota: Proceso 1 es el que más se beneficia de multimodalidad — la combinación de visual + texto da información mucho más rica que cualquiera solo.",
+              "contexto": "Una startup colombiana de agritech quiere construir un sistema para detectar enfermedades en cultivos de café a partir de fotos del smartphone del agricultor. El equipo técnico encontró en Hugging Face un dataset de 'Plant Disease Detection' con 87,000 imágenes de enfermedades en tomate, papa y maíz, y un proveedor ofrece su modelo con '94% de accuracy en este dataset'. El equipo quiere saber si pueden usar este dataset y ese modelo directamente.",
+              "instruccion": "Evalúa si este dataset y ese modelo son adecuados para el problema. ¿Qué preguntas debes hacer antes de decidir? ¿Qué harías si la respuesta es que no son adecuados?",
+              "input_malo": "Usar el modelo directamente porque 94% de accuracy suena excelente y el dataset tiene muchas imágenes. El café es una planta, el dataset tiene plantas — debería funcionar.",
+              "pista": "El problema tiene tres capas: (1) ¿el dataset cubre la planta correcta (café)? (2) ¿las enfermedades del dataset son las enfermedades del café en Colombia? (3) ¿las condiciones fotográficas del dataset (laboratorio vs campo + smartphone) coinciden con el caso de uso real?",
+              "solucion": "El dataset NO es adecuado directamente por tres razones críticas: (1) Mismatch de especie: las enfermedades de tomate y papa tienen síntomas visuales completamente distintos a las del café (roya, broca, antracnosis). Un modelo entrenado en tomate no reconoce roya del café. (2) Mismatch de benchmark: 94% de accuracy en imágenes controladas de laboratorio no se traduce a fotos de campo con luz variable, ángulos inconsistentes y fondo natural. (3) Mismatch geográfico: las enfermedades presentes en un dataset de EE.UU. pueden no ser las prevalentes en la región cafetera colombiana. Plan correcto: usar el dataset existente como preentrenamiento inicial (transfer learning), luego recopilar 2,000-5,000 imágenes reales de plantas de café colombianas etiquetadas por agrónomos locales para fine-tuning. Resultado esperado: modelo especializado en café colombiano con 85%+ de accuracy en condiciones reales de campo.",
               "criterios_de_exito": [
-                "Identifica correctamente el tipo de dato dominante para cada proceso",
-                "Sugiere modelo apropiado para cada tipo de dato",
-                "Identifica el proceso que más se beneficia de combinar tipos (multimodalidad)"
+                "Identifica el mismatch entre el dataset público y el problema real (especie, condiciones, geografía)",
+                "Cuestiona el 94% de accuracy explicando por qué no se traslada al caso de uso",
+                "Propone una estrategia de transfer learning + datos propios en lugar de descartar todo o usar todo ciegamente"
               ]
             },
             "conexion": {
               "siguiente_concepto": "Cómo se recopilan datos de entrenamiento a escala",
-              "por_que_importa_despues": "Saber qué tipo de datos tienes es el primer paso; el siguiente es entender de dónde vienen los datos que hacen funcionar a los modelos que usas hoy y por qué tienen las capacidades y limitaciones que tienen."
+              "por_que_importa_despues": "Saber qué datasets existen y qué los hace valiosos es el primer paso. El siguiente es entender los procesos industriales que permiten crear datasets a la escala que requieren los LLMs modernos, y cómo eso determina sus capacidades y limitaciones."
             }
           }
         },
