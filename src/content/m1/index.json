@@ -6258,33 +6258,98 @@
         },
         {
           "id": "m1-b7-l3",
-          "titulo": "Precisión, recall y F1: métricas de clasificación",
+          "titulo": "Benchmarks actuales y sus limitaciones reales",
           "bloque": 7,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Los benchmarks son el lenguaje común con el que los laboratorios de IA comunican el performance de sus modelos. En anuncios de producto, papers académicos y comparativas de prensa, los números de benchmarks aparecen constantemente. Esta lección examina los benchmarks más usados en 2026, qué miden con precisión, dónde fallan, y cómo leerlos con criterio en vez de tomarlos al pie de la letra.\n\n**MMLU (Massive Multitask Language Understanding)**\nCreado en 2021, MMLU es el benchmark de conocimiento general más citado. Cubre 57 áreas —matemáticas, medicina, derecho, filosofía, economía, ciencias naturales, historia— con preguntas de opción múltiple de nivel universitario a profesional avanzado. Un humano experto en su área obtiene ~90%. Los mejores modelos de 2026 obtienen 88-92%.\n\nQué mide bien: amplitud de conocimiento factual codificado en texto. Si la respuesta existe en los textos de entrenamiento, MMLU la detecta.\n\nQué NO mide: razonamiento sobre situaciones genuinamente nuevas, creatividad, capacidad de seguir instrucciones complejas con múltiples condiciones, o rendimiento en idiomas distintos al inglés. También está sujeto a contaminación —si el modelo vio estas preguntas durante el entrenamiento (posible dado que MMLU está en internet desde 2021), el score es inflado.\n\n**HumanEval**\nDiseñado por OpenAI para medir la capacidad de escribir código Python funcional. El modelo recibe la firma de una función y el docstring (descripción de qué hace), y debe escribir la implementación. Se evalúa si el código pasa los tests automáticamente. Métrica principal: pass@1 (porcentaje de problemas resueltos en el primer intento).\n\nQué mide bien: generación de funciones Python cortas y aisladas con especificación clara.\n\nQué NO mide: código en proyectos reales con dependencias, refactoring de código existente, debugging de sistemas complejos, código en otros lenguajes (aunque existen variantes), o la capacidad de entender contexto de codebase amplio.\n\n**HELM (Holistic Evaluation of Language Models, Stanford)**\nEl más comprehensivo. HELM evalúa modelos en 42 escenarios que incluyen no solo accuracy sino también calibración (¿sabe el modelo cuándo no sabe?), robustez (¿funciona igual con variaciones del prompt?), equidad (¿produce sesgos hacia ciertos grupos?), toxicidad y eficiencia computacional. Filosofía: un modelo puede ser muy preciso pero injusto o poco confiable — HELM intenta capturar todas estas dimensiones.\n\nQué mide bien: perfil multidimensional del modelo para audiencias técnicas que necesitan más que accuracy.\n\nLimitación: su complejidad lo hace difícil de interpretar para no especialistas y su actualización no siempre sigue el ritmo de los modelos más nuevos.\n\n**Chatbot Arena (LMSYS)**\nQuizás el más honesto de los benchmarks actuales. Usuarios reales comparan respuestas de dos modelos anónimos y eligen cuál prefieren. Con cientos de miles de comparaciones acumuladas, genera un ranking Elo —el mismo sistema de rating del ajedrez. No tiene preguntas fijas, no puede ser 'estudiado' por los modelos, y refleja preferencias humanas reales en uso real.\n\nLimitación: mide preferencia subjetiva del usuario promedio, no performance objetivo en tareas específicas. Un modelo que escribe de forma más amable puede superar a uno más preciso si los usuarios valoran el tono.\n\n**La limitación más importante de todos los benchmarks: la contaminación**\nComo los benchmarks son públicos y los datos de entrenamiento de los modelos incluyen grandes cantidades de texto de internet, existe alta probabilidad de que los modelos hayan 'visto' las preguntas de los benchmarks durante el entrenamiento. Un score alto puede reflejar memorización, no capacidad. Los laboratorios más rigurosos auditan esto, pero es técnicamente difícil garantizarlo. La regla práctica: desconfía de scores en benchmarks de más de 2 años de antigüedad para modelos nuevos.",
+              "analogia": "Los benchmarks son como las reseñas de un restaurante en Google Maps: una señal útil como primer filtro, pero si el restaurante sabe que Google Reviews es el criterio de éxito, puede optimizar para eso (fotos bonitas, contestar reviews rápido) sin que la comida mejore realmente. La única evaluación que importa es ir y comer.",
+              "ejemplo_malo": "Comparar modelos exclusivamente por su score en MMLU para decidir cuál usar en un proyecto de atención al cliente en español colombiano. MMLU no mide español LATAM, no mide seguimiento de instrucciones de negocio, y no mide coherencia en conversaciones largas.",
+              "ejemplo_bueno": "Usar MMLU como filtro inicial (eliminar modelos claramente por debajo del umbral técnico), Chatbot Arena para la preferencia de usuarios en uso general, y construir un eval set propio de 30-50 ejemplos del caso de uso real del cliente para la decisión final.",
+              "por_que_importa": "Cuando un proveedor anuncia '94% en nuestro benchmark propietario', necesitas poder preguntar: ¿en qué benchmark estándar? ¿Cómo se compara con modelos conocidos? ¿Cuándo fue creado ese benchmark? Esas preguntas te diferencian como evaluador crítico.",
+              "tip_profesional": "Para proyectos empresariales en LATAM, los benchmarks estándar (que son casi todos en inglés) son una señal necesaria pero no suficiente. Siempre incluye en tu evaluación al menos 10 ejemplos en español del caso de uso real, preferiblemente con el dialecto o vocabulario específico del sector del cliente (médico, legal, financiero, etc.)."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué diferencia fundamental tiene Chatbot Arena respecto a MMLU y HumanEval?",
+                "opciones": [
+                  "Chatbot Arena es más difícil porque tiene más preguntas",
+                  "Chatbot Arena usa comparaciones de preferencia de usuarios reales sobre respuestas de modelos anónimos, no preguntas con respuesta correcta fija",
+                  "Chatbot Arena es el único benchmark creado por una universidad",
+                  "Chatbot Arena solo evalúa modelos en inglés"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La diferencia es estructural. MMLU y HumanEval tienen preguntas con respuestas correctas predefinidas —el modelo acierta o no. Esto los hace objetivos y reproducibles, pero también los hace 'estudiables': los modelos pueden ser entrenados con datos similares a las preguntas. Chatbot Arena no tiene preguntas fijas: los usuarios traen sus propias preguntas en uso real, dos modelos responden anónimamente, y el usuario elige cuál prefiere. Con decenas de miles de comparaciones, el ranking Elo resultante refleja preferencias humanas reales en uso diverso. No puede ser 'estudiado' porque no hay preguntas predefinidas que memorizar. Su limitación es que mide preferencia subjetiva —un modelo que escribe de forma más fluida y amigable puede superar a uno más factualmente preciso si los usuarios valoran el estilo.",
+                "concepto_reforzado": "Método de evaluación por preferencia humana vs respuesta correcta fija"
+              },
+              {
+                "pregunta": "¿Qué es la 'contaminación de benchmark' y cuál es su efecto en los scores reportados?",
+                "opciones": [
+                  "Cuando errores humanos se introducen en las preguntas del benchmark",
+                  "Cuando el modelo fue entrenado con datos que incluyen o son similares a las preguntas del benchmark, inflando artificialmente su score sin mejora real en capacidades generales",
+                  "Cuando múltiples empresas usan el mismo benchmark haciendo imposible la comparación",
+                  "Cuando el benchmark tiene preguntas en idiomas que el modelo no entiende"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La contaminación de benchmark es uno de los problemas más serios en la evaluación de LLMs porque mina la confianza en los scores reportados. Como los benchmarks están publicados en internet desde hace años, y los modelos se entrenan en cantidades masivas de texto de internet, hay probabilidad real de que los modelos hayan visto variaciones de las preguntas del benchmark durante el entrenamiento. Un modelo que ha 'memorizado' la respuesta correcta a una pregunta de MMLU no demuestra comprensión —demuestra memorización. La consecuencia: scores de MMLU para modelos nuevos pueden estar inflados por contaminación. Los laboratorios más rigurosos incluyen análisis de contaminación en sus papers, pero detectarla completamente es técnicamente difícil. La práctica más honesta es reportar scores en benchmarks recientes o en variantes no publicadas de benchmarks conocidos.",
+                "concepto_reforzado": "Contaminación de benchmark y su impacto en la confiabilidad de scores"
+              },
+              {
+                "pregunta": "¿Por qué un score alto en HumanEval no garantiza que el modelo sea bueno asistiendo con código en proyectos reales?",
+                "opciones": [
+                  "Porque HumanEval solo evalúa código en JavaScript, no Python",
+                  "Porque HumanEval mide funciones cortas y aisladas con especificación clara, mientras el código real implica contexto de codebase amplio, dependencias y refactoring",
+                  "Porque HumanEval no tiene casos de prueba confiables",
+                  "Porque el código de HumanEval no puede ejecutarse en producción"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "HumanEval tiene 164 problemas de programación Python relativamente aislados: se le da al modelo una firma de función + docstring y debe escribir la implementación. Este formato captura bien la capacidad de generar código sintácticamente correcto que hace lo que se describe en pocas líneas. Pero el trabajo de un desarrollador real es diferente: entender una codebase con miles de líneas de código existente, hacer refactoring de funciones con dependencias complejas, debuggear errores con stack traces que requieren contexto de arquitectura, generar código en frameworks específicos como FastAPI o React con convenciones del proyecto. Un modelo puede tener 87% en HumanEval y ser frustrante para un desarrollador real si no puede mantener contexto de código largo o entiende las convenciones del framework del proyecto.",
+                "concepto_reforzado": "Limitaciones de HumanEval para predecir utilidad real en desarrollo de software"
+              },
+              {
+                "pregunta": "¿Qué dimensiones evalúa HELM que MMLU y HumanEval no cubren?",
+                "opciones": [
+                  "HELM evalúa la velocidad de respuesta y el costo computacional exclusivamente",
+                  "HELM evalúa calibración (certeza apropiada), robustez ante variaciones, equidad entre grupos y toxicidad, además de accuracy",
+                  "HELM solo evalúa modelos multimodales de imagen y texto",
+                  "HELM es idéntico a MMLU pero en más idiomas"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "HELM fue diseñado como respuesta a la limitación de los benchmarks de una dimensión. Un modelo puede ser muy preciso (alta accuracy) pero poco confiable en aspectos críticos: calibración pobre (el modelo dice 'estoy seguro' cuando debería decir 'no lo sé'), robustez baja (pequeñas variaciones en el prompt producen respuestas muy diferentes, señal de comportamiento frágil), equidad inconsistente (responde mejor preguntas sobre ciertos grupos demográficos que otros), o produce contenido tóxico con ciertos prompts. Para aplicaciones empresariales en sectores regulados —salud, finanzas, recursos humanos— estas dimensiones pueden ser más relevantes que el accuracy puro. Un modelo con accuracy 88% pero comportamiento inequitativo puede generar pasivos legales; un modelo con accuracy 85% pero comportamiento robusto y bien calibrado puede ser preferible.",
+                "concepto_reforzado": "Evaluación multidimensional de HELM"
+              },
+              {
+                "pregunta": "¿Por qué los benchmarks estándar como MMLU (casi todos en inglés) son insuficientes para proyectos empresariales en LATAM?",
+                "opciones": [
+                  "Porque los modelos no pueden procesar texto en español",
+                  "Porque MMLU es demasiado caro para empresas latinoamericanas",
+                  "Porque miden capacidades en inglés con temas generales, sin capturar el español LATAM, vocabulario sectorial específico ni contextos regulatorios y culturales de la región",
+                  "Porque los benchmarks en inglés no pueden descargarse fuera de EE.UU."
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Los benchmarks dominantes —MMLU, HumanEval, HELM— fueron diseñados principalmente en inglés con preguntas basadas en currículo académico y cultural anglosajón. Para proyectos en LATAM, hay tres brechas importantes. Primero, lingüística: el español latinoamericano tiene variaciones regionales y vocabulario técnico-sectorial que los benchmarks en inglés no capturan; un modelo puede tener 90% en MMLU y responder pobremente en español mexicano de contratos de compraventa. Segundo, sectorial: los benchmarks no incluyen preguntas sobre el Código Civil colombiano, las regulaciones de la SBS peruana, o los estándares NIIF adaptados para LATAM. Tercero, cultural: algunos benchmarks asumen contextos culturales (sistema legal anglosajón, sistema universitario norteamericano) que no aplican directamente en la región. La solución es siempre complementar con un eval set propio construido con el tipo de texto real del proyecto.",
+                "concepto_reforzado": "Limitaciones de benchmarks en inglés para proyectos en español LATAM"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "El director de tecnología de una aseguradora en Lima te envía este mensaje: 'Hemos evaluado tres modelos para nuestro asistente de siniestros. El proveedor A tiene 91% en MMLU. El proveedor B tiene 89% en MMLU y 85% en HumanEval. El proveedor C tiene 78% en MMLU pero el proveedor dice que su modelo fue entrenado específicamente con texto legal y de seguros en español. ¿Cuál recomiendas?' El asistente necesita analizar reportes de siniestros escritos en español peruano con terminología de seguros.",
+              "instruccion": "Responde al director con un análisis que incluya: (1) por qué los benchmarks disponibles son insuficientes para tomar esta decisión, (2) cuál información adicional necesitas de cada proveedor, y (3) qué evaluación propia harías antes de recomendar.",
+              "input_malo": "Recomendaría el proveedor A porque tiene el mayor score en MMLU (91%), lo que indica que tiene el mejor modelo de los tres.",
+              "pista": "MMLU mide conocimiento general en inglés. HumanEval mide código Python. Ninguno mide español peruano de seguros. El proveedor C tiene 78% en MMLU pero dice especialización en seguros en español — esa especialización podría ser exactamente lo que se necesita, aunque el MMLU general sea menor.",
+              "solucion": "Respuesta al director: (1) INSUFICIENCIA DE BENCHMARKS: MMLU mide conocimiento factual general en inglés —no español peruano, no terminología de seguros, no análisis de siniestros. HumanEval mide código Python, completamente irrelevante para este caso. Los scores de proveedores A y B son ruido para esta decisión. El proveedor C con 78% en MMLU puede ser perfectamente mejor para este caso de uso específico si su fine-tuning en seguros en español es sólido. (2) INFORMACIÓN ADICIONAL NECESARIA: De todos: ejemplos reales de análisis de siniestros generados por cada modelo en español. De proveedor C: en qué datos de seguros se fine-tuneó, qué volumen, qué países, si incluye documentos peruanos. De todos: términos de privacidad de datos (¿pueden enviar reportes de siniestros de clientes?) y disponibilidad de API. (3) EVALUACIÓN PROPIA: Tomar 20 reportes reales de siniestros (anonimizados) ya revisados por el equipo de siniestros de la aseguradora con el análisis correcto como ground truth. Enviar a los tres modelos. Evaluar: ¿detecta las causas correctas del siniestro? ¿Identifica correctamente la cobertura aplicable? ¿Usa terminología apropiada del sector? El modelo que obtenga mejor resultado en este eval set específico es el recomendado, independientemente del score en MMLU.",
+              "criterios_de_exito": [
+                "Señala explícitamente por qué MMLU y HumanEval no son métricas relevantes para este caso de uso específico",
+                "Defiende la posibilidad de que el proveedor C sea la mejor opción pese a menor MMLU",
+                "Propone un eval set con ejemplos reales del caso de uso como única evaluación confiable"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Evaluación humana vs automática",
+              "por_que_importa_despues": "Después de entender los benchmarks automáticos y sus límites, la siguiente lección examina cuándo la evaluación humana es irremplazable y cómo diseñarla para que sea rigurosa y no sesgada."
             }
           }
         },
