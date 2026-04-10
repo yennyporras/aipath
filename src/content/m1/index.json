@@ -7803,7 +7803,7 @@
         },
         {
           "id": "m1-b9-l3",
-          "titulo": "Regulación global: EU AI Act, Executive Order, China",
+          "titulo": "Transparencia y explicabilidad en IA",
           "bloque": 9,
           "tipo": "leccion",
           "duracion_min": 20,
@@ -7817,7 +7817,68 @@
               "por_que_importa": "",
               "tip_profesional": ""
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la diferencia principal entre 'interpretabilidad' y 'explicabilidad' en sistemas de IA?",
+                "opciones": [
+                  "Interpretabilidad es la capacidad intrínseca del modelo de ser comprendido; explicabilidad es la capacidad de generar explicaciones post-hoc para modelos de caja negra",
+                  "Interpretabilidad aplica solo a modelos lineales; explicabilidad aplica solo a redes neuronales profundas",
+                  "Son sinónimos exactos que describen la misma propiedad técnica del modelo",
+                  "Interpretabilidad mide la velocidad de inferencia; explicabilidad mide la precisión del modelo"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "Interpretabilidad (o transparencia intrínseca) significa que el modelo mismo es comprensible por diseño: una regresión logística, un árbol de decisión pequeño o reglas IF-THEN son interpretables porque un humano puede leer el modelo y entender por qué predice lo que predice. Explicabilidad (XAI - Explainable AI) es diferente: aplica técnicas post-hoc para generar aproximaciones de por qué un modelo de caja negra —como una red neuronal profunda— tomó una decisión específica. Herramientas como LIME (Local Interpretable Model-agnostic Explanations) y SHAP (SHapley Additive exPlanations) generan explicaciones locales aproximadas sin modificar el modelo original. La distinción importa porque las explicaciones post-hoc son aproximaciones que pueden ser engañosas, mientras que los modelos interpretables garantizan comprensión real aunque suelen tener menor rendimiento predictivo.",
+                "concepto_reforzado": "Diferencia entre interpretabilidad intrínseca y explicabilidad post-hoc"
+              },
+              {
+                "pregunta": "SHAP (SHapley Additive exPlanations) asigna un valor a cada feature de una predicción. ¿De dónde viene matemáticamente este valor?",
+                "opciones": [
+                  "De la teoría de juegos cooperativos de Shapley, que distribuye la contribución de cada jugador (feature) a la predicción total",
+                  "Del gradiente de la función de pérdida respecto a cada feature en el punto de predicción",
+                  "De la correlación de Pearson entre cada feature y la variable objetivo en el conjunto de entrenamiento",
+                  "Del coeficiente de importancia calculado durante el entrenamiento del modelo de random forest"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "Los valores SHAP están fundamentados en la teoría de valores de Shapley de la teoría de juegos cooperativos (Lloyd Shapley, Premio Nobel de Economía 2012). La idea central: para cada combinación posible de features, calcula la diferencia en la predicción cuando un feature está presente vs ausente, ponderada por todas las posibles coaliciones de features. El resultado es la contribución marginal promedio de cada feature a la predicción específica. Esto le da a SHAP propiedades matemáticas deseables como eficiencia (los valores suman exactamente la diferencia entre la predicción y el valor base), simetría (features con igual contribución reciben igual valor), y nulidad (features que no aportan reciben cero). El gradiente (LIME) es una aproximación local diferente, más rápida pero menos fundamentada teóricamente.",
+                "concepto_reforzado": "Fundamento matemático de SHAP y valores de Shapley"
+              },
+              {
+                "pregunta": "Un banco usa un modelo de deep learning para aprobar créditos. Un cliente rechazado pregunta por qué. ¿Qué principio legal en Europa obliga al banco a responder, y qué tipo de explicación requiere?",
+                "opciones": [
+                  "El GDPR Art. 22 exige el derecho a no ser sujeto de decisiones totalmente automatizadas y el derecho a obtener explicación significativa de la lógica aplicada",
+                  "La Directiva de Servicios de Pago (PSD2) exige documentar todos los algoritmos de scoring crediticio en código abierto",
+                  "El EU AI Act exige que todos los modelos bancarios sean modelos lineales interpretables por definición",
+                  "El Acuerdo de Basilea III exige explicabilidad técnica solo para modelos con más de 1 millón de parámetros"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "El Artículo 22 del GDPR (Reglamento General de Protección de Datos) establece el derecho del individuo a no ser sujeto de decisiones basadas únicamente en procesamiento automatizado que le afecten significativamente, incluyendo decisiones de crédito, empleo y seguros. Cuando el responsable del tratamiento invoca una excepción (como necesidad contractual), debe proporcionar 'información significativa sobre la lógica aplicada'. Esto creó presión regulatoria para que los bancos europeos puedan generar explicaciones de sus modelos de scoring, aunque el GDPR no especifica un método técnico concreto. En práctica, muchos bancos europeos implementaron SHAP o LIME para generar explicaciones individualizadas. El EU AI Act (2024) refuerza esto clasificando los sistemas de scoring crediticio como 'alto riesgo' con requisitos adicionales de transparencia y auditoría.",
+                "concepto_reforzado": "GDPR Art. 22 y derecho a explicación en decisiones automatizadas"
+              },
+              {
+                "pregunta": "¿Por qué los modelos más interpretables suelen tener menor rendimiento predictivo que los modelos de caja negra? ¿Cómo se llama este trade-off?",
+                "opciones": [
+                  "El accuracy-interpretability trade-off: modelos simples capturan menos patrones complejos no lineales que existen en datos reales",
+                  "El bias-variance trade-off: modelos interpretables tienen mayor varianza porque son más sensibles a ruido",
+                  "El precision-recall trade-off: modelos interpretables optimizan precisión sacrificando recall",
+                  "El train-test trade-off: modelos interpretables generalizan peor por usar menos parámetros"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "El accuracy-interpretability trade-off es una tensión fundamental en machine learning. Los modelos interpretables como regresión logística o árboles de decisión poco profundos tienen restricciones estructurales: solo pueden capturar relaciones lineales o de baja complejidad. Los datos del mundo real frecuentemente tienen patrones altamente no lineales, interacciones entre cientos de variables, y dependencias que solo emergen con representaciones de alta dimensionalidad. Las redes neuronales profundas y los gradient boosting models pueden aprender estas complejidades porque tienen millones de parámetros libres, pero esa misma complejidad los hace incomprensibles. La solución no es siempre elegir un extremo: a veces la diferencia de accuracy es pequeña y la interpretabilidad vale la pérdida; en otras aplicaciones críticas (medicina, justicia), la interpretabilidad puede ser un requisito no negociable aunque cueste rendimiento.",
+                "concepto_reforzado": "Accuracy-interpretability trade-off en machine learning"
+              },
+              {
+                "pregunta": "¿Qué es una 'explicación contrafactual' y por qué es particularmente útil para usuarios finales afectados por decisiones de IA?",
+                "opciones": [
+                  "Explica qué cambios mínimos en los inputs habrían resultado en una decisión diferente, dando al usuario una acción concreta",
+                  "Explica los factores que históricamente causaron el resultado en el conjunto de entrenamiento",
+                  "Muestra el peso de cada neurona en la capa de activación que produjo la predicción",
+                  "Compara la predicción del modelo con la de un experto humano para validar la coherencia"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "Las explicaciones contrafactuales responden a la pregunta: '¿qué habría tenido que ser diferente en tu caso para obtener un resultado distinto?' Por ejemplo, en lugar de decir 'tu crédito fue negado porque tu deuda es alta y tu historial es corto', una explicación contrafactual diría: 'si tu ratio deuda/ingreso fuera menor al 35% (actualmente 52%) Y tuvieras 12 meses más de historial crediticio, tu solicitud habría sido aprobada'. Esta forma de explicar es especialmente valiosa para usuarios finales porque: (1) es accionable — el usuario sabe exactamente qué cambiar, (2) no requiere comprensión técnica del modelo, (3) preserva la privacidad del modelo sin revelar su arquitectura completa. El GDPR Art. 22 y el EU AI Act implícitamente favorecen explicaciones contrafactuales porque son las más 'significativas' para el afectado.",
+                "concepto_reforzado": "Explicaciones contrafactuales y su utilidad para usuarios afectados"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
               "contexto": "",
