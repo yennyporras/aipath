@@ -243,7 +243,15 @@ export default function App() {
     setRachaRota(false)
   }
 
-  function handleTeoriaOk() { setPantalla("quiz") }
+  function handleTeoriaOk() {
+    // Si la lección no tiene preguntas (contenido pendiente), salta al quiz
+    const tieneQuiz = leccionActual?.contenido?.verificacion?.length > 0
+    if (!tieneQuiz) {
+      setPantalla(leccionActual?.contenido?.practica?.contexto ? "practica" : "results")
+    } else {
+      setPantalla("quiz")
+    }
+  }
 
   function handleResponder(esCorrecto) {
     if (esCorrecto) {

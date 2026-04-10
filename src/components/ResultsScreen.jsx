@@ -32,8 +32,8 @@ function ProgressCircle({ pct }) {
 }
 
 export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, onRestart, onVolver, hayNextLesson }) {
-  const pct    = Math.round((correctas / totalPreguntas) * 100)
-  const passed = correctas >= Math.ceil(totalPreguntas * 0.7)
+  const pct    = totalPreguntas > 0 ? Math.round((correctas / totalPreguntas) * 100) : 100
+  const passed = totalPreguntas === 0 || correctas >= Math.ceil(totalPreguntas * 0.7)
   const msg    = getMessage(pct)
 
   const [xpAnim, setXpAnim] = useState(0)
