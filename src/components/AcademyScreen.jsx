@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react"
 import academyIndex from "../content/academy-index.json"
 
 const NIVEL_COLORS = {
@@ -10,19 +11,37 @@ const NIVEL_COLORS = {
 }
 
 const FASE_INFO = {
-  1:             { label: "Fase 1 — Funcional",  sub: "Prioridad máxima",    color: "#10B981" },
-  2:             { label: "Fase 2 — Sólida",      sub: "ML + Backend",        color: "#3B82F6" },
-  3:             { label: "Fase 3 — Referente",   sub: "Arquitectura profunda",color: "#8B5CF6" },
-  "transversal": { label: "Transversales",         sub: "Desde el inicio",     color: "#F59E0B" },
+  1: { label: "Fase 1 — Funcional",         sub: "6 módulos · Prioridad máxima",      color: "#10B981" },
+  2: { label: "Fase 2 — Sólida",            sub: "6 módulos · ML + Backend",          color: "#3B82F6" },
+  3: { label: "Fase 3 — Referente Mundial", sub: "5 módulos · Arquitectura profunda",  color: "#8B5CF6" },
+}
+
+// Calcula días/horas/minutos hasta el objetivo
+function calcularCountdown() {
+  const target = new Date("2026-10-31T23:59:59")
+  const diff = target - new Date()
+  if (diff <= 0) return { dias: 0, horas: 0, minutos: 0 }
+  return {
+    dias:    Math.floor(diff / (1000 * 60 * 60 * 24)),
+    horas:   Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    minutos: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+  }
 }
 
 export default function AcademyScreen({ progreso, onSelectModulo }) {
   const completadas = progreso.leccionesCompletadas || []
   const modulos     = academyIndex.modulos
-  const fases       = [1, 2, 3, "transversal"]
+  const fases       = [1, 2, 3]
 
   const xpTotal = progreso.xpTotal || 0
   const nivel   = Math.floor(xpTotal / 300) + 1
+
+  const [countdown, setCountdown] = useState(calcularCountdown)
+
+  useEffect(() => {
+    const id = setInterval(() => setCountdown(calcularCountdown()), 60000)
+    return () => clearInterval(id)
+  }, [])
 
   return (
     <div className="w-full max-w-4xl mx-auto px-2 relative z-10">
@@ -49,7 +68,7 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
       </div>
 
       {/* Stats globales */}
-      <div className="max-w-lg mx-auto surface rounded-2xl p-5 mb-10 animate-reveal grid grid-cols-4 gap-4 text-center"
+      <div className="max-w-lg mx-auto surface rounded-2xl p-5 mb-4 animate-reveal grid grid-cols-4 gap-4 text-center"
         style={{ animationDelay: "200ms" }}>
         <div>
           <p className="text-lg font-bold text-gradient" style={{ fontFamily: "'Outfit', sans-serif" }}>{completadas.length}</p>
@@ -66,6 +85,37 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
         <div>
           <p className="text-lg font-bold text-gradient" style={{ fontFamily: "'Outfit', sans-serif" }}>{progreso.rachaDiaria || 1}</p>
           <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>Racha</p>
+        </div>
+      </div>
+
+      {/* Meta + Countdown */}
+      <div className="max-w-lg mx-auto mb-8 animate-reveal" style={{ animationDelay: "240ms" }}>
+        {/* Meta siempre visible */}
+        <p className="text-center text-[11px] font-bold uppercase tracking-[0.2em] mb-3"
+          style={{ color: "#6366F1" }}>
+          Meta: Referente en IA — Octubre 2026
+        </p>
+        {/* Contador regresivo */}
+        <div className="surface rounded-2xl px-5 py-3 grid grid-cols-3 gap-2 text-center"
+          style={{ border: "1px solid rgba(99,102,241,0.2)" }}>
+          <div>
+            <p className="text-2xl font-extrabold text-gradient" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              {countdown.dias}
+            </p>
+            <p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>días</p>
+          </div>
+          <div>
+            <p className="text-2xl font-extrabold text-gradient" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              {countdown.horas}
+            </p>
+            <p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>horas</p>
+          </div>
+          <div>
+            <p className="text-2xl font-extrabold text-gradient" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              {countdown.minutos}
+            </p>
+            <p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>minutos</p>
+          </div>
         </div>
       </div>
 
@@ -178,7 +228,7 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
 
       <p className="text-center mt-4 mb-8 text-xs animate-reveal"
         style={{ color: "var(--color-text-muted)" }}>
-        Nuevos módulos se activan cada semana
+        Nuevos módulos se activan cada semana · Meta: Octubre 2026
       </p>
     </div>
   )
