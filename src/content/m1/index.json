@@ -8175,7 +8175,7 @@
         },
         {
           "id": "m1-b9-l7",
-          "titulo": "IA Safety: alineación y riesgos a largo plazo",
+          "titulo": "Constitutional AI de Anthropic: cómo funciona",
           "bloque": 9,
           "tipo": "leccion",
           "duracion_min": 20,
@@ -8189,7 +8189,68 @@
               "por_que_importa": "",
               "tip_profesional": ""
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es el principio central de Constitutional AI (CAI) desarrollado por Anthropic y en qué se diferencia del RLHF estándar?",
+                "opciones": [
+                  "CAI entrena al modelo para auto-criticar y revisar sus respuestas según principios escritos explícitamente (la 'constitución'), reduciendo dependencia de feedback humano individual en cada ejemplo",
+                  "CAI usa votos de una constitución de usuarios que deciden democráticamente qué respuestas son aceptables",
+                  "CAI es un filtro post-generación que bloquea respuestas que violan reglas codificadas manualmente en un sistema experto",
+                  "CAI entrena modelos separados para cada dominio de seguridad y combina sus outputs con ensemble"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "Constitutional AI (paper de Anthropic, 2022) introduce un cambio metodológico importante respecto al RLHF (Reinforcement Learning from Human Feedback) estándar. En RLHF tradicional, humanos comparan pares de respuestas y el modelo aprende sus preferencias — lo que requiere muchísimo feedback humano y puede ser inconsistente. En CAI, se especifica una 'constitución': un conjunto de principios éticos escritos en lenguaje natural como 'elige la respuesta que sea más honesta' o 'elige la respuesta que cause menos daño'. Luego el mismo modelo AI usa esa constitución para auto-criticar sus propias respuestas (RLAIF — Reinforcement Learning from AI Feedback): genera una respuesta, la evalúa contra los principios constitucionales, genera una revisión, y usa esos juicios como señal de entrenamiento. Esto permite escalar el alineamiento con menos supervisión humana y con principios más explícitos y auditables.",
+                "concepto_reforzado": "Constitutional AI: entrenamiento por auto-crítica con principios explícitos"
+              },
+              {
+                "pregunta": "La 'constitución' de Anthropic para Claude incluye principios de múltiples fuentes. ¿Qué fuentes menciona el paper original de CAI y por qué se eligen diversas?",
+                "opciones": [
+                  "Declaración Universal de Derechos Humanos de la ONU, principios de organizaciones de derechos digitales, y los términos de servicio de plataformas tecnológicas — para anclar el modelo en valores con amplio consenso",
+                  "Solo los valores de los fundadores de Anthropic, para garantizar consistencia interna y evitar contradicciones",
+                  "Exclusivamente textos filosóficos académicos de ética utilitarista y deontológica",
+                  "Leyes positivas vigentes de EE.UU. y la UE, sin principios abstractos no codificados legalmente"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "El paper de CAI de Anthropic (Bai et al., 2022) describe una constitución que toma principios de fuentes diversas deliberadamente: la Declaración Universal de Derechos Humanos de la ONU (para anclar en estándares de derechos con legitimidad global), los principios de organizaciones como el Electronic Frontier Foundation (para perspectivas de derechos digitales), y los términos de servicio de plataformas como Apple App Store (para principios operacionales ya aceptados públicamente). La diversidad de fuentes es intencional: ningún conjunto de valores tiene monopolio sobre la ética, y usar múltiples fuentes con legitimidad independiente reduce el riesgo de que la constitución refleje solo los sesgos particulares de los ingenieros de Anthropic. Esta transparencia sobre las fuentes de la constitución también permite auditarla externamente — cualquiera puede leer la constitución y debatir si sus principios son los correctos.",
+                "concepto_reforzado": "Fuentes diversas de la constitución de Claude y su legitimidad"
+              },
+              {
+                "pregunta": "¿Cómo maneja Constitutional AI el conflicto entre principios cuando dos reglas de la constitución apuntan a respuestas contradictorias?",
+                "opciones": [
+                  "El modelo aprende a hacer juicios contextuales de balance entre principios, similar a cómo los humanos resuelven dilemas éticos, no mediante jerarquía rígida",
+                  "Siempre prevalece el principio de seguridad sobre cualquier otro principio de la constitución",
+                  "El conflicto se reporta automáticamente al equipo de Anthropic para resolución manual caso por caso",
+                  "Se usa una función de pérdida que asigna pesos numéricos fijos a cada principio antes del entrenamiento"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "Los conflictos entre principios constitucionales son inevitables: ser maximalmente útil puede tensionar con ser maximalmente seguro; ser honesto puede tensionar con evitar daño emocional. Constitutional AI no resuelve esto con jerarquías rígidas porque la ética real es contextual. En cambio, el proceso de entrenamiento expone al modelo a muchos ejemplos de cómo balancear estos principios en distintos contextos, y el modelo aprende a hacer juicios graduales. Por ejemplo, el nivel de riesgo de la solicitud modula cuánto peso dan a seguridad vs utilidad. Anthropic publicó posteriormente el 'Model Spec' (especificación del modelo, 2024) que sí articula algunas prioridades generales: ser inofensivo > ser honesto > ser útil, pero con la caveat de que en la práctica la mayoría de interacciones no activan estos conflictos porque ayudar con código o escribir un email no requiere sacrificar seguridad. El balance entre principios en conflicto sigue siendo uno de los problemas abiertos más difíciles del alineamiento.",
+                "concepto_reforzado": "Resolución de conflictos entre principios en Constitutional AI"
+              },
+              {
+                "pregunta": "¿Qué es RLAIF (Reinforcement Learning from AI Feedback) y cuál es su ventaja sobre RLHF clásico en la escala del entrenamiento de modelos?",
+                "opciones": [
+                  "RLAIF usa al propio modelo de IA como evaluador de sus respuestas según los principios constitucionales, lo que permite generar más datos de preferencia a menor costo que con evaluadores humanos",
+                  "RLAIF reemplaza al modelo de recompensa humano con un modelo de recompensa entrenado en código fuente de sistemas de IA anteriores",
+                  "RLAIF usa feedback de otros modelos competidores de la industria para crear evaluaciones más objetivas",
+                  "RLAIF es una extensión del RLHF donde los humanos evalúan respuestas generadas por IA en lugar de respuestas del modelo en entrenamiento"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "RLHF estándar tiene un cuello de botella de escala: para entrenar modelos grandes se necesitan miles o millones de comparaciones de respuestas evaluadas por humanos, lo que es lento y caro. RLAIF (técnica central de Constitutional AI) resuelve esto usando al propio modelo — o un modelo auxiliar — como evaluador: se genera una respuesta, se le pide al modelo que la evalúe según los principios constitucionales ('¿cuál de estas dos respuestas es más honesta y menos dañina?'), y ese juicio sirve como señal de entrenamiento. Esto puede generar millones de ejemplos de feedback a bajo costo. La limitación es que el modelo evaluador tiene sus propios sesgos, por lo que CAI combina RLAIF con algo de RLHF humano para calibrar al modelo evaluador. El resultado: más feedback de preferencia por menos costo, con principios más explícitos y auditables que los capturados implícitamente en comparaciones humanas.",
+                "concepto_reforzado": "RLAIF vs RLHF: ventajas de escala en Constitutional AI"
+              },
+              {
+                "pregunta": "Anthropic diseñó Claude con el concepto de ser 'broadly safe' como primera prioridad. ¿Qué significa esto en práctica y por qué Anthropic lo pone antes que ser útil?",
+                "opciones": [
+                  "Que Claude debe apoyar la supervisión humana sobre sistemas de IA durante el período actual de desarrollo, evitando acciones que concentren poder o escapen al control humano, incluso si eso reduce su utilidad",
+                  "Que Claude nunca debe generar contenido que cause daño físico directo a ningún usuario bajo ninguna circunstancia",
+                  "Que Claude debe consultar a un humano antes de cada respuesta que involucre temas sensibles o controvertidos",
+                  "Que Claude prioriza la seguridad de los datos del usuario sobre proporcionar información útil cuando hay conflicto"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "Anthropic articula en su Model Spec (2024) que 'broadly safe' significa que Claude debe apoyar la capacidad de los humanos de supervisar, corregir y controlar los sistemas de IA, especialmente durante este período crítico donde los modelos pueden tener errores de valores o capacidades que no se comprenden completamente. La razón de prioridad es estratégica: si Claude tuviese valores incorrectos y no fuera supervisable, el daño podría escalar sin posibilidad de corrección. Si Claude es supervisable aunque tenga valores imperfectos, los humanos pueden detectar y corregir los errores. En práctica, 'broadly safe' incluye: no tomar acciones que concentren poder en ninguna entidad (incluida Anthropic), ser transparente sobre sus capacidades y limitaciones, no ayudar a subvertir mecanismos de supervisión, y preferir acciones reversibles sobre irreversibles cuando hay incertidumbre. Esto no significa que Claude sea inútil — la inmensa mayoría de interacciones no activan este principio porque ayudar con tareas cotidianas no amenaza la supervisión humana.",
+                "concepto_reforzado": "Broadly safe como primera prioridad de Claude y la lógica del período actual de IA"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
               "contexto": "",
