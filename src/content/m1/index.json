@@ -6646,33 +6646,98 @@
         },
         {
           "id": "m1-b7-l7",
-          "titulo": "Overfitting, underfitting y generalización",
+          "titulo": "Sesgos en la evaluación: cómo evitarlos",
           "bloque": 7,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Los sesgos en la evaluación de modelos de IA no son fallas de carácter ni falta de rigor intencional —son errores sistemáticos que afectan incluso a los evaluadores más cuidadosos. Conocer los sesgos más comunes es el primer paso para diseñar evaluaciones que los mitiguen. Esta lección cataloga los sesgos más relevantes para proyectos de IA en contexto profesional y da estrategias concretas para cada uno.\n\n**1. Sesgo de confirmación en la evaluación**\nEl sesgo de confirmación lleva a buscar evidencia que confirme lo que ya creemos. Si el equipo cree que Claude es mejor que GPT-4o para su proyecto, tendrá más peso perceptual cada respuesta de Claude que salga bien, y minimizará las que salgan mal. Los casos donde GPT-4o supere a Claude se atribuirán a 'fue una pregunta fácil' o 'tuve suerte'. Mitigación: evaluación ciega y criterios pre-definidos que se aplican igual independientemente de cuál modelo generó la respuesta.\n\n**2. Sesgo de orden (primacy y recency)**\nLos evaluadores tienden a recordar y puntuar mejor lo primero que ven (primacy effect) o lo último que ven (recency effect). Si siempre presentas las respuestas del Modelo A antes que las del Modelo B, el Modelo A tiene ventaja por primacy. Mitigación: randomizar el orden de presentación para cada ejemplo evaluado.\n\n**3. Sesgo de longitud**\nTanto evaluadores humanos como LLMs-como-juez tienden a preferir respuestas más largas y elaboradas, incluso cuando respuestas más concisas son de igual o mayor calidad. Un modelo que genera respuestas 50% más largas puede parecer más 'completo' sin ser más correcto o útil. Mitigación: incluir 'concisión' como dimensión explícita de evaluación con sus propios criterios, y definir si el caso de uso requiere respuestas largas o concisas.\n\n**4. Sesgo de formato (markdown, bullets, estructura)**\nLos LLMs a menudo generan respuestas con formato markdown —headers, bullets, negritas— que hace que el texto se vea organizado y profesional. Si la evaluación se hace en una interfaz que renderiza markdown, el modelo que usa más formato puede parecer mejor aunque el contenido sea igual. Mitigación: evaluar el contenido separado del formato, o asegurarse de que el entorno de evaluación renderiza (o no renderiza) el markdown de forma consistente para todos los modelos.\n\n**5. Sesgo de halo**\nSi un modelo da una respuesta excelente a los primeros tres ejemplos, los evaluadores tienden a puntuar mejor sus respuestas siguientes, incluso si la calidad baja. El 'halo' de las buenas respuestas iniciales contamina la evaluación posterior. Mitigación: randomizar el orden de los ejemplos para cada modelo y evaluar cada respuesta de forma independiente sin saber el puntaje de las anteriores.\n\n**6. Sesgo de dominio del evaluador**\nUn evaluador con expertise técnico en el dominio del caso de uso (ej: un abogado evaluando contratos) puede penalizar al modelo que usa terminología menos precisa aunque el contenido sea correcto para el usuario final que es no-experto. Un evaluador no-experto puede ser el reverso: valorar respuestas que suenan impresionantes pero son factualmente incorrectas. Mitigación: usar evaluadores que representen al usuario real del sistema, no al experto máximo ni al usuario completamente inexperto.\n\n**7. Sesgo temporal**\nLos modelos se actualizan frecuentemente. Una evaluación hecha en enero con GPT-4o-2024-01 puede ser irrelevante para GPT-4o-2024-06. Si reportas que 'el modelo A es mejor basado en evaluación de hace 8 meses', la conclusión puede estar obsoleta. Mitigación: documentar siempre la versión exacta del modelo evaluado y la fecha. Re-evaluar cuando hay actualizaciones mayores.\n\n**8. Sesgo de auto-referencia en LLM-as-a-Judge**\nCuando usas Claude como juez para evaluar otros modelos, Claude puede tener preferencia inconsciente por el estilo de escritura y los patrones de respuesta similares a los suyos. Similarmente, un juez GPT-4o puede favorecer las respuestas de GPT-4o. Mitigación: cuando sea posible, usa un juez diferente al modelo que se evalúa y calibra al juez comparando sus evaluaciones con las de humanos expertos en una muestra.",
+              "analogia": "Los sesgos de evaluación son como los árbitros de fútbol: todos intentan ser justos, pero hay estudios que muestran que en tiempo de descuento los árbitros favorecen inconscientemente al equipo local. No es mala intención, es un sesgo sistemático que requiere mecanismos estructurales (VAR) para mitigarlo.",
+              "ejemplo_malo": "Evaluar tres modelos mostrando siempre primero el modelo preferido del equipo, con los criterios de evaluación definidos después de ver algunos resultados, y sin evaluación ciega. Luego presentar el resultado como 'evaluación objetiva'.",
+              "ejemplo_bueno": "Randomizar el orden de presentación de modelos y respuestas, definir rubrica antes de ver resultados, pedir que dos evaluadores independientes califiquen la misma muestra, y reportar el porcentaje de acuerdo entre evaluadores (inter-rater reliability) como indicador de la solidez de la evaluación.",
+              "por_que_importa": "Si tus evaluaciones están contaminadas por sesgos no reconocidos, puedes recomendar el modelo equivocado con alta confianza. Reconocer los sesgos no te hace más inseguro — te hace más confiable, porque tus recomendaciones pueden ser auditadas y resistidas al escrutinio.",
+              "tip_profesional": "Para proyectos con múltiples evaluadores, siempre calcula el Inter-Rater Reliability (IRR) —el porcentaje de acuerdo entre evaluadores—. Si dos evaluadores coinciden menos del 70% del tiempo, los criterios de evaluación son ambiguos y necesitas refinarlos antes de confiar en los resultados."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cómo se manifiesta el sesgo de confirmación en la evaluación de modelos de IA?",
+                "opciones": [
+                  "Cuando el modelo confirma siempre las respuestas del usuario",
+                  "Cuando los evaluadores dan más peso a evidencia que confirma lo que ya creen sobre un modelo, y minimizan la evidencia contraria",
+                  "Cuando el modelo solo responde preguntas que confirman su entrenamiento",
+                  "Cuando el código de evaluación tiene bugs que confirman un resultado específico"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El sesgo de confirmación es uno de los sesgos cognitivos más documentados en psicología y se manifiesta con fuerza en evaluaciones de IA porque los evaluadores frecuentemente tienen preferencias previas. Si el equipo de ingeniería lleva meses trabajando con Claude y prefiere esa plataforma, evaluará sus respuestas con criterios implícitamente más favorables: una respuesta elaborada de Claude se percibirá como 'completa y rigurosa', mientras que la misma respuesta de GPT-4o puede percibirse como 'verbosa'. Los fallos de Claude se atribuirán a 'fue una pregunta difícil' y los de GPT-4o a 'el modelo es inferior'. Esta asimetría no es deliberada — es un proceso automático. La solución es estructural: evaluación ciega (sin saber qué modelo generó qué) y rubrica pre-definida que no deje espacio para interpretación post-hoc.",
+                "concepto_reforzado": "Sesgo de confirmación y evaluación ciega como solución"
+              },
+              {
+                "pregunta": "¿Qué es el 'sesgo de longitud' en evaluación de LLMs y cómo afecta los resultados?",
+                "opciones": [
+                  "Cuando los modelos más lentos reciben peores evaluaciones",
+                  "La tendencia de evaluadores humanos y LLMs-como-juez a preferir respuestas más largas y elaboradas, incluso cuando respuestas concisas son de igual o mayor calidad",
+                  "Cuando los textos más largos tienen mayor probabilidad de contener errores",
+                  "La preferencia de los modelos por generar respuestas cortas para reducir costos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El sesgo de longitud está documentado en múltiples estudios de LLM-as-a-Judge: cuando el mismo contenido se presenta en versión corta (2 párrafos) y larga (4 párrafos con el mismo contenido + repetición y elaboraciones secundarias), los jueces —humanos y LLMs— tienden a preferir la versión larga. La hipótesis es que más texto se percibe como más 'esfuerzo' y 'profundidad' aunque la versión corta sea más precisa. En evaluaciones de LLMs, un modelo que genera respuestas sistemáticamente más largas puede ganar evaluaciones no por calidad sino por volumen. Para mitigarlo: si tu caso de uso requiere respuestas concisas (chatbot de soporte, respuestas FAQ), define explícitamente 'concisión apropiada' como criterio positivo en tu rubrica y penaliza el relleno.",
+                "concepto_reforzado": "Sesgo de longitud y su impacto en evaluaciones de LLM"
+              },
+              {
+                "pregunta": "¿Por qué el sesgo temporal es importante al documentar evaluaciones de modelos?",
+                "opciones": [
+                  "Porque los modelos son más lentos a ciertas horas del día",
+                  "Porque los modelos se actualizan frecuentemente y una evaluación de hace meses puede estar comparando versiones obsoletas con versiones actuales, invalidando la comparación",
+                  "Porque el tiempo de respuesta cambia según la temporada del año",
+                  "Porque las evaluaciones hechas en diciembre son menos confiables que las de otros meses"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "En 2026, los modelos principales se actualizan frecuentemente —a veces sin anuncio público— y estas actualizaciones pueden cambiar significativamente el comportamiento del modelo. OpenAI actualiza GPT-4o regularmente con cambios en seguridad, capacidades y estilo de respuesta. Anthropic actualiza Claude de forma similar. Si una empresa hizo una evaluación en enero comparando 'Claude Sonnet 2024-01' con 'GPT-4o-2024-01' y documentó que Claude era mejor, esa conclusión puede ser inválida en julio cuando ambos modelos han tenido múltiples actualizaciones. Sin documentar las versiones exactas y las fechas, la evaluación es irreproducible y sus conclusiones no son confiables para decisiones actuales. La práctica correcta: documentar nombre del modelo + versión específica + fecha + los prompts exactos usados.",
+                "concepto_reforzado": "Documentación de versión y fecha para evaluaciones reproducibles"
+              },
+              {
+                "pregunta": "¿Cómo mitiga la randomización del orden de presentación los sesgos de primacy y recency?",
+                "opciones": [
+                  "Al randomizar el orden, los evaluadores se confunden y evalúan de forma más justa",
+                  "Al presentar los modelos en orden diferente para cada ejemplo, el modelo que aparece primero varía, distribuyendo el efecto del primacy equitativamente entre todos los modelos en evaluación",
+                  "La randomización elimina la necesidad de evaluación ciega",
+                  "El orden de presentación no afecta la evaluación si los criterios están bien definidos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los efectos de primacy (recordar mejor lo primero) y recency (recordar mejor lo último) son efectos cognitivos reales: en evaluaciones largas, los evaluadores tienden a ser más benevolentes con las primeras y últimas respuestas que ven. Si siempre presentas Modelo A primero, Modelo A acumula ventaja sistemática por primacy. La solución elegante es randomizar: en el ejemplo 1, presentas A primero; en el ejemplo 2, B primero; en el 3, A primero, etc. Cuando promedias los puntajes, el efecto de primacy se distribuye equitativamente entre todos los modelos. Para evaluaciones más rigurosas, puedes hacer contra-balanceo completo: la mitad de los evaluadores ve siempre A primero, la otra mitad siempre B primero, y comparas si el orden afecta los resultados.",
+                "concepto_reforzado": "Randomización como solución a sesgos de orden"
+              },
+              {
+                "pregunta": "¿Qué es el Inter-Rater Reliability (IRR) y por qué es indicador de la calidad de una rubrica de evaluación?",
+                "opciones": [
+                  "Es la velocidad de respuesta entre diferentes servidores del modelo",
+                  "Es el porcentaje de acuerdo entre múltiples evaluadores independientes; si es bajo (<70%), indica que los criterios de la rubrica son ambiguos y producen evaluaciones inconsistentes",
+                  "Es la tasa de error del modelo cuando responde en diferentes idiomas",
+                  "Es la consistencia del modelo para responder la misma pregunta varias veces"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El Inter-Rater Reliability mide qué tan consistentemente múltiples evaluadores independientes aplican los mismos criterios. Si evaluador A y evaluador B evalúan las mismas 50 respuestas y coinciden en el 90% de los casos, la rubrica es clara y los resultados son confiables. Si coinciden solo en el 55% de los casos, los criterios son ambiguos — cada evaluador los interpreta diferente, y los puntajes reflejan más las preferencias personales del evaluador que la calidad objetiva de las respuestas. Un IRR bajo invalida la evaluación: si dos humanos no pueden ponerse de acuerdo sobre qué es una respuesta buena usando la misma rubrica, la rubrica necesita refinamiento. Para calcularlo de forma simple: pide a dos evaluadores que califiquen la misma muestra de 20-30 respuestas, cuenta los casos donde coinciden, y divide entre el total. Por encima del 70% de acuerdo es aceptable; por encima del 85% es sólido.",
+                "concepto_reforzado": "Inter-Rater Reliability como validación de la rubrica de evaluación"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Un equipo de 4 personas (2 ingenieros, 1 product manager, 1 especialista en contenido) en una empresa de educación en Lima está evaluando dos modelos para generar explicaciones de conceptos matemáticos para estudiantes de secundaria. Han completado una evaluación de 40 ejemplos. Al revisar los resultados, notas varios problemas: los dos ingenieros evaluaron las respuestas sabiendo cuál modelo las generó; el especialista en contenido dice que prefirió las respuestas más largas y detalladas; las respuestas del Modelo A siempre se mostraron primero; y la rubrica se definió informalmente en una reunión de 10 minutos y cada evaluador la interpretó diferente (el IRR entre pares fue del 52%).",
+              "instruccion": "Identifica los sesgos presentes en esta evaluación, explica cómo afectan cada uno a los resultados, y propone cómo rehacer la evaluación de forma más rigurosa.",
+              "input_malo": "La evaluación tiene algunos problemas pero los 4 evaluadores son profesionales competentes. Los resultados probablemente son válidos.",
+              "pista": "Identifica: (1) evaluación no ciega por los ingenieros, (2) sesgo de longitud por el especialista, (3) sesgo de orden (Modelo A siempre primero), (4) IRR del 52% indicando rubrica ambigua. Cada uno introduce error en una dirección diferente. Juntos pueden invalidar completamente el resultado.",
+              "solucion": "Sesgos identificados y su impacto: (1) EVALUACIÓN NO CIEGA (ingenieros): Los ingenieros saben cuál modelo evaluaron. Si tienen preferencia previa (muy probable dado que trabajan con uno u otro), el sesgo de confirmación contamina sus evaluaciones. Impacto: sistemáticamente favorece al modelo que los ingenieros prefieren. (2) SESGO DE LONGITUD (especialista en contenido): Preferir respuestas más largas introduce sesgo hacia el modelo que genera más texto, independientemente de la calidad pedagógica. Para estudiantes de secundaria, concisión y claridad son igual o más importantes que detalle. (3) SESGO DE ORDEN (Modelo A primero): Modelo A acumula ventaja sistemática por primacy effect en los 40 ejemplos. (4) IRR DEL 52%: Los 4 evaluadores están de acuerdo solo la mitad del tiempo. Los resultados reflejan principalmente diferencias en interpretación de los criterios, no diferencias reales entre los modelos. REHACERLA CORRECTAMENTE: (a) Definir rubrica clara con descriptores específicos para cada puntaje. Incluir concisión como dimensión explícita dado el público de estudiantes. (b) Hacer evaluación ciega: asignar A/B sin identificar el modelo. (c) Randomizar el orden para cada ejemplo. (d) Hacer pre-piloto de calibración: los 4 evaluadores califican los mismos 10 ejemplos y discuten discrepancias hasta llegar a IRR >75% antes de evaluar los 40 restantes. (e) Con rubrica calibrada, los puntajes serán mucho más confiables.",
+              "criterios_de_exito": [
+                "Identifica los 4 sesgos presentes con nombre específico y explica cómo afecta cada uno a los resultados",
+                "Señala el IRR del 52% como el problema más serio que invalida toda la evaluación",
+                "Propone evaluación ciega, randomización de orden y calibración de rubrica como soluciones concretas"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Evaluación continua en producción",
+              "por_que_importa_despues": "Con los sesgos de evaluación identificados, la última lección del bloque cierra el ciclo: cómo mantener la evaluación activa una vez el modelo está en producción, donde los sesgos nuevos emergen y la degradación de calidad puede pasar desapercibida sin sistemas de monitoreo."
             }
           }
         },
