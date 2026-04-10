@@ -10,13 +10,14 @@ const BLOCK_ICONS_BG = [
   "from-rose-500/15 to-rose-600/5",
 ]
 
-export default function IntroScreen({ modulo, progreso, onSelectBlock }) {
+export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverAcademy, mostrarProyectoCert = false }) {
   const bloques = modulo.bloques
   const completadas = progreso.leccionesCompletadas || []
   const fasesProyecto = progreso.fasesProyecto || []
   const certAprobada = progreso.certificacionAprobada || false
   const todas = bloques.flatMap(b => b.lecciones)
-  const totalDone = completadas.length
+  // Contar solo lecciones de ESTE módulo
+  const totalDone = todas.filter(l => completadas.includes(l.id)).length
   const totalLecciones = todas.length
 
   // Proyecto y cert desbloqueados solo si se completaron todos los bloques
@@ -29,6 +30,19 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock }) {
 
   return (
     <div className="w-full max-w-2xl lg:max-w-4xl mx-auto px-2 relative z-10">
+      {/* Volver a academia — solo móvil (en desktop lo muestra la sidebar) */}
+      {onVolverAcademy && (
+        <button
+          onClick={onVolverAcademy}
+          className="lg:hidden text-xs mb-5 flex items-center gap-1 transition-colors animate-reveal"
+          style={{ color: "var(--color-text-muted)" }}
+          onMouseEnter={e => e.currentTarget.style.color = "var(--color-text-secondary)"}
+          onMouseLeave={e => e.currentTarget.style.color = "var(--color-text-muted)"}
+        >
+          ← Todos los módulos
+        </button>
+      )}
+
       {/* Header — solo móvil/tablet; en desktop lo muestra la sidebar */}
       <div className="text-center mb-8 lg:mb-6">
         <div className="animate-reveal mb-5 lg:hidden">
@@ -36,14 +50,14 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock }) {
         </div>
         <p className="font-display text-[11px] font-bold uppercase tracking-[0.3em] animate-reveal"
           style={{ color: "var(--color-text-muted)", animationDelay: "80ms" }}>
-          Módulo 4
+          {modulo.id ? `Módulo ${modulo.numero ?? ""}` : "Módulo"}
         </p>
         <h2 className="font-display text-3xl font-extrabold text-gradient mt-2 animate-reveal"
           style={{ animationDelay: "120ms" }}>
-          {modulo.title}
+          {modulo.title || modulo.titulo}
         </h2>
         <p className="text-sm mt-2 animate-reveal" style={{ color: "var(--color-text-secondary)", animationDelay: "160ms" }}>
-          Tu ruta al dominio de la Inteligencia Artificial
+          {modulo.descripcion || "Tu ruta al dominio de la Inteligencia Artificial"}
         </p>
       </div>
 
@@ -110,8 +124,8 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock }) {
         })}
       </div>
 
-      {/* Proyecto Final */}
-      {totalLecciones > 0 && (
+      {/* Proyecto Final — solo M4 */}
+      {mostrarProyectoCert && totalLecciones > 0 && (
         <button
           onClick={() => todosBloquesCompletos && onSelectBlock({ id: "proyecto_final" })}
           disabled={!todosBloquesCompletos}
@@ -149,8 +163,8 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock }) {
         </button>
       )}
 
-      {/* Certificación Final */}
-      {totalLecciones > 0 && (
+      {/* Certificación Final — solo M4 */}
+      {mostrarProyectoCert && totalLecciones > 0 && (
         <button
           onClick={() => todosBloquesCompletos && onSelectBlock({ id: "certificacion_final" })}
           disabled={!todosBloquesCompletos}
@@ -188,7 +202,7 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock }) {
         </button>
       )}
 
-      {certAprobada && (
+      {mostrarProyectoCert && certAprobada && (
         <div className="surface rounded-2xl p-6 mt-8 text-center max-w-md mx-auto animate-scale-in">
           <p className="text-4xl mb-2">🏆</p>
           <p className="font-display text-lg font-bold text-gradient">¡M4 completado y certificado!</p>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import Header from "./components/Header"
 import XPBar from "./components/XPBar"
 import QuizCard from "./components/QuizCard"
+import AcademyScreen from "./components/AcademyScreen"
 import IntroScreen from "./components/IntroScreen"
 import BlockLessons from "./components/BlockLessons"
 import ResultsScreen from "./components/ResultsScreen"
@@ -12,7 +13,12 @@ import ProyectoScreen from "./components/ProyectoScreen"
 import CertificacionScreen from "./components/CertificacionScreen"
 import InstallBanner from "./components/InstallBanner"
 import { usePWAInstall } from "./hooks/usePWAInstall"
-import moduleData from "./content/m4-completo.json"
+
+// Módulos con contenido disponible — import estático (Vite los bundlea)
+import m4Data from "./content/m4-completo.json"
+import m1Data from "./content/m1/index.json"
+
+const MODULO_DATA = { m4: m4Data, m1: m1Data }
 
 const STORAGE_KEY = "aipath_progreso_v2"
 const SESSION_KEY = "aipath_session"
@@ -26,8 +32,7 @@ function cargarProgreso() {
       leccionesCompletadas: [], ultimaSesion: null,
       fasesProyecto: [], certificacionAprobada: false
     }
-    const p = JSON.parse(guardado)
-    return { fasesProyecto: [], certificacionAprobada: false, ...p }
+    return { fasesProyecto: [], certificacionAprobada: false, ...JSON.parse(guardado) }
   } catch {
     return {
       xpTotal: 0, rachaDiaria: 1, badges: [],
@@ -51,28 +56,28 @@ function calcularRachaDiaria(progreso) {
   return { rachaDiaria: 1, rachaRota: progreso.rachaDiaria > 1 }
 }
 
-function todasLasLecciones() {
-  return moduleData.bloques.flatMap(b => b.lecciones)
-}
-
 function getSession() {
   try { return JSON.parse(localStorage.getItem(SESSION_KEY)) } catch { return null }
 }
 
 // ── Sidebar desktop ──────────────────────────────────────────────────
-function Sidebar({ progreso, pantalla, bloqueActual, leccionActual, onNavBloque, onNavBloqueActual }) {
+function Sidebar({ progreso, moduloData, bloqueActual, leccionActual, onNavBloque, onVolverAcademy }) {
+  const session = getSession()
   const completadas = progreso.leccionesCompletadas || []
-  const todas = todasLasLecciones()
-  const totalDone = completadas.length
   const nivel = Math.floor((progreso.xpTotal || 0) / 300) + 1
+  const bloques = moduloData?.bloques || []
+  const totalLecciones = bloques.reduce((s, b) => s + b.lecciones.length, 0)
+  const totalDone = completadas.filter(id => bloques.some(b => b.lecciones.some(l => l.id === id))).length
 
   return (
-    <aside className="hidden lg:flex flex-col w-64 xl:w-72 shrink-0 h-screen sticky top-0 overflow-y-auto py-6 px-4"
-      style={{ borderRight: "1px solid var(--color-border)" }}>
-      {/* Logo */}
-      <div className="mb-8">
+    <aside
+      className="hidden lg:flex flex-col w-64 xl:w-72 shrink-0 h-screen sticky top-0 overflow-y-auto py-6 px-4"
+      style={{ borderRight: "1px solid var(--color-border)" }}
+    >
+      {/* Logo — vuelve a academy */}
+      <button onClick={onVolverAcademy} className="mb-8 text-left">
         <img src="/etk-logo-white.png" alt="Estratek IA Academy" className="h-9 w-auto opacity-90" />
-      </div>
+      </button>
 
       {/* Usuario */}
       <div className="glass rounded-xl p-3 mb-6 flex items-center gap-3">
@@ -80,66 +85,85 @@ function Sidebar({ progreso, pantalla, bloqueActual, leccionActual, onNavBloque,
           className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
           style={{ background: "var(--color-accent-blue)", color: "#0A0A0A" }}
         >
-          {getSession()?.nombre?.[0]?.toUpperCase() || "U"}
+          {session?.nombre?.[0]?.toUpperCase() || "U"}
         </div>
         <div className="min-w-0">
           <p className="text-sm font-semibold text-white truncate">
-            {getSession()?.nombre || getSession()?.email?.split("@")[0] || "Usuario"}
+            {session?.nombre || session?.email?.split("@")[0] || "Usuario"}
           </p>
           <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>Nivel {nivel}</p>
         </div>
       </div>
 
-      {/* Progreso global */}
-      <div className="mb-6">
-        <div className="flex justify-between text-xs mb-1.5">
-          <span style={{ color: "var(--color-text-muted)" }}>Progreso M4</span>
-          <span style={{ color: "var(--color-accent-blue)" }}>{totalDone}/{todas.length}</span>
+      {/* Progreso del módulo activo */}
+      {moduloData && (
+        <div className="mb-6">
+          <div className="flex justify-between text-xs mb-1.5">
+            <span style={{ color: "var(--color-text-muted)" }}>{moduloData.title || moduloData.titulo}</span>
+            <span style={{ color: "var(--color-accent-blue)" }}>{totalDone}/{totalLecciones}</span>
+          </div>
+          <div className="progress-bar">
+            <div className="progress-bar-fill" style={{ width: `${totalLecciones > 0 ? (totalDone / totalLecciones) * 100 : 0}%` }} />
+          </div>
+          <p className="text-xs mt-1.5" style={{ color: "var(--color-text-muted)" }}>
+            {progreso.xpTotal || 0} XP total · Racha {progreso.rachaDiaria} día{progreso.rachaDiaria !== 1 ? "s" : ""}
+          </p>
         </div>
-        <div className="progress-bar">
-          <div className="progress-bar-fill" style={{ width: `${todas.length > 0 ? (totalDone / todas.length) * 100 : 0}%` }} />
-        </div>
-        <p className="text-xs mt-1.5" style={{ color: "var(--color-text-muted)" }}>
-          {progreso.xpTotal || 0} XP · Racha {progreso.rachaDiaria} día{progreso.rachaDiaria !== 1 ? "s" : ""}
-        </p>
-      </div>
+      )}
 
-      {/* Navegación de bloques */}
-      <nav className="flex-1 space-y-1">
-        <p className="text-[10px] font-bold uppercase tracking-wider mb-3"
-          style={{ color: "var(--color-text-muted)" }}>Módulo 4</p>
-        {moduleData.bloques.map((bloque, bi) => {
-          const done = bloque.lecciones.filter(l => completadas.includes(l.id)).length
-          const complete = done === bloque.lecciones.length && bloque.lecciones.length > 0
-          const activo = bloqueActual?.id === bloque.id || leccionActual?.id?.startsWith(bloque.id.split("-")[0])
+      {/* Nav de bloques */}
+      {moduloData && (
+        <nav className="flex-1 space-y-1">
+          <button
+            onClick={onVolverAcademy}
+            className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left text-xs mb-2 transition-all"
+            style={{ color: "var(--color-text-muted)" }}
+            onMouseEnter={e => e.currentTarget.style.color = "var(--color-text-secondary)"}
+            onMouseLeave={e => e.currentTarget.style.color = "var(--color-text-muted)"}
+          >
+            ← Todos los módulos
+          </button>
+          <p className="text-[10px] font-bold uppercase tracking-wider mb-2 px-3"
+            style={{ color: "var(--color-text-muted)" }}>
+            Bloques
+          </p>
+          {bloques.map(bloque => {
+            const done = bloque.lecciones.filter(l => completadas.includes(l.id)).length
+            const complete = done === bloque.lecciones.length && bloque.lecciones.length > 0
+            const activo = bloqueActual?.id === bloque.id ||
+              (leccionActual && bloque.lecciones.some(l => l.id === leccionActual.id))
 
-          return (
-            <button
-              key={bloque.id}
-              onClick={() => onNavBloque(bloque)}
-              className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all text-xs"
-              style={{
-                background: activo ? "rgba(0,212,170,0.1)" : "transparent",
-                color: activo ? "var(--color-accent-blue)" : complete ? "var(--color-text-secondary)" : "var(--color-text-muted)",
-                borderLeft: activo ? "2px solid var(--color-accent-blue)" : "2px solid transparent"
-              }}
-            >
-              <span className="shrink-0">{complete ? "✓" : bloque.icon}</span>
-              <span className="truncate">{bloque.nombre}</span>
-              <span className="ml-auto shrink-0" style={{ color: "var(--color-text-muted)" }}>
-                {done}/{bloque.lecciones.length}
-              </span>
-            </button>
-          )
-        })}
-      </nav>
+            return (
+              <button
+                key={bloque.id}
+                onClick={() => onNavBloque(bloque)}
+                className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all text-xs"
+                style={{
+                  background: activo ? "rgba(0,212,170,0.1)" : "transparent",
+                  color: activo ? "var(--color-accent-blue)" : complete ? "var(--color-text-secondary)" : "var(--color-text-muted)",
+                  borderLeft: activo ? "2px solid var(--color-accent-blue)" : "2px solid transparent"
+                }}
+              >
+                <span className="shrink-0">{complete ? "✓" : bloque.icon}</span>
+                <span className="truncate">{bloque.nombre}</span>
+                <span className="ml-auto shrink-0" style={{ color: "var(--color-text-muted)" }}>
+                  {done}/{bloque.lecciones.length}
+                </span>
+              </button>
+            )
+          })}
+        </nav>
+      )}
     </aside>
   )
 }
 
 // ── App ──────────────────────────────────────────────────────────────
 export default function App() {
-  const [pantalla, setPantalla] = useState(() => getSession() ? "intro" : "login")
+  // Pantallas: login | academy | intro | lessons | teoria | quiz | practica | results | proyecto | certificacion
+  const [pantalla, setPantalla] = useState(() => getSession() ? "academy" : "login")
+  const [moduloActivo, setModuloActivo] = useState(null)   // objeto del academy-index
+  const [moduloData, setModuloData] = useState(null)       // JSON del módulo cargado
   const [bloqueActual, setBloqueActual] = useState(null)
   const [leccionActual, setLeccionActual] = useState(null)
 
@@ -172,7 +196,26 @@ export default function App() {
     localStorage.setItem(INSTALL_DISMISSED_KEY, "1")
   }
 
-  function handleLogin() { setPantalla("intro") }
+  function handleLogin() { setPantalla("academy") }
+
+  // Seleccionar módulo desde AcademyScreen
+  function handleSelectModulo(mod) {
+    const data = MODULO_DATA[mod.id]
+    if (!data) return
+    setModuloActivo(mod)
+    setModuloData(data)
+    setBloqueActual(null)
+    setLeccionActual(null)
+    setPantalla("intro")
+  }
+
+  function handleVolverAcademy() {
+    setPantalla("academy")
+    setModuloActivo(null)
+    setModuloData(null)
+    setBloqueActual(null)
+    setLeccionActual(null)
+  }
 
   function handleSelectBlock(bloque) {
     if (bloque.id === "proyecto_final") { setPantalla("proyecto"); setBloqueActual(null); return }
@@ -181,7 +224,10 @@ export default function App() {
     setPantalla("lessons")
   }
 
-  function handleVolverBloques() { setPantalla("intro"); setBloqueActual(null) }
+  function handleVolverBloques() {
+    setPantalla("intro")
+    setBloqueActual(null)
+  }
 
   function handleSelectLesson(leccion) {
     setLeccionActual(leccion)
@@ -242,7 +288,8 @@ export default function App() {
   }
 
   function handleVolver() {
-    const todas = todasLasLecciones()
+    if (!moduloData) { setPantalla("academy"); return }
+    const todas = moduloData.bloques.flatMap(b => b.lecciones)
     const preguntas = leccionActual.contenido.verificacion
     const minAprobacion = Math.ceil(preguntas.length * 0.7)
     if (correctas >= minAprobacion) {
@@ -267,19 +314,18 @@ export default function App() {
     const nuevoProgreso = { ...progreso }
     if (!nuevoProgreso.certificacionAprobada) {
       nuevoProgreso.certificacionAprobada = true
-      nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + moduleData.certificacion_final.xp_aprobacion
+      nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + (m4Data.certificacion_final?.xp_aprobacion || 1000)
     }
     guardarProgreso(nuevoProgreso)
     setProgreso(nuevoProgreso)
   }
 
   const preguntas = leccionActual?.contenido?.verificacion || []
-  const todas = todasLasLecciones()
-  const hayNextLesson = leccionActual
+  const todas = moduloData ? moduloData.bloques.flatMap(b => b.lecciones) : []
+  const hayNextLesson = leccionActual && todas.length > 0
     ? todas.findIndex(l => l.id === leccionActual.id) < todas.length - 1
     : false
 
-  // Botón instalar para desktop (pasado al Header)
   const installButton = isInstallable && !isInstalled && !installDismissed
     ? <InstallBanner onInstall={promptInstall} onDismiss={handleDismissInstall} isMobile={false} />
     : null
@@ -287,39 +333,55 @@ export default function App() {
   // ── LOGIN ──
   if (pantalla === "login") return <LoginScreen onLogin={handleLogin} />
 
-  // ── LAYOUT PRINCIPAL (con sidebar en desktop) ──
-  const mostrarSidebar = pantalla !== "login"
-  const mostrarHeaderMobile = pantalla !== "intro"
+  // ── ACADEMY (home) — sin sidebar ──
+  if (pantalla === "academy") {
+    return (
+      <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16">
+        {/* Header simplificado en academy */}
+        <div className="w-full max-w-4xl flex justify-between items-center mb-8 animate-reveal">
+          <img src="/etk-logo-white.png" alt="Estratek IA Academy" className="h-8 w-auto opacity-90" />
+          <div className="flex items-center gap-3">
+            {installButton}
+            <div className={`surface flex items-center gap-2 px-3 py-1.5 rounded-full`}>
+              <span className="text-sm">✨</span>
+              <span className="text-xs font-medium" style={{ color: "var(--color-text-secondary)" }}>
+                {progreso.rachaDiaria} día{progreso.rachaDiaria !== 1 ? "s" : ""}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 w-full">
+          <AcademyScreen progreso={progreso} onSelectModulo={handleSelectModulo} />
+        </div>
+        {mostrarBanner && isMobile && (
+          <InstallBanner onInstall={promptInstall} onDismiss={handleDismissInstall} isMobile={true} />
+        )}
+      </div>
+    )
+  }
 
+  // ── LAYOUT CON SIDEBAR (todas las pantallas dentro de un módulo) ──
   return (
     <div className="min-h-dvh text-white flex">
-      {/* Sidebar — solo desktop */}
-      {mostrarSidebar && (
-        <Sidebar
-          progreso={progreso}
-          pantalla={pantalla}
-          bloqueActual={bloqueActual}
-          leccionActual={leccionActual}
-          onNavBloque={handleSelectBlock}
-          onNavBloqueActual={() => {}}
-        />
-      )}
+      <Sidebar
+        progreso={progreso}
+        moduloData={moduloData}
+        bloqueActual={bloqueActual}
+        leccionActual={leccionActual}
+        onNavBloque={handleSelectBlock}
+        onVolverAcademy={handleVolverAcademy}
+      />
 
-      {/* Contenido principal */}
       <main className="flex-1 flex flex-col items-center p-5 pb-20 lg:pb-8 overflow-y-auto">
-        {/* Header mobile/tablet — en todo excepto intro */}
-        {mostrarHeaderMobile && (
+        {/* Header mobile */}
+        {pantalla !== "intro" && (
           <div className="w-full max-w-2xl lg:hidden">
-            <Header
-              rachaDiaria={progreso.rachaDiaria}
-              rachaActual={rachaActual}
-              installButton={installButton}
-            />
+            <Header rachaDiaria={progreso.rachaDiaria} rachaActual={rachaActual} installButton={installButton} />
             <XPBar xp={(progreso.xpTotal || 0) + xpSesion} rachaActual={rachaActual} />
           </div>
         )}
 
-        {/* Header desktop — siempre visible arriba del contenido */}
+        {/* Header desktop */}
         <div className="hidden lg:flex w-full max-w-3xl xl:max-w-4xl justify-between items-center mb-6">
           <div>
             {leccionActual && (
@@ -340,7 +402,7 @@ export default function App() {
 
         {/* ── PANTALLAS ── */}
 
-        {pantalla === "intro" && (
+        {pantalla === "intro" && moduloData && (
           <div className="flex-1 w-full py-4">
             {rachaRota && (
               <div className="glass rounded-xl px-4 py-3 max-w-2xl mx-auto mb-6 flex items-center gap-3 animate-slide-down">
@@ -348,7 +410,13 @@ export default function App() {
                 <p className="text-sm text-gray-400">Tu racha se rompió. ¡Hoy empieza una nueva!</p>
               </div>
             )}
-            <IntroScreen modulo={moduleData} progreso={progreso} onSelectBlock={handleSelectBlock} />
+            <IntroScreen
+              modulo={moduloData}
+              progreso={progreso}
+              onSelectBlock={handleSelectBlock}
+              onVolverAcademy={handleVolverAcademy}
+              mostrarProyectoCert={moduloActivo?.id === "m4"}
+            />
           </div>
         )}
 
@@ -390,7 +458,6 @@ export default function App() {
                 {leccionActual.titulo}
               </p>
             </div>
-
             <QuizCard
               key={`${leccionActual.id}-${preguntaActual}`}
               pregunta={preguntas[preguntaActual]}
@@ -401,10 +468,7 @@ export default function App() {
             />
             {respondidas > preguntaActual && (
               <div className="flex justify-center mt-5 animate-slide-up">
-                <button
-                  onClick={handleSiguiente}
-                  className="btn-primary px-8 py-3.5 rounded-xl text-sm"
-                >
+                <button onClick={handleSiguiente} className="btn-primary px-8 py-3.5 rounded-xl text-sm">
                   {preguntaActual < preguntas.length - 1 ? "Siguiente pregunta →" : "Ver práctica ✨"}
                 </button>
               </div>
@@ -453,13 +517,8 @@ export default function App() {
         )}
       </main>
 
-      {/* Banner instalación móvil/tablet */}
       {mostrarBanner && isMobile && (
-        <InstallBanner
-          onInstall={promptInstall}
-          onDismiss={handleDismissInstall}
-          isMobile={true}
-        />
+        <InstallBanner onInstall={promptInstall} onDismiss={handleDismissInstall} isMobile={true} />
       )}
     </div>
   )
