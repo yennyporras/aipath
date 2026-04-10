@@ -9158,30 +9158,100 @@
         },
         {
           "id": "m1-b11-l3",
-          "titulo": "Consultor de IA: el perfil más demandado en LATAM",
+          "titulo": "Cómo construir portafolio que impresiona",
           "bloque": 11,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Un portafolio de IA que impresiona no es el que tiene más proyectos — es el que demuestra que puedes resolver problemas reales con criterio y calidad de producción. La mayoría de portafolios de profesionales de IA son débiles porque contienen proyectos de tutoriales copiados, notebooks sin contexto, o demos que no demuestran que entiendes el problema que resuelven. Esta lección enseña la anatomía de un portafolio de IA de alto impacto.\n\nPrimer principio: calidad sobre cantidad. Tres proyectos excelentes abren más puertas que quince proyectos mediocres. Un 'proyecto excelente' tiene: (1) un problema real claramente articulado, (2) por qué tu solución fue la correcta entre las alternativas, (3) métricas que demuestran que funcionó, (4) código limpio y documentado que alguien más podría usar, y (5) una reflexión honesta sobre las limitaciones. Los proyectos de tutoriales de Kaggle o cursos de Coursera reproducidos no cuentan — todo el mundo los tiene y no demuestran capacidad de problem-solving original.\n\nLos tres tipos de proyectos que más impactan para roles en IA en 2026: (1) Proyecto de aplicación end-to-end: construyes una aplicación completa que usa LLMs en producción — desde la idea hasta el deploy. Ejemplo: un asistente de revisión de contratos que usa RAG sobre jurisprudencia colombiana, desplegado en un dominio accesible con interfaz funcional. Esto demuestra que puedes llevar un proyecto desde concepto hasta producción, no solo hacer experimentación en notebook. (2) Proyecto de evaluación y mejora: tomas un sistema de IA existente, defines métricas de calidad, mides el rendimiento actual, e implementas mejoras medibles. Esto es diferente porque demuestra criterio técnico — sabes qué medir, por qué importa, y cómo mejorarlo. Es exactamente lo que hacen los equipos de IA maduros en empresas. (3) Caso de estudio documentado: describir un problema real que resolviste para un cliente o empleador, con el contexto del problema, las decisiones técnicas que tomaste (y por qué rechazaste las alternativas), y los resultados obtenidos con métricas reales. No requiere código público — requiere narrativa clara y honesta.\n\nLa documentación es tan importante como el código. Un README excepcional incluye: qué problema resuelve el proyecto, por qué es difícil ese problema, cómo lo resolviste, qué aprendiste, y cómo alguien más podría usar o extender tu trabajo. Muchos buenos proyectos de IA son invisibles porque tienen un README de tres líneas que dice 'este es mi proyecto de ML'.\n\nDónde alojar el portafolio: GitHub es el estándar para código. Hugging Face es el estándar para modelos y demos. Una página web personal (incluso simple) que lista tus proyectos con links y contexto narrativo es diferenciador — la mayoría de candidates no lo tienen. Para demos funcionales, Streamlit + Hugging Face Spaces o Vercel son las opciones más accesibles para ML/LLM apps.\n\nEl error más común: hacer proyectos que solo demuestran que sabes usar herramientas, no que entiendes los problemas que resuelven. 'Construí un chatbot con LangChain y GPT-4' no es un portafolio — es una línea en un tutorial. 'Construí un sistema de respuesta de preguntas para una empresa de seguros que redujo el tiempo de respuesta a clientes de 4 horas a 3 minutos, evaluando accuracy con un conjunto de 200 preguntas representativas, y documentando los casos donde el sistema falla' sí es un portafolio.",
+              "analogia": "Un portafolio de IA es como el portfolio de un arquitecto. No importa cuántos bocetos tiene — lo que importa es si los edificios están realmente construidos, si la gente los usa felizmente, y si el arquitecto puede explicar las decisiones de diseño. Un edificio real con habitantes satisfechos vale más que cien bocetos de edificios que nunca se construyeron. En IA: una aplicación funcional que resuelve un problema real vale más que cincuenta notebooks de experimentación.",
+              "ejemplo_malo": "Un aspirante a ML engineer construye un portafolio con 20 notebooks de Kaggle: titanic survival prediction, MNIST digit classification, house price prediction. Todos son proyectos de tutoriales que aparecen en miles de portafolios idénticos. Los reclutadores los ven tan frecuentemente que en 2026 los ignoran activamente. El candidate no tiene ningún proyecto original que demuestre que puede identificar un problema real y construir una solución para él. En entrevistas no puede responder 'por qué elegiste este approach vs las alternativas' porque simplemente siguió un tutorial.",
+              "ejemplo_bueno": "Una developer colombiana construye dos proyectos para su portafolio: (1) 'Asistente de facturación electrónica Colombia' — un chatbot que responde preguntas sobre el sistema de facturación de la DIAN usando RAG sobre la documentación oficial, desplegado en Streamlit y accesible públicamente. README explica la arquitectura, por qué eligió RAG vs fine-tuning, y una evaluación de 50 preguntas reales con accuracy del 87%. (2) Un caso de estudio de un cliente real (con permiso) donde implementó un sistema de clasificación de PQRS para una empresa, con el código anonimizado en GitHub, métricas antes/después, y las lecciones aprendidas. Con estos dos proyectos, tiene más credibilidad que alguien con 20 notebooks de Kaggle.",
+              "por_que_importa": "El portafolio es la única forma de demostrar capacidad cuando no tienes años de experiencia en un cargo específico de IA. Para hacer una transición de carrera hacia IA, el portafolio reemplaza la experiencia previa en el campo. Para freelancers y consultores, el portafolio es la herramienta de ventas principal — los clientes miran proyectos antes de decidir contratar. Para acceder al mercado internacional, un portafolio en GitHub/Hugging Face con documentación en inglés abre puertas a oportunidades remotas que una hoja de vida sola no puede.",
+              "tip_profesional": "Haz uno de estos proyectos ahora, mientras terminas este curso. No esperes a 'saber suficiente'. Elige el problema más simple posible que te parezca genuinamente interesante, construye la versión más pequeña funcional, documéntala bien, y despliégala. Un proyecto modesto pero completo y bien documentado supera a un proyecto ambicioso que nunca terminaste. El momento correcto para empezar tu portafolio no es cuando termines de aprender — es ahora."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué los proyectos de tutoriales de Kaggle (Titanic, MNIST, House Prices) tienen poco impacto en un portafolio de IA en 2026?",
+                "opciones": [
+                  "Porque Kaggle ya no es una plataforma relevante para el mercado laboral de IA",
+                  "Porque miles de candidates los tienen idénticos y no demuestran capacidad de identificar o resolver problemas originales",
+                  "Porque los problemas de Kaggle son demasiado fáciles y los reclutadores buscan proyectos más complejos",
+                  "Porque Kaggle solo acepta soluciones en Python y muchas empresas usan otros lenguajes"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El problema con los proyectos de tutoriales de Kaggle no es la plataforma ni la dificultad del problema — es que son proyectos completamente guiados que producen resultados idénticos entre thousands de candidates. Cuando un reclutador ve 'Titanic Survival Prediction' en GitHub, sabe exactamente cuál tutorial siguió el candidate, qué decisiones técnicas tomó (porque el tutorial las dictó), y qué resultado obtuvo. No hay diferenciación, no hay evidence de problem-solving original, y no hay demostración de que el candidate puede ir de un problema no resuelto a una solución. Los proyectos de Kaggle competitions (donde el problema está definido pero la solución no está en un tutorial y el candidate tomó decisiones propias) son diferentes y más valiosos. Un proyecto propio con un problema que el candidate identificó de su entorno es más valioso aún.",
+                "concepto_reforzado": "Por qué proyectos de tutoriales reproducidos no diferencian un portafolio de IA y qué los reemplaza efectivamente"
+              },
+              {
+                "pregunta": "¿Qué característica define a un 'proyecto end-to-end' de alto impacto para portafolio de IA en 2026?",
+                "opciones": [
+                  "Que use los modelos de IA más avanzados disponibles como GPT-4o o Claude Opus",
+                  "Que tenga más de 10,000 líneas de código demostrando habilidades técnicas profundas",
+                  "Que resuelva un problema real con deploy accesible, métricas de evaluación, y documentación que explica las decisiones técnicas",
+                  "Que haya sido publicado en una conferencia académica o en Arxiv como paper de investigación"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El proyecto end-to-end de alto impacto demuestra exactamente las habilidades que los employers necesitan en 2026: capacidad de identificar un problema real, elegir la solución técnica correcta entre alternativas, implementarla con calidad suficiente para producción, evaluarla con métricas que importan, y comunicar todo el proceso claramente. El deploy accesible (una URL donde alguien puede usar la app ahora mismo) convierte el proyecto de 'experimento' a 'producto' — una diferencia psicológica importante para quienes evalúan el portafolio. Las métricas de evaluación demuestran que el candidate entiende que en IA el código que funciona en test no necesariamente funciona en producción, y que sabe cómo medir si funciona. La documentación de decisiones técnicas ('elegí RAG sobre fine-tuning porque...') demuestra juicio técnico maduro.",
+                "concepto_reforzado": "Características del proyecto end-to-end de alto impacto: problema real + deploy + métricas + documentación de decisiones"
+              },
+              {
+                "pregunta": "¿Qué plataforma es el estándar de la industria para alojar modelos y demos de IA accesibles públicamente?",
+                "opciones": [
+                  "GitHub Pages, que permite desplegar cualquier tipo de aplicación web incluyendo modelos de ML",
+                  "Hugging Face Spaces, la plataforma estándar de la industria para modelos y demos de IA",
+                  "Google Colab, que permite compartir notebooks interactivos con el modelo cargado",
+                  "AWS Lambda, que es la plataforma de serverless más usada para APIs de IA en producción"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Hugging Face se convirtió en el 'GitHub de la IA': el lugar donde los researchers y practitioners comparten modelos, datasets, y demos. Hugging Face Spaces permite desplegar aplicaciones Streamlit, Gradio o Docker gratuitamente con GPU disponible para los demos. Cuando alguien hace clic en el link de tu portafolio y puede interactuar con tu modelo en segundos sin instalar nada, el impacto es radicalmente mayor que un notebook estático. Para LLM apps más complejas con backend, Vercel (para frontend) + Railway o Render (para backend) son las opciones más accesibles. GitHub es imprescindible para el código pero GitHub Pages no soporta el backend necesario para modelos de ML. Google Colab requiere que quien lo visite ejecute las celdas manualmente — terrible experiencia para demos de portafolio.",
+                "concepto_reforzado": "Hugging Face Spaces como estándar de la industria para demos accesibles de IA en portafolios"
+              },
+              {
+                "pregunta": "¿Qué elementos debe incluir un README excepcional para un proyecto de IA en GitHub?",
+                "opciones": [
+                  "Las instrucciones técnicas de instalación y los requirements.txt son suficientes para un README de calidad",
+                  "Qué problema resuelve, por qué es difícil, cómo se resolvió con decisiones técnicas justificadas, métricas de evaluación, y limitaciones honestas",
+                  "Un resumen de las tecnologías usadas con badges y versiones de todas las dependencias",
+                  "El nombre del autor, la fecha de creación, y una descripción de una línea del proyecto"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El README es la primera y muchas veces la única cosa que los reclutadores leen de un proyecto de GitHub. Un README técnico (solo instrucciones de instalación) comunica que el author puede seguir convenciones estándar pero no comunica capacidad de pensar y comunicar sobre problemas. Un README narrativo de alto impacto responde las preguntas que tiene cualquier persona que lo evalúa: ¿Por qué existe este proyecto? ¿Cuál era el problema y por qué era difícil? ¿Cómo decidiste este approach vs las alternativas que consideraste? ¿Funciona bien — qué métricas lo demuestran? ¿Cuándo NO funciona bien — qué limitaciones tiene? Este nivel de documentación demuestra que el candidate no solo programó — pensó sobre el problema con profundidad y puede comunicar ese pensamiento claramente. Esa habilidad comunicativa es exactamente lo que distingue a un senior de un junior en equipos de IA.",
+                "concepto_reforzado": "README narrativo que explica problema, decisiones técnicas, métricas y limitaciones como diferenciador de portafolio de IA"
+              },
+              {
+                "pregunta": "¿Cuándo es el momento correcto para empezar a construir proyectos de portafolio de IA?",
+                "opciones": [
+                  "Después de completar todos los módulos de IA para llegar con conocimiento suficiente",
+                  "Cuando consigas el primer cliente o trabajo en IA, para construir proyectos con contexto real",
+                  "Ahora, con el nivel de conocimiento actual — un proyecto modesto pero completo y documentado supera a un proyecto ambicioso nunca terminado",
+                  "Cuando decidas especializarte en un rol específico, para que el portafolio sea coherente con el target"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El síndrome de 'empezaré cuando sepa suficiente' es la razón por la que muchos professionals con conocimientos de IA no tienen portafolio después de meses o años de estudio. El conocimiento de IA no tiene un punto de 'suficiente' — siempre hay algo más que aprender. El portafolio se construye progresivamente: el primer proyecto es el más simple posible que te parece genuinamente interesante, ejecutado con el nivel de habilidades que tienes hoy. Con el tiempo, ese proyecto se mejora o se reemplaza por proyectos más sofisticados. Un proyecto modesto pero funcional, con README claro y deploy accesible, construido con el conocimiento de la mitad de M1, ya diferencia a un candidate que está aprendiendo activamente de uno que solo estudia teoría. Además, construir proyectos mientras aprendes acelera el aprendizaje — los problemas reales revelan gaps que los cursos no pueden.",
+                "concepto_reforzado": "Empezar el portafolio ahora con proyectos modestos pero completos, no esperar a 'saber suficiente'"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Carlos tiene 6 meses aprendiendo IA autodidactamente. Completó M1 y M4 de AIPath, sabe usar Claude API básico, tiene Python básico, y tiene experiencia previa de 5 años en recursos humanos en una empresa colombiana. Quiere construir su primer proyecto de portafolio en las próximas 4 semanas para empezar a buscar trabajo como AI Consultant para el sector de RRHH. Tiene 2 horas diarias disponibles.",
+              "instruccion": "Diseña el proyecto de portafolio específico más adecuado para Carlos. Define: el problema a resolver, las herramientas técnicas a usar, la estructura del proyecto (qué construir), cómo desplegarlo para que sea accesible, y cómo documentarlo para máximo impacto.",
+              "input_malo": "Construir un modelo de machine learning complejo desde cero para predecir la rotación de empleados usando técnicas avanzadas de deep learning que demuestren habilidades técnicas profundas.",
+              "pista": "¿Qué problema de RRHH conoce Carlos muy bien que la IA puede resolver? ¿Cuál es la versión más simple del proyecto que aún demuestra valor real? Con Python básico + Claude API, ¿qué puede construir en 4 semanas con 2h/día?",
+              "solucion": "Proyecto: 'Asistente de análisis de hojas de vida para RRHH Colombia'. Problema: los reclutadores colombianos revisan 50-200 HVs por posición, proceso que toma 3-6 horas. El asistente extrae información estructurada y hace un análisis inicial. Stack técnico: Python (Flask/FastAPI para backend básico) + Claude API (análisis de texto) + Streamlit para UI. Funcionalidades: (1) el usuario pega el texto de una HV, (2) el sistema extrae automáticamente: años de experiencia, habilidades técnicas, educación, y genera una evaluación en 3 dimensiones según el perfil requerido. Deploy: Streamlit + Hugging Face Spaces (gratis). README: Contexto — '5 años en RRHH, vi este problema diariamente. Proceso actual: 3-6h por vacante. Con este sistema: 10-15 min para revisar las primeras 20 candidatos.' Decisiones técnicas: 'elegí Claude API + prompt engineering vs ML clásico porque el problema requiere comprensión de contexto, no clasificación estadística'. Limitaciones honestas: 'el sistema puede tener bias implícito en los criterios — siempre requiere revisión humana final'. Tiempo estimado: 4 semanas, 2h/día = 56 horas. Semana 1-2: lógica de análisis + prompts. Semana 3: interfaz Streamlit. Semana 4: deploy + README + caso de prueba con 10 HVs reales (con consentimiento).",
+              "criterios_de_exito": [
+                "El proyecto resuelve un problema real de RRHH que Carlos conoce de primera mano, no un problema genérico",
+                "El stack técnico es ejecutable con Python básico + Claude API sin over-engineering",
+                "El proyecto es completable en 4 semanas con 2h/día — alcance realista, no ambicioso",
+                "El README incluye contexto del problema, decisiones técnicas justificadas, y limitaciones honestas"
+              ]
             },
+            "conexion": {
+              "siguiente_concepto": "GitHub para AI Engineers: estrategia completa",
+              "por_que_importa_despues": "Tener buenos proyectos es la mitad de la ecuación. La otra mitad es que sean visibles y encontrables por las personas correctas. GitHub no es solo donde guardas código — es tu CV técnico, tu herramienta de networking con otros engineers, y la plataforma donde Anthropic, OpenAI, y las mejores empresas de IA buscan talento activamente. La siguiente lección enseña la estrategia completa para maximizar tu presencia en GitHub."
+            }
             "conexion": {
               "siguiente_concepto": "",
               "por_que_importa_despues": ""
