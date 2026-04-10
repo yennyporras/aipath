@@ -8962,72 +8962,100 @@
       "lecciones": [
         {
           "id": "m1-b11-l1",
-          "titulo": "Los 6 roles de carrera en IA y tu ruta personalizada",
+          "titulo": "Roles reales en IA en 2026: el mapa completo",
           "bloque": 11,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "El ecosistema de carrera en IA en 2026 no es solo 'Data Scientist o ML Engineer'. Hay al menos 6 roles distintos, cada uno con un stack diferente y accesible desde diferentes puntos de partida. Rol 1: AI/ML Engineer — construye e implementa modelos en producción. Stack: Python, PyTorch, MLOps. Salario Colombia: $3,000-8,000/mes. Punto de entrada: ingeniería de software + estudios de ML. Rol 2: AI Product Manager — define qué construir con IA, trabaja entre negocio y equipo técnico. Stack: no necesariamente código, sí entender limitaciones técnicas. Salario: $2,500-6,000/mes. Punto de entrada: PM tradicional + aprendizaje de IA. Rol 3: Prompt Engineer / AI Designer — diseña los sistemas de prompts para productos de IA empresarial. Stack: profundo conocimiento de LLMs, evaluación de outputs. Salario: $1,500-4,000/mes. Punto de entrada: cualquier background + este programa. Rol 4: AI Consultant — ayuda empresas a adoptar IA. Stack: estrategia + implementación básica. Salario: $50-200/hora de consultoría. Punto de entrada: expertise de industria + IA. Rol 5: AI Educator / Community Builder — enseña IA, construye audiencia. Ingresos: cursos + sponsorships + consultoría. Punto de entrada: comunicación + dominio técnico. Rol 6: AI Entrepreneur — construye startups de IA. El stack importa menos que la visión del problema y el acceso al mercado. En LATAM, los roles más escasos y mejor remunerados en 2026 son AI Consultant (muchas empresas necesitan adoptar IA, pocos saben cómo) y AI Engineer con español + inglés.",
-              "analogia": "Los roles en IA son como los roles en internet en 2000: los primeros en especializarse no eran los más brillantes técnicamente, sino los que actuaron más rápido mientras la demanda superaba la oferta.",
-              "ejemplo_malo": "Intentar acceder a roles de ML Research sin doctorado y 5+ años de investigación — ese es el único rol donde el punto de entrada no es flexible.",
-              "ejemplo_bueno": "Identificar en qué rol encajas mejor según tu background actual, y construir exactamente las habilidades que faltan para ese rol específico — no para 'IA en general'.",
-              "por_que_importa": "El rol de AI Consultant tiene la menor barrera de entrada y mayor velocidad de monetización: 3-6 meses de preparación para primeras consultas.",
-              "tip_profesional": "Para cada rol, hay una 'credencial mínima viable' que el mercado reconoce: para Prompt Engineer es un portafolio de 5-10 sistemas de prompts documentados; para AI Consultant es un caso de estudio concreto con métricas."
+              "explicacion": "El mercado laboral de IA en 2026 es más diverso y accesible de lo que la mayoría imagina. No existe un solo camino hacia una carrera en IA — existen al menos 7 roles distintos, cada uno con diferentes requerimientos de entrada, stacks técnicos, y rangos salariales. Entender este mapa es el primer paso para trazar una ruta realista hacia el rol que mejor se adapta a tu background actual.\n\nRol 1 — AI/ML Engineer: construye, entrena y despliega modelos en producción. Es el rol más técnico y el que más se asocia con 'trabajar en IA'. Stack: Python, PyTorch o TensorFlow, MLOps (MLflow, Kubeflow), cloud (AWS SageMaker, GCP Vertex AI). Requisito de entrada real: ingeniería de software con 2+ años + estudios de ML. Salario Colombia mercado local: $4,000-9,000 USD/mes. Salario remoto EE.UU./Europa: $8,000-18,000 USD/mes. Demanda: alta pero la competencia también es alta globalmente.\n\nRol 2 — Data Scientist: extrae insights de datos y construye modelos analíticos. Históricamente separado de ML Engineer, pero los roles convergen en 2026. Stack: Python, pandas, scikit-learn, SQL, visualización (Tableau, PowerBI). Salario Colombia: $2,500-6,000 USD/mes. Punto de entrada: estadística + programación o economía + Python.\n\nRol 3 — AI Product Manager: define qué construir con IA, prioriza el roadmap, trabaja entre negocio e ingeniería. No necesita programar pero debe entender profundamente las limitaciones y capacidades de los modelos. Salario Colombia: $3,000-7,000 USD/mes. Punto de entrada: PM tradicional con 3+ años + aprendizaje de IA o background técnico que pivota a producto.\n\nRol 4 — Prompt Engineer / AI System Designer: diseña los sistemas de prompts para productos de IA empresarial — el orquestador entre el negocio y el modelo. En 2026 este rol ha madurado: no es solo escribir prompts, es diseñar flujos multi-prompt, sistemas de evaluación, y RAG pipelines. Salario Colombia: $2,000-5,000 USD/mes. Salario remoto: $5,000-12,000 USD/mes. Punto de entrada: cualquier background técnico + este programa + M4 de AIPath.\n\nRol 5 — AI Consultant / Implementation Specialist: ayuda empresas a adoptar e implementar IA — el puente entre la estrategia y la ejecución. Es el rol con menor barrera de entrada y mayor velocidad de monetización en LATAM. Stack: conocimiento de herramientas de IA + expertise de industria. Ingresos: $50-250 USD/hora de consultoría independiente. Punto de entrada: expertise de industria (5+ años en cualquier sector) + 6 meses de aprendizaje de IA.\n\nRol 6 — AI Educator / Content Creator: enseña IA, construye audiencia, genera ingresos por cursos, sponsorships y consultoría. Ingresos: muy variables, de $500/mes a $50,000/mes según audiencia. Punto de entrada: comunicación clara + dominio técnico suficiente para enseñar.\n\nRol 7 — AI Entrepreneur / Founder: construye startups de IA. El stack técnico importa menos que la visión del problema y el acceso al mercado. No requiere saber ML profundo — requiere identificar el problema correcto y el equipo correcto.\n\nEn LATAM específicamente, los roles con mayor desequilibrio demanda-oferta (y por tanto mayor poder de negociación salarial) son AI Consultant y AI/ML Engineer bilingüe. La combinación de español + inglés + conocimiento de contexto LATAM + habilidades de IA es extremadamente escasa y bien remunerada.",
+              "analogia": "Los roles en IA son como los roles en el ecosistema de internet en 2000: no todos necesitaban ser ingenieros de redes para tener una carrera exitosa en 'internet'. Había diseñadores web, gerentes de producto, especialistas en contenido, emprendedores de e-commerce — cada uno con un punto de entrada diferente pero todos parte del mismo ecosistema. La analogía se extiende: los que actuaron en 2000-2003 tuvieron ventaja de primera mover. Estamos en ese momento con IA.",
+              "ejemplo_malo": "Una developer colombiana con 5 años de experiencia en WordPress decide que para 'trabajar en IA' necesita hacer un doctorado en ML o al menos un máster. Pasa 2 años sin avanzar hacia IA esperando poder pagar los estudios. Mientras tanto, el mercado para AI Consultants y Prompt Engineers — roles a los que podría haber accedido con 6 meses de estudio — crece sin ella. El error fue creer que el único rol en IA requiere investigación académica.",
+              "ejemplo_bueno": "Una consultora de negocios colombiana con 8 años en transformación digital identifica que el rol de AI Consultant es su entrada natural. En lugar de estudiar ML desde cero, dedica 4 meses a aprender prompt engineering avanzado, automatización con APIs, y los fundamentos de IA que la hacen creíble técnicamente. Con su background de negocio + las nuevas habilidades técnicas, lanza una oferta de consultoría de AI transformation para empresas medianas. En 6 meses tiene 5 clientes a $3,000 USD/mes. Su background de negocio, que sentía era una 'desventaja' para entrar en IA, resulta ser su mayor activo.",
+              "por_que_importa": "Muchos profesionales talentosos no entran al campo de IA porque creen que el único camino es ser ML engineer con Python y matemáticas avanzadas. Este mapa de roles demuestra que hay múltiples puntos de entrada accesibles según el background existente. Elegir el rol correcto desde el inicio ahorra meses o años de preparación en la dirección equivocada. El rol equivocado es el que requiere reconstruir completamente tu identidad profesional; el correcto es el que construye sobre lo que ya tienes.",
+              "tip_profesional": "Para cada rol, existe una 'credencial mínima viable' que el mercado realmente reconoce — no la que sientes que deberías tener. Para AI Consultant: un caso de estudio documentado con métricas reales. Para Prompt Engineer: un portafolio de 5-10 sistemas documentados. Para ML Engineer: 2-3 proyectos en GitHub con código limpio y README explicativo. Para AI Educator: un contenido que haya generado engagement real (comentarios, shares). Ninguno de estos requiere un título o certificación formal."
             },
             "verificacion": [
               {
-                "pregunta": "¿Cuál de estos roles de IA tiene la menor barrera de entrada para alguien con background de negocio sin programación?",
+                "pregunta": "¿Cuál es el rol de IA con menor barrera de entrada y mayor velocidad de monetización para alguien con experiencia en una industria tradicional (legal, salud, finanzas)?",
                 "opciones": [
-                  "ML Engineer",
-                  "AI Researcher",
-                  "AI Consultant / Prompt Engineer",
-                  "Data Scientist"
+                  "ML Engineer, porque construir modelos propios da mayor control sobre el producto final",
+                  "AI Researcher, porque la investigación básica define hacia dónde va el campo",
+                  "AI Consultant / Implementation Specialist, porque aprovecha el expertise de industria existente con 6 meses de aprendizaje de IA",
+                  "Data Scientist, porque el análisis de datos es la base de cualquier aplicación de IA"
                 ],
                 "correcta": 2,
-                "explicacion_profunda": "AI Consultant y Prompt Engineer tienen la menor barrera de entrada para perfiles de negocio: no requieren programación avanzada, se basan en el expertise de dominio existente, y tienen paths de aprendizaje de 3-6 meses.",
-                "concepto_reforzado": "¿Cuál de estos roles de IA tiene la menor barrera de entrada para alguien con background de negocio sin programación?"
+                "explicacion_profunda": "El AI Consultant tiene la menor barrera de entrada para profesionales con experiencia en industrias tradicionales precisamente porque el activo más valioso (conocimiento profundo del sector) ya lo tienen. Lo que necesitan agregar es la capa de IA: entender qué pueden hacer los LLMs, cómo implementar soluciones básicas con APIs, y cómo evaluar si una solución de IA funcionará en un contexto específico. Un abogado con 10 años de experiencia que aprende IA en 6 meses tiene algo que ningún ML engineer joven tiene: la credibilidad sectorial que le permite vender consultoría a firmas de abogados. La monetización es rápida porque la demanda de empresas que necesitan adoptar IA supera significativamente la oferta de personas que saben cómo hacerlo en el contexto específico de cada industria.",
+                "concepto_reforzado": "AI Consultant como rol de menor barrera de entrada para profesionales con experiencia sectorial que quieren entrar en IA"
               },
               {
-                "pregunta": "¿Qué es la 'credencial mínima viable' para un Prompt Engineer?",
+                "pregunta": "¿Qué distingue al rol de Prompt Engineer en 2026 respecto a cómo se percibía en 2023?",
                 "opciones": [
-                  "Un título universitario en IA",
-                  "Un portafolio de 5-10 sistemas de prompts documentados con métricas",
-                  "Haber completado un MOOC de IA",
-                  "Trabajar en una empresa tech"
+                  "En 2026 el rol desapareció porque los modelos son tan buenos que no necesitan ingeniería de prompts",
+                  "En 2026 maduró de escribir prompts individuales a diseñar flujos multi-prompt, sistemas de evaluación y pipelines RAG completos",
+                  "En 2026 el rol se fusionó completamente con el de Data Scientist sin diferenciación",
+                  "En 2026 el rol solo existe en empresas grandes de más de 500 empleados"
                 ],
                 "correcta": 1,
-                "explicacion_profunda": "Para el mercado, la credencial mínima viable para Prompt Engineer es un portafolio concreto: 5-10 sistemas de prompts documentados, con contexto del problema, proceso de diseño, y métricas de mejora. Los títulos importan menos que la demostración práctica.",
-                "concepto_reforzado": "¿Qué es la 'credencial mínima viable' para un Prompt Engineer?"
+                "explicacion_profunda": "El rol de Prompt Engineer evolucionó significativamente desde su aparición como 'la persona que sabe escribir buenos prompts'. En 2026, el rol maduro implica: diseñar sistemas de prompts complejos con múltiples pasos y condicionales, construir pipelines de RAG que conectan LLMs con bases de datos de conocimiento empresarial, diseñar sistemas de evaluación automática que miden la calidad de los outputs del modelo, optimizar prompts para reducir costos de tokens sin sacrificar calidad, y documentar y mantener el 'prompt layer' de productos de IA empresarial. Es un rol de ingeniería de software especializado en la capa de interacción con LLMs, no simplemente un 'escritor de prompts'. La demanda creció porque las empresas que desplegaron productos de IA en 2023-2024 descubrieron que la calidad del sistema de prompts era el factor diferenciador entre un producto que funciona y uno que no.",
+                "concepto_reforzado": "Evolución del rol de Prompt Engineer de escritura de prompts individuales a diseño de sistemas de IA completos"
               },
               {
-                "pregunta": "¿Por qué los roles de AI Consultant en LATAM son especialmente escasos y bien remunerados en 2026?",
+                "pregunta": "¿Cuál es la combinación de características que hace más escaso y mejor remunerado al AI engineer en LATAM?",
                 "opciones": [
-                  "Porque los consultores ganan más en todo LATAM",
-                  "Muchas empresas necesitan adoptar IA pero hay pocos profesionales con la combinación de expertise técnico + de industria + en español",
-                  "Porque requieren doctorado",
-                  "Porque solo lo hacen empresas grandes"
+                  "Tener un doctorado en ML de una universidad top de EE.UU. o Europa",
+                  "Haber trabajado en Google, Meta o Anthropic antes de volver a LATAM",
+                  "Bilingüismo español-inglés + habilidades de ML/IA + conocimiento del contexto de negocios LATAM",
+                  "Tener el mayor número de certificaciones de cloud (AWS, GCP, Azure) del mercado"
                 ],
-                "correcta": 1,
-                "explicacion_profunda": "La brecha de talento en LATAM es específica: hay ingenieros de ML (pocos) y hay consultores de negocio (muchos), pero casi nadie tiene la combinación de comprensión técnica de IA + expertise de industria + capacidad de ejecución en el contexto latinoamericano.",
-                "concepto_reforzado": "¿Por qué los roles de AI Consultant en LATAM son especialmente escasos y bien remunerados en 2026?"
+                "correcta": 2,
+                "explicacion_profunda": "La escasez de talento de IA en LATAM no es solo de skills técnicos — es de la combinación completa que necesitan las empresas que operan en la región. Un ML engineer que solo habla inglés puede trabajar para empresas globales pero no entiende el contexto local. Un professional bilingüe puede comunicarse con clientes colombianos en español y con equipos técnicos internacionales en inglés. El conocimiento del contexto de negocios LATAM (regulaciones, cultura empresarial, sectores prioritarios) es lo que permite traducir las capacidades técnicas de IA en soluciones que realmente funcionan en la región. Esta combinación — técnica + idioma + contexto — es la que genera el mayor diferencial salarial en el mercado de IA de LATAM, y es también la combinación que ningún engineer importado puede tener de inmediato.",
+                "concepto_reforzado": "Combinación de habilidades técnicas + bilingüismo + contexto LATAM como diferenciador salarial para AI engineers en la región"
+              },
+              {
+                "pregunta": "¿Cuál es la 'credencial mínima viable' real que el mercado reconoce para un AI Consultant en LATAM?",
+                "opciones": [
+                  "Un máster en IA o certificación de una universidad reconocida como Stanford o MIT",
+                  "Al menos 3 años de experiencia trabajando como ML engineer en una empresa de tecnología",
+                  "Un caso de estudio documentado con métricas reales de una implementación de IA que realizó",
+                  "Haber completado los 5 cursos de IA más populares de Coursera o DeepLearning.AI"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Los tomadores de decisiones en empresas colombianas que contratan consultores de IA son principalmente directores comerciales, gerentes de operaciones, y CEOs. No son expertos técnicos que pueden evaluar un currículo académico — son personas pragmáticas que quieren saber si el consultor puede resolver SU problema. Un caso de estudio que dice 'implementé un sistema de análisis de contratos con IA para una firma de abogados en Bogotá que redujo el tiempo de revisión de 3 semanas a 4 días, con ROI de 5x en el primer año' comunica valor de forma inmediatamente comprensible. Un máster de Stanford impresiona a otros académicos; el caso de estudio con métricas convence a quienes tienen el presupuesto para contratarte. La credencial mínima viable es la demostración de que puedes entregar resultados, no de que sabes la teoría.",
+                "concepto_reforzado": "Casos de estudio con métricas como credencial mínima viable para AI Consultant vs títulos académicos formales"
+              },
+              {
+                "pregunta": "¿Por qué el AI Product Manager necesita entender las limitaciones técnicas de los modelos aunque no programe?",
+                "opciones": [
+                  "Para poder reemplazar a los engineers cuando están ocupados con otras tareas del proyecto",
+                  "Para poder evaluar y contratar engineers de IA y verificar su trabajo técnico",
+                  "Para tomar decisiones de producto realistas y evitar prometer funcionalidades imposibles o subestimar la complejidad técnica",
+                  "Porque los clientes siempre preguntan detalles técnicos que solo el PM puede responder"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El AI Product Manager que no entiende las limitaciones técnicas de los modelos comete errores costosos en la definición del producto. Ejemplo: un PM que no sabe que los LLMs alucinar con frecuencia en dominios específicos podría comprometer con el cliente que 'el sistema siempre tendrá 100% de accuracy' — una promesa técnicamente imposible. Un PM que no entiende la latencia de los modelos podría definir una experiencia de usuario que asume respuestas en <100ms cuando la tecnología no puede lograrlo. Un PM que no sabe cuándo tiene sentido fine-tuning vs RAG vs prompting podría tomar la decisión técnica incorrecta que lleva a semanas de trabajo innecesario. No necesita programar — necesita lo suficiente para tener conversaciones honestas con engineers, hacer preguntas que revelan problemas reales, y proteger al equipo de compromisos imposibles.",
+                "concepto_reforzado": "Comprensión técnica del AI PM como herramienta para decisiones de producto realistas, no para programar"
               }
             ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "Paola tiene 5 años de experiencia en marketing digital en LATAM, sabe WordPress y algo de JavaScript, no programa en Python. Quiere hacer la transición a un rol en IA en los próximos 12 meses manteniendo su trabajo actual.",
-              "instruccion": "Diseña el path de 12 meses más eficiente hacia un rol específico en IA que aproveche su experiencia existente.",
-              "input_malo": "Estudiar Python, después ML, después Deep Learning, después buscar trabajo como ML Engineer.",
-              "pista": "¿Cuál rol de IA beneficia más de tener 5 años de expertise en marketing LATAM? ¿Cuál tiene el path de transición más corto?",
-              "solucion": "Rol target: AI Marketing Specialist / AI Consultant para agencias de marketing. Meses 1-3: Prompt Engineering aplicado a marketing (este módulo). Construir 5 sistemas de prompts para marketing: generación de copies, análisis de competencia, estrategia de contenido. Publicar el proceso en LinkedIn (1 post/semana). Meses 4-6: Automatización de workflows. Make + Claude API para automatizar reportes de campañas. Primer proyecto pagado: ofrecer a una agencia pequeña la automatización de sus reportes. Meses 7-9: Construir portafolio de casos de estudio con números. Hablar en un meetup de marketing digital sobre IA. Meses 10-12: Lanzar oferta de consultoría AI para marketing: $500-1,000 por proyecto inicial, subir a $2,000-3,000 con testimonios. Ventaja competitiva: nadie más combina 5 años de expertise en marketing LATAM con capacidad de implementar IA.",
+              "contexto": "Tienes 4 profesionales en diferentes situaciones que quieren hacer transición hacia roles en IA: (A) Sofía: abogada con 7 años de experiencia en derecho corporativo colombiano, sin habilidades técnicas pero muy analítica. (B) Diego: developer de backend con 4 años en Java/Spring, quiere pasar a IA pero no sabe por dónde empezar. (C) Valentina: diseñadora UX con 5 años en apps móviles, sabe CSS/JavaScript básico. (D) Andrés: gerente de ventas con 10 años en sector financiero, conoce bien los productos y clientes de banca.",
+              "instruccion": "Para cada profesional, identifica el rol de IA más adecuado según su background, el tiempo estimado de transición, y las 3 habilidades clave que necesita desarrollar. Justifica cada elección.",
+              "input_malo": "Todos deberían estudiar Python y ML desde cero para convertirse en ML Engineers — es el único rol serio en IA.",
+              "pista": "¿Qué tiene cada persona que ya es valioso en IA? El background existente no es un obstáculo — es el punto de partida. Cada rol usa el background diferente.",
+              "solucion": "Sofía (abogada): Rol → AI Consultant para legaltech. Su conocimiento de derecho corporativo colombiano es exactamente lo que hace falta para construir soluciones de IA legal en Colombia. Tiempo: 4-6 meses. Habilidades a desarrollar: (1) Prompt engineering para análisis de contratos, (2) RAG básico para conectar LLM con bases de jurisprudencia colombiana, (3) Evaluación de salidas de modelos en contexto legal. Diego (backend Java): Rol → AI/ML Engineer o Prompt Engineer técnico. Tiene la base de programación — la transición es más técnica pero más directa. Tiempo: 6-9 meses. Habilidades: (1) Python + ecosistema ML (NumPy, pandas, PyTorch básico), (2) APIs de LLMs y orquestadores (LangChain, LlamaIndex), (3) MLOps básico para despliegue. Valentina (diseñadora UX): Rol → AI Product Designer / AI UX. Hay demanda creciente de diseñadores que entienden las capacidades y limitaciones de IA para diseñar experiencias honestas con usuarios. Tiempo: 3-4 meses. Habilidades: (1) Fundamentos de LLMs y sus limitaciones, (2) Diseño de conversational UX para chatbots, (3) Evaluación de experiencias de usuario con sistemas de IA. Andrés (gerente de ventas financiero): Rol → AI Consultant para sector financiero. Conoce los productos, clientes y reguladores de banca colombiana como nadie. Tiempo: 3-5 meses. Habilidades: (1) Herramientas de IA específicas de fintech (scoring alternativo, detección de fraude conceptual), (2) Cómo presentar ROI de IA a directivos financieros, (3) Regulación de IA en sector financiero colombiano (Superfinanciera).",
               "criterios_de_exito": [
-                "Elige el rol correcto aprovechando el background de marketing",
-                "Path es concreto con entregables por trimestre",
-                "Cada etapa genera ingresos o portafolio"
+                "Asigna roles diferentes a cada persona según su background, sin sugerir ML Engineer para todos",
+                "Reconoce el background existente como activo, no obstáculo, en cada caso",
+                "Estima tiempos de transición realistas y diferenciados por rol",
+                "Las habilidades a desarrollar son específicas al rol asignado, no genéricas de 'aprender IA'"
               ]
             },
-            "conexion": {}
+            "conexion": {
+              "siguiente_concepto": "Salarios globales y en LATAM: números reales",
+              "por_que_importa_despues": "Conocer los roles es el primer paso. El segundo es saber cuánto pagan realmente — tanto en Colombia como en el mercado global remoto. Los salarios en IA tienen rangos enormes según el rol, las habilidades específicas, el tipo de empresa, y si trabajas local o remotamente para empresas internacionales. Los números concretos permiten tomar decisiones estratégicas informadas sobre qué habilidades construir y para qué mercado."
+            }
           }
         },
         {
