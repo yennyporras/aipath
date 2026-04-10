@@ -5959,33 +5959,98 @@
         },
         {
           "id": "m1-b6-l10",
-          "titulo": "Framework para evaluar nuevas herramientas de IA",
+          "titulo": "El ecosistema en 2027: qué viene",
           "bloque": 6,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "En una industria que cambia cada 6-12 meses, la habilidad de leer tendencias con anticipación es tan valiosa como conocer el estado actual. Esta lección no predice el futuro con certeza —nadie puede hacerlo en IA— sino que identifica las fuerzas estructurales que ya están en movimiento en 2026 y que con alta probabilidad darán forma al ecosistema en 2027.\n\n**Tendencia 1: La comoditización del razonamiento de texto**\nLo que hoy requiere Claude Opus o GPT-4o —análisis de documentos, generación de texto de alta calidad, seguimiento de instrucciones complejas— en 2027 estará disponible en modelos de bajo costo comparables a Haiku o Flash actuales. El patrón histórico es consistente: las capacidades de los modelos frontera de hoy se convierten en el estándar de los modelos económicos en 12-18 meses. La implicación: las ventajas competitivas de 2027 estarán en los datos propios, la experiencia de usuario, y la profundidad de integración con procesos de negocio —no en 'tener acceso a IA' que será ubicuo.\n\n**Tendencia 2: Agentes autónomos como modo de uso principal**\nEn 2026, la mayoría de los usos de LLMs son 'reactivos': el usuario hace una pregunta, el modelo responde. En 2027, el modo dominante será 'agéntico': el modelo ejecuta secuencias de acciones —busca información, escribe código, envía emails, toma decisiones en flujos de trabajo— con mínima supervisión humana. Claude Code (el que Paola está usando ahora) es un ejemplo temprano de 2026. En 2027, agentes que gestionan procesos de negocio completos (desde recibir una solicitud de cotización hasta generar y enviar la propuesta) serán el estándar en empresas que adoptan IA seriamente. Para consultores, esto significa aprender a diseñar 'flujos de agentes' más que solo prompts.\n\n**Tendencia 3: Consolidación y diferenciación del mercado**\nEn 2026 hay decenas de modelos competitivos. En 2027 habrá consolidación: los laboratorios sin recursos para el siguiente ciclo de entrenamiento (que cuesta cientos de millones de dólares) saldrán del mercado o se especializarán. Pero simultáneamente habrá más modelos especializados verticales —un modelo fine-tuneado en derecho colombiano, otro en medicina latinoamericana, otro en contabilidad con estándares NIIF—. La paradoja: el mercado de modelos generalistas se consolida, mientras el mercado de modelos especializados se fragmenta y expande.\n\n**Tendencia 4: Infraestructura de IA en la nube como commodity**\nAWS Bedrock, Google Vertex y Azure OpenAI se están convirtiendo en los equivalentes de AWS S3 o RDS en la nube: infraestructura de IA que 'simplemente funciona' sin que el cliente necesite entender los detalles técnicos. En 2027, acceder a múltiples modelos con una sola API unificada (como ya hace Bedrock con Claude, Llama y otros) será el estándar. Esto simplifica la adopción pero también reduce las barreras de entrada para competidores.\n\n**Tendencia 5: Regulación como factor estructural**\nEl AI Act de la UE entró en vigor en 2026 y en 2027 comenzará la fase de cumplimiento para aplicaciones de alto riesgo. Países de LATAM —Colombia, Brasil, México— están desarrollando marcos regulatorios propios. Para consultores en LATAM, esto significa que el conocimiento de regulación de IA se vuelve tan relevante como el conocimiento técnico: los proyectos de IA más lucrativos en 2027 serán los que naveguen correctamente los requisitos de cumplimiento.\n\n**Tendencia 6: Computación de borde (edge AI)**\nModelos de 1-7B parámetros corriendo localmente en dispositivos móviles o servidores edge (sin conexión a nube) serán mainstream en 2027. Apple, Google y Qualcomm ya tienen chips optimizados para inferencia de modelos pequeños. Esto habilita nuevos casos de uso: asistentes de IA offline, procesamiento de datos sensibles en el dispositivo del usuario sin conexión a internet, y latencias de milisegundos en aplicaciones donde el round-trip a la nube es inaceptable.",
+              "analogia": "Leer tendencias de IA en 2026 es como leer el horizonte en un barco: no sabes exactamente qué encontrarás, pero puedes ver la dirección del viento y las nubes formándose. Los mejores navegantes no necesitan predicciones perfectas — necesitan leer bien los patrones.",
+              "ejemplo_malo": "Asumir que el ecosistema de 2026 será igual en 2028 y no actualizar tu conocimiento de modelos y herramientas. En IA, el conocimiento de hace 18 meses es potencialmente obsoleto en aspectos críticos.",
+              "ejemplo_bueno": "Incluir en cada propuesta a clientes una sección de 'consideraciones de evolución' que anticipe cómo las tendencias del ecosistema pueden afectar el diseño del sistema en 12-24 meses, y qué arquitecturas de hoy facilitan la adaptación futura.",
+              "por_que_importa": "El consultor que entiende las tendencias puede venderle a un cliente no solo la solución de hoy sino la arquitectura que se adapta al mañana. Esa visión de largo plazo es lo que diferencia una consultoría de $5,000 de una de $50,000.",
+              "tip_profesional": "La forma más eficiente de mantenerte al día con tendencias de IA no es leer todos los artículos: es seguir a 5-10 investigadores y fundadores clave en X/Twitter y LinkedIn, revisar los blogs de Anthropic, OpenAI y Google DeepMind cuando publican modelos nuevos, y tener un documento personal de 'tendencias a seguir' que revisas cada trimestre. Menos información, más curada."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué implica la 'comoditización del razonamiento de texto' para los consultores de IA en 2027?",
+                "opciones": [
+                  "Que los consultores de IA perderán trabajo porque los modelos se vuelven demasiado simples",
+                  "Que tener 'acceso a IA' dejará de ser una ventaja competitiva — el valor estará en datos propios, experiencia de usuario e integración profunda con procesos de negocio",
+                  "Que los modelos de texto serán reemplazados completamente por modelos de imagen",
+                  "Que solo las grandes empresas podrán pagar por IA de calidad"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La comoditización es un proceso económico bien conocido: cuando una tecnología se vuelve barata y accesible, deja de ser diferenciador y se convierte en requisito de entrada. En 2023, tener acceso a GPT-4 era ventaja competitiva. En 2025, cualquier empresa puede acceder a calidad equivalente. En 2027, el análisis de documentos, la generación de texto de calidad y la clasificación inteligente serán servicios básicos. La ventaja competitiva migra hacia: ¿qué datos únicos tiene tu empresa que ningún modelo público tiene? ¿Qué experiencia de usuario diferenciada construiste sobre estos modelos? ¿Qué procesos de negocio integraste tan profundamente que los competidores tardarían años en replicar? Los consultores que entienden esta dinámica posicionan sus proyectos en términos de ventaja estratégica de largo plazo, no de capacidad técnica inmediata.",
+                "concepto_reforzado": "Comoditización de IA y migración del valor competitivo"
+              },
+              {
+                "pregunta": "¿Cuál es el modo de uso de LLMs que dominará en 2027 según las tendencias actuales?",
+                "opciones": [
+                  "Chatbots de preguntas y respuestas en interfaces web",
+                  "Agentes autónomos que ejecutan secuencias de acciones con mínima supervisión humana",
+                  "Modelos solo accesibles para investigadores académicos",
+                  "Asistentes de voz reemplazando completamente la interacción por texto"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El modo 'reactivo' (pregunta→respuesta) ha dominado el uso de LLMs desde ChatGPT. Pero el modo 'agéntico' —donde el modelo planifica y ejecuta secuencias de acciones multi-paso— es la dirección hacia la que todos los laboratorios principales están moviendo sus productos. Claude Code, Devin (el programador autónomo), Operator de OpenAI, y múltiples frameworks de agentes como LangGraph y CrewAI son indicadores del patrón en 2026. En 2027, los agentes que automatizan procesos completos —desde recibir inputs hasta entregar outputs con pasos intermedios de investigación, cálculo y comunicación— serán el caso de uso empresarial más valioso. Para consultores, esto significa que diseñar 'flujos de agentes' confiables, con manejo de errores y supervisión humana en los puntos correctos, será una habilidad más valiosa que escribir prompts individuales.",
+                "concepto_reforzado": "Evolución hacia agentes autónomos como modo de uso dominante"
+              },
+              {
+                "pregunta": "¿Por qué el conocimiento de regulación de IA se vuelve tan importante como el técnico en 2027?",
+                "opciones": [
+                  "Porque la regulación prohíbe el uso de IA en la mayoría de los sectores",
+                  "Porque el AI Act de la UE y los marcos regulatorios de LATAM que entran en vigor generan proyectos de compliance de IA que son lucrativos y requieren conocimiento especializado",
+                  "Porque solo abogados podrán trabajar en proyectos de IA",
+                  "Porque la regulación hace que todos los modelos sean gratuitos por ley"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El AI Act de la UE, vigente desde 2026, clasifica las aplicaciones de IA por nivel de riesgo y exige requisitos específicos para cada categoría: documentación de sistemas, evaluaciones de riesgo, supervisión humana, explicabilidad. Los proyectos de IA en sectores de alto riesgo (crédito, empleo, educación, salud, servicios críticos) deben cumplir con estos requisitos, y las multas por incumplimiento son hasta el 3-7% de la facturación global de la empresa. Colombia, Brasil y México están desarrollando marcos equivalentes. Esto crea una demanda nueva: consultores que pueden diseñar sistemas de IA que sean técnicamente capaces Y regulatoriamente cumplidores. Ese perfil combinado tiene mayor valor que el técnico puro o el legal puro.",
+                "concepto_reforzado": "Regulación de IA como generador de proyectos de consultoría"
+              },
+              {
+                "pregunta": "¿Qué es el 'edge AI' y qué casos de uso habilita que la IA en nube no puede?",
+                "opciones": [
+                  "IA que solo funciona en los bordes de las ciudades, no en zonas rurales",
+                  "Modelos pequeños que corren localmente en dispositivos sin conexión a nube, habilitando IA offline, procesamiento de datos sensibles en el dispositivo y latencias de milisegundos",
+                  "Un tipo especial de computación que corre en los servidores más avanzados de AWS",
+                  "IA que solo puede responder preguntas sobre tecnología"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Edge AI se refiere a modelos de IA corriendo en el dispositivo del usuario (smartphone, laptop, dispositivo IoT) sin enviar datos a un servidor en la nube. Esto habilita tres categorías de casos de uso que la IA en nube no puede resolver: (1) Offline: un asistente de IA que funciona sin conexión a internet, crucial para zonas rurales de LATAM con conectividad intermitente o para uso en aviones y zonas sin señal. (2) Privacidad máxima: el dato de salud del paciente, la transcripción de la reunión confidencial, o el documento legal nunca abandona el dispositivo del usuario, eliminando cualquier riesgo de interceptación o filtración en la transmisión. (3) Latencia de milisegundos: aplicaciones de tiempo real como reconocimiento de voz con respuesta instantánea, asistencia en conducción o robótica industrial donde el round-trip a un servidor en la nube (100-300ms) es inaceptable.",
+                "concepto_reforzado": "Edge AI como habilitador de nuevos casos de uso"
+              },
+              {
+                "pregunta": "¿Cuál es la forma más eficiente de mantenerse al día con las tendencias de IA según esta lección?",
+                "opciones": [
+                  "Leer todos los artículos de Medium y TechCrunch sobre IA publicados cada día",
+                  "Tomar un curso nuevo de IA cada vez que se lanza un modelo importante",
+                  "Seguir 5-10 investigadores y fundadores clave, revisar blogs de labs principales al lanzar modelos, y mantener un documento personal de tendencias revisado trimestralmente",
+                  "Suscribirse a todas las newsletters de IA disponibles para tener máxima cobertura"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "La trampa del 'information overload' en IA es real: hay cientos de artículos diarios sobre nuevos modelos, papers, herramientas y opiniones. La mayoría de ese contenido es redundante, superficial o prematuramente optimista. La estrategia más efectiva es la curaduría activa: identificar 5-10 fuentes de señal alta (investigadores que han predicho correctamente tendencias antes, fundadores que explican razonamiento técnico, no solo anuncios de productos), leer en profundidad los anuncios directos de los labs principales cuando ocurren (blogs de Anthropic, OpenAI, Google DeepMind), y revisar trimestralmente qué de lo que anotaste como tendencia se materializó o cambió de dirección. Este enfoque tarda 2-3 horas a la semana y produce mejor comprensión que 20 horas de consumo desordenado.",
+                "concepto_reforzado": "Estrategia de actualización eficiente en un campo que cambia rápido"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "El CTO de una empresa de logística en Perú te pide una consultoría de 'hoja de ruta de IA para 2027'. La empresa actualmente usa WhatsApp Business para coordinación con conductores, Excel para tracking de rutas, y tiene una base de datos con 3 años de datos históricos de entregas (rutas, tiempos, incidencias, costos). No tienen desarrolladores propios pero quieren invertir en IA seriamente.",
+              "instruccion": "Diseña una hoja de ruta de IA de 18 meses (hasta finales de 2027) que anticipe las tendencias del ecosistema. Incluye: (1) qué construirías en los primeros 6 meses (2026), (2) cómo evoluciona en 6-12 meses cuando los agentes autónomos sean más accesibles, y (3) qué decisiones de arquitectura de hoy facilitan las tendencias de 2027.",
+              "input_malo": "Les recomendaría empezar con ChatGPT Enterprise y luego ver qué pasa con la tecnología conforme evoluciona.",
+              "pista": "Los 3 años de datos históricos de entregas son el activo más valioso — ningún modelo público los tiene. Las tendencias de agentes autónomos en 2027 sugieren que los coordinadores de rutas podrían tener un agente que automatice la comunicación con conductores y la optimización de rutas. La falta de desarrolladores propios sugiere empezar con herramientas no-code y escalar.",
+              "solucion": "Hoja de ruta: FASE 1 (0-6 meses, 2026): (1) Activar WhatsApp Business API con Claude Haiku para responder automáticamente consultas frecuentes de conductores (disponibilidad de carga, confirmaciones de entrega) — no requiere desarrolladores, usa Make o n8n. (2) Construir un sistema RAG sobre los 3 años de datos históricos: cuando el despachador pregunta 'qué rutas tienen más retrasos en lluvia', el sistema busca en los datos históricos y responde. ROI inmediato y medible. FASE 2 (6-12 meses, anticipando agentes): (3) Diseñar el 'Agente de Coordinación de Rutas': recibe información de nuevo pedido → consulta disponibilidad de conductores via WhatsApp automático → propone ruta óptima basada en histórico → confirma con conductor y cliente → actualiza sistema. En 2027 los frameworks de agentes estarán más maduros para hacer esto confiablemente. FASE 3 (12-18 meses, regulación y datos): (4) Documentar el sistema de decisiones de IA para cumplimiento anticipado de regulaciones peruanas que vendrán. Los datos históricos de rutas se convierten en activo para modelo predictivo de tiempo de entrega propio. DECISIONES DE ARQUITECTURA: Usar APIs (no self-hosting) para facilitar cambio de modelos cuando mejore la calidad/costo. Almacenar todos los datos de interacciones de IA para future fine-tuning. Diseñar workflows en n8n (no código propietario) para flexibilidad.",
+              "criterios_de_exito": [
+                "La hoja de ruta tiene al menos dos fases diferenciadas que anticipan la evolución del ecosistema",
+                "Identifica los datos históricos propios como activo estratégico para 2027",
+                "Menciona al menos una tendencia del ecosistema (agentes, regulación, edge AI) con implicación concreta para este cliente"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Ética y sesgos en IA (Bloque 7)",
+              "por_que_importa_despues": "Con el ecosistema de modelos dominado, el siguiente bloque cubre el lado responsable: cómo los sesgos de los datos se convierten en sesgos de los modelos, y por qué eso importa para cada proyecto que construyas."
             }
           }
         }
