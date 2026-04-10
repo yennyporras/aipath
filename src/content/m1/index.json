@@ -6064,74 +6064,98 @@
       "lecciones": [
         {
           "id": "m1-b7-l1",
-          "titulo": "Cómo se mide si un modelo es bueno",
+          "titulo": "Cómo medir si un modelo realmente es bueno",
           "bloque": 7,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "La evaluación de modelos de IA es más arte que ciencia, y más difícil de lo que parece. El error más común: optimizar para la métrica equivocada. Un modelo puede tener 99% de accuracy en un dataset de detección de fraude y ser completamente inútil si el 99% de las transacciones son legítimas — el modelo aprende a decir 'no fraude' siempre y tiene 99% de accuracy. Las métricas básicas para clasificación son cuatro: Accuracy (% de predicciones correctas), Precision (de lo que predijo positivo, cuánto era realmente positivo), Recall (de todos los positivos reales, cuántos detectó), y F1 (media armónica de Precision y Recall). Cuándo priorizar cada una: si un falso positivo es costoso (ej: bloquear tarjeta de crédito legítima → cliente molesto), maximiza Precision. Si un falso negativo es costoso (ej: no detectar cáncer → consecuencias graves), maximiza Recall. F1 es útil cuando no hay preferencia clara entre los dos tipos de error. Para LLMs, las métricas son diferentes: BLEU y ROUGE para comparar texto generado vs referencia, pero tienen limitaciones serias. MMLU (Massive Multitask Language Understanding) mide conocimiento factual. HumanEval mide capacidad de escribir código. La evaluación humana sigue siendo el gold standard para la mayoría de las tareas de LLMs.",
-              "analogia": "Medir la calidad de un modelo sin entender el costo de cada tipo de error es como medir la velocidad de un cirujano: necesitas saber si va rápido o si va bien.",
-              "ejemplo_malo": "Reportar solo accuracy para modelos con clases desbalanceadas — siempre reportar también Precision, Recall y F1 junto a la distribución de clases.",
-              "ejemplo_bueno": "Al evaluar un modelo para una empresa, siempre preguntar: ¿Qué es peor para el negocio: un falso positivo o un falso negativo? La respuesta define qué métrica optimizar.",
-              "por_que_importa": "Para LLMs en producción, las métricas automáticas son un punto de partida pero no el final — siempre incluye evaluación humana con una muestra del 5-10% de los outputs.",
-              "tip_profesional": "Una métrica de negocio es siempre más poderosa que una métrica técnica en una presentación: 'redujo reclamaciones falsas en 30%' > 'F1 de 0.87'."
+              "explicacion": "Medir si un modelo de IA es realmente bueno es una de las habilidades más subestimadas y más críticas en la práctica profesional. La mayoría de los equipos y clientes caen en la misma trampa: reportan el número que se ve mejor en el dashboard y lo llaman éxito. Un consultor de IA que entiende evaluación puede detectar esa trampa, proponer métricas correctas, y en muchos casos descubrir que un modelo presentado como exitoso es en realidad peligroso para el negocio.\n\n**El primer principio: una métrica aislada no dice nada**\nLa pregunta correcta no es '¿cuál es el accuracy del modelo?' sino '¿qué tipo de errores comete el modelo, con qué frecuencia, y cuánto le cuesta cada error al negocio?' Un modelo de detección de spam con 99% de accuracy puede estar bloqueando el 30% de los emails legítimos de clientes (alto recall de spam pero precisión pobre para emails buenos). Un modelo de diagnóstico médico con 95% de accuracy puede estar fallando en detectar el 60% de los casos positivos reales (alto accuracy, recall catastrófico).\n\n**Las cuatro preguntas fundamentales de evaluación:**\n\n1. ¿Qué está intentando predecir el modelo? Definir claramente la tarea antes de elegir métricas. Un modelo que clasifica texto en categorías tiene métricas diferentes a uno que genera texto libre, que a su vez tiene métricas diferentes a uno que detecta objetos en imágenes.\n\n2. ¿Cuál error es más costoso para el negocio: el falso positivo o el falso negativo? Esta pregunta determina si priorizas Precision (minimizar falsos positivos) o Recall (minimizar falsos negativos). No hay respuesta universal — depende del contexto de negocio.\n\n3. ¿Las métricas elegidas miden lo que realmente importa para el usuario? BLEU mide si el texto generado se parece a una referencia. Pero si la referencia es mediocre, un BLEU alto puede significar 'mediocre consistente'. La métrica técnica puede estar perfectamente calculada pero medir algo irrelevante para el usuario real.\n\n4. ¿En qué datos se está evaluando el modelo? Un modelo evaluado en datos de entrenamiento puede tener métricas perfectas que se desploman en producción. Un modelo evaluado en datos de un solo mes puede fallar en otros meses con distribuciones diferentes.\n\n**El framework de evaluación en tres capas:**\n\nCapa 1 — Métricas técnicas: accuracy, F1, BLEU, perplexity. Son objetivas, automatizables, y dan una señal rápida. Son necesarias pero no suficientes.\n\nCapa 2 — Métricas de caso de uso: ¿resuelve el problema para el que fue diseñado? Para un asistente de soporte al cliente: ¿cuántas consultas resuelve sin escalar a humano? Para un modelo de código: ¿cuántas sugerencias son correctas en el primer intento?\n\nCapa 3 — Métricas de negocio: el impacto real medible en el negocio. ¿Redujo el tiempo de atención? ¿Aumentó la conversión? ¿Redujo costos operativos? Esta capa es la que importa para el cliente final.\n\nLa evaluación correcta combina las tres capas. Un modelo con métricas técnicas perfectas pero impacto de negocio nulo es un fracaso. Un modelo con métricas técnicas mediocres pero que resuelve el problema de negocio puede ser un éxito. La diferencia entre los dos define la calidad de un proyecto de IA.",
+              "analogia": "Medir la calidad de un modelo con una sola métrica es como evaluar un restaurante solo por la velocidad del servicio: puede ser el más rápido y tener la peor comida. Necesitas medir lo que realmente importa para el comensal.",
+              "ejemplo_malo": "Presentar a un cliente un modelo con '98% de accuracy' en clasificación de comentarios sin mencionar que el dataset tiene 98% de comentarios neutros — el modelo aprendió a predecir 'neutro' siempre.",
+              "ejemplo_bueno": "Presentar: 'El modelo detecta el 89% de los comentarios negativos reales (Recall 0.89), con una tasa de falsos positivos del 12% (Precision 0.88). En términos de negocio, esto equivale a que el equipo de soporte solo necesita revisar manualmente 1 de cada 8 alertas para resolver 9 de cada 10 problemas reales.'",
+              "por_que_importa": "Como consultor, tu credibilidad depende de no ser la persona que presenta números impresionantes que ocultan problemas reales. La evaluación rigurosa es lo que separa los proyectos que funcionan en producción de los que funcionan solo en la presentación.",
+              "tip_profesional": "Siempre construye tu 'matriz de confusión de negocio' antes de elegir métricas: un cuadro 2×2 donde las columnas son 'modelo predice positivo/negativo' y las filas son 'realidad positiva/negativa'. Llena cada celda con el costo de negocio de ese escenario. Eso te dice automáticamente qué métrica debes optimizar."
             },
             "verificacion": [
               {
-                "pregunta": "¿Por qué el accuracy puede ser engañoso en datasets desbalanceados?",
+                "pregunta": "¿Por qué un modelo con 99% de accuracy puede ser inútil o peligroso para el negocio?",
                 "opciones": [
-                  "Porque es difícil de calcular",
-                  "Un modelo que predice siempre la clase mayoritaria puede tener alto accuracy sin aprender nada útil",
-                  "Porque no mide correctamente",
-                  "Porque depende del hardware"
+                  "Porque el 99% nunca es suficiente en aplicaciones críticas",
+                  "Porque en datasets desbalanceados, un modelo que siempre predice la clase mayoritaria puede alcanzar alto accuracy sin haber aprendido patrones útiles",
+                  "Porque los modelos con accuracy muy alto tienden a ser lentos en producción",
+                  "Porque el accuracy solo mide el tiempo de respuesta del modelo"
                 ],
                 "correcta": 1,
-                "explicacion_profunda": "En un dataset con 99% de clase A y 1% de clase B, un modelo que siempre predice 'A' tiene 99% de accuracy sin haber aprendido nada. Por eso se necesitan métricas como Precision, Recall y F1 en casos desbalanceados.",
-                "concepto_reforzado": "¿Por qué el accuracy puede ser engañoso en datasets desbalanceados?"
+                "explicacion_profunda": "El problema del accuracy en datasets desbalanceados es uno de los errores más costosos en proyectos de ML. Imagina detección de fraude: si el 99% de las transacciones son legítimas y el 1% son fraude, un modelo que responde 'legítima' a todo tiene 99% de accuracy y detecta 0 fraudes. El negocio paga por un modelo que no hace nada útil. Este patrón aparece en muchos casos reales: detección de enfermedades raras, clasificación de comentarios donde la mayoría son neutros, detección de defectos de fabricación donde la mayoría de piezas son buenas. La solución no es ignorar el accuracy sino complementarlo siempre con métricas que midan el performance en la clase minoritaria: Precision, Recall, F1, y la distribución de la matriz de confusión.",
+                "concepto_reforzado": "Limitación del accuracy en datasets desbalanceados"
               },
               {
-                "pregunta": "¿Cuándo deberías priorizar Recall sobre Precision?",
+                "pregunta": "¿Qué determina si debes priorizar Precision o Recall en la evaluación de un modelo?",
                 "opciones": [
-                  "Cuando los falsos positivos son costosos",
-                  "Cuando los falsos negativos son costosos (ej: no detectar enfermedades graves)",
-                  "Siempre, es más importante",
-                  "Cuando el dataset está balanceado"
+                  "El tamaño del dataset de entrenamiento",
+                  "El costo relativo de los falsos positivos vs falsos negativos en el contexto específico del negocio",
+                  "Siempre se debe priorizar la que tenga mayor valor numérico",
+                  "Lo determina el proveedor del modelo automáticamente"
                 ],
                 "correcta": 1,
-                "explicacion_profunda": "Recall maximiza la detección de todos los casos positivos reales, a costa de más falsos positivos. Es prioritario cuando no detectar un caso verdadero es más costoso que una alarma falsa (diagnóstico de enfermedades, detección de fraude de alto impacto).",
-                "concepto_reforzado": "¿Cuándo deberías priorizar Recall sobre Precision?"
+                "explicacion_profunda": "La elección entre Precision y Recall es fundamentalmente una decisión de negocio, no técnica. Precision mide: de todo lo que el modelo marcó como positivo, ¿cuánto era realmente positivo? Alta precision significa pocas alarmas falsas. Recall mide: de todos los casos positivos reales, ¿cuántos detectó el modelo? Alto recall significa pocos casos reales perdidos. Si los falsos positivos son muy costosos (ej: bloquear una transferencia bancaria legítima de un cliente importante → cliente se va al banco competidor), prioriza Precision. Si los falsos negativos son muy costosos (ej: no detectar un tumor en una mamografía → diagnóstico tardío con consecuencias graves), prioriza Recall. Para muchos casos empresariales en LATAM, como detección de spam, clasificación de quejas de clientes, o scoring de leads, el balance entre los dos depende de los costos operativos específicos del negocio.",
+                "concepto_reforzado": "Selección de métrica según costo de negocio de cada tipo de error"
               },
               {
-                "pregunta": "¿Cuál es el gold standard para evaluar la calidad de outputs de LLMs?",
+                "pregunta": "¿Cuáles son las tres capas de evaluación que debería cubrir un proyecto de IA bien evaluado?",
                 "opciones": [
-                  "BLEU score",
-                  "ROUGE score",
-                  "Evaluación humana de una muestra de outputs",
-                  "MMLU benchmark"
+                  "Velocidad, memoria y costo de GPU",
+                  "Métricas técnicas (accuracy/F1), métricas de caso de uso (resuelve el problema) y métricas de negocio (impacto real medible)",
+                  "Evaluación del desarrollador, evaluación del cliente y evaluación del regulador",
+                  "Evaluación en entrenamiento, validación y producción"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El error más común es quedarse en la capa 1 (métricas técnicas) y declarar éxito. Las tres capas son necesarias porque miden cosas diferentes. Capa 1 — métricas técnicas (accuracy, F1, BLEU): miden propiedades matemáticas del modelo, son objetivas y rápidas de calcular, pero no garantizan que el modelo sea útil. Capa 2 — métricas de caso de uso: ¿cuántas consultas de soporte resuelve sin escalar? ¿Cuántos contratos analiza sin errores críticos? Miden si el modelo hace lo que fue diseñado para hacer en condiciones reales. Capa 3 — métricas de negocio: reducción de costos operativos, aumento de conversión, reducción de tiempo de ciclo. Estas son las que importan al CEO y al CFO. Un proyecto puede tener excelentes métricas en capa 1, aceptables en capa 2, pero nulo impacto en capa 3 si el proceso de negocio no adoptó realmente el modelo.",
+                "concepto_reforzado": "Marco de evaluación en tres capas"
+              },
+              {
+                "pregunta": "¿Por qué evaluar un modelo en datos de entrenamiento produce resultados engañosos?",
+                "opciones": [
+                  "Porque los datos de entrenamiento son siempre de menor calidad",
+                  "Porque el modelo ya vio esos datos durante el entrenamiento y puede haber 'memorizado' patrones que no generalizan a datos nuevos",
+                  "Porque los datos de entrenamiento son demasiado pequeños para evaluar",
+                  "Porque la evaluación en entrenamiento requiere más tiempo de cómputo"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Evaluar un modelo en los mismos datos con los que se entrenó es como darle al estudiante el examen idéntico a los ejercicios de práctica: los resultados miden memorización, no comprensión. Un modelo puede tener 99% de F1 en datos de entrenamiento y 60% en datos nuevos. Esto se llama overfitting —el modelo aprendió los patrones específicos de los datos de entrenamiento incluyendo su ruido, en lugar de aprender los patrones generalizables. Por esto la práctica estándar es dividir los datos en tres partes: entrenamiento (para entrenar el modelo), validación (para ajustar hiperparámetros y detectar overfitting durante el desarrollo), y test (para evaluación final con datos que el modelo nunca ha visto). Solo las métricas del conjunto de test son una estimación honesta del performance en producción.",
+                "concepto_reforzado": "Importancia de la separación entre datos de entrenamiento y evaluación"
+              },
+              {
+                "pregunta": "¿Cuál es la 'capa de evaluación' que más importa para convencer a un CEO de que un proyecto de IA fue exitoso?",
+                "opciones": [
+                  "Capa 1: métricas técnicas como F1 score y BLEU",
+                  "Capa 2: métricas de caso de uso como resolución de consultas",
+                  "Capa 3: métricas de negocio como reducción de costos, aumento de ventas o reducción de tiempo operativo",
+                  "Las tres capas tienen igual peso para un CEO"
                 ],
                 "correcta": 2,
-                "explicacion_profunda": "La evaluación humana sigue siendo el gold standard para LLMs porque las tareas de lenguaje natural (coherencia, utilidad, factualidad en contexto) son difíciles de capturar con métricas automáticas. Las métricas automáticas son un complemento, no sustituto.",
-                "concepto_reforzado": "¿Cuál es el gold standard para evaluar la calidad de outputs de LLMs?"
+                "explicacion_profunda": "Un CEO o director de empresa raramente entiende qué significa F1 de 0.87 o BLEU de 45. Lo que entienden y les importa es: '¿Este proyecto redujo mis costos de atención al cliente en $X al mes?' o '¿Aumentó la conversión de leads en Y%?' o '¿Redujo el tiempo de revisión de contratos de 3 días a 4 horas?'. Estas son métricas de negocio —la capa 3— y son el lenguaje correcto para comunicar el valor de un proyecto de IA a tomadores de decisiones no técnicos. Como consultor, siempre traduce las métricas técnicas a métricas de negocio antes de presentar resultados. 'El modelo tiene F1 de 0.87' se convierte en 'el modelo detecta 87 de cada 100 casos de fraude real, reduciendo las pérdidas mensuales estimadas en $45,000 con solo 15 revisiones manuales adicionales al día para el equipo de operaciones'.",
+                "concepto_reforzado": "Traducción de métricas técnicas a métricas de negocio"
               }
             ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "Un banco colombiano tiene un modelo de detección de fraude. Los resultados del último mes: 95% accuracy, 78% Precision, 45% Recall. El equipo está satisfecho porque el accuracy es alto.",
-              "instruccion": "Explica por qué el equipo debería estar preocupado y qué ajuste necesita el modelo.",
-              "input_malo": "El modelo está bien porque tiene 95% de accuracy. El banco puede estar tranquilo.",
-              "pista": "El Recall del 45% significa que de 100 transacciones fraudulentas reales, el modelo solo detectó 45. ¿Cuántas perdió?",
-              "solucion": "El equipo debería estar MUY preocupado. El Recall de 45% significa que el modelo está dejando pasar el 55% de los fraudes reales — es decir, de cada 100 transacciones fraudulentas, el banco absorbe el costo de 55 sin detectarlas. Si el fraude promedio es $500 y tienen 1,000 fraudes por mes, están perdiendo $275,000/mes en fraudes no detectados. El accuracy del 95% es alto porque la mayoría de las transacciones son legítimas (clase desbalanceada). Ajuste necesario: reducir el umbral de clasificación (más falsos positivos a cambio de más detección) hasta que el negocio encuentre el balance costo-beneficio entre fraudes no detectados vs transacciones legítimas bloqueadas.",
+              "contexto": "Una empresa de telecomunicaciones en Bogotá implementó un modelo de IA para predecir qué clientes van a cancelar su servicio (churn) en los próximos 30 días. El equipo técnico presenta los resultados: accuracy 94%, Precision 71%, Recall 38%. El gerente comercial dice: 'Excelente, 94% de accuracy, aprobemos el modelo para producción.' El presupuesto de retención es $50 por cliente contactado, y el ingreso por cliente retenido es $800 anuales. Mensualmente hay aproximadamente 500 clientes que sí cancelan.",
+              "instruccion": "Evalúa si el modelo debería aprobarse. Calcula el impacto económico real del Recall del 38%, propone la métrica correcta a optimizar y justifica por qué el accuracy del 94% es engañoso aquí.",
+              "input_malo": "El modelo tiene 94% de accuracy que es excelente. Proceder con producción.",
+              "pista": "Con Recall del 38%: de 500 clientes que sí van a cancelar, el modelo solo detecta 38% = 190 clientes. Se pierden 310 clientes que podrían haberse retenido. Cada cliente retenido vale $800 anuales. Calcula el costo de oportunidad perdida y compáralo con el costo de retención.",
+              "solucion": "El modelo NO debería aprobarse en su estado actual. Análisis: Con Recall 38%, el modelo detecta solo 190 de 500 clientes en riesgo real. Los 310 no detectados se van sin que nadie intervenga. Costo de oportunidad: 310 clientes × $800 = $248,000/año en ingresos perdidos. La Precision del 71% significa que de cada 100 alertas del modelo, 71 son reales y 29 son falsas alarmas. Si contactas 190 clientes detectados × 100/71 = ~268 contactos totales, el costo de retención es 268 × $50 = $13,400/mes. El modelo actual tiene ROI negativo si se considera lo que se pierde. Solución: reducir el umbral de clasificación para aumentar Recall a al menos 70-80%, aceptando más falsos positivos (más contactos innecesarios) a cambio de no perder 60% de los clientes en riesgo real. La métrica a optimizar no es accuracy sino Recall o una combinación ponderada donde el falso negativo (no detectar un cliente que cancela) es ~16× más costoso que el falso positivo (contactar a un cliente que no cancela: $50 de costo de retención sin beneficio).",
               "criterios_de_exito": [
-                "Calcula el impacto real del Recall del 45% en dinero perdido",
-                "Explica por qué el accuracy es engañoso aquí",
-                "Propone la solución correcta (ajuste de umbral)"
+                "Calcula el impacto económico del Recall del 38% en ingresos anuales perdidos",
+                "Explica por qué el 94% de accuracy es engañoso (clases desbalanceadas)",
+                "Recomienda aumentar Recall con justificación del costo relativo de cada tipo de error"
               ]
             },
             "conexion": {
-              "siguiente_concepto": "Accuracy, Precision, Recall, F1",
-              "por_que_importa_despues": "Optimizar la métrica equivocada puede producir un modelo inútil con excelentes números en papel."
+              "siguiente_concepto": "Accuracy, Precision, Recall y F1 con intuición",
+              "por_que_importa_despues": "Ahora que entiendes por qué las métricas importan, la siguiente lección te da la intuición matemática y práctica para calcularlas e interpretarlas con confianza en cualquier proyecto."
             }
           }
         },
