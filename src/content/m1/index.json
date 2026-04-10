@@ -7710,7 +7710,7 @@
         },
         {
           "id": "m1-b9-l2",
-          "titulo": "IA responsable: principios y frameworks internacionales",
+          "titulo": "Fairness y equidad en sistemas de IA",
           "bloque": 9,
           "tipo": "leccion",
           "duracion_min": 20,
@@ -7724,7 +7724,68 @@
               "por_que_importa": "",
               "tip_profesional": ""
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "Un sistema de IA para selección de CVs aprueba el 80% de candidatos hombres pero solo el 45% de candidatas mujeres con calificaciones equivalentes. ¿Qué tipo de sesgo describe este resultado?",
+                "opciones": [
+                  "Sesgo de disparidad de resultados (outcome disparity)",
+                  "Sesgo de confirmación del modelo",
+                  "Sesgo de underfitting por datos insuficientes",
+                  "Sesgo de overfitting en datos de entrenamiento"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "El sesgo de disparidad de resultados ocurre cuando un sistema produce resultados significativamente diferentes para grupos demográficos distintos, incluso cuando esos grupos tienen las mismas cualificaciones relevantes. En este caso, el sistema trata de manera inequitativa a candidatos con perfiles equivalentes basándose en género. No es un problema de underfitting ni overfitting (que son errores técnicos de generalización), ni de confirmación (que implica búsqueda selectiva de evidencia). La disparidad de resultados es el indicador más directo de falta de fairness en modelos de decisión automatizada, y es el tipo de sesgo que más frecuentemente genera consecuencias legales bajo regulaciones como el EU AI Act y el EEOC estadounidense.",
+                "concepto_reforzado": "Disparidad de resultados y fairness en modelos de decisión"
+              },
+              {
+                "pregunta": "¿Cuál es la diferencia fundamental entre 'equidad demográfica' (demographic parity) e 'igualdad de oportunidades' (equal opportunity) como métricas de fairness?",
+                "opciones": [
+                  "La equidad demográfica exige iguales tasas de predicción positiva entre grupos; la igualdad de oportunidades exige iguales tasas de verdaderos positivos entre grupos cualificados",
+                  "La equidad demográfica aplica solo a modelos de clasificación; la igualdad de oportunidades aplica solo a modelos de regresión",
+                  "La equidad demográfica mide precisión por grupo; la igualdad de oportunidades mide recall por grupo",
+                  "Son términos sinónimos que describen el mismo requisito matemático con diferente nombre"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "Demographic parity exige que la tasa de predicciones positivas sea igual entre grupos (ej: 50% de aprobados en cada género). Equal opportunity es más sofisticado: exige que entre las personas que realmente merecen el resultado positivo (los verdaderamente cualificados), la tasa de ser correctamente identificados sea igual entre grupos. La diferencia práctica es crucial: un sistema puede satisfacer demographic parity aprobando aleatoriamente más candidatos no cualificados de un grupo para compensar, lo que es injusto de otra manera. Equal opportunity es generalmente preferido porque evalúa si el sistema falla a grupos específicos que merecen el resultado. No son sinónimos: matemáticamente es imposible que ambas métricas se cumplan simultáneamente excepto en casos triviales.",
+                "concepto_reforzado": "Métricas de fairness: demographic parity vs equal opportunity"
+              },
+              {
+                "pregunta": "Una empresa entrena un modelo de crédito con datos históricos de los últimos 20 años. Históricamente, las personas de ciertos barrios recibieron menos crédito. ¿Qué fenómeno describe esto y cuál es el riesgo principal?",
+                "opciones": [
+                  "Sesgo histórico que el modelo aprende y perpetúa, creando un ciclo de retroalimentación discriminatorio",
+                  "Error de muestreo estadístico que se corrige solo al aumentar el volumen de datos",
+                  "Problema de distribución de clases que se resuelve con técnicas de oversampling",
+                  "Ruido en los datos de entrenamiento que se elimina con regularización del modelo"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "Cuando un modelo aprende de datos históricos que reflejan discriminación sistémica pasada, no solo reproduce ese sesgo sino que lo amplifica mediante ciclos de retroalimentación: el modelo niega crédito a ciertos barrios → esas personas no tienen historial crediticio positivo → el modelo interpreta esa ausencia como mayor riesgo → niega más crédito. Este fenómeno se llama sesgo histórico o feedback loop discriminatorio. Aumentar datos no resuelve el problema porque más datos del mismo sistema discriminatorio refuerzan el patrón. Oversampling y regularización son técnicas técnicas que no abordan el origen sociológico del sesgo. La solución requiere intervención consciente: reponderar los datos, aplicar fairness constraints durante el entrenamiento, y auditar los resultados por grupo demográfico.",
+                "concepto_reforzado": "Sesgo histórico y ciclos de retroalimentación en modelos de IA"
+              },
+              {
+                "pregunta": "El framework de IA responsable de Google incluye el principio de 'accountability'. ¿Qué significa este principio en práctica para un equipo de desarrollo?",
+                "opciones": [
+                  "Que debe existir un proceso claro para reportar, investigar y remediar daños causados por el sistema de IA",
+                  "Que el modelo debe poder explicar cada predicción individual en lenguaje natural",
+                  "Que el código fuente del modelo debe ser publicado como open source para auditoría externa",
+                  "Que el equipo debe obtener certificación ISO antes de desplegar cualquier sistema de IA"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "Accountability en IA responsable significa que cuando un sistema de IA causa daño o toma una decisión errónea, existe una cadena clara de responsabilidad: quién puede reportar el problema, quién lo investiga, quién tiene autoridad para corregir o apagar el sistema, y qué compensación o remedio reciben los afectados. Es diferente a explicabilidad (que el modelo explique sus predicciones) o transparencia (que el código sea abierto). La accountability es organizacional y procesal, no técnica. En práctica implica: canales de reporte accesibles para usuarios afectados, equipos dedicados a revisar casos de daño, métricas de seguimiento de incidentes, y compromiso de remediar. La ausencia de accountability es una de las principales críticas a sistemas de IA desplegados sin supervisión humana adecuada.",
+                "concepto_reforzado": "Accountability en frameworks de IA responsable"
+              },
+              {
+                "pregunta": "¿Por qué es matemáticamente imposible que un clasificador binario cumpla simultáneamente demographic parity, equal opportunity y predictive parity (calibration) cuando las tasas base difieren entre grupos?",
+                "opciones": [
+                  "Porque optimizar una métrica de fairness crea trade-offs inevitables con las otras cuando las tasas base de eventos reales son diferentes entre grupos",
+                  "Porque los algoritmos de machine learning no tienen suficiente capacidad computacional para optimizar tres objetivos a la vez",
+                  "Porque es un problema de datos insuficientes que se resuelve con datasets más grandes",
+                  "Porque las tres métricas miden lo mismo y solo se puede usar una como función de pérdida"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "El 'Impossibility Theorem of Fairness' (Chouldechova, 2017; Kleinberg et al., 2016) demuestra matemáticamente que cuando las tasas base de un evento difieren entre grupos (ej: la tasa real de reincidencia criminal es diferente entre grupos demográficos por razones sistémicas), es imposible satisfacer simultáneamente: (1) demographic parity (igual % de predicciones positivas), (2) equal opportunity (igual tasa de verdaderos positivos entre los que realmente son positivos), y (3) predictive parity/calibration (cuando el modelo predice 70% de probabilidad, el 70% debería ser positivo en todos los grupos). Esto no es un problema técnico sino matemático: maximizar una crea violaciones de las otras. Este teorema obliga a los desarrolladores a elegir conscientemente qué tipo de fairness priorizar según el contexto de uso y los daños potenciales de cada tipo de error.",
+                "concepto_reforzado": "Impossibility theorem of fairness y trade-offs entre métricas"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
               "contexto": "",
