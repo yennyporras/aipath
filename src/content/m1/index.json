@@ -7433,33 +7433,99 @@
         },
         {
           "id": "m1-b8-l7",
-          "titulo": "Latencia, throughput y escalabilidad en sistemas de IA",
+          "titulo": "Optimización de costos: hacer más con menos",
           "bloque": 8,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Optimizar costos de IA no significa usar el modelo más barato siempre — significa usar el recurso correcto para cada tarea y eliminar el gasto innecesario. Un sistema de IA bien optimizado puede costar 5x-20x menos que uno naif sin degradar la calidad para el usuario final. Estas técnicas son la diferencia entre un proyecto de IA sostenible y uno que se cancela por presupuesto.\n\nLa primera y más impactante técnica es el routing inteligente de modelos: no todas las tareas necesitan el modelo más caro. Una pregunta FAQ simple ('¿cuáles son sus horarios de atención?') puede responderse perfectamente con Claude Haiku ($0.80/M) o incluso desde una base de datos sin modelo alguno. Una pregunta de análisis legal compleja sí necesita Claude Sonnet ($3/M) o superior. Un sistema de routing que clasifica solicitudes y las despacha al modelo apropiado puede reducir el costo promedio por solicitud 60-80% manteniendo la misma calidad percibida. Anthropic ha publicado que la mayoría de las empresas que usan Claude gastan 3-5x más de lo necesario por no hacer routing.\n\nEl caché semántico es otra técnica de alto impacto. A diferencia del caché tradicional que requiere strings exactos, el caché semántico identifica preguntas equivalentes ('¿cuánto cuesta?' vs '¿cuál es el precio?' vs '¿qué valor tiene?') y devuelve la respuesta cacheada sin llamar al modelo. Herramientas como GPTCache o Redis con embeddings pueden reducir hasta 50-70% de las llamadas en sistemas con muchas consultas repetitivas como soporte al cliente.\n\nLa optimización de prompts tiene impacto directo en costos: cada token cuenta. Un prompt system mal diseñado de 2,000 tokens que se envía en cada solicitud vs uno optimizado de 400 tokens multiplica el costo de entrada por 5x. Técnicas concretas: eliminar instrucciones redundantes, usar few-shot examples solo cuando son necesarios, truncar el historial de conversación a los últimos N turnos relevantes en lugar de enviar todo.\n\nLa cuantización reduce el tamaño del modelo en memoria y acelera la inferencia con mínima pérdida de calidad. Un modelo de 7B en float32 ocupa ~28GB de VRAM; en int4 (4-bit quantization) ocupa ~4GB y corre en GPUs consumer. GGUF con llama.cpp, AWQ y GPTQ son los formatos principales. Un Llama 3.1 8B cuantizado en Q4 es ~90-95% tan capaz como el original en la mayoría de tareas pero cuesta 4-7x menos en compute.\n\nEl batch processing agrupa múltiples solicitudes independientes para procesarlas juntas, aprovechando la eficiencia de la GPU. En lugar de procesar 1,000 documentos de forma secuencial (esperando cada respuesta), procesarlos en batches de 50 puede reducir el tiempo total y el costo 3-4x. La API de Anthropic ofrece Batch API con 50% de descuento específicamente para este caso de uso. Ideal para: generación masiva de contenido, análisis de documentos, re-etiquetado de datos.",
+              "analogia": "Optimizar costos de IA es como gestionar el personal de un restaurante. No pones al chef estrella (modelo caro, $100/hora) a pelar papas — eso lo hace el asistente de cocina ($15/hora). El chef solo hace los platos que requieren su expertise. El menú del día (respuestas cacheadas) no requiere cocinar: ya está preparado y sale en segundos. Y cuando tienes muchos pedidos similares, preparas en batch para la hora pico en lugar de uno por uno. El mismo número de platos, el mismo nivel de calidad para el cliente, pero a una fracción del costo.",
+              "ejemplo_malo": "Una plataforma de e-commerce usa GPT-4o para responder TODAS las consultas de clientes: 'rastrear pedido', '¿aceptan devoluciones?', '¿tienen talla XL?', análisis de reclamos complejos. Con 50,000 consultas/mes, gastan $4,000/mes en API. El 80% de las consultas son preguntas simples que un modelo de $0.15/M tokens respondería igual de bien. Con routing, ese 80% costaría $48/mes y el 20% complejo en GPT-4o ~$800/mes. Total optimizado: ~$850/mes. El costo actual es 4.7x más alto de lo necesario.",
+              "ejemplo_bueno": "Un marketplace B2B en Colombia implementa optimización en tres capas: (1) Caché para las 500 preguntas más frecuentes del catálogo (50% de consultas → costo cero). (2) Routing: clasificador lightweight despacha preguntas simples a Claude Haiku y preguntas complejas (negociaciones, especificaciones técnicas) a Claude Sonnet. (3) Prompt optimization: reducen el system prompt de 1,800 a 450 tokens eliminando instrucciones redundantes. Resultado: de $2,800/mes a $420/mes con la misma satisfacción del cliente medida por CSAT. ROI: la optimización se pagó en la primera semana.",
+              "por_que_importa": "Para proyectos de IA en LATAM con márgenes ajustados o en fase de validación, la diferencia entre gastar $500/mes y $3,000/mes puede ser la diferencia entre poder sostener el proyecto o tener que cerrarlo. La optimización de costos no es una tarea de 'después del lanzamiento' — debe diseñarse desde el inicio. Además, las técnicas de optimización (caché, routing, batch) generalmente mejoran también la latencia y la escabilidad, siendo una mejora triple: costo, velocidad y capacidad.",
+              "tip_profesional": "Implementa observabilidad desde el día uno: loguea cada llamada al LLM con el modelo usado, tokens de input/output, latencia, y costo estimado. Herramientas como LangSmith (LangChain), Helicone, o Langfuse hacen esto automáticamente. Sin estos datos, no puedes optimizar porque no sabes dónde está el gasto. La regla 80/20 aplica perfectamente aquí: generalmente el 20% de los tipos de solicitudes representa el 80% del costo, y ahí es donde hay que atacar primero."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué es el routing inteligente de modelos y cuál es su principal beneficio económico?",
+                "opciones": [
+                  "Usar siempre el modelo más barato disponible para todas las solicitudes y ahorrar al máximo",
+                  "Clasificar las solicitudes por complejidad y despacharlas al modelo apropiado, reduciendo el costo promedio sin degradar calidad",
+                  "Balancear la carga entre múltiples proveedores de IA para evitar rate limits",
+                  "Enrutar solicitudes al servidor más cercano geográficamente para reducir latencia de red"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El routing inteligente reconoce que las tareas tienen diferentes requerimientos de capacidad. Una pregunta simple ('¿cuáles son sus horarios?') y una pregunta compleja ('analiza este contrato de 50 páginas e identifica las cláusulas de riesgo') no necesitan el mismo modelo. Un clasificador ligero (que puede ser un modelo pequeño o incluso reglas basadas en keywords) evalúa cada solicitud y la despacha al modelo más eficiente que puede resolverla con calidad suficiente. El resultado típico es 60-80% de reducción en costo promedio por solicitud porque la mayoría de las consultas en sistemas reales son simples. El truco es no degradar la experiencia del usuario — para las consultas simples, el modelo barato es genuinamente suficiente.",
+                "concepto_reforzado": "Routing inteligente como la técnica de mayor impacto para reducir costos de LLM en producción"
+              },
+              {
+                "pregunta": "¿En qué se diferencia el caché semántico del caché tradicional para optimizar llamadas a LLMs?",
+                "opciones": [
+                  "El caché semántico es más rápido porque usa RAM en lugar de disco duro",
+                  "El caché semántico identifica preguntas equivalentes aunque usen palabras diferentes, el caché tradicional requiere strings idénticos",
+                  "El caché semántico funciona para imágenes además de texto, mientras el tradicional solo maneja texto",
+                  "El caché semántico se almacena en el servidor del proveedor de IA automáticamente sin configuración"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El caché tradicional requiere una coincidencia exacta de strings: '¿Cuál es el precio?' y '¿Cuánto cuesta?' son strings diferentes, por lo que no hay cache hit aunque la intención sea idéntica. El caché semántico convierte cada pregunta en un embedding (vector de alta dimensión que captura el significado) y busca preguntas con significado similar (alta similitud coseno) en el store de vectores. Si encuentra una pregunta equivalente con similitud > 0.95 por ejemplo, devuelve la respuesta cacheada sin llamar al modelo. En sistemas de soporte al cliente donde los usuarios hacen las mismas preguntas con palabras diferentes, esto puede eliminar 50-70% de las llamadas. Herramientas como GPTCache, Redis con vectores, o Qdrant/Pinecone implementan esto.",
+                "concepto_reforzado": "Caché semántico basado en embeddings como técnica para eliminar llamadas redundantes al LLM"
+              },
+              {
+                "pregunta": "¿Qué es la cuantización de modelos y cómo reduce costos de inferencia?",
+                "opciones": [
+                  "Dividir el modelo en partes más pequeñas que corren en paralelo en múltiples GPUs",
+                  "Reducir la precisión numérica de los pesos del modelo (ej. float32 a int4), disminuyendo tamaño en memoria y acelerando el cómputo",
+                  "Eliminar capas del modelo que no se usan frecuentemente basado en estadísticas de uso",
+                  "Comprimir el código del modelo como un archivo ZIP para reducir el tiempo de carga inicial"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los modelos de lenguaje almacenan sus pesos (parámetros) como números de punto flotante. Float32 usa 32 bits por número; float16 usa 16 bits; int8 usa 8 bits; int4 usa 4 bits. Un modelo de 7B parámetros en float32 ocupa ~28GB de VRAM; en int4 ocupa ~4GB. Esta reducción tiene dos efectos: (1) el modelo cabe en hardware más barato o consumer, y (2) las operaciones int4/int8 son más rápidas que float32 en hardware moderno. La pérdida de calidad con buenas técnicas de cuantización (AWQ, GPTQ) es típicamente menor al 2-5% en benchmarks estándar para Q4, siendo casi imperceptible en la mayoría de aplicaciones. GGUF con llama.cpp es el formato más popular para inferencia local cuantizada.",
+                "concepto_reforzado": "Cuantización como técnica de compresión de modelos que reduce VRAM y acelera inferencia con mínima pérdida de calidad"
+              },
+              {
+                "pregunta": "¿Qué ventaja ofrece la Batch API de Anthropic vs las llamadas individuales estándar?",
+                "opciones": [
+                  "Mayor calidad de respuesta porque el modelo tiene más contexto de las otras solicitudes del batch",
+                  "50% de descuento en precio para procesamiento asíncrono de múltiples solicitudes agrupadas",
+                  "Respuestas más rápidas porque el batch se procesa en paralelo con prioridad alta",
+                  "Eliminación del rate limit para empresas que procesan grandes volúmenes de datos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La Batch API de Anthropic (y equivalentes en OpenAI y otros proveedores) ofrece un 50% de descuento en el precio normal a cambio de aceptar que el procesamiento puede tardar hasta 24 horas en lugar de ser inmediato. Esta es una propuesta de valor excelente para casos de uso no interactivos: análisis masivo de documentos, generación de contenido en lote, re-etiquetado de datasets, moderación de contenido histórico. El modelo procesa cada solicitud de forma independiente, no usa el contexto de las demás. Las respuestas no son más rápidas — de hecho tardan más — pero el costo es la mitad. Para proyectos con presupuesto ajustado que necesitan procesar grandes volúmenes sin urgencia de tiempo real, esto puede cambiar radicalmente la viabilidad económica del proyecto.",
+                "concepto_reforzado": "Batch API como opción de procesamiento asíncrono con 50% de descuento para casos de uso no interactivos"
+              },
+              {
+                "pregunta": "Un desarrollador tiene un sistema prompt de 2,000 tokens que se envía en cada una de las 100,000 solicitudes mensuales con Claude Sonnet. Si lo optimiza a 500 tokens sin cambiar la calidad, ¿cuánto ahorra mensualmente?",
+                "opciones": [
+                  "Nada, porque el system prompt se cobra diferente a los tokens de usuario",
+                  "Aproximadamente $4.50/mes, un ahorro marginal que no justifica el esfuerzo",
+                  "Aproximadamente $450/mes: 1,500 tokens × 100,000 solicitudes = 150M tokens × $3/M",
+                  "Aproximadamente $50/mes porque solo cuenta la diferencia en tokens de salida"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El cálculo es directo: cada solicitud ahorra 1,500 tokens de input (2,000 - 500). Con 100,000 solicitudes/mes, el ahorro total es 1,500 × 100,000 = 150,000,000 tokens = 150M tokens. A $3/M tokens con Claude Sonnet, el ahorro mensual es $450/mes, o $5,400/año. Este ejemplo ilustra por qué la optimización de prompts es crítica a escala: parece un detalle técnico menor pero tiene impacto económico real y recurrente. El system prompt se cobra igual que cualquier otro token de input. Además, prompts más cortos reducen la latencia (menos tokens para procesar antes de generar) y dejan más espacio disponible en la ventana de contexto para el contenido real.",
+                "concepto_reforzado": "Impacto económico de la optimización de prompts a escala: cada token en el system prompt multiplica por el volumen total de solicitudes"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de seguros colombiana tiene un chatbot de atención al cliente con estas métricas del último mes: 80,000 conversaciones totales, costo actual $3,200/mes usando Claude Sonnet para todo. Análisis de las conversaciones: 35% son consultas sobre el estado de reclamaciones (requieren consultar BD, respuesta estándar), 25% son preguntas frecuentes sobre coberturas (mismas 200 preguntas siempre), 30% son asesorías sobre nuevos seguros (requieren análisis y recomendaciones personalizadas), 10% son reclamos o quejas complejas (requieren análisis profundo). El equipo técnico tiene 1 sprint disponible para optimizar.",
+              "instruccion": "Diseña una estrategia de optimización de costos. Calcula: (1) el costo por conversación actual, (2) qué técnicas aplicar a cada segmento, (3) el nuevo costo estimado y el ahorro mensual, (4) prioriza qué implementar primero con solo 1 sprint disponible.",
+              "input_malo": "Cambiar todo a Claude Haiku para bajar el costo. Si el modelo es más barato, el ahorro es automático.",
+              "pista": "Segmenta los tipos de conversación y asigna la solución óptima a cada uno: ¿cuál se beneficia más del caché semántico? ¿cuál no necesita modelo alguno? ¿cuál sí necesita el modelo caro? Luego multiplica volumen × costo por conversación para cada segmento.",
+              "solucion": "Costo actual: $3,200 / 80,000 conversaciones = $0.04/conversación promedio. Estrategia por segmento: (1) 25% preguntas frecuentes (20,000 convs): implementar caché semántico para las 200 preguntas repetitivas → costo ~$0/conv para hits de caché (estimando 85% hit rate: 17,000 gratis, 3,000 pasan al modelo). (2) 35% estado de reclamaciones (28,000 convs): integración directa con BD + template predefinido, Claude Haiku solo para formato si necesario → $0.002/conv promedio. (3) 30% asesorías nuevos seguros (24,000 convs): Claude Haiku suficiente → $0.005/conv. (4) 10% reclamos complejos (8,000 convs): mantener Claude Sonnet → $0.04/conv. Nuevo costo estimado: (17,000×$0) + (11,000×$0.005) + (28,000×$0.002) + (24,000×$0.005) + (8,000×$0.04) = $0 + $55 + $56 + $120 + $320 = ~$551/mes. Ahorro: $2,649/mes (83% de reducción). Prioridad para 1 sprint: el caché semántico para FAQs (25% del volumen, costo casi cero, menor complejidad técnica y mayor ROI inmediato).",
+              "criterios_de_exito": [
+                "Segmenta correctamente los tipos de conversación y asigna solución diferente a cada uno (no aplica la misma técnica a todo)",
+                "Calcula el ahorro correctamente por segmento, llegando a una reducción significativa (>60%) del costo total",
+                "Identifica el caché semántico para FAQs como la primera prioridad de implementación por mejor ROI",
+                "Reconoce que los reclamos complejos (10%) deben mantener el modelo caro por la criticidad de la tarea"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Hardware para developers: guía práctica",
+              "por_que_importa_despues": "Entender cómo optimizar costos en la nube es fundamental, pero también necesitas saber qué hardware usar cuando desarrollas localmente o cuando evalúas comprar tu propio compute. La última lección de este bloque hace una guía práctica de qué laptop, GPU, y configuración de desarrollo necesitas como AI developer según tu presupuesto y caso de uso."
             }
           }
         },
