@@ -5474,33 +5474,98 @@
         },
         {
           "id": "m1-b6-l5",
-          "titulo": "Frameworks: LangChain, LlamaIndex, CrewAI, AutoGen",
+          "titulo": "Mistral: la alternativa europea",
           "bloque": 6,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "En mayo de 2023, tres ex-investigadores de Google DeepMind y Meta AI fundaron Mistral AI en París con una tesis clara: Europa necesita un laboratorio de IA de frontera propio, con soberanía tecnológica y alineado con las regulaciones de privacidad europeas. En menos de 18 meses, Mistral pasó de startup a empresa valorada en más de $6 mil millones USD y se convirtió en el único laboratorio de IA de frontera fuera de EE.UU. con relevancia global real en 2026.\n\nLa estrategia de Mistral es inusual en la industria: publican modelos open source de alta capacidad (Mistral 7B, Mixtral 8×7B, Mistral Small) mientras también ofrecen modelos propietarios premium por API (Mistral Large, Mistral Medium). Esta dualidad no es contradicción —es estrategia. Los modelos open source construyen comunidad, establecen credibilidad técnica, y crean un moat de adopción que convierte a Mistral en el estándar europeo de open source. Los modelos propietarios monetizan a clientes enterprise que necesitan más capacidad que los open source pueden ofrecer sin la complejidad del self-hosting.\n\nLas fortalezas técnicas de Mistral son concretas. Mixtral 8×7B, su modelo Mixture of Experts (MoE), fue un avance significativo en 2024: en benchmarks de razonamiento y código, iguala o supera a modelos tres veces más grandes en parámetros totales, activando solo una fracción de sus parámetros por token (eficiencia computacional MoE). Mistral Small, en 2026, procesa tareas estándar con calidad comparable a GPT-4o Mini o Claude Haiku a precios competitivos, pero con un diferenciador clave: todos los servidores de Mistral están en Europa, cumpliendo GDPR desde la arquitectura, no como add-on.\n\nEl diferenciador regulatorio de Mistral es importante para consultores en LATAM que trabajan con empresas europeas o multinacionales con sede en Europa. El AI Act de la Unión Europea, vigente desde 2026, impone requisitos de transparencia, explicabilidad y registro de modelos para aplicaciones de IA de alto riesgo. Mistral está diseñado desde cero para cumplir con ese marco regulatorio, con opciones de despliegue on-premise o en nube europea que ningún proveedor americano puede igualar sin complejidad adicional.\n\nPara el mercado latinoamericano, Mistral tiene un caso de uso emergente muy relevante: empresas con operaciones en España o en países con acuerdos de adecuación de datos con la UE (Argentina, Uruguay) necesitan a veces mantener los datos en Europa. Mistral resuelve esto sin necesidad de negociar cláusulas especiales con AWS o Azure. Adicionalmente, los modelos open source de Mistral son frecuentemente el primer paso que recomienden comunidades técnicas en LATAM para self-hosting porque sus modelos de 7B son más accesibles para hardware modesto que los modelos equivalentes de Meta.\n\nLa limitación principal de Mistral en 2026 sigue siendo el ecosistema: hay menos documentación, menos librerías de terceros, menos tutoriales y menos talento con experiencia previa en Mistral que en OpenAI o incluso Llama. Para proyectos donde la velocidad de desarrollo importa más que la optimización de costo o la compliance europea, esta brecha de ecosistema es un factor real.",
+              "analogia": "Mistral es como Airbus respecto a Boeing en la aviación: no el primero, no el más grande del mercado, pero el que Europa decidió que debía existir para no depender de un monopolio americano. Su existencia cambia el juego, aunque no domine el mercado.",
+              "ejemplo_malo": "Descartar Mistral en proyectos con clientes europeos o multinacionales por ser 'menos conocido', perdiendo el argumento de compliance GDPR y soberanía de datos que puede ser exactamente lo que el comité de compliance del cliente necesita escuchar.",
+              "ejemplo_bueno": "Para una farmacéutica colombiana con filial en Alemania que necesita procesar datos de ensayos clínicos, proponer Mistral con despliegue en servidores europeos como la única solución que cumple simultáneamente con el AI Act europeo y los acuerdos de transferencia de datos entre Colombia y la UE.",
+              "por_que_importa": "La regulación de IA es una ventaja competitiva disfrazada de restricción. Mientras empresas americanas pelean contra el AI Act, Mistral fue construido para cumplirlo. Para clientes en sectores regulados o con exposición a mercados europeos, esa diferencia puede ser decisiva.",
+              "tip_profesional": "Cuando evalúes Mistral para self-hosting, empieza con Mistral 7B en hardware modesto. Si el costo de la GPU de entrenamiento es el cuello de botella, los modelos de Mistral son notablemente más eficientes por parámetro que Llama equivalente. La comunidad de Mistral en Hugging Face tiene benchmarks comparativos actualizados regularmente."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es el origen de Mistral AI y qué lo distingue geopolíticamente?",
+                "opciones": [
+                  "Es una startup canadiense fundada por ex-empleados de Amazon",
+                  "Es el laboratorio de IA del gobierno francés",
+                  "Es una empresa europea fundada por ex-investigadores de Google DeepMind y Meta, con el objetivo de crear soberanía tecnológica de IA en Europa",
+                  "Es una división de Airbus que aplica IA a la aviación"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Mistral AI fue fundada en mayo de 2023 por Arthur Mensch, Guillaume Lample y Timothée Lacroix, los tres con experiencia en Google DeepMind y Meta AI. La motivación explícita fue crear un laboratorio de IA de frontera con base en Europa, alineado con los valores europeos de privacidad y regulación, y que pudiera competir técnicamente con OpenAI y Anthropic sin depender de infraestructura estadounidense. En 18 meses pasaron de startup a valoración de $6B+ y se convirtieron en la única empresa de IA europea con relevancia global real en el espacio de modelos de frontera. Este origen europeo no es solo marketing: determina dónde están los servidores, cómo se manejan los datos y qué regulaciones cumplen nativamente.",
+                "concepto_reforzado": "Identidad europea y soberanía tecnológica de Mistral"
+              },
+              {
+                "pregunta": "¿Qué es la arquitectura Mixture of Experts (MoE) usada en Mixtral y cuál es su ventaja?",
+                "opciones": [
+                  "Un comité de expertos humanos que revisa las respuestas del modelo",
+                  "Un diseño donde múltiples sub-modelos especializados se activan selectivamente por token, logrando alta capacidad con menor costo computacional",
+                  "Un método para entrenar el modelo con datos de múltiples idiomas simultáneamente",
+                  "Una técnica de fine-tuning que requiere menos datos etiquetados"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Mixture of Experts (MoE) es una arquitectura donde el modelo tiene múltiples 'expertos' —sub-redes especializadas— pero solo activa una fracción de ellos para procesar cada token. Mixtral 8×7B tiene 46.7B parámetros totales, pero activa solo 12.9B por token durante la inferencia. Esto permite calidad de un modelo de 46B con el costo computacional de uno de 13B. El resultado práctico: en benchmarks de razonamiento y código, Mixtral iguala o supera a Llama 2 70B a menos del 30% del costo de inferencia. Para proyectos con restricciones de GPU pero necesidad de calidad alta, MoE es una ventaja técnica real que distingue a Mistral de modelos de arquitectura densa equivalentes.",
+                "concepto_reforzado": "Arquitectura MoE como ventaja técnica de Mixtral"
+              },
+              {
+                "pregunta": "¿Por qué el cumplimiento del GDPR 'desde la arquitectura' de Mistral importa para empresas europeas?",
+                "opciones": [
+                  "Porque Mistral donó dinero a la Unión Europea para obtener certificación",
+                  "Porque todos los servidores de Mistral están en Europa y no transfieren datos fuera, cumpliendo GDPR estructuralmente sin configuraciones adicionales",
+                  "Porque el GDPR solo aplica a empresas que venden en Europa, no a las que procesan datos",
+                  "Porque Mistral es la única empresa con permiso especial de la UE para procesar datos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El GDPR europeo (y el AI Act de 2026) impone restricciones sobre dónde pueden procesarse los datos de ciudadanos europeos: bajo ciertos contextos, los datos no pueden salir de la UE sin mecanismos de transferencia específicos (Standard Contractual Clauses, etc.). Cuando una empresa usa la API de Claude o GPT, los datos viajan a servidores en EE.UU., requiriendo esos mecanismos de transferencia. Con Mistral en sus servidores europeos, los datos nunca salen del territorio europeo por defecto. Para un Data Protection Officer (DPO) de una empresa alemana o francesa, este argumento elimina una clase completa de riesgo legal. El cumplimiento 'desde la arquitectura' significa que no hay configuración adicional requerida para cumplir ese aspecto del GDPR.",
+                "concepto_reforzado": "GDPR compliance estructural de Mistral"
+              },
+              {
+                "pregunta": "¿Cuál es la estrategia dual de Mistral que la distingue de Meta y OpenAI?",
+                "opciones": [
+                  "Ofrece tanto servicios de consultoría como desarrollo de modelos",
+                  "Publica modelos open source de alta capacidad mientras también ofrece modelos propietarios premium por API",
+                  "Vende tanto hardware como software de IA",
+                  "Tiene operaciones en Europa y en EE.UU. simultáneamente"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Meta es puramente open source (no tiene API pública de pago para sus mejores modelos). OpenAI es puramente propietario (sus mejores modelos solo están disponibles via API de pago). Mistral hace ambas cosas: Mistral 7B y Mixtral 8×7B son completamente open source bajo licencia Apache 2.0 —descargables y modificables libremente. Mistral Large y Mistral Medium son propietarios y disponibles solo via API de pago. Esta estrategia no es contradicción: los modelos open source generan adopción y credibilidad técnica, construyendo el estándar de facto para el ecosistema europeo de IA; los modelos propietarios monetizan a clientes enterprise que necesitan más capacidad. Es exactamente la estrategia que usó Red Hat con Linux: open source para el estándar, servicios y versiones premium para el negocio.",
+                "concepto_reforzado": "Estrategia dual open source + propietario de Mistral"
+              },
+              {
+                "pregunta": "¿Para qué perfil de cliente latinoamericano Mistral es más relevante en 2026?",
+                "opciones": [
+                  "Startups con presupuesto menor a $50 USD/mes que buscan la solución más barata",
+                  "Empresas con operaciones en Europa o bajo acuerdos de adecuación de datos con la UE que necesitan cumplir con regulaciones de datos europeas",
+                  "Cualquier empresa que quiera usar IA, sin importar su contexto regulatorio",
+                  "Solo empresas del sector tecnológico con equipos de ML internos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "En LATAM, los casos más claros para Mistral son dos. Primero: empresas latinoamericanas con subsidiarias o clientes europeos que deben manejar datos de ciudadanos de la UE bajo GDPR —farmacéuticas, bancos internacionales, consultoras con clientes europeos. Segundo: empresas en países con acuerdos de adecuación de datos con la UE (Argentina y Uruguay están en esa lista) que participan en proyectos con contrapartes europeas. En ambos casos, Mistral elimina la necesidad de negociar cláusulas especiales de transferencia de datos con Amazon, Microsoft o Google. Para todos los demás casos, la elección entre Mistral, Claude, GPT o Llama depende de los factores técnicos y de costo que se han discutido en lecciones anteriores.",
+                "concepto_reforzado": "Casos de uso de Mistral en contexto latinoamericano"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una firma consultora colombiana (Bogotá) tiene un contrato nuevo con un banco alemán para analizar documentos financieros de clientes europeos. El banco alemán exige que todos los datos de sus clientes permanezcan en servidores dentro de la UE. El equipo colombiano tiene 2 desarrolladores con experiencia en Python y APIs pero sin experiencia en self-hosting de modelos. Necesitan procesar ~50,000 documentos al mes en alemán e inglés.",
+              "instruccion": "Diseña la solución de IA más apropiada para este proyecto. Explica: (1) por qué Mistral es la elección correcta sobre Claude, GPT o Llama, (2) qué tier de Mistral usarías (open source self-hosted vs API propietaria), y (3) cómo justificarías esta elección técnica y regulatoria ante el banco alemán.",
+              "input_malo": "Usaría ChatGPT Enterprise porque tiene el mejor soporte en múltiples idiomas y es el modelo más reconocido para análisis de documentos financieros.",
+              "pista": "El banco alemán tiene un requisito no negociable: datos en servidores dentro de la UE. Claude, GPT y Llama self-hosted en nube colombiana o americana no cumplen. Mistral API con servidores en Europa sí cumple. El equipo tiene skills de API pero no de self-hosting. El volumen de 50,000 documentos/mes no es masivo.",
+              "solucion": "Solución: Mistral Large via API (la Plateforme de Mistral, servidores en Europa). Justificación: (1) REGULATORIO: Claude API (servidores EE.UU.) y GPT API (servidores EE.UU.) no cumplen el requisito del banco alemán de datos en la UE. Llama self-hosted en nube colombiana tampoco. Mistral API garantiza que los datos nunca salen del territorio europeo. (2) TIER: Mistral Large via API, no self-hosted, porque el equipo tiene skills de API y el volumen de 50,000 docs/mes no justifica la complejidad de self-hosting (que requeriría contratar infraestructura europea y administrarla). (3) ANTE EL BANCO ALEMÁN: 'Usamos la API de Mistral AI (empresa francesa) con procesamiento exclusivo en servidores europeos bajo cumplimiento nativo de GDPR y AI Act. Podemos proveer el DPA (Data Processing Agreement) europeo estándar de Mistral sin necesidad de Standard Contractual Clauses adicionales.' Este argumento convierte un requisito técnico en ventaja comercial.",
+              "criterios_de_exito": [
+                "Identifica el requisito de soberanía de datos como el factor decisivo, no técnico",
+                "Elige la API propietaria de Mistral (no self-hosted) con justificación basada en las capacidades del equipo y el volumen",
+                "Formula el argumento regulatorio en términos que un DPO bancario europeo reconocería"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Modelos de imagen: Flux, Midjourney, DALL-E",
+              "por_que_importa_despues": "Hasta ahora viste los grandes modelos de texto. Pero el ecosistema de IA incluye modelos especializados en imagen que siguen su propia lógica de capacidades, costos y casos de uso — completando el mapa del ecosistema."
             }
           }
         },
