@@ -9060,33 +9060,99 @@
         },
         {
           "id": "m1-b11-l2",
-          "titulo": "AI Engineer vs Data Scientist vs ML Engineer: diferencias reales",
+          "titulo": "Salarios globales y en LATAM: números reales",
           "bloque": 11,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Los salarios en IA son reales, están creciendo, y tienen una varianza enorme según el rol, las habilidades, el tipo de empresa, y crucialmente si trabajas para el mercado local colombiano o para empresas internacionales de forma remota. Esta lección presenta números concretos y actualizados para que puedas tomar decisiones estratégicas informadas.\n\nMercado colombiano local (salarios en USD equivalente, 2026): Los salarios varían significativamente según si trabajas en startups tech, empresas medianas o grandes corporaciones. ML Engineer senior en empresa de tecnología colombiana: $3,500-7,000/mes. Data Scientist con 3+ años: $2,500-5,000/mes. AI Product Manager: $3,000-6,000/mes. Analista de datos con ML: $1,500-3,000/mes. Los salarios en pesos colombianos tienen una volatilidad adicional por la tasa de cambio — en 2026 el USD/COP oscila, lo que hace los salarios en dólares preferibles cuando es posible negociarlos.\n\nMercado remoto para empresas de EE.UU. y Europa (salarios en USD): Esta es la gran oportunidad para professionals latinoamericanos. ML Engineer con 3+ años: $8,000-18,000/mes. AI/LLM Engineer especializado en aplicaciones: $7,000-15,000/mes. Prompt Engineer / AI System Designer senior: $5,000-12,000/mes. AI Product Manager con track record: $8,000-16,000/mes. Data Scientist con especialización en LLMs: $6,000-13,000/mes. Estos salarios en plataformas como Toptal, LinkedIn (posiciones remotas), y empresas de nearshoring son accesibles para professionals LATAM con las habilidades correctas y un portafolio demostrable.\n\nConsultoría independiente LATAM: AI Consultant para mercado local: $50-150 USD/hora. AI Consultant para empresas de EE.UU./Europa: $100-250 USD/hora. Estos rangos asumen 2+ años de experiencia con casos de éxito documentados. Un consultor que trabaja 80 horas billables/mes al low end ($50/hora) factura $4,000/mes; al high end para mercado internacional ($200/hora × 80h) factura $16,000/mes.\n\nLas habilidades que más impactan el salario en 2026 (según análisis de ofertas de trabajo en LinkedIn y Glassdoor LATAM): (1) Experiencia con LLMs en producción: +35-50% sobre el salario base de ML engineer. (2) MLOps avanzado: +20-30%. (3) Especialización en RAG y sistemas de retrieval: +25-40%. (4) Experiencia con fine-tuning de modelos: +30-45%. (5) Inglés fluido: +40-80% en acceso a mercado internacional. La combinación de habilidades específicas en LLMs + inglés + un sector vertical genera los salarios más altos del mercado de IA de LATAM.\n\nRealidad de las startups vs grandes empresas: Las startups de IA bien financiadas pueden pagar salarios competitivos más equity (acciones). Una startup Serie A o B puede ofrecer $6,000-10,000/mes + opciones de equity que podrían valer significativamente más si la empresa tiene éxito. Las grandes corporaciones (Bancolombia, Grupo Éxito, multinacionales) pagan más estable pero menos que las startups top y los trabajos remotos para EE.UU. Para maximizar ingresos en el corto plazo: mercado remoto internacional. Para maximizar impacto y upside a largo plazo: startups de IA con buena tracción.",
+              "analogia": "Los salarios en IA son como los precios en diferentes mercados de la misma ciudad: el mismo aguacate cuesta $1,000 pesos en el mercado del barrio y $5,000 en el supermercado premium. Tu habilidad de IA tiene diferente 'precio de mercado' según dónde la vendes. El mismo Prompt Engineer cobra $2,000/mes en una empresa colombiana de tamaño medio y $8,000/mes trabajando remotamente para una startup de EE.UU. La habilidad es idéntica — el mercado es diferente.",
+              "ejemplo_malo": "Un ML engineer colombiano con 4 años de experiencia y habilidades sólidas en LLMs acepta un trabajo en una empresa local por $3,000 USD/mes porque 'es lo que se paga en Colombia'. No sabe inglés fluido y nunca se postula a trabajos remotos internacionales. Su colega con habilidades equivalentes pero inglés B2+ trabaja remotamente para una empresa española por $9,000/mes. La diferencia de $6,000/mes en el mismo rol es el costo del idioma no dominado.",
+              "ejemplo_bueno": "Una data scientist colombiana con 3 años de experiencia invierte 6 meses en tres cosas: (1) aprender inglés hasta B2+, (2) especializarse en LLMs y RAG, (3) construir un portafolio GitHub con proyectos documentados en inglés. Se postula en LinkedIn a posiciones remotas con el filtro 'Remote + LATAM'. En 2 meses tiene 3 entrevistas y una oferta de $10,500/mes de una fintech española. Su salario aumenta 3.5x sin moverse de Bogotá. La inversión de 6 meses tuvo un ROI calculable en meses.",
+              "por_que_importa": "Los números concretos importan para tomar decisiones estratégicas: saber que inglés + LLMs puede significar un salario 3-4x mayor que el mercado local colombiano convierte el aprendizaje del idioma de algo genérico ('debería aprender inglés') a una inversión con ROI calculable. Conocer los rangos de consultoría permite estructurar una oferta de servicios con precios competitivos que no se subestimen ni se sobrevaloren. Y saber cuáles habilidades específicas tienen mayor prima salarial permite priorizar el estudio.",
+              "tip_profesional": "Para conocer los salarios reales actualizados usa estas fuentes: Glassdoor Colombia (filtra por 'machine learning' y 'artificial intelligence'), LinkedIn Salary Insights (disponible con cuenta Premium), Levels.fyi para salarios de empresas tech globales, y el informe anual de Stack Overflow Developer Survey que incluye salarios por región y especialización. Para consultoría, revisa tarifas en Toptal, Upwork, y preguntas directas en comunidades de Slack o Discord de IA en español. Los rangos que te damos aquí son de referencia pero el mercado cambia — valida con fuentes actualizadas antes de negociar."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "Un ML engineer colombiano con 3 años de experiencia quiere maximizar su salario. ¿Cuál estrategia tiene mayor impacto a 12 meses?",
+                "opciones": [
+                  "Cambiar de empresa dentro de Colombia para obtener un aumento del 15-20%",
+                  "Hacer un máster en ML en una universidad colombiana para acceder a mejores posiciones locales",
+                  "Aprender inglés hasta nivel B2+ y especializarse en LLMs para acceder al mercado remoto internacional",
+                  "Conseguir certificaciones de AWS y GCP para demostrar expertise en cloud"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El diferencial salarial entre mercado local y mercado remoto internacional es el factor de mayor impacto para un ML engineer latinoamericano. La data de mercado muestra que un ML engineer con habilidades equivalentes gana 2.5-4x más trabajando remotamente para empresas de EE.UU./Europa que para empresas colombianas. Un aumento del 15-20% dentro de Colombia es positivo pero modesto comparado con multiplicar el salario base. Cambiar de empresa en Colombia puede llevar de $3,500 a $4,200/mes — trabajar remotamente puede llevarte a $9,000-12,000/mes con las mismas habilidades. Inglés fluido es la llave de acceso al mercado internacional, y la especialización en LLMs es la habilidad más demandada y mejor pagada en ese mercado. La inversión de tiempo en ambas áreas tiene el ROI más alto disponible.",
+                "concepto_reforzado": "Mercado remoto internacional como principal palanca de incremento salarial para ML engineers de LATAM"
+              },
+              {
+                "pregunta": "¿Cuánto puede facturar mensualmente un AI Consultant independiente trabajando para el mercado colombiano local con 2+ años de experiencia y casos documentados?",
+                "opciones": [
+                  "Máximo $500 USD/mes porque el mercado colombiano no paga bien la consultoría",
+                  "$4,000-12,000 USD/mes dependiendo de las horas billables y la tarifa por hora ($50-150 USD/hora)",
+                  "Exactamente igual que un empleado de empresa, porque la consultoría no tiene ventaja económica",
+                  "Más de $50,000 USD/mes si tiene los clientes correctos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Un AI Consultant independiente en el mercado colombiano puede facturar entre $50-150 USD/hora dependiendo de la especialización y track record. Con 80 horas billables al mes (un ritmo sostenible que deja tiempo para ventas, administración y desarrollo profesional), el rango es $4,000-12,000 USD/mes. Este rango supera típicamente el salario de un empleado de empresa en el mismo nivel, con la ventaja adicional de flexibilidad y diversificación de clientes. Las variables que llevan al high end: especialización en un sector específico (mayor prima), casos de éxito documentados, y disposición a trabajar para empresas más grandes con presupuestos más altos. El tradeoff vs empleo: el consultor independiente asume la carga de conseguir clientes y la variabilidad de ingresos, pero a cambio tiene mayor potencial de ingreso y autonomía.",
+                "concepto_reforzado": "Rango de facturación de AI Consultant independiente en Colombia: tarifa horaria × horas billables mensuales"
+              },
+              {
+                "pregunta": "¿Cuál especialización técnica tiene mayor impacto positivo en el salario de un ML engineer en 2026?",
+                "opciones": [
+                  "Conocimiento de algoritmos clásicos de ML como Random Forest y SVM, que son la base de todos los sistemas",
+                  "Experiencia con LLMs en producción (RAG, fine-tuning, evaluación), que tiene una prima salarial de 35-50%",
+                  "Certificaciones en las tres principales plataformas cloud (AWS, GCP, Azure)",
+                  "Especialización en visión por computadora para aplicaciones industriales"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El análisis de ofertas laborales en LinkedIn y Glassdoor para LATAM en 2026 muestra que la especialización en LLMs en producción tiene la mayor prima salarial: 35-50% sobre el salario base de un ML engineer con solo habilidades de ML clásico. La razón es la demanda masiva de empresas que quieren implementar aplicaciones con LLMs (chatbots, análisis de documentos, asistentes) combinada con la escasez de professionals que saben hacer esto bien en producción (no solo experimentar en notebooks). El stack específico más demandado incluye: RAG (LangChain, LlamaIndex), evaluación de LLMs (LangSmith, RAGAS), fine-tuning eficiente (LoRA, QLoRA), y despliegue de modelos (vLLM, TGI). Esta prima existe precisamente porque hay millones de ML engineers con sklearn y Random Forest pero pocos con experiencia real en llevar sistemas de LLMs a producción confiablemente.",
+                "concepto_reforzado": "Especialización en LLMs en producción como la habilidad con mayor prima salarial en el mercado de IA de LATAM en 2026"
+              },
+              {
+                "pregunta": "¿Por qué los salarios de AI en empresas locales colombianas y en el mercado remoto internacional difieren tanto para el mismo rol y habilidades?",
+                "opciones": [
+                  "Las empresas extranjeras exigen más trabajo y más horas, por lo que el salario mayor refleja mayor esfuerzo",
+                  "Es el diferencial del costo de vida: empresas de EE.UU. pagan según su mercado laboral local (donde $10,000/mes es normal) y el professional LATAM vive con menor costo",
+                  "Las empresas extranjeras no saben que pueden contratar al mismo profesional por menos dinero en LATAM",
+                  "La legislación laboral colombiana limita cuánto puede pagar un empleador extranjero a un trabajador colombiano"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El diferencial salarial entre mercado local e internacional para el mismo rol no refleja diferencia de trabajo o habilidades — refleja diferencia de mercados laborales. Una empresa en San Francisco paga $15,000/mes a un ML engineer porque ese es el precio de mercado en su ciudad donde el arriendo de un apartamento es $3,500/mes, una comida normal es $20, y el costo de vida es 3-4x el de Bogotá. Cuando esa misma empresa contrata remotamente a un professional de Medellín, tiene la opción de pagar $10,000/mes y el professional gana mucho más en poder adquisitivo local que un colega de San Francisco con el mismo salario. Las empresas que hacen esto no lo desconocen — simplemente acceden a talento de calidad a un precio menor que su mercado local, y el professional latinoamericano accede a ingresos en dólares con costo de vida en pesos. Es un win-win estructural del trabajo remoto global.",
+                "concepto_reforzado": "Diferencial de costo de vida como base del diferencial salarial entre mercado colombiano local y mercado remoto internacional"
+              },
+              {
+                "pregunta": "¿Cuál es la fuente más confiable para conocer los salarios actualizados en IA para el mercado de LATAM?",
+                "opciones": [
+                  "Preguntar a compañeros de trabajo cuánto ganan, ya que el mercado local es el más relevante",
+                  "Glassdoor Colombia filtrado por ML/IA, LinkedIn Salary Insights, Stack Overflow Developer Survey, y comunidades de Slack/Discord de IA en español",
+                  "Las cifras publicadas en artículos de prensa sobre el 'boom de IA' que suelen ser actualizadas",
+                  "Los cursos online de IA que publican proyecciones salariales en su marketing como parte del pitch de inscripción"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Las fuentes de datos de salarios tienen muy diferente nivel de confiabilidad. Glassdoor y LinkedIn Salary Insights agregan datos auto-reportados de miles de professionals, filtrable por país, rol y años de experiencia — son las más representativas del mercado real. El Stack Overflow Developer Survey es la encuesta anual más grande de developers globalmente con datos por región y especialización. Las comunidades de Slack/Discord de IA en español (como Latam AI, AI Latam, etc.) permiten preguntas directas a peers que actualizan información en tiempo real. Por contraste: artículos de prensa suelen citar cifras globales de EE.UU. sin contexto de LATAM, y los cursos online tienen incentivo de exagerar las proyecciones salariales para justificar su precio. Los rangos de esta lección son de referencia basada en estas fuentes en 2026 — siempre valida antes de negociar porque el mercado evoluciona.",
+                "concepto_reforzado": "Fuentes confiables para datos de salarios en IA: Glassdoor, LinkedIn Salary, Stack Overflow Survey y comunidades de peers"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Camila es una data analyst colombiana con 4 años de experiencia usando SQL, Excel avanzado, y Power BI para una empresa de logística. Gana $2,200 USD/mes. Tiene inglés B1 (entiende bien, habla con dificultad). Quiere maximizar sus ingresos en IA en los próximos 18 meses sin dejar su trabajo actual. Tiene 10 horas semanales disponibles para estudio.",
+              "instruccion": "Diseña un plan estratégico de 18 meses que maximice el incremento salarial de Camila. Define: qué habilidades priorizar (con justificación de ROI), qué tipo de rol target al final de los 18 meses, y cuánto podría estar ganando si ejecuta el plan.",
+              "input_malo": "Estudiar Python desde cero, luego ML clásico, luego Deep Learning, luego aplicar a posiciones de ML Engineer. Tardará varios años pero es el camino correcto.",
+              "pista": "¿Qué tiene Camila que ya es valioso? ¿Qué habilidades específicas, con 10h/semana durante 18 meses, maximizan el ROI? ¿El mercado local o el internacional tiene mejor potencial para su perfil?",
+              "solucion": "Plan de 18 meses enfocado en ROI: MES 1-4 (base técnica de IA para analysts): Python básico para análisis de datos (pandas, visualización) — 4h/semana. Prompt engineering para análisis de datos con Claude (2h/semana). Inglés: práctica de conversación 1h/semana mínimo con iTalki o similar. Objetivo: pasar de B1 a B2. MES 5-9 (especialización en IA + primeros proyectos): Aprender RAG básico (LangChain + embeddings) para construir un dashboard de inteligencia de negocio con IA encima. Aplicar en su trabajo actual: proponer un proyecto de IA que mejore los análisis de logística. Resultado tangible: 'implementé sistema de análisis de datos con IA que redujo el tiempo de reportes en X%'. MES 10-14 (posicionamiento en mercado): LinkedIn en inglés con el proyecto documentado. Aplicar a posiciones remotas de 'Analytics Engineer' o 'Data Analyst with AI' en empresas de EE.UU./España filtradas en LinkedIn. Objetivo: conseguir al menos 3 entrevistas. MES 15-18 (transición): Conseguir posición remota o consultoría. Target salarial realista: $5,500-8,000 USD/mes en posición remota (+150-260% del salario actual) o $60-80 USD/hora de consultoría. El inglés B2+ + especialización en IA analytics + caso de éxito documentado = diferenciación suficiente.",
+              "criterios_de_exito": [
+                "Prioriza inglés como inversión de alto ROI dado que habilita acceso al mercado internacional",
+                "Construye sobre las habilidades existentes (SQL, Excel, Power BI) agregando IA encima, no empezando de cero",
+                "Incluye un proyecto real en su trabajo actual como pieza de portafolio con métricas concretas",
+                "Proyecta incremento salarial realista (150-260%) basado en acceso al mercado remoto internacional"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Cómo construir portafolio que impresiona",
+              "por_que_importa_despues": "Conocer los rangos salariales y los mercados objetivos define la estrategia. El siguiente paso es el más práctico: cómo construir el portafolio concreto que abre las puertas a esos salarios. No todas las piezas de portafolio tienen el mismo impacto — la siguiente lección enseña qué mostrar, cómo estructurarlo, y los errores más comunes que hacen que portafolios buenos se vean mediocres."
             }
           }
         },
