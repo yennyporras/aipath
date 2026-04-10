@@ -8750,30 +8750,100 @@
         },
         {
           "id": "m1-b10-l9",
-          "titulo": "IA para pymes en LATAM: casos de uso con ROI real",
+          "titulo": "Casos de fracaso en IA: qué no hacer",
           "bloque": 10,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "El aprendizaje de los fracasos es tan valioso como el de los éxitos — quizás más, porque los patrones de error se repiten con sorprendente consistencia. Estudiar por qué proyectos de IA aparentemente prometedores fallaron protege contra repetir los mismos errores costosos. Esta lección documenta los fracasos más instructivos y los patrones que los generan.\n\nFracaso 1 — IBM Watson Health: el caso más emblemático de overpromise. IBM invirtió más de $4,000 millones de dólares en Watson Health desde 2014, prometiendo que su IA podría 'curar el cáncer'. En 2022, IBM vendió el negocio a Francisco Partners por menos de $1,000 millones — un fracaso de escala masiva. Las razones: (1) Los oncólogos del MD Anderson Cancer Center (uno de los primeros clientes) encontraron que Watson recomendaba tratamientos incorrectos y 'potencialmente peligrosos' según su propia auditoría interna. (2) El sistema fue entrenado principalmente con casos de hospitales de EE.UU. con poca representación de poblaciones diversas y contextos médicos reales. (3) IBM prometió capacidades de razonamiento que la IA de esa época no podía cumplir. Lección: la brecha entre el pitch y las capacidades reales del sistema destruyó la confianza.\n\nFracaso 2 — Chatbot de atención al cliente de Air Canada: en 2023, el chatbot de Air Canada le dio información errónea a un cliente sobre la política de tarifas de duelo (para viajes por muerte de familiar). El chatbot prometió un descuento que la política real no otorgaba. Air Canada intentó alegar que el chatbot era una 'entidad separada' responsable de sus propias declaraciones. El tribunal de Columbia Británica rechazó ese argumento y Air Canada fue responsabilizada por los daños. Lección: los chatbots de IA cometen errores que tienen consecuencias legales y reputacionales reales para las empresas que los despliegan.\n\nFracaso 3 — Sistema de reclutamiento de Amazon: Amazon desarrolló un sistema de IA para filtrar CVs que fue descontinuado en 2018. El problema: el modelo fue entrenado con 10 años de CVs de contrataciones pasadas de Amazon, que históricamente era una empresa dominada por hombres en roles técnicos. El sistema aprendió que ser hombre era una señal positiva y penalizaba CVs que mencionaban 'mujeres' (como 'capitana del equipo de mujeres'). Amazon lo descontinuó cuando descubrió el sesgo, pero el caso se volvió icónico sobre los riesgos del bias en datos de entrenamiento.\n\nFracaso 4 — Startups de 'IA para X' sin diferenciar de herramientas generales: en 2023-2024, cientos de startups LATAM levantaron capital con el pitch 'aplicamos IA a [sector]' — muchas de ellas básicamente eran wrappers de ChatGPT con una interfaz vertical. Cuando OpenAI y Anthropic lanzaron herramientas más potentes directamente a consumidores, estas startups perdieron su argumento de valor. Lección: 'uso IA' no es un modelo de negocio — necesitas datos, distribución, o conocimiento de dominio que no se compre con una suscripción.\n\nFracaso 5 — Sobreautomatización de atención al cliente: múltiples empresas colombianas implementaron chatbots de IA reemplazando completamente el servicio al cliente humano para reducir costos. El resultado fue consistente: NPS cayó, quejas en redes sociales aumentaron, y varias empresas debieron contratar de vuelta al personal humano. Los chatbots de IA en 2026 son excelentes para el 70% de consultas simples y repetitivas; el 30% de casos complejos, emocionales, o irregulares requiere juicio humano que los bots no tienen.\n\nLos patrones comunes de fracaso: (1) overpromise — prometer más de lo que la tecnología puede hacer. (2) Sesgo en datos de entrenamiento no detectado. (3) Desplegar sin probar exhaustivamente casos límite. (4) Eliminar al humano del proceso cuando la IA no tiene suficiente capacidad para el caso de uso. (5) No tener un plan de fallo — ¿qué pasa cuando el sistema da una respuesta incorrecta?",
+              "analogia": "Los proyectos de IA que fallan por overpromise son como los medicamentos que superan las expectativas en el laboratorio pero fallan en ensayos clínicos. En el laboratorio (demo, piloto controlado), todo parece funcionar perfectamente. La realidad clínica (usuarios reales con casos edge, datos desordenados, expectativas formadas por el pitch) es incomparablemente más compleja. La diferencia entre el demo y la producción real es donde mueren más proyectos de IA.",
+              "ejemplo_malo": "Una empresa de seguros colombiana implementa un sistema de IA para evaluación automática y pago de reclamaciones simples (hasta $5M COP) sin revisión humana. Los primeros 2 meses parecen perfectos. En el mes 3, el sistema empieza a aprobar reclamaciones fraudulentas que pasan los filtros iniciales pero usan patrones nuevos que el modelo no vio en entrenamiento. Adicionalmente, rechaza reclamaciones legítimas de usuarios con nombres poco comunes en el dataset de entrenamiento. Las pérdidas en 6 meses superan los ahorros proyectados para 3 años. El error fue eliminar la supervisión humana sin verificar que el modelo podía manejar casos fuera de su distribución de entrenamiento.",
+              "ejemplo_bueno": "Una empresa de logística colombiana implementa IA para clasificación de incidencias de entrega (daño, retraso, error de dirección). El sistema clasifica automáticamente el 85% de casos simples y los resuelve según protocolos predefinidos. El 15% de casos complejos o de alta incertidumbre los escala a un agente humano con toda la información pre-procesada. El sistema incluye un mecanismo de feedback: cuando un agente humano modifica la clasificación del bot, eso va al dataset de reentrenamiento mensual. Con 6 meses de operación, el modelo mejora continuamente y la tasa de casos escalados baja de 15% a 8%. La clave: nunca eliminaron completamente al humano del loop.",
+              "por_que_importa": "El costo de un fracaso de IA no es solo económico — es reputacional, legal, y de confianza. Amazon no solo perdió el tiempo invertido en su sistema de reclutamiento; el caso se convirtió en un símbolo del sesgo algorítmico que aparece en cada artículo sobre ética de IA. IBM no solo perdió $3,000 millones — perdió la credibilidad de Watson como marca de IA para siempre. En Colombia, donde la confianza en tecnología empresarial se construye lentamente, un fracaso de IA visible puede retrasar la adopción en un sector entero por años.",
+              "tip_profesional": "Antes de desplegar cualquier sistema de IA en producción, haz tres preguntas: (1) ¿Qué pasa cuando el sistema falla o da una respuesta incorrecta? (¿hay supervisión humana? ¿hay mecanismo de escalado?). (2) ¿Se ha probado el sistema con los casos más difíciles y raros, no solo con los casos promedio? (3) ¿El cliente (empresa) entiende las limitaciones del sistema o solo vio el demo? Si no puedes responder estas tres preguntas con confianza, el sistema no está listo para producción."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál fue la razón principal del fracaso de IBM Watson Health después de $4,000 millones de inversión?",
+                "opciones": [
+                  "La tecnología de IA de la época simplemente no era lo suficientemente avanzada para el caso de uso médico",
+                  "IBM prometió capacidades de razonamiento que el sistema no podía cumplir, y el sistema recomendaba tratamientos que oncólogos expertos calificaron como incorrectos o peligrosos",
+                  "IBM no tenía suficiente capital para completar el desarrollo del sistema al nivel necesario para uso médico",
+                  "Las regulaciones de la FDA prohibieron el uso de IA para recomendaciones médicas, bloqueando el mercado objetivo"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El caso IBM Watson Health es un estudio de caso en la peligrosa brecha entre el marketing de IA y la capacidad real del sistema. IBM prometió que Watson podría 'curar el cáncer' y lo vendió a 14 hospitales más importantes del mundo. Cuando los oncólogos del MD Anderson Cancer Center — uno de los mejores centros de oncología del mundo — auditaron el sistema, encontraron recomendaciones de tratamiento que consideraron incorrectas y potencialmente peligrosas para los pacientes. El problema técnico: el sistema fue entrenado principalmente con casos de hospitales de EE.UU. (no representativos de la diversidad global), con datos históricos limitados, y usando enfoques de ML que no capturaban el razonamiento médico complejo que promovía el marketing. La lección no es que la IA no puede ayudar en medicina — puede y lo hace — sino que el overpromise destruye la confianza y tiene consecuencias muy reales en sectores críticos.",
+                "concepto_reforzado": "Overpromise y sesgo de datos de entrenamiento como causas del fracaso de IBM Watson Health"
+              },
+              {
+                "pregunta": "¿Qué precedente legal estableció el caso del chatbot de Air Canada en 2023?",
+                "opciones": [
+                  "Los chatbots de IA no pueden dar información sobre precios o condiciones comerciales en Canadá",
+                  "Las empresas son legalmente responsables por la información incorrecta que sus chatbots de IA den a clientes",
+                  "Los usuarios que confían en chatbots de IA asumen el riesgo de información incorrecta al aceptar los términos de servicio",
+                  "Solo los chatbots que se identifican explícitamente como IA están sujetos a regulación de veracidad"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El tribunal de Columbia Británica rechazó el argumento de Air Canada de que el chatbot era una 'entidad separada' y estableció que la empresa es responsable por las representaciones que hace su sistema de IA a los clientes. Esto es un precedente importante porque define que el deployment de un chatbot de IA es una extensión de las comunicaciones de la empresa, no una entidad autónoma con responsabilidad propia. Para empresas y developers, esto tiene implicaciones directas: cualquier información que el chatbot da al usuario puede crear obligaciones legales para la empresa. Un chatbot que promete un descuento que no existe, que malinterpreta una política, o que da información incorrecta sobre un producto puede generar demandas y obligaciones legales. El diseño del chatbot debe incluir mecanismos para manejar esto: disclaimers apropiados, escalado a humanos para compromisos comerciales, y revisión periódica de que las respuestas del bot son correctas.",
+                "concepto_reforzado": "Responsabilidad legal de empresas por información incorrecta de sus chatbots de IA según precedente de Air Canada"
+              },
+              {
+                "pregunta": "¿Por qué el sistema de reclutamiento de Amazon desarrolló sesgo contra candidatas mujeres?",
+                "opciones": [
+                  "El equipo que desarrolló el sistema tenía prejuicios explícitos contra mujeres que introdujeron manualmente",
+                  "El modelo fue entrenado con 10 años de CVs de contrataciones pasadas dominadas por hombres, aprendiendo que el género masculino era una señal positiva",
+                  "Amazon usó datos de LinkedIn que tenían más perfiles de hombres que de mujeres en tecnología",
+                  "El modelo penalizaba intencionalmente ciertos perfiles para cumplir cuotas de contratación previas de la empresa"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Este caso ilustra perfectamente cómo el bias algorítmico emerge sin intención maliciosa: el equipo de Amazon no intentó crear un sistema sesgado contra mujeres. Sin embargo, al entrenar el modelo con datos históricos de contrataciones de Amazon (una empresa de tecnología históricamente dominada por hombres en roles técnicos), el modelo aprendió las correlaciones estadísticas presentes en esos datos. Los CVs de personas contratadas exitosamente eran mayoritariamente masculinos, por lo que el modelo aprendió 'siendo hombre → mayor probabilidad de ser buen candidato según el patrón histórico'. Más específicamente, penalizó CVs que mencionaban términos asociados a mujeres. El sesgo no estaba en el algoritmo — estaba en los datos que reflejaban la cultura histórica de la empresa. Este caso es la razón por la que la auditoría de bias en modelos de ML para toma de decisiones sobre personas es ahora considerada práctica obligatoria en la industria.",
+                "concepto_reforzado": "Bias algorítmico emergente de datos históricos discriminatorios sin intención maliciosa del equipo de desarrollo"
+              },
+              {
+                "pregunta": "¿Cuál es el patrón de fracaso de las startups LATAM que eran 'wrappers de ChatGPT'?",
+                "opciones": [
+                  "Sus productos dejaron de funcionar cuando OpenAI cambió los términos de su API en 2024",
+                  "Cuando los proveedores de IA lanzaron herramientas más potentes directamente, estas startups perdieron su propuesta de valor diferenciadora",
+                  "Sus costos de API eran demasiado altos para ser rentables a los precios que el mercado LATAM podía pagar",
+                  "Los clientes LATAM prefieren soluciones locales y rechazaron productos basados en IA de empresas estadounidenses"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El patrón 'wrapper de ChatGPT' se refiere a startups que básicamente tomaban el API de OpenAI o Claude, le ponían una interfaz vertical (para abogados, para médicos, para contadores), y cobraban una suscripción. El problema estructural: su ventaja competitiva era 'hacemos más fácil usar ChatGPT para X' — una ventaja que desaparece cuando ChatGPT o Claude lanzan características nativas para ese caso de uso, o cuando el cliente aprende a usar directamente las herramientas. Las startups sostenibles en ese espacio eran las que construyeron sobre los modelos pero agregaron capa de datos (RAG con datos específicos del cliente), distribución (integración con sistemas existentes del sector), o conocimiento de dominio tan profundo que no se puede replicar con una suscripción genérica. El modelo 'interfaz + prompt engineering' sin más profundidad técnica y de datos era inherentemente frágil.",
+                "concepto_reforzado": "Fragilidad de startups de IA sin diferenciación más allá del acceso a modelos de terceros"
+              },
+              {
+                "pregunta": "¿Cuál es la práctica más importante para evitar el fracaso por 'sistema falla en casos edge no previstos'?",
+                "opciones": [
+                  "Usar siempre el modelo de IA más potente disponible para maximizar la capacidad de manejar casos complejos",
+                  "Mantener supervisión humana en el loop para los casos que el sistema identifica como de alta incertidumbre o complejidad",
+                  "Probar el sistema con 10,000 casos antes del despliegue para garantizar cobertura estadística suficiente",
+                  "Asegurarse de que el sistema tiene un 99.9% de accuracy en el dataset de prueba antes del lanzamiento"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los casos edge (casos inusuales, raros, o combinaciones de condiciones no vistas en entrenamiento) son la fuente más común de fallos graves en sistemas de IA en producción. Un sistema puede tener 99% de accuracy en el conjunto de prueba y fallar catastróficamente con el 1% de casos reales que son edge cases. La solución no es solo más datos de entrenamiento (aunque ayuda) — es arquitecturar el sistema para que cuando el modelo tiene baja confianza o el caso es anómalo, escale a un humano en lugar de tomar una decisión autónoma. Esto se llama 'human in the loop' y es la práctica estándar en sistemas de alto riesgo: los sistemas antifraude bancarios, los sistemas de moderación de contenido, y los sistemas médicos más responsables siempre tienen este mecanismo. La alta accuracy en el dataset de prueba es una condición necesaria pero no suficiente para un sistema robusto en producción.",
+                "concepto_reforzado": "Human in the loop para casos de alta incertidumbre como práctica fundamental para evitar fallos de sistemas de IA en producción"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de telecomunicaciones colombiana con 2 millones de clientes quiere implementar un chatbot de IA para atención al cliente. Su CEO leyó sobre los éxitos de otros chatbots y quiere 'el mejor chatbot del mundo' que maneje el 100% de las consultas sin necesidad de agentes humanos. Las consultas actuales: 40% activación de servicios (proceso definido), 30% consultas de facturación (buscar datos en sistema), 20% reclamos por cobros incorrectos (requieren análisis y autorización), 10% cancelaciones de servicio (proceso sensible con retención).",
+              "instruccion": "Evalúa la viabilidad del objetivo del CEO ('100% sin agentes humanos') y diseña una arquitectura de chatbot responsable que maximice la automatización sin los riesgos que causaron los fracasos estudiados. Define qué porcentaje automatizas, qué casos escalan siempre a humanos, y qué mecanismos de salvaguarda incluyes.",
+              "input_malo": "El objetivo del CEO es alcanzable — con el chatbot de IA correcto podemos manejar el 100% de casos sin humanos. La IA en 2026 es suficientemente capaz para manejar cualquier situación.",
+              "pista": "¿Cuáles de los 4 tipos de consulta son genuinamente automatizables con alta confianza? ¿Cuáles involucran juicio, autorización, o son emocionalmente sensibles? El caso de Air Canada y otros fracasos estudiados sugieren qué debe quedar con humanos.",
+              "solucion": "Evaluación del objetivo CEO: el 100% sin agentes es irresponsable y generará los mismos fracasos documentados. Arquitectura responsable: (1) AUTOMATABLE ALTO CONFIANZA: activación de servicios (40%) + consultas de facturación simples (20% del 30%) = ~52% del total. El bot puede manejar estos con alta precisión porque son procesos definidos y búsqueda de datos. (2) AUTOMATABLE CON VERIFICACIÓN: consultas de facturación complejas (~10% del total) — el bot presenta la información, el cliente confirma, si hay discrepancia escala al humano. (3) ESCALAR SIEMPRE A HUMANO: reclamos por cobros incorrectos (20%) — implican reversiones que tienen impacto financiero y potencialmente legal (lección Air Canada). Cancelaciones de servicio (10%) — proceso de retención emocionalmente sensible donde el tono humano tiene impacto real en la decisión del cliente. Total automatizable responsablemente: ~62-65%, no 100%. Salvaguardas: (a) Cuando el bot tiene <70% de confianza en la intención del usuario, escala al humano. (b) El cliente SIEMPRE puede pedir agente humano en cualquier momento. (c) Auditoría mensual de los casos donde el bot dio información incorrecta para reentrenamiento. (d) Cualquier compromiso financiero (devolución, descuento) siempre necesita autorización humana.",
+              "criterios_de_exito": [
+                "Rechaza fundamentadamente el objetivo de 100% automatización del CEO con referencia a los casos de fracaso",
+                "Segmenta correctamente los 4 tipos de consulta por nivel de automatizabilidad y riesgo",
+                "Identifica reclamos y cancelaciones como casos que requieren humano por riesgo legal y sensibilidad",
+                "Incluye mecanismos de salvaguarda específicos (umbral de confianza, escalado al cliente, auditoría mensual)"
+              ]
             },
+            "conexion": {
+              "siguiente_concepto": "Oportunidades únicas para developers LATAM",
+              "por_que_importa_despues": "Conocer los fracasos completa el mapa: qué funciona (l1-l8), qué no funciona y por qué (l9). La última lección del bloque integra todo esto con una perspectiva específica para developers colombianos y latinoamericanos: cuáles son las oportunidades que existen precisamente por el contexto regional, y cómo posicionarse para aprovecharlas."
+            }
             "conexion": {
               "siguiente_concepto": "",
               "por_que_importa_despues": ""
