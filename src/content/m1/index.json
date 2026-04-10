@@ -6452,33 +6452,98 @@
         },
         {
           "id": "m1-b7-l5",
-          "titulo": "Evaluación humana vs automática: trade-offs",
+          "titulo": "Overfitting y underfitting: el balance perfecto",
           "bloque": 7,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Overfitting y underfitting son los dos problemas fundamentales de generalización en machine learning. Entenderlos no es solo un ejercicio teórico —son las principales causas de que modelos que funcionan perfectamente durante el desarrollo fallen en producción. Para cualquier consultor de IA, reconocer estos patrones ahorra meses de trabajo desperdiciado.\n\n**El problema de generalización**\nEl objetivo de cualquier modelo de ML es aprender patrones que generalicen a datos nuevos que no vio durante el entrenamiento. El problema: el modelo solo tiene acceso a los datos de entrenamiento, que son una muestra finita de la realidad. Si aprende demasiado bien los datos de entrenamiento (incluyendo su ruido), pierde capacidad de generalizar. Si no aprende suficiente, no captura los patrones reales.\n\n**Overfitting: el modelo sabe demasiado sobre demasiado poco**\nEl overfitting ocurre cuando el modelo memoriza los datos de entrenamiento en lugar de aprender los patrones subyacentes. Señales clásicas: la métrica en el conjunto de entrenamiento es muy alta (95-99%), pero la métrica en el conjunto de validación o test es significativamente menor (60-70%). La brecha entre train y test es la señal diagnóstica principal.\n\nAnálogía de overfitting: imagina estudiar para un examen memorizando todas las preguntas de práctica de años anteriores en vez de entender los conceptos. En el examen, si una pregunta usa el mismo wording que una que memorizaste, respondes perfectamente. Si la misma pregunta viene formulada diferente, fallas completamente. El modelo 'aprendió' las preguntas de práctica, no la materia.\n\nCausas del overfitting:\n- Modelo demasiado complejo para el tamaño del dataset (más parámetros que ejemplos de entrenamiento)\n- Dataset de entrenamiento muy pequeño\n- Entrenamiento por demasiadas épocas (iteraciones)\n- Features con mucho ruido que el modelo aprende a explotar\n\nPara LLMs: el overfitting durante el fine-tuning es un riesgo real. Si haces fine-tuning de Claude o LLaMA con 50 ejemplos y entrenas demasiadas épocas, el modelo puede memorizar esos 50 ejemplos exactamente y responder bien solo a inputs muy similares a los ejemplos de entrenamiento.\n\n**Underfitting: el modelo no aprendió suficiente**\nEl underfitting ocurre cuando el modelo es demasiado simple para capturar los patrones del problema, o no se entrenó lo suficiente. Señales: tanto la métrica de entrenamiento como la de validación son bajas. El modelo falla tanto en los datos que vio como en los nuevos.\n\nAnálogía de underfitting: el mismo estudiante que decidió no estudiar nada y espera pasar el examen con sentido común. Falla tanto las preguntas de práctica como las del examen real.\n\nCausas del underfitting:\n- Modelo demasiado simple (insuficiente capacidad de representación)\n- Dataset insuficiente en volumen o calidad\n- Features inadecuadas que no capturan la señal relevante\n- Entrenamiento por muy pocas épocas\n\n**El balance justo: el 'sweet spot'**\nEntre overfitting y underfitting existe un punto óptimo donde el modelo generaliza mejor. La herramienta principal para encontrarlo es la curva de aprendizaje: grafica la métrica de entrenamiento y validación en función de las épocas o el tamaño del dataset. El punto óptimo es donde la métrica de validación deja de mejorar y empieza a empeorar (mientras la de entrenamiento sigue mejorando).\n\nTécnicas para combatir overfitting: regularización (penaliza modelos complejos), dropout (apaga neuronas aleatoriamente durante el entrenamiento, fuerza robustez), data augmentation (aumenta artificialmente el dataset), early stopping (detiene el entrenamiento cuando la validación deja de mejorar), y reducir la complejidad del modelo.\n\n**Para LLMs y proyectos de IA en LATAM**\nEn el contexto de LLMs con fine-tuning, overfitting se manifiesta cuando el modelo fine-tuneado responde perfectamente a los ejemplos de entrenamiento pero generaliza mal a inputs parecidos pero no idénticos. La regla práctica: si haces fine-tuning con menos de 100 ejemplos, el riesgo de overfitting es alto. Más ejemplos, más diversidad, y pocas épocas de entrenamiento reducen ese riesgo. Para RAG (Retrieval-Augmented Generation) el problema de overfitting no aplica de la misma forma —los LLMs base ya están bien generalizados.",
+              "analogia": "Overfitting es el médico que memoriza los síntomas exactos de los 100 últimos pacientes que atendió y solo acierta cuando un paciente nuevo tiene exactamente los mismos síntomas. Underfitting es el médico que solo sabe que 'si hay fiebre, dar acetaminofén', sin importar el diagnóstico. El balance justo es el que entiende los principios de fisiología y puede aplicarlos a casos nuevos.",
+              "ejemplo_malo": "Al hacer fine-tuning de un modelo para clasificar facturas, usar las 30 facturas de ejemplo del cliente y entrenar 100 épocas. El modelo va a memorizar esas 30 facturas y fallar en el resto de las facturas reales del negocio.",
+              "ejemplo_bueno": "Usar al menos 200-500 ejemplos de entrenamiento, monitorear las curvas de pérdida en entrenamiento y validación durante el fine-tuning, y aplicar early stopping cuando la pérdida de validación comienza a subir mientras la de entrenamiento sigue bajando.",
+              "por_que_importa": "La mayoría de los proyectos de ML que fallan en producción lo hacen por overfitting no detectado durante el desarrollo. Reconocer este patrón en las métricas de evaluación es la diferencia entre lanzar un modelo funcional y uno que se ve bien en el demo y falla en el mundo real.",
+              "tip_profesional": "La regla del 10x: para que un modelo generalice bien, necesitas aproximadamente 10 veces más ejemplos de entrenamiento que parámetros a aprender. Para fine-tuning de LLMs con LoRA (donde solo se actualizan millones de parámetros, no billones), necesitas mínimo 500-1,000 ejemplos de alta calidad para evitar overfitting. Por debajo de eso, considera RAG en lugar de fine-tuning."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la señal diagnóstica principal del overfitting en un modelo de ML?",
+                "opciones": [
+                  "El modelo tarda demasiado en generar respuestas durante la inferencia",
+                  "Las métricas en el conjunto de entrenamiento son muy altas, pero las métricas en el conjunto de validación o test son significativamente menores — una brecha grande entre train y test",
+                  "El modelo produce el mismo error en todos los inputs",
+                  "El modelo usa demasiada memoria RAM durante el entrenamiento"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La brecha entre train accuracy y test accuracy es el indicador más confiable de overfitting. Un modelo con 98% de accuracy en entrenamiento y 70% en test está memorizando los datos de entrenamiento en lugar de aprender patrones generalizables. La diferencia (28 puntos porcentuales) indica que el modelo aprendió el ruido específico de los datos de entrenamiento — variaciones, errores de etiquetado, particularidades del dataset — que no aparecen de la misma forma en datos nuevos. Para detectarlo correctamente es fundamental tener un conjunto de test completamente separado del entrenamiento, que el modelo nunca vea hasta la evaluación final. Si mezclas entrenamiento y evaluación, el overfitting se vuelve invisible.",
+                "concepto_reforzado": "Brecha train-test como indicador de overfitting"
+              },
+              {
+                "pregunta": "¿En qué se diferencia el underfitting del overfitting en las métricas observadas?",
+                "opciones": [
+                  "En el underfitting la métrica de entrenamiento es alta y la de test es baja; en el overfitting ambas son bajas",
+                  "En el underfitting tanto la métrica de entrenamiento como la de test son bajas; en el overfitting la de entrenamiento es alta y la de test es significativamente menor",
+                  "Son el mismo fenómeno con nombres diferentes",
+                  "El underfitting solo ocurre con modelos de texto, el overfitting solo con modelos de imagen"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La diferencia es visible en las métricas. Underfitting: el modelo no aprendió suficiente, por lo que falla tanto en datos de entrenamiento como en datos nuevos. Ambas métricas son bajas. Es como un estudiante que no estudió — falla tanto los ejercicios de práctica como el examen. El diagnóstico sugiere más datos, modelo más complejo, o más tiempo de entrenamiento. Overfitting: el modelo aprendió demasiado específicamente los datos de entrenamiento, logrando alta accuracy en train pero fallando en datos nuevos. Es como el estudiante que memorizó las respuestas específicas de los ejercicios de práctica — responde perfecto a los ejercicios pero falla ante variaciones del mismo concepto. El diagnóstico sugiere regularización, más datos, o reducir la complejidad del modelo.",
+                "concepto_reforzado": "Diagnóstico diferencial de overfitting vs underfitting"
+              },
+              {
+                "pregunta": "¿Qué es el 'early stopping' y cómo combate el overfitting?",
+                "opciones": [
+                  "Detener el entrenamiento cuando el modelo alcanza un tiempo máximo predefinido",
+                  "Detener el entrenamiento cuando la métrica de validación deja de mejorar y comienza a empeorar, evitando que el modelo siga memorizando el ruido del entrenamiento",
+                  "Detener el entrenamiento si el costo de cómputo supera el presupuesto",
+                  "Aplicar early stopping solo durante la evaluación, no el entrenamiento"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Early stopping es una técnica elegante de regularización implícita. Durante el entrenamiento, la pérdida de entrenamiento siempre decrece con más épocas — el modelo sigue encontrando formas de ajustarse mejor a los datos de entrenamiento. Pero la pérdida de validación inicialmente decrece (el modelo está aprendiendo patrones generalizables) y luego comienza a subir (el modelo está memorizando ruido). Early stopping detiene el entrenamiento exactamente en el mínimo de la pérdida de validación. Guarda el checkpoint del modelo en ese punto y descarta el entrenamiento posterior. Es como decirle al estudiante 'para de estudiar cuando ya sabes el material — más repetición solo te va a confundir con los detalles de los ejemplos específicos'. La implementación requiere monitorear la pérdida de validación cada N épocas y tener una 'paciencia' definida (cuántas épocas sin mejora antes de parar).",
+                "concepto_reforzado": "Early stopping como técnica anti-overfitting"
+              },
+              {
+                "pregunta": "¿Por qué el overfitting durante el fine-tuning de LLMs con pocos ejemplos es un riesgo particular?",
+                "opciones": [
+                  "Porque los LLMs no pueden hacer fine-tuning con pocos ejemplos",
+                  "Porque con pocos ejemplos el modelo memoriza los patrones exactos de esos ejemplos y responde bien solo a inputs muy similares, perdiendo la capacidad de generalizar a variaciones del mismo caso de uso",
+                  "Porque el fine-tuning con pocos ejemplos siempre produce underfitting, no overfitting",
+                  "Porque los LLMs son demasiado grandes para hacer overfitting"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El fine-tuning de LLMs con conjuntos pequeños (bajo 100 ejemplos) es especialmente susceptible al overfitting porque el modelo parte con millones/billones de parámetros altamente expresivos que son perfectamente capaces de memorizar cualquier conjunto pequeño de ejemplos. Con 50 ejemplos de facturas y 10 épocas de entrenamiento, el modelo puede aprender que 'la factura de Empresa XYZ siempre tiene el total en la línea 12 con el formato $XXX,XXX' — una regla específica de esos 50 ejemplos que no generaliza. Cuando llega una factura con el mismo formato pero de otra empresa, falla. La detección es la misma: comparar rendimiento en los 50 ejemplos de entrenamiento vs ejemplos nuevos del mismo tipo. Si hay brecha grande, hay overfitting. La solución más práctica para LLMs con pocos datos: usar RAG (inyectar contexto relevante en el prompt) en lugar de fine-tuning — RAG no tiene riesgo de overfitting porque no modifica los pesos del modelo.",
+                "concepto_reforzado": "Overfitting en fine-tuning de LLMs y alternativa con RAG"
+              },
+              {
+                "pregunta": "¿Qué indica una curva de aprendizaje donde tanto la pérdida de entrenamiento como la de validación son altas y no bajan con más datos?",
+                "opciones": [
+                  "Overfitting severo que requiere regularización inmediata",
+                  "Underfitting — el modelo tiene insuficiente capacidad para capturar los patrones del problema, o las features no contienen señal relevante",
+                  "El modelo está correctamente entrenado y no necesita ajustes",
+                  "Un problema de hardware que ralentiza el entrenamiento"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Cuando ambas curvas (train y validación) muestran pérdida alta que no mejora con más datos o más épocas, el diagnóstico es underfitting o features incorrectas. Las causas posibles son: (1) el modelo es demasiado simple — una regresión lineal para un problema que requiere relaciones no lineales complejas; (2) las features de entrada no contienen información relevante para predecir el target — si intentas predecir fraude sin incluir variables como monto, ubicación o patrón de transacciones, el modelo no puede aprender; (3) los datos tienen demasiado ruido para aprender una señal confiable. La solución implica revisar la arquitectura del modelo (¿es suficientemente expresiva?), revisar las features (¿capturan la información relevante?), y verificar la calidad de los datos (¿el etiquetado es consistente?).",
+                "concepto_reforzado": "Diagnóstico de underfitting por curvas de aprendizaje"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de logística en Medellín quiere un modelo que prediga si un paquete llegará tarde basándose en: distancia, peso, tipo de mercancía, y clima en la ruta. El equipo de datos tiene 500 registros históricos de envíos. Un data scientist junior entrena un modelo de árbol de decisión con profundidad máxima ilimitada y obtiene: accuracy en entrenamiento = 99.2%, accuracy en validación = 61.4%. El equipo celebra el 99.2% y quiere lanzar el modelo.",
+              "instruccion": "Diagnostica qué está pasando con el modelo. Explica: (1) qué indica la brecha entre train y validación accuracy, (2) qué causó este resultado dado el contexto del dataset y el modelo, y (3) qué harías para solucionarlo antes de lanzar.",
+              "input_malo": "El modelo tiene 99.2% de accuracy en entrenamiento. Eso demuestra que aprendió muy bien. El 61.4% en validación es solo porque la validación es más difícil.",
+              "pista": "Un árbol de decisión con profundidad ilimitada puede hacer un nodo para cada ejemplo individual de entrenamiento — literalmente memoriza cada registro. Con 500 registros y profundidad ilimitada, el árbol tiene capacidad para memorizar todos los casos en vez de aprender patrones.",
+              "solucion": "Diagnóstico: overfitting severo. (1) BRECHA TRAIN-VALIDACIÓN: La diferencia de 37.8 puntos porcentuales (99.2% vs 61.4%) es una señal clara de overfitting. El modelo está memorizando los 500 registros de entrenamiento en vez de aprender patrones generalizables. En producción, cuando lleguen nuevos paquetes con combinaciones no vistas exactamente en los 500 registros, el modelo fallará — el 61.4% de validación es la estimación realista del performance real. (2) CAUSA: Un árbol de decisión sin límite de profundidad tiene capacidad para memorizar cualquier dataset. Con 500 ejemplos, puede crear un árbol con hasta 500 hojas, una por cada registro. Eso no es aprendizaje, es memorización. Con solo 4 features, la señal real no justifica un árbol tan complejo. (3) SOLUCIÓN: Limitar la profundidad del árbol (probar profundidades de 3-8 niveles y elegir la que maximiza accuracy en validación). Alternativamente, usar Random Forest con árboles de profundidad limitada — el ensemble promedia múltiples árboles y reduce overfitting. Además, con 500 registros es mejor: dividir 400 entrenamiento / 100 validación, o usar cross-validation con 5 folds para evaluar más robustamente. El modelo final debería tener train accuracy ≈ validación accuracy (ej: ambos 78-82%), señal de que aprendió generalización real.",
+              "criterios_de_exito": [
+                "Diagnostica correctamente el overfitting por la brecha de 37.8 puntos entre train y validación",
+                "Explica la causa técnica: árbol sin límite de profundidad memoriza en lugar de generalizar",
+                "Propone una solución concreta con árboles de profundidad limitada o Random Forest"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Comparar modelos objetivamente sin sesgos",
+              "por_que_importa_despues": "Con el diagnóstico de overfitting claro, la siguiente lección te da el framework para comparar modelos de forma rigurosa, incluyendo cómo evitar que los sesgos de quien evalúa contaminen la comparación."
             }
           }
         },
