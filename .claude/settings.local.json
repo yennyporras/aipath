@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx vite:*)",
+      "Bash(node:*)",
+      "Bash(xxd)",
+      "Bash(python3 -c \"import json; f=open\\('src/content/m4-completo.json','r',encoding='utf-8'\\); d=json.load\\(f\\); total=sum\\(len\\(b['lecciones']\\) for b in d['bloques']\\); print\\(f'Bloques: {len\\(d[\\\\\"bloques\\\\\"]\\)}'\\); [print\\(f'  {b[\\\\\"id\\\\\"]}: {b[\\\\\"nombre\\\\\"]} — {len\\(b[\\\\\"lecciones\\\\\"]\\)} lecciones'\\) for b in d['bloques']]; print\\(f'Total lecciones: {total}'\\)\")",
+      "Bash(ls -la C:/Users/ypaol/aipath/public/icon-*.png)",
+      "Bash(npm run:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m 'feat: Estratek visual identity + teoria before quiz + login:*)",
+      "Bash(git push:*)",
+      "Bash(python scripts/add_b6.py)"
+    ]
+  }
+}
