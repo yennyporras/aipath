@@ -2,9 +2,9 @@ import { useState } from "react"
 
 const TIPO_LABELS = {
   reescribir: "Reescribe el prompt",
-  completar: "Completa el prompt",
-  identificar: "Identifica el problema",
-  caso_real: "Caso real"
+  completar:  "Completa el prompt",
+  identificar:"Identifica el problema",
+  caso_real:  "Caso real"
 }
 
 export default function PracticaScreen({ leccion, onSiguiente }) {
@@ -17,11 +17,11 @@ export default function PracticaScreen({ leccion, onSiguiente }) {
         {/* Header */}
         <div>
           <span className="text-xs font-bold tracking-widest uppercase"
-            style={{ color: "var(--color-accent-blue)" }}>
+            style={{ color: "var(--color-accent-primary)" }}>
             Práctica
           </span>
           <h2 className="font-display text-lg font-bold mt-1"
-            style={{ color: "var(--color-text-primary)" }}>
+            style={{ color: "var(--color-text-primary)", fontFamily: "'Outfit', sans-serif" }}>
             {TIPO_LABELS[p.tipo] || p.tipo}
           </h2>
         </div>
@@ -30,13 +30,11 @@ export default function PracticaScreen({ leccion, onSiguiente }) {
         <div className="animate-reveal rounded-xl p-4"
           style={{
             animationDelay: "80ms",
-            background: "rgba(255,255,255,0.03)",
-            border: "1px solid var(--color-border)"
+            background: "rgba(99,102,241,0.04)",
+            borderLeft: "3px solid rgba(99,102,241,0.4)"
           }}>
           <p className="text-xs font-bold mb-1.5 tracking-wide uppercase"
-            style={{ color: "var(--color-text-muted)" }}>
-            Contexto
-          </p>
+            style={{ color: "var(--color-text-muted)" }}>Contexto</p>
           <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
             {p.contexto}
           </p>
@@ -44,8 +42,7 @@ export default function PracticaScreen({ leccion, onSiguiente }) {
 
         {/* Instrucción */}
         <div className="animate-reveal" style={{ animationDelay: "160ms" }}>
-          <p className="text-sm font-semibold leading-relaxed"
-            style={{ color: "var(--color-text-primary)" }}>
+          <p className="text-sm font-semibold leading-relaxed" style={{ color: "var(--color-text-primary)" }}>
             {p.instruccion}
           </p>
         </div>
@@ -53,13 +50,9 @@ export default function PracticaScreen({ leccion, onSiguiente }) {
         {/* Input malo */}
         {p.input_malo && (
           <div className="animate-reveal rounded-xl p-3.5"
-            style={{
-              animationDelay: "240ms",
-              background: "rgba(239,68,68,0.05)",
-              border: "1px solid rgba(239,68,68,0.15)"
-            }}>
-            <p className="text-xs font-bold mb-1" style={{ color: "#FCA5A5" }}>❌ Prompt a mejorar</p>
-            <p className="text-sm font-mono" style={{ color: "var(--color-text-secondary)" }}>
+            style={{ animationDelay: "240ms", background: "rgba(239,68,68,0.05)", border: "1px solid rgba(239,68,68,0.15)" }}>
+            <p className="text-xs font-bold mb-1" style={{ color: "#FCA5A5" }}>❌ Enfoque incorrecto</p>
+            <p className="text-sm" style={{ color: "var(--color-text-secondary)", fontFamily: "'JetBrains Mono', monospace", fontSize: "12px" }}>
               {p.input_malo}
             </p>
           </div>
@@ -68,11 +61,7 @@ export default function PracticaScreen({ leccion, onSiguiente }) {
         {/* Pista */}
         {p.pista && !verSolucion && (
           <div className="animate-reveal rounded-xl p-3.5"
-            style={{
-              animationDelay: "320ms",
-              background: "rgba(251,191,36,0.05)",
-              border: "1px solid rgba(251,191,36,0.15)"
-            }}>
+            style={{ animationDelay: "320ms", background: "rgba(245,158,11,0.05)", border: "1px solid rgba(245,158,11,0.15)" }}>
             <p className="text-xs font-bold mb-1" style={{ color: "#FBBF24" }}>💡 Pista</p>
             <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
               {p.pista}
@@ -80,30 +69,24 @@ export default function PracticaScreen({ leccion, onSiguiente }) {
           </div>
         )}
 
-        {/* Solución (oculta hasta clic) */}
+        {/* Solución */}
         {verSolucion && (
-          <div className="animate-reveal flex flex-col gap-3" style={{ animationDelay: "0ms" }}>
+          <div className="animate-reveal flex flex-col gap-3">
             <div className="rounded-xl p-4"
-              style={{
-                background: "rgba(0,212,170,0.05)",
-                border: "1px solid rgba(0,212,170,0.2)"
-              }}>
+              style={{ background: "rgba(16,185,129,0.05)", border: "1px solid rgba(16,185,129,0.2)" }}>
               <p className="text-xs font-bold mb-2 tracking-wide uppercase"
-                style={{ color: "var(--color-accent-blue)" }}>
+                style={{ color: "var(--color-success)" }}>
                 ✅ Solución modelo
               </p>
-              <p className="text-sm font-mono leading-relaxed"
-                style={{ color: "var(--color-text-secondary)" }}>
+              <p className="text-sm leading-relaxed"
+                style={{ color: "var(--color-text-secondary)", fontFamily: "'JetBrains Mono', monospace", fontSize: "12px" }}>
                 {p.solucion}
               </p>
             </div>
 
-            {p.criterios_de_exito && p.criterios_de_exito.length > 0 && (
+            {p.criterios_de_exito?.length > 0 && (
               <div className="rounded-xl p-4"
-                style={{
-                  background: "rgba(255,255,255,0.02)",
-                  border: "1px solid var(--color-border)"
-                }}>
+                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--color-border)" }}>
                 <p className="text-xs font-bold mb-2 tracking-wide uppercase"
                   style={{ color: "var(--color-text-muted)" }}>
                   Criterios de éxito
@@ -112,7 +95,7 @@ export default function PracticaScreen({ leccion, onSiguiente }) {
                   {p.criterios_de_exito.map((c, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm"
                       style={{ color: "var(--color-text-secondary)" }}>
-                      <span style={{ color: "var(--color-accent-blue)", marginTop: "2px" }}>✓</span>
+                      <span style={{ color: "var(--color-success)", marginTop: "2px" }}>✓</span>
                       {c}
                     </li>
                   ))}
@@ -125,22 +108,19 @@ export default function PracticaScreen({ leccion, onSiguiente }) {
         {/* Acciones */}
         <div className="flex flex-col gap-2.5 animate-reveal" style={{ animationDelay: "400ms" }}>
           {!verSolucion && (
-            <button
-              onClick={() => setVerSolucion(true)}
-              className="w-full py-3 rounded-xl text-sm font-semibold transition-all hover:bg-white/6"
+            <button onClick={() => setVerSolucion(true)}
+              className="w-full py-3 rounded-xl text-sm font-semibold transition-all"
               style={{
-                border: "1px solid var(--color-border-active)",
-                color: "var(--color-accent-blue)",
-                background: "rgba(0,212,170,0.05)"
+                border: "1px solid rgba(99,102,241,0.4)",
+                color: "var(--color-accent-primary)",
+                background: "rgba(99,102,241,0.06)"
               }}
-            >
+              onMouseEnter={e => e.currentTarget.style.background = "rgba(99,102,241,0.1)"}
+              onMouseLeave={e => e.currentTarget.style.background = "rgba(99,102,241,0.06)"}>
               Ver solución
             </button>
           )}
-          <button
-            onClick={onSiguiente}
-            className="btn-primary w-full py-3.5 text-sm"
-          >
+          <button onClick={onSiguiente} className="btn-primary w-full py-3.5 text-sm">
             Siguiente lección →
           </button>
         </div>

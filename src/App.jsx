@@ -74,16 +74,19 @@ function Sidebar({ progreso, moduloData, bloqueActual, leccionActual, onNavBloqu
       className="hidden lg:flex flex-col w-64 xl:w-72 shrink-0 h-screen sticky top-0 overflow-y-auto py-6 px-4"
       style={{ borderRight: "1px solid var(--color-border)" }}
     >
-      {/* Logo — vuelve a academy */}
+      {/* Logo AIPath — vuelve a academy */}
       <button onClick={onVolverAcademy} className="mb-8 text-left">
-        <img src="/etk-logo-white.png" alt="Estratek IA Academy" className="h-9 w-auto opacity-90" />
+        <div className="aipath-logo">
+          <span className="logo-text">AI</span>
+          <span className="logo-accent">Path</span>
+        </div>
       </button>
 
       {/* Usuario */}
       <div className="glass rounded-xl p-3 mb-6 flex items-center gap-3">
         <div
           className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
-          style={{ background: "var(--color-accent-blue)", color: "#0A0A0A" }}
+          style={{ background: "var(--color-accent-primary)", color: "#ffffff" }}
         >
           {session?.nombre?.[0]?.toUpperCase() || "U"}
         </div>
@@ -139,9 +142,9 @@ function Sidebar({ progreso, moduloData, bloqueActual, leccionActual, onNavBloqu
                 onClick={() => onNavBloque(bloque)}
                 className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all text-xs"
                 style={{
-                  background: activo ? "rgba(0,212,170,0.1)" : "transparent",
-                  color: activo ? "var(--color-accent-blue)" : complete ? "var(--color-text-secondary)" : "var(--color-text-muted)",
-                  borderLeft: activo ? "2px solid var(--color-accent-blue)" : "2px solid transparent"
+                  background: activo ? "rgba(99,102,241,0.1)" : "transparent",
+                  color: activo ? "var(--color-accent-primary)" : complete ? "var(--color-text-secondary)" : "var(--color-text-muted)",
+                  borderLeft: activo ? "2px solid var(--color-accent-primary)" : "2px solid transparent"
                 }}
               >
                 <span className="shrink-0">{complete ? "✓" : bloque.icon}</span>
@@ -339,11 +342,14 @@ export default function App() {
       <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16">
         {/* Header simplificado en academy */}
         <div className="w-full max-w-4xl flex justify-between items-center mb-8 animate-reveal">
-          <img src="/etk-logo-white.png" alt="Estratek IA Academy" className="h-8 w-auto opacity-90" />
+          <div className="aipath-logo">
+            <span className="logo-text">AI</span>
+            <span className="logo-accent">Path</span>
+          </div>
           <div className="flex items-center gap-3">
             {installButton}
-            <div className={`surface flex items-center gap-2 px-3 py-1.5 rounded-full`}>
-              <span className="text-sm">✨</span>
+            <div className="surface flex items-center gap-2 px-3 py-1.5 rounded-full">
+              <span className="text-sm">⚡</span>
               <span className="text-xs font-medium" style={{ color: "var(--color-text-secondary)" }}>
                 {progreso.rachaDiaria} día{progreso.rachaDiaria !== 1 ? "s" : ""}
               </span>

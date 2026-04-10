@@ -3,10 +3,10 @@ import { useState } from "react"
 const PRAISE = ["¡Exacto!", "¡Correcto!", "¡Bien pensado!", "¡Perfecto!", "¡Excelente!", "¡Así se hace!", "¡Genial!"]
 
 export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, rachaActual }) {
-  const [sel, setSel] = useState(null)
+  const [sel, setSel]       = useState(null)
   const [showXP, setShowXP] = useState(false)
   const answered = sel !== null
-  const correct = sel === pregunta.correcta
+  const correct  = sel === pregunta.correcta
 
   function pick(i) {
     if (answered) return
@@ -18,8 +18,8 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
     }
   }
 
-  const num = (indice || 0) + 1
-  const pct = (num / totalPreguntas) * 100
+  const num    = (indice || 0) + 1
+  const pct    = (num / totalPreguntas) * 100
   const labels = ["A", "B", "C", "D"]
 
   return (
@@ -42,7 +42,9 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
 
         <div className="flex items-center justify-between mb-4">
           <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>
-            Pregunta <span className="font-display font-bold" style={{ color: "var(--color-text-primary)" }}>{num}</span> de {totalPreguntas}
+            Pregunta{" "}
+            <span className="font-display font-bold" style={{ color: "var(--color-text-primary)" }}>{num}</span>
+            {" "}de {totalPreguntas}
           </span>
           {rachaActual >= 3 && (
             <span className="text-[10px] font-bold text-amber-400 animate-scale-in"
@@ -53,17 +55,15 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
         </div>
 
         <h2 className="font-display text-lg font-bold leading-relaxed mb-6"
-          style={{ color: "var(--color-text-primary)" }}>
+          style={{ color: "var(--color-text-primary)", fontFamily: "'Outfit', sans-serif" }}>
           {pregunta.pregunta}
         </h2>
 
         <div className="flex flex-col gap-2.5 stagger">
           {pregunta.opciones.map((opt, i) => {
-            let borderC = "var(--color-border)"
-            let bgC = "transparent"
+            let borderC = "var(--color-border)", bgC = "transparent"
             let textC = "var(--color-text-secondary)"
-            let labelBg = "rgba(255,255,255,0.04)"
-            let labelC = "var(--color-text-muted)"
+            let labelBg = "rgba(255,255,255,0.04)", labelC = "var(--color-text-muted)"
 
             if (answered) {
               if (i === pregunta.correcta) {
@@ -80,7 +80,7 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
 
             return (
               <button key={i} onClick={() => pick(i)} disabled={answered}
-                className={`option-btn animate-reveal w-full text-left px-4 py-3.5 flex items-start gap-3`}
+                className="option-btn animate-reveal w-full text-left px-4 py-3.5 flex items-start gap-3"
                 style={{ borderColor: borderC, background: bgC, animationDelay: `${i * 60}ms` }}>
                 <span className="shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold"
                   style={{ background: labelBg, color: labelC }}>
@@ -97,11 +97,11 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
             style={{
               background: correct ? "rgba(16,185,129,0.06)" : "rgba(245,158,11,0.06)",
               border: `1px solid ${correct ? "rgba(16,185,129,0.15)" : "rgba(245,158,11,0.15)"}`,
-              animationDelay: "0ms"
             }}>
             <div className="flex items-center gap-2 mb-2">
               <span className="text-base">{correct ? "✅" : "💡"}</span>
-              <p className="font-display text-sm font-bold" style={{ color: correct ? "#6EE7B7" : "#FBBF24" }}>
+              <p className="font-display text-sm font-bold"
+                style={{ color: correct ? "#6EE7B7" : "#FBBF24", fontFamily: "'Outfit', sans-serif" }}>
                 {correct ? PRAISE[(indice || 0) % PRAISE.length] : "Casi — recuerda esto:"}
               </p>
             </div>
