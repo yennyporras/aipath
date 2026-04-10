@@ -6945,33 +6945,98 @@
         },
         {
           "id": "m1-b8-l2",
-          "titulo": "Cómo funciona el entrenamiento distribuido a escala",
+          "titulo": "Cloud vs local: decisión estratégica real",
           "bloque": 8,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "La decisión entre usar infraestructura en la nube versus infraestructura local (on-premise) para proyectos de IA es una de las preguntas más frecuentes en consultoría tecnológica. La respuesta correcta no es universal — depende de factores específicos de cada organización. Esta lección te da el marco de análisis para llegar a la decisión correcta en cada contexto.\n\n**Qué significa cada opción:**\n\nInfraestructura en nube (cloud): usas GPUs y servidores de AWS, Google Cloud, Azure u otros proveedores. Pagas por el tiempo de uso (horas de GPU, tokens procesados) sin inversión inicial en hardware físico. Los proveedores se encargan del mantenimiento, actualizaciones y disponibilidad.\n\nInfraestructura local (on-premise): compras y operas tus propias GPUs y servidores en tus instalaciones o en un datacenter arrendado. Tienes control total sobre el hardware pero también toda la responsabilidad operacional.\n\n**El caso para la nube — cuándo es la opción correcta:**\n\n1. Volumen variable o incierto: si el tráfico de tu sistema de IA fluctúa (más consultas en horario laboral que a medianoche, picos estacionales), la nube te permite escalar y reducir sin pagar por capacidad ociosa. La flexibilidad de escalar de 1 GPU a 100 GPUs en minutos no existe on-premise.\n\n2. Proyecto nuevo sin trayectoria probada: cuando no sabes todavía el volumen real que tendrás, comenzar en la nube evita el riesgo de sobre-invertir en hardware que podría quedar subutilizado o ser insuficiente.\n\n3. Equipo sin expertise de infraestructura: administrar GPUs físicamente (drivers, CUDA, redes de alta velocidad, refrigeración, mantenimiento) requiere expertise específico. Si tu equipo no lo tiene, el costo de adquirirlo puede superar el ahorro del hardware propio.\n\n4. Presupuesto de capital limitado: la nube convierte CAPEX (gasto de capital: comprar servidores) en OPEX (gasto operacional: pagar por uso mensual). Para startups y pymes, preservar capital inicial es frecuentemente prioritario.\n\n**El caso para on-premise — cuándo tiene sentido:**\n\n1. Volumen alto y estable: si procesas 500 millones de tokens al día, los 365 días del año, el costo de nube se vuelve predecible y alto. Comparado con el costo de servidores propios amortizado en 3-5 años, el on-premise puede ser 30-60% más económico a esos volúmenes.\n\n2. Privacidad y soberanía de datos no negociable: cuando los datos no pueden salir de las instalaciones de la empresa bajo ninguna circunstancia (sector defensa, datos ultra-sensibles bajo regulación específica), el on-premise es la única opción válida. La nube privada (VPC, entornos aislados) mitiga pero no elimina la percepción de riesgo en algunos contextos regulatorios.\n\n3. Latencia crítica: para aplicaciones donde la latencia de red a un datacenter de la nube (10-100 milisegundos) es inaceptable, tener el hardware en el mismo edificio o incluso en el mismo dispositivo (edge) es la única solución.\n\n4. Predicciones de largo plazo con carga constante: el break-even típico entre nube y on-premise para cargas constantes está entre 18-36 meses. Si tienes certeza de que el sistema estará en producción con esa carga por más de 3 años, on-premise puede ser la opción económicamente racional.\n\n**La opción híbrida — lo más común en 2026:**\nLa mayoría de las organizaciones de escala media llegan a arquitecturas híbridas: el entrenamiento inicial y la experimentación en la nube (flexible, no requiere hardware propio para proyectos cortos), y la inferencia a escala (el modelo en producción sirviendo usuarios) on-premise o en instancias reservadas de larga duración en nube a precio reducido.\n\n**El factor que más se subestima: el costo operacional del on-premise**\nComprar GPUs es solo el inicio. Hay que añadir: el costo del servidor con alimentación redundante (~30% del costo de la GPU), refrigeración (el consumo eléctrico de GPUs de entrenamiento es masivo), espacio en datacenter o instalaciones propias, personal dedicado al mantenimiento, licencias de software de gestión, y el costo de oportunidad del capital inmovilizado. Estos costos 'ocultos' frecuentemente suman 50-100% del costo del hardware en el primer año.",
+              "analogia": "Elegir entre nube y on-premise es como decidir entre rentar o comprar un local comercial. Rentar (nube) tiene mayor costo por mes pero flexibilidad total. Comprar (on-premise) requiere capital inicial alto pero reduce el costo mensual a largo plazo, si el volumen de negocio es estable y seguro.",
+              "ejemplo_malo": "Una startup de IA decide comprar 4 servidores con GPU H100 ($120,000+ en hardware) en su primera ronda de financiación porque 'la nube es muy cara a largo plazo'. 6 meses después, el modelo de negocio cambia y la infraestructura queda subutilizada mientras el costo de capital podría haber financiado 12 ingenieros.",
+              "ejemplo_bueno": "Una empresa de manufactura con 200 millones de inferencias/mes predecibles y datos de producción que no pueden salir de la planta: evalúa el break-even a 24 meses entre nube ($15,000/mes) y on-premise ($60,000 CAPEX + $2,000/mes operacional = equivalente a 5 meses de nube para recuperar). Con certeza de 5 años de uso, on-premise es correcto.",
+              "por_que_importa": "Muchos proyectos de IA en LATAM fracasan no por problemas técnicos sino por decisiones de infraestructura mal informadas: compran hardware demasiado pronto o escalan en nube sin entender los costos. Como consultor, esta decisión temprana define si un proyecto es financieramente sostenible.",
+              "tip_profesional": "Antes de recomendar on-premise a cualquier cliente, construye una hoja de cálculo con tres escenarios: optimista (la carga es 2× lo esperado), base (la carga es lo esperado) y pesimista (la carga es 50% de lo esperado). El on-premise solo tiene sentido si es la opción correcta en los tres escenarios. La nube es correcta si el escenario pesimista es probable."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la principal ventaja de la nube sobre el on-premise para proyectos de IA con volumen variable?",
+                "opciones": [
+                  "La nube siempre es más barata que el on-premise",
+                  "La flexibilidad para escalar capacidad de 1 a 100 GPUs en minutos según la demanda, sin pagar por capacidad ociosa cuando el tráfico es bajo",
+                  "La nube tiene mejores GPUs que las disponibles comercialmente",
+                  "La nube no requiere ningún tipo de gestión por parte del cliente"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El valor fundamental de la nube para cargas variables es la elasticidad: pagar exactamente por el compute que necesitas en cada momento. Imagina un sistema de análisis de documentos para una firma legal que recibe 90% de su volumen los días laborales de 8am a 6pm. On-premise, necesitas hardware suficiente para el pico del mediodía del martes, que estará ocioso el sábado a las 3am. En la nube, escalar automáticamente de 2 GPUs en horas bajas a 20 GPUs en el pico del martes y volver a 2 en la noche es trivial con auto-scaling. El on-premise te obliga a dimensionar para el pico máximo y soportar esa capacidad ociosa. Para startups que aún no conocen su distribución de carga real, comenzar en nube y observar el patrón real antes de comprometerse con hardware es siempre la decisión correcta.",
+                "concepto_reforzado": "Elasticidad de la nube como ventaja para cargas variables"
+              },
+              {
+                "pregunta": "¿En qué punto el on-premise generalmente se vuelve más económico que la nube?",
+                "opciones": [
+                  "Inmediatamente, desde el primer mes de operación",
+                  "Nunca: la nube siempre es más económica por su escala",
+                  "Típicamente entre 18-36 meses de operación con carga constante y alta, donde el CAPEX del hardware se amortiza y el costo operacional mensual es menor que el equivalente en nube",
+                  "Exactamente a los 12 meses independientemente de la carga"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El break-even entre nube y on-premise sigue una lógica financiera simple. El on-premise requiere CAPEX inicial alto (hardware, infraestructura) pero tiene OPEX mensual bajo (electricidad, mantenimiento). La nube tiene CAPEX cero pero OPEX mensual alto. El punto donde el CAPEX acumulado del on-premise es igual al gasto acumulado en nube es el break-even — típicamente entre 18 y 36 meses para cargas constantes. Si la vida útil del hardware es 3-5 años y el sistema estará en producción por ese tiempo con carga predecible, on-premise puede ahorrar 30-60% del costo total. Pero esta ecuación requiere certeza: si la carga cae a la mitad porque el proyecto no funcionó como esperado, el hardware on-premise queda como activo sin retorno. La nube en ese escenario simplemente reduce el gasto proporcionalmente.",
+                "concepto_reforzado": "Break-even financiero entre nube y on-premise"
+              },
+              {
+                "pregunta": "¿Cuáles son los 'costos ocultos' del on-premise que frecuentemente se subestiman?",
+                "opciones": [
+                  "El costo de contratar ingenieros para desarrollar el software de IA",
+                  "Servidor con alimentación redundante, refrigeración, espacio en datacenter, personal de mantenimiento, licencias de software y costo de oportunidad del capital, que pueden sumar 50-100% del costo del hardware en el primer año",
+                  "El costo de las licencias de los modelos de IA open source",
+                  "El costo de internet de alta velocidad para descargar los modelos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Comprar 4 GPUs H100 por $120,000 es solo el comienzo del costo on-premise. El servidor que las aloja con doble fuente de poder para redundancia suma ~$30,000-40,000. La refrigeración necesaria para disipar el calor de GPU de alta densidad (una H100 consume 700W, 4 GPUs = 2.8kW solo en las GPUs) requiere sistemas especializados de aire acondicionado de precisión. El espacio en un datacenter con la conectividad y seguridad adecuadas cuesta $500-2,000/mes por rack. El personal técnico para mantenimiento (un DevOps especializado cuesta $3,000-6,000/mes en LATAM). Y el costo de oportunidad del capital: $120,000 invertidos en hardware que tarda 3 años en recuperarse podría haber financiado 4 ingenieros por un año. Estos costos ocultos frecuentemente duplican el costo aparente del hardware.",
+                "concepto_reforzado": "Costo total de propiedad (TCO) del on-premise"
+              },
+              {
+                "pregunta": "¿Cuándo la soberanía de datos es un argumento genuinamente válido para on-premise (no solo percepción)?",
+                "opciones": [
+                  "Siempre, porque los datos en la nube siempre son menos seguros",
+                  "Cuando una regulación específica o contrato requiere que los datos físicamente no salgan de las instalaciones de la organización, y los proveedores de nube no pueden garantizar eso ni con entornos aislados",
+                  "Solo cuando la empresa tiene más de 1,000 empleados",
+                  "Cuando el CEO prefiere tener el hardware visible en la oficina"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La soberanía de datos es un argumento genuino cuando hay una restricción legal o contractual específica que los datos no puedan salir físicamente de ciertas instalaciones. Ejemplos reales: contratos de defensa nacional que explícitamente prohíben infraestructura externa, regulaciones del sector salud en ciertos países que requieren que datos de pacientes se almacenen en territorio nacional en instalaciones auditables, y contratos de clientes corporativos que incluyen cláusulas de residencia de datos en instalaciones propias. Lo que no es argumento genuino para on-premise: 'la nube es menos segura' (los grandes proveedores de nube tienen certificaciones de seguridad que pocas empresas pueden replicar on-premise), o 'no confiamos en AWS' sin una restricción legal específica. Los entornos VPC (Virtual Private Cloud), KMS (Key Management Service) y zonas de disponibilidad dedicadas en nube resuelven la mayoría de los escenarios de privacidad sin necesitar hardware físico propio.",
+                "concepto_reforzado": "Cuándo la soberanía de datos justifica on-premise genuinamente"
+              },
+              {
+                "pregunta": "¿Qué es la arquitectura híbrida y por qué es la más común para organizaciones de escala media en 2026?",
+                "opciones": [
+                  "Usar dos proveedores de nube simultáneamente para redundancia",
+                  "Combinar entrenamiento/experimentación en nube (flexible) con inferencia a escala en on-premise o instancias reservadas de larga duración, optimizando costo y control para cada fase del ciclo de vida del modelo",
+                  "Tener la mitad de los servidores en la nube y la otra mitad on-premise de forma permanente",
+                  "Usar nube durante el día y apagar los servidores en noche para reducir costos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La arquitectura híbrida emerge como solución pragmática porque el entrenamiento y la inferencia tienen perfiles de cómputo muy diferentes. El entrenamiento es infrecuente (ocurre cuando se actualiza el modelo), requiere mucha GPU por períodos cortos (horas a días), y su costo marginal es bajo en nube por la corta duración. La inferencia es continua (24/7), requiere menos GPU por solicitud pero de forma constante, y su costo en nube se acumula significativamente con el volumen. La arquitectura híbrida óptima: experimentación y entrenamiento en nube spot instances (30-70% más barato que instancias on-demand), inferencia en instancias reservadas de 1-3 años en nube (40-60% más barato que on-demand) o on-premise para volúmenes muy altos. Esta separación permite optimizar costo en cada fase sin comprometer flexibilidad en la fase de desarrollo.",
+                "concepto_reforzado": "Arquitectura híbrida como optimización de nube y on-premise"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de telecomunicaciones en Bogotá te pide evaluar si deben comprar infraestructura GPU on-premise o usar la nube para su nuevo sistema de análisis de llamadas (transcripción + análisis de sentimiento). Datos del proyecto: 500,000 minutos de audio al mes para analizar (aproximadamente 250 GB de audio). Cada minuto de audio tarda ~3 segundos en procesar con el modelo de IA en una GPU A10G. El costo de una instancia AWS g5.xlarge (A10G) es $1.006/hora. El departamento de seguridad dice que los datos de llamadas son sensibles pero no tienen una regulación específica que prohíba la nube. Presupuesto de CAPEX disponible: $80,000 USD.",
+              "instruccion": "Calcula el costo mensual de nube para este volumen y compáralo con el escenario on-premise. Recomienda cuál opción es más apropiada con justificación cuantitativa y cualitativa.",
+              "input_malo": "Recomendaría on-premise porque los datos de llamadas son sensibles y es mejor tener el control total.",
+              "pista": "500,000 minutos × 3 segundos/minuto = 1,500,000 segundos = 416 horas de GPU al mes. Una A10G a $1/hora = $416/mes en compute. On-premise: una GPU A10G cuesta ~$15,000 (tarjeta) + servidor ~$8,000 = $23,000. En 12 meses, la nube costaría $4,992. ¿Cuántos meses tarda en alcanzar el costo de on-premise?",
+              "solucion": "Cálculo: NUBE: 500,000 minutos × 3 seg = 1,500,000 seg = 416.7 horas GPU/mes × $1.006/hora = $419/mes. Anual: $5,028. ON-PREMISE: GPU A10G profesional ~$15,000 + servidor con dual PSU ~$8,000 + red/switches ~$2,000 + instalación/configuración ~$3,000 + refrigeración adicional ~$2,000 = $30,000 CAPEX. Costos operativos: electricidad ~$150/mes + mantenimiento ~$300/mes = $450/mes. Break-even: $30,000 ÷ ($450 - $419) = $30,000 ÷ $31/mes = ¡casi 970 meses! En este caso el volumen es demasiado bajo para que on-premise sea económico — el ahorro mensual es solo $31. RECOMENDACIÓN: Nube (AWS g5.xlarge o equivalente). Justificación cualitativa adicional: (1) El presupuesto de $80,000 CAPEX está disponible pero el payback de on-premise sería irreal. (2) El argumento de seguridad no tiene una restricción regulatoria específica — AWS GovCloud o instancias con cifrado satisface el requisito de seguridad. (3) Si el volumen crece 5× en el futuro (2.5M minutos/mes), se puede revisar on-premise. Con el volumen actual, no.",
+              "criterios_de_exito": [
+                "Calcula el costo mensual de nube con los datos numéricos del caso",
+                "Calcula el CAPEX on-premise realista incluyendo costos más allá del hardware GPU",
+                "Concluye correctamente que nube es la opción con justificación del break-even calculado"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Costos reales de IA en 2026: números concretos",
+              "por_que_importa_despues": "Con el marco cloud vs on-premise claro, la siguiente lección entra en los números reales: cuánto cuesta cada token, cada GPU-hora, y cada tipo de operación de IA en 2026, para que puedas hacer presupuestos precisos para tus clientes."
             }
           }
         },
