@@ -5571,33 +5571,98 @@
         },
         {
           "id": "m1-b6-l6",
-          "titulo": "APIs de IA: cuándo usarlas y cómo elegir la correcta",
+          "titulo": "Modelos de imagen: Flux, Midjourney, DALL-E",
           "bloque": 6,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "El ecosistema de IA no se limita a texto. Los modelos de generación de imágenes han seguido su propia trayectoria de evolución, paralela a los LLMs, y en 2026 representan una categoría madura con casos de uso empresariales reales, no solo creativos. Para un consultor de IA completo, entender los modelos de imagen es tan importante como entender los modelos de texto.\n\nLa arquitectura dominante en generación de imágenes en 2026 son los modelos de difusión (diffusion models). A diferencia de los GANs (Generative Adversarial Networks) que dominaron hasta 2022, los modelos de difusión aprenden a 'deshacer ruido' —comienzan con ruido aleatorio y gradualmente revelan una imagen coherente guiados por una descripción de texto. Esta arquitectura produce imágenes de mayor calidad, más coherentes y con mejor seguimiento de instrucciones complejas que los GANs.\n\nLos tres jugadores principales en 2026 son diferentes en modelo de negocio, arquitectura y casos de uso óptimos:\n\n**DALL-E 3 (OpenAI)**: El modelo de imagen de OpenAI, integrado nativamente en ChatGPT. Sus fortalezas son la integración con texto —puede generar imagen y texto en la misma conversación de forma coherente— y el seguimiento de instrucciones precisas de composición. Sus limitaciones son el costo (más caro por imagen que las alternativas) y la limitación de sus filtros de contenido que a veces bloquean imágenes de uso legítimo comercial. El caso de uso ideal es proyectos donde ya usas la API de OpenAI y quieres consistencia de plataforma.\n\n**Midjourney**: Sigue siendo el modelo preferido por diseñadores y creativos en 2026, no por una API especialmente flexible sino por la calidad estética de sus outputs. Midjourney V7 produce imágenes con una 'mirada' artística difícil de replicar con otros modelos —composición, iluminación y estilo visual con coherencia artística que los usuarios de diseño perciben inmediatamente. Su limitación comercial: hasta 2025 solo funcionaba vía Discord, y aunque lanzó API en 2026, su adopción en flujos de trabajo técnicos es menor que sus competidores. El caso de uso ideal: proyectos de branding, marketing visual de alto impacto, y casos donde la calidad estética es más importante que el costo o la automatización.\n\n**Flux (Black Forest Labs)**: El nuevo protagonista de 2026. Flux 1 fue lanzado en agosto de 2024 por ex-investigadores de Stability AI y rápidamente se convirtió en el modelo de difusión de referencia para desarrolladores. Sus ventajas son técnicas: mejor seguimiento de instrucciones que Stable Diffusion, mejor coherencia en detalles (manos, texto dentro de imágenes), disponible en múltiples variantes (Flux Schnell para velocidad, Flux Dev para calidad alta, Flux Pro para máxima calidad), y con versiones open source que permiten fine-tuning y self-hosting. En benchmarks de calidad de imagen evaluada por humanos en 2026, Flux Pro iguala o supera a Midjourney V7 mientras ofrece API pública y versiones open source. El caso de uso ideal: proyectos técnicos que necesitan automatización, e-commerce (generación de imágenes de producto), y cualquier caso donde el volumen de imágenes hace que el costo por imagen sea crítico.\n\nPara proyectos empresariales en LATAM, los casos de uso más frecuentes de modelos de imagen en 2026 son: generación automatizada de imágenes de producto para e-commerce (reemplazar sesiones fotográficas costosas), generación de assets de marketing en múltiples formatos sin diseñador para cada variación, visualización de interiores para inmobiliarias, y generación de ilustraciones para materiales educativos o de comunicación interna.",
+              "analogia": "Los modelos de imagen son como fotógrafos con estilos diferentes: DALL-E es el fotógrafo corporativo que sigue las instrucciones al pie de la letra, Midjourney es el artista con visión propia que hace que cualquier cosa se vea espectacular, y Flux es el fotógrafo técnico que puede hacer cualquier cosa a escala con control preciso.",
+              "ejemplo_malo": "Recomendar Midjourney para un proyecto de e-commerce que necesita generar 10,000 imágenes de producto al mes automatizadas, sin considerar que Midjourney no tiene una API robusta para automatización de alto volumen en 2026.",
+              "ejemplo_bueno": "Para una tienda online colombiana con 5,000 SKUs que necesita imágenes de producto en fondos blancos y escenas de lifestyle, usar Flux Dev via API de Replicate para el flujo automatizado: costo estimado $0.05 por imagen vs $200+ por imagen en sesión fotográfica tradicional.",
+              "por_que_importa": "La generación de imágenes con IA es una de las aplicaciones con ROI más inmediato y medible en empresas LATAM. Una sesión fotográfica de producto cuesta $2,000-10,000 USD. Flux puede generar las mismas imágenes por $50-200. Para consultores, este argumento económico cierra proyectos rápido.",
+              "tip_profesional": "Para evaluar modelos de imagen para un cliente, siempre prueba con el caso de uso más difícil del proyecto real: si necesitan texto dentro de las imágenes (nombres de producto, precios), usa eso como test —es el caso donde más difieren los modelos. Flux maneja texto en imagen mejor que DALL-E y significativamente mejor que Midjourney en 2026."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la arquitectura dominante en generación de imágenes en 2026 y cuál es su principio básico?",
+                "opciones": [
+                  "GANs (Generative Adversarial Networks): dos redes compiten para generar y discriminar imágenes",
+                  "Modelos de difusión: aprenden a deshacer ruido, partiendo de ruido aleatorio para revelar una imagen coherente guiada por texto",
+                  "Transformers directos: la misma arquitectura que los LLMs aplicada a píxeles",
+                  "Redes convolucionales clásicas con entrenamiento supervisado de imágenes etiquetadas"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los modelos de difusión dominaron la generación de imágenes desde 2022 porque resuelven las limitaciones fundamentales de los GANs: los GANs son difíciles de entrenar (inestabilidad del generador vs discriminador), tienen modos de colapso (generan pocas variedades de imágenes), y no siguen bien instrucciones de texto complejas. Los diffusion models aprenden el proceso inverso: dado que una imagen puede degradarse agregando ruido gradualmente, el modelo aprende a revertir ese proceso —a partir de ruido puro, quitar ruido gradualmente guiado por una descripción. Esto produce resultados más variados, más coherentes, y con mejor capacidad de seguir instrucciones de composición específicas. Todos los modelos líderes en 2026 —Flux, DALL-E 3, Stable Diffusion XL— son modelos de difusión.",
+                "concepto_reforzado": "Modelos de difusión como arquitectura dominante en imagen"
+              },
+              {
+                "pregunta": "¿Cuál es la fortaleza principal de Midjourney que la mantiene relevante en 2026?",
+                "opciones": [
+                  "Tiene la API más fácil de integrar en aplicaciones empresariales",
+                  "Es el modelo más barato por imagen del mercado",
+                  "Produce imágenes con calidad estética artística —composición, iluminación y estilo visual— que diseñadores y creativos prefieren sobre las alternativas técnicas",
+                  "Es el único modelo que puede generar imágenes en alta resolución 4K"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Midjourney mantiene su posición en 2026 no por ventajas técnicas de API o precio, sino por una cualidad difícil de cuantificar: sus imágenes tienen una 'mirada artística' consistente que los diseñadores reconocen y valoran. La iluminación tiende a ser dramática y flattering, la composición sigue principios de diseño implícitamente, y los resultados tienen coherencia visual que resulta en imágenes que 'se ven bien' casi sin refinamiento. Para usuarios no técnicos que buscan calidad artística rápida, esta cualidad es difícil de replicar incluso con prompts elaborados en otros modelos. Sin embargo, para casos de uso técnicos que requieren automatización, control preciso, fine-tuning en estilo de marca, o integración en pipelines de desarrollo, las limitaciones de API de Midjourney hacen que Flux sea superior en 2026.",
+                "concepto_reforzado": "Midjourney: fortaleza estética vs limitaciones técnicas"
+              },
+              {
+                "pregunta": "¿Por qué Flux se convirtió en la referencia para desarrolladores en 2026?",
+                "opciones": [
+                  "Porque es propiedad de Meta y viene con soporte empresarial gratuito",
+                  "Porque es el único modelo de imagen open source disponible",
+                  "Por su combinación de calidad comparable a Midjourney, API pública robusta, versiones open source con fine-tuning, y buen manejo de texto dentro de imágenes",
+                  "Porque genera imágenes más rápido que cualquier alternativa"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Flux 1 (agosto 2024) llegó en un momento donde los desarrolladores necesitaban un modelo con las siguientes características simultáneas: calidad de imagen comparable a Midjourney (que Stable Diffusion XL no lograba consistentemente), API pública y confiable (que Midjourney no tenía robustamente), versiones open source para self-hosting y fine-tuning (que DALL-E no ofrece), y buen manejo de texto dentro de imágenes (uno de los puntos débiles históricos de los modelos de difusión). Flux cumplió todas esas condiciones, y la comunidad de desarrolladores lo adoptó rápidamente. Black Forest Labs, la empresa detrás de Flux, también publicó Flux Schnell en licencia Apache 2.0, creando la misma dinámica de ecosistema open source que Mistral logró en texto.",
+                "concepto_reforzado": "Flux como modelo de referencia para desarrollo con imagen"
+              },
+              {
+                "pregunta": "¿Cuál de estos casos de uso empresariales tiene el ROI más directo y medible con modelos de imagen IA?",
+                "opciones": [
+                  "Generar logos para nuevas empresas",
+                  "Crear fondos de pantalla para los computadores de la empresa",
+                  "Generar imágenes de producto para e-commerce, reemplazando sesiones fotográficas costosas",
+                  "Producir memes para redes sociales internas"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Las fotografías de producto para e-commerce tienen una economía muy clara: una sesión fotográfica profesional para 100 SKUs cuesta entre $2,000 y $10,000 USD, dependiendo del estudio, el fotógrafo y el tiempo de edición. Flux o DALL-E pueden generar las mismas 100 imágenes (fondo blanco, múltiples ángulos, variaciones de color) por $5-50 USD en cómputo de API. El ROI es inmediato, medible en la primera semana, y escala directamente con el catálogo. Para tiendas con miles de SKUs —que en LATAM incluyen marketplaces como MercadoLibre y plataformas de supermercados online— la generación IA de imágenes de producto no es un experimento innovador sino una necesidad operacional. Este caso de uso concreto y de ROI medible es uno de los más fáciles de vender a clientes que son escépticos de IA.",
+                "concepto_reforzado": "ROI de generación de imagen IA en e-commerce"
+              },
+              {
+                "pregunta": "¿Qué evaluación práctica deberías hacer para elegir entre Flux, DALL-E y Midjourney para un proyecto específico?",
+                "opciones": [
+                  "Comparar el número de seguidores en redes sociales de cada empresa",
+                  "Elegir siempre el más caro porque correlaciona con calidad",
+                  "Probar con el caso de uso más difícil del proyecto real —especialmente si necesitan texto dentro de imágenes— y comparar resultados",
+                  "Preguntar al cliente cuál conoce de nombre"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "La evaluación de modelos de imagen no debería basarse en benchmarks genéricos sino en el caso de uso específico del proyecto. Las diferencias entre modelos son más pronunciadas en los casos extremos: texto dentro de imágenes (Flux gana), calidad artística para materiales de branding de lujo (Midjourney gana frecuentemente), integración con pipeline OpenAI existente (DALL-E gana por consistencia de plataforma). Si el proyecto involucra texto en imagen —números de producto, nombres, precios, etiquetas—, este es el test más discriminante: es donde históricamente los modelos de difusión fallan más. Flux V1 fue uno de los primeros modelos de difusión en manejar texto en imagen de forma usable en producción. Probar con el caso difícil primero ahorra el costo de descubrir limitaciones después de comprometerse con una arquitectura.",
+                "concepto_reforzado": "Metodología de evaluación de modelos de imagen"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de moda colombiana (Bogotá) vende ropa en su propia tienda online y en MercadoLibre. Tienen 800 SKUs nuevos cada temporada (4 temporadas/año = 3,200 SKUs/año). Actualmente contratan un fotógrafo ($3,000/sesión por 100 prendas) y un editor ($500/sesión). El product manager quiere explorar si IA puede reemplazar parte de ese proceso para las imágenes de fondo blanco estándar (mantener las fotos editoriales con modelos pero automatizar las de producto).",
+              "instruccion": "Diseña una solución de generación de imágenes de producto. Incluye: (1) qué modelo elegirías y por qué, (2) el flujo técnico básico (cómo pasas del producto real a la imagen generada), (3) una estimación del ahorro anual, y (4) qué tipo de imágenes NO delegarías a IA todavía.",
+              "input_malo": "Usaría Midjourney porque hace las imágenes más bonitas y la ropa se vería espectacular con su estilo artístico.",
+              "pista": "Para imágenes de fondo blanco estándar, necesitas consistencia y automatización, no necesariamente el estilo artístico más espectacular. Considera: foto del producto real como referencia → Flux API con prompt de fondo blanco profesional → imagen de catálogo. Calcula el costo actual vs el costo de Flux (~$0.05/imagen en Replicate).",
+              "solucion": "Modelo: Flux Dev via API (Replicate o fal.ai). Justificación: Flux tiene la mejor API para automatización, maneja bien detalles de ropa (texturas, colores precisos), y el fine-tuning sobre fotos reales de las prendas produce consistencia de marca. Midjourney no tiene API robusta para 3,200 imágenes/año automatizadas. Flujo técnico: (1) Fotógrafo toma foto raw del producto sobre maniquí o fondo neutro (bajo costo vs sesión completa), (2) Flux API procesa la imagen con prompt 'product photo, white background, professional catalog, [descripción de prenda]', (3) Revisión humana de 10% de las imágenes para control de calidad. Estimación de ahorro: Costo actual: 32 sesiones/año × ($3,000 + $500) = $112,000/año. Costo nuevo: 32 sesiones mínimas para fotos raw ($500/sesión = $16,000) + Flux API 3,200 imágenes × $0.05 = $160 + desarrollo del sistema (~$5,000 una vez). Ahorro año 1: $112,000 - $21,160 = $90,840. Qué NO automatizar: fotos editoriales con modelos humanos (la presencia humana en ropa de moda sigue siendo crucial para conversión en prendas premium), imágenes de detalle de telas de lujo donde la textura real es el argumento de venta.",
+              "criterios_de_exito": [
+                "Elige Flux con justificación técnica específica (API, automatización) sobre Midjourney",
+                "Incluye estimación de costo/ahorro con números reales",
+                "Distingue claramente qué tipo de fotografía IA reemplaza y qué no"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Benchmarks: MMLU, HumanEval, HELM",
+              "por_que_importa_despues": "Ahora que conoces los principales modelos, necesitas saber cómo se miden objetivamente. Los benchmarks son el lenguaje técnico para comparar modelos sin dejarse llevar por el marketing."
             }
           }
         },
