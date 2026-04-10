@@ -4428,26 +4428,67 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Los datos que alimentan los sistemas de IA vienen en cinco formas fundamentales, cada una con sus características y desafíos únicos. Entender estas diferencias es clave para diseñar soluciones de IA que realmente funcionen.\n\nDatos estructurados son los más ordenados: viven en tablas con filas y columnas bien definidas. Una hoja de cálculo de ventas, una base de datos de clientes, un reporte financiero. Cada campo tiene un tipo, un rango esperado, y una relación clara con los otros campos. Los modelos clásicos de ML como XGBoost y Random Forest se especializaron en este tipo. En IA empresarial, el 60% de los datos disponibles son estructurados — son el punto de entrada más fácil para proyectos de ML.\n\nDatos de texto (no estructurados) son la materia prima de los LLMs. Emails, contratos, chats de soporte, reseñas de clientes, posts en redes sociales. La clave es que el significado no está en la estructura sino en el lenguaje natural. El procesamiento requiere tokenización, embeddings y los transformers que revolucionaron el campo. Los LLMs como Claude fueron preentrenados en billones de tokens de texto.\n\nImágenes alimentan modelos de visión computacional (CV). Un pixel es un número; una imagen es una matriz 3D (alto × ancho × canales RGB). Modelos como CLIP y Stable Diffusion manejan este tipo. Aplicaciones: detección de defectos en manufactura, análisis de imágenes médicas, reconocimiento facial.\n\nAudio se convierte a espectrogramas (representación visual de frecuencias en el tiempo) para que los modelos lo procesen. Whisper de OpenAI convierte audio a texto con precisión sobresaliente. Aplicaciones: transcripción de llamadas de servicio al cliente, análisis de sentimiento en voz, comandos de voz.\n\nVideo es el más complejo: es audio más imágenes en secuencia temporal. Requiere entender no solo qué hay en cada frame sino las relaciones entre frames. Modelos como Gemini 1.5 Pro pueden procesar horas de video. Aplicaciones: análisis de seguridad, moderación de contenido, educación.\n\nEl gran avance de 2024-2026 son los modelos multimodales: Claude 3, GPT-4V y Gemini pueden procesar múltiples tipos simultáneamente. Puedes enviar una imagen más texto y obtener análisis integrado. Para empresas en LATAM, esto significa que si tienes datos de imagen Y texto —por ejemplo, fotos de productos más descripciones— puedes construir sistemas mucho más poderosos que usando solo uno de los dos.",
+              "analogia": "Los tipos de datos son como idiomas diferentes. Un modelo entrenado solo en español no entiende chino. Un modelo de texto no 'entiende' imágenes — necesita ser entrenado en ese 'idioma visual'. Los modelos multimodales de 2026 son los primeros verdaderamente políglotas.",
+              "ejemplo_malo": "Intentar usar un modelo de NLP para clasificar imágenes de defectos en una fábrica — necesitas un modelo de visión computacional para eso. Usar la herramienta equivocada garantiza resultados malos independientemente de la calidad de los datos.",
+              "ejemplo_bueno": "Usar un modelo multimodal para analizar fotos de siniestros de vehículos más el texto del informe del ajustador simultáneamente, obteniendo evaluaciones de daño más precisas que con imagen o texto solos.",
+              "por_que_importa": "Identificar qué tipo de datos tiene tu empresa determina qué modelos y arquitecturas son aplicables. Elegir el tipo de modelo equivocado para el tipo de dato equivocado es el error más costoso y frecuente en proyectos de IA empresarial.",
+              "tip_profesional": "En proyectos empresariales reales, los mejores resultados vienen de combinar tipos. Un chatbot de soporte que procesa texto más imágenes de pantallazos del error reporta resolución en primer contacto 40% mayor que solo texto. Siempre pregunta: ¿qué otros tipos de datos podrían enriquecer este problema?"
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué tipo de dato es una hoja de Excel con ventas mensuales por producto?",
+                "opciones": [
+                  "No estructurado",
+                  "Estructurado",
+                  "Semiestructurado",
+                  "Multimodal"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los datos estructurados son información organizada en tablas con filas, columnas y tipos de campo definidos. Una hoja de Excel con ventas tiene columnas como fecha, producto, monto — cada campo tiene un tipo bien definido (fecha, texto, número). Este es el tipo de dato más común en empresas y el punto de entrada más accesible para proyectos de ML clásico. XGBoost, Random Forest y regresión logística están optimizados para este formato.",
+                "concepto_reforzado": "Clasificación de tipos de datos según su estructura"
+              },
+              {
+                "pregunta": "¿Cómo procesan los modelos de audio como Whisper la señal de audio?",
+                "opciones": [
+                  "Leen la señal eléctrica directamente como números binarios",
+                  "Convierten el audio a espectrogramas (representación visual de frecuencias) y los procesan como imágenes",
+                  "Transcriben fonema por fonema usando reglas lingüísticas",
+                  "Comparan el audio con grabaciones de referencia almacenadas"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los modelos de audio como Whisper convierten la señal de audio a espectrogramas — representaciones visuales que muestran las frecuencias del sonido en el tiempo usando un mapa de calor. Esta transformación convierte el problema de audio en un problema de visión computacional, permitiendo usar redes convolucionales optimizadas para imágenes. El espectrograma captura tanto el contenido lingüístico como las características acústicas del hablante, habilitando no solo transcripción sino identificación de hablante y análisis de emoción.",
+                "concepto_reforzado": "Procesamiento de datos de audio mediante espectrogramas"
+              },
+              {
+                "pregunta": "¿Cuál es el principal avance de los modelos multimodales de 2024-2026?",
+                "opciones": [
+                  "Son más baratos que los modelos de un solo tipo de dato",
+                  "Procesan múltiples tipos de datos (texto, imagen, audio) simultáneamente en una sola consulta",
+                  "Tienen más parámetros que cualquier modelo anterior",
+                  "Funcionan completamente sin conexión a internet"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los modelos multimodales como Claude 3.5 Sonnet, GPT-4V y Gemini pueden recibir y razonar sobre múltiples tipos de datos en la misma consulta. Esto permite análisis imposible con modelos unimodales: analizar una imagen médica junto al historial del paciente, revisar un contrato PDF y compararlo con base legal, o analizar un video de entrenamiento y generar materiales de estudio. Representa el mayor salto en aplicabilidad empresarial desde GPT-3 y explica por qué las soluciones de IA de 2026 son dramáticamente más poderosas que las de 2022.",
+                "concepto_reforzado": "Capacidades y ventajas de los modelos multimodales"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de seguros colombiana quiere usar IA para tres procesos: (1) clasificar siniestros de vehículos por las fotos del accidente y el informe del ajustador, (2) analizar contratos de pólizas en PDF para extraer cláusulas clave, (3) predecir renovaciones basándose en historial de pagos y siniestros de cada cliente.",
+              "instruccion": "Para cada proceso, identifica qué tipo de dato se necesita, qué tipo de modelo es más apropiado, y si podrías combinar tipos para obtener mejores resultados.",
+              "input_malo": "Usar el mismo modelo de lenguaje genérico para los tres procesos — simplemente darle texto descriptivo de cada situación y esperar que responda bien en todos los casos.",
+              "pista": "Proceso 1 = imágenes + texto (multimodal), proceso 2 = texto largo (LLM con contexto largo), proceso 3 = datos estructurados de historial (ML clásico). ¿Cuál proceso se beneficia más de un modelo multimodal versus uno especializado?",
+              "solucion": "Proceso 1 (fotos siniestros): Modelo multimodal (Claude 3.5 o GPT-4V) que procese simultáneamente imagen del accidente + texto del informe del ajustador. Combinar ambos tipos mejora la precisión de evaluación del daño en ~40% vs solo imagen. Proceso 2 (análisis contratos): LLM con contexto largo (Claude Sonnet con 200K tokens). RAG si los contratos superan el contexto máximo — dividir en chunks y recuperar cláusulas relevantes. Proceso 3 (predicción renovaciones): Modelo ML clásico (XGBoost o LightGBM) sobre datos estructurados: historial de pagos, número de siniestros, tipo de póliza, antigüedad. Nota: Proceso 1 es el que más se beneficia de multimodalidad — la combinación de visual + texto da información mucho más rica que cualquiera solo.",
+              "criterios_de_exito": [
+                "Identifica correctamente el tipo de dato dominante para cada proceso",
+                "Sugiere modelo apropiado para cada tipo de dato",
+                "Identifica el proceso que más se beneficia de combinar tipos (multimodalidad)"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Cómo se recopilan datos de entrenamiento a escala",
+              "por_que_importa_despues": "Saber qué tipo de datos tienes es el primer paso; el siguiente es entender de dónde vienen los datos que hacen funcionar a los modelos que usas hoy y por qué tienen las capacidades y limitaciones que tienen."
             }
           }
         },
@@ -4460,26 +4501,67 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Detrás de cada LLM potente hay años de recopilación de datos a una escala difícil de imaginar. Entender cómo se recopilan estos datos te ayuda a comprender las limitaciones de los modelos, sus sesgos potenciales, y por qué los datos propios de tu empresa son tan valiosos.\n\nCommon Crawl es la columna vertebral de los datos de preentrenamiento de la mayoría de los LLMs. Es un proyecto sin fines de lucro que rastrea el internet mensualmente generando 250TB de texto. GPT-3, LLaMA, Mistral y prácticamente todos los modelos open source usaron Common Crawl como base. El problema: internet incluye desinformación, contenido ofensivo y mucho texto de baja calidad. El proceso de filtrado es crítico y costoso — hasta el 95% del texto crudo de Common Crawl se descarta antes del entrenamiento.\n\nWeb scraping programático construyó datasets especializados de alta calidad: Wikipedia fue procesada en 20+ idiomas (texto enciclopédico bien estructurado). Los papers de ArXiv con más de 2 millones de artículos científicos están en casi todos los modelos base. GitHub con cientos de millones de repositorios de código fue clave para las capacidades de programación de los LLMs. Stack Overflow y foros técnicos añadieron el conocimiento Q&A que hace a los modelos tan útiles para programadores.\n\nHuman Annotation (etiquetación humana) produce datos de la máxima calidad, especialmente para fine-tuning e RLHF. Empresas como Scale AI, Surge AI y Remotasks tienen miles de trabajadores que etiquetan conversaciones, califican respuestas y crean pares instrucción-respuesta. El entrenamiento de InstructGPT y los modelos que siguieron instrucciones dependió masivamente de este trabajo humano. Para Claude, el Constitutional AI de Anthropic usó criterios éticos explícitos para guiar las preferencias humanas durante el RLHF.\n\nDatos sintéticos es la técnica más revolucionaria de 2024-2026. Consiste en usar LLMs más potentes para generar datos de entrenamiento para modelos más pequeños. Phi-1 de Microsoft (1.3B parámetros) fue entrenado con datos sintéticos generados por GPT-4 y superó a modelos 10 veces más grandes. Mistral, LLaMA 3 y muchos modelos de 7-13B parámetros usaron datos sintéticos para acelerar la creación de ejemplos de alta calidad en dominios donde los datos reales son escasos.\n\nDatos propietarios son el moat competitivo de los grandes labs: Google usó búsquedas de usuarios, correos de Gmail anonimizados y el contenido de Google Books. Meta usó publicaciones de Facebook e Instagram. Estos datos únicos explican parte del rendimiento superior de los modelos comerciales versus los open source con los mismos parámetros.\n\nPara empresas en LATAM, la lección es doble: los modelos base tienen menos datos en español —especialmente variedades regionales— que en inglés. Pero más importante: los datos propios de tu empresa son un activo enorme. El historial de tickets de soporte, los contratos pasados, las conversaciones con clientes son datos que ningún modelo base tiene y que pueden transformar completamente el rendimiento de un sistema de IA customizado.",
+              "analogia": "Recopilar datos para un LLM es como construir una biblioteca universal — necesitas libros de todos los temas, en todos los idiomas, de toda calidad, y luego tener bibliotecarios expertos que organicen, califiquen y descarten el material. Los bibliotecarios (etiquetadores humanos y filtros automáticos) son tan importantes como los libros.",
+              "ejemplo_malo": "Asumir que todos los modelos de lenguaje tienen los mismos datos de entrenamiento — la diferencia en los datos de preentrenamiento explica gran parte de las diferencias de rendimiento entre Claude, GPT-4 y LLaMA en tareas específicas.",
+              "ejemplo_bueno": "Entender que si tu empresa tiene 10 años de documentos técnicos únicos de tu industria, esos documentos son más valiosos para construir un asistente especializado que cualquier dataset público disponible en Hugging Face.",
+              "por_que_importa": "Conocer los orígenes de los datos de entrenamiento explica los límites y sesgos de los modelos. Si tu caso de uso requiere conocimiento muy específico de tu industria o del contexto colombiano, los modelos base pueden no ser suficientes sin customización con datos propios.",
+              "tip_profesional": "El 'data poisoning' es un riesgo real de seguridad: investigadores han demostrado que insertar contenido manipulado en Common Crawl puede influir en el comportamiento de modelos entrenados con esos datos. La procedencia y trazabilidad de los datos de entrenamiento se está convirtiendo en un requisito regulatorio en Europa y pronto en LATAM."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la fuente de datos más usada en el preentrenamiento de LLMs como GPT-3 y LLaMA?",
+                "opciones": [
+                  "Twitter/X",
+                  "Common Crawl — proyecto que rastrea internet mensualmente generando 250TB de texto",
+                  "Google Books exclusivamente",
+                  "Wikipedia en inglés"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Common Crawl es un proyecto sin fines de lucro que rastrea mensualmente partes de internet generando 250TB de texto crudo. Ha sido la fuente principal para GPT-3, LLaMA, Mistral y prácticamente todos los modelos base. Su escala es incomparable, aunque su calidad es desigual — hasta el 95% del texto crudo se descarta durante el filtrado. El proceso de curación de Common Crawl es una de las partes más costosas y críticas del pipeline de entrenamiento, y las diferentes decisiones de filtrado explican parte de las diferencias entre modelos.",
+                "concepto_reforzado": "Fuentes de datos para preentrenamiento de LLMs"
+              },
+              {
+                "pregunta": "¿Qué es RLHF y por qué fue transformador para los LLMs?",
+                "opciones": [
+                  "Un algoritmo de optimización matemática para reducir el tamaño del modelo",
+                  "Reinforcement Learning from Human Feedback: proceso donde humanos califican respuestas para enseñar al modelo qué comportamientos prefieren",
+                  "Una técnica de compresión de datos para reducir el tamaño de los datasets",
+                  "Un tipo especial de red neuronal para procesar texto"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "RLHF (Reinforcement Learning from Human Feedback) transformó los LLMs de 'completadores de texto' a 'asistentes útiles que siguen instrucciones'. Etiquetadores humanos califican pares de respuestas del modelo indicando cuál es mejor según criterios de utilidad, veracidad y seguridad. Esas preferencias entrenan un modelo de recompensa que guía el fine-tuning del LLM. InstructGPT (2022) fue el primer modelo masivo en usar RLHF, lo que permitió que GPT-3.5 siguiera instrucciones de forma confiable y transformó la utilidad práctica de los LLMs para usuarios no técnicos.",
+                "concepto_reforzado": "Rol de la etiquetación humana en el entrenamiento de LLMs"
+              },
+              {
+                "pregunta": "¿Por qué los modelos base generalmente rinden mejor en inglés que en español latinoamericano?",
+                "opciones": [
+                  "Porque el inglés tiene gramática más simple",
+                  "Porque hay proporcionalmente mucho más texto en inglés que en español latinoamericano en Common Crawl y las otras fuentes de preentrenamiento",
+                  "Porque los ingenieros que crean los modelos prefieren el inglés",
+                  "Por razones técnicas relacionadas con el vocabulario de tokenización"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El inglés domina internet con aproximadamente 55-60% del contenido web. Common Crawl, Wikipedia, GitHub y Stack Overflow tienen proporcionalmente mucho más contenido en inglés. Esto significa que los modelos base ven más ejemplos en inglés durante el entrenamiento, resultando en representaciones más ricas. El español latinoamericano — especialmente variantes regionales como el colombiano o venezolano — está sub-representado, lo que justifica el fine-tuning con datos locales para aplicaciones que requieren alto rendimiento en español regional.",
+                "concepto_reforzado": "Brecha de representación lingüística en datos de preentrenamiento"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Eres el CTO de una plataforma legal en Colombia que quiere construir un asistente de IA para abogados. El asistente debe responder preguntas sobre legislación colombiana vigente, jurisprudencia reciente de la Corte Constitucional y contratos laborales locales. El equipo propone usar Claude directamente sin customización.",
+              "instruccion": "Explica por qué los modelos base como Claude pueden no ser suficientes para este caso, qué datos específicos necesitarías recopilar, y qué arquitectura técnica usarías para aprovecharlos.",
+              "input_malo": "Usar Claude directamente sin customización — 'es un modelo muy inteligente, seguro que sabe de leyes colombianas y responde bien'.",
+              "pista": "Pregúntate: ¿está el Código Civil colombiano actualizado a 2026, las sentencias recientes de la Corte Constitucional, o los contratos laborales típicos de Colombia en Common Crawl o Wikipedia con suficiente detalle y actualización?",
+              "solucion": "Los modelos base tienen conocimiento general de derecho pero limitado en legislación colombiana específica —especialmente post-2023— y pueden alucinar citas legales. La estrategia correcta: 1) Recopilar corpus legal colombiano: Código Civil y Laboral, sentencias Corte Constitucional 2020-2026, Gaceta del Congreso, circulares del Ministerio del Trabajo. 2) Estructurar como documentos con metadata: artículo, fecha, entidad emisora, tema jurídico. 3) Usar RAG para que el modelo recupere y cite legislación específica antes de responder. 4) Opcionalmente fine-tuning con 500-1000 pares pregunta-respuesta anotados por abogados expertos. Resultado esperado: el asistente pasa de respuestas genéricas ('según el Código Civil...') a citas precisas ('según el Artículo 64 del Código Sustantivo del Trabajo, modificado por...').",
+              "criterios_de_exito": [
+                "Identifica la brecha entre conocimiento general del modelo y legislación colombiana específica y actualizada",
+                "Propone recopilación de corpus legal local con fuentes concretas",
+                "Menciona RAG como arquitectura apropiada para conocimiento factual actualizable"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Calidad vs cantidad: el dilema del dataset",
+              "por_que_importa_despues": "Saber cómo se recopilan datos a escala abre la pregunta crucial de diseño: ¿cuántos datos necesitas realmente y qué tan buenos deben ser? La respuesta cambió dramáticamente en 2023-2026."
             }
           }
         },
@@ -4492,26 +4574,67 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Uno de los debates más importantes en ML en los últimos años ha sido: ¿qué importa más para entrenar un modelo, la cantidad de datos o la calidad de esos datos? La respuesta ha evolucionado dramáticamente y tiene implicaciones prácticas directas para cualquier proyecto empresarial.\n\nDurante los años 2010-2022, la mantra del campo era clara: más datos, siempre. GPT-3 con 175B parámetros entrenado en 500GB de texto superó a todo lo anterior. La escala lo resolvía todo — si el modelo tenía suficientes parámetros y suficientes datos, emergían capacidades sorprendentes casi como por magia.\n\nEl giro llegó con Phi-1 de Microsoft en 2023. Con solo 1.3B parámetros y 7GB de datos sintéticos de 'libros de texto de alta calidad' generados por GPT-4, superó a modelos 10 veces más grandes entrenados con datos masivos de internet no filtrados. El paper 'Textbooks Are All You Need' formalizó el principio: los datos diseñados pedagógicamente —claros, correctos, con razonamiento explícito— producen capacidades mucho mejores por parámetro que datos masivos de baja calidad.\n\nHoy en 2026, los modelos más eficientes como Mistral 7B, Phi-3 y Gemma son más capaces que GPT-3 (175B parámetros) usando 10-50 veces menos parámetros y con datos curados cuidadosamente. Esto democratizó la IA: modelos que antes requerían datacenters ahora corren en una laptop.\n\nPara proyectos empresariales, esto tiene implicaciones directas y muy concretas.\n\nEn fine-tuning: para customizar un modelo para tu empresa, 500-1000 ejemplos de alta calidad anotados por expertos y representativos de tus casos de uso reales superan a 50,000 ejemplos recopilados automáticamente sin curaduría. El tiempo dedicado a seleccionar y anotar bien esos 1000 ejemplos es la inversión más rentable del proyecto.\n\nEn RAG: la calidad de tus documentos base importa enormemente. Un manual técnico bien estructurado con terminología consistente produce resultados dramáticamente mejores que PDFs escaneados con OCR inconsistente, aunque ambos contengan la misma información.\n\nEl costo oculto de los datos malos: entrenar con datos de mala calidad no solo produce resultados pobres — activamente daña al modelo en áreas donde antes funcionaba bien. El 'catastrophic forgetting' puede ocurrir cuando datos de fine-tuning mal curados sobreescriben conocimiento valioso del modelo base, convirtiendo un modelo capaz en uno roto para tareas que antes resolvía sin problemas.\n\nLa regla práctica para 2026: cuida tus datos mejor que tu código. Un pipeline de datos limpio con datos de alta calidad más un modelo simple supera consistentemente a un modelo complejo con datos sucios.",
+              "analogia": "Es la diferencia entre alimentar a un atleta de élite con 10,000 calorías de comida chatarra versus 2,500 calorías de nutrición perfectamente diseñada. El atleta con la nutrición correcta no solo tiene más energía — desarrolla el músculo correcto para su deporte. Más no es mejor; la composición y calidad es lo que importa.",
+              "ejemplo_malo": "Hacer scraping masivo del sitio web de la empresa y todos los emails de soporte sin revisar, e intentar hacer fine-tuning directamente — el modelo aprenderá todos los errores, inconsistencias, respuestas malas y spam incluidos. Literalmente aprenderá a comportarse mal.",
+              "ejemplo_bueno": "Seleccionar las 300 mejores conversaciones de soporte resueltas exitosamente, revisadas y aprobadas por el equipo, anotar el razonamiento detrás de cada resolución, y usar eso para fine-tuning. El resultado es un asistente que replica las mejores prácticas del mejor agente del equipo.",
+              "por_que_importa": "En proyectos de IA empresarial, la mayor parte del tiempo y costo debe ir a curación de datos, no a selección de modelos ni infraestructura. Los proyectos que invierten el presupuesto en el modelo equivocado y descuidan los datos fracasan con regularidad predecible.",
+              "tip_profesional": "La regla 80/20 invertida en ML: el 80% del tiempo de un proyecto de IA bien ejecutado se dedica a datos (recopilación, limpieza, curaduría, anotación). Solo el 20% es modelado e infraestructura. Los proyectos que intentan hacer esto al revés — 80% en el modelo, 20% en datos — fracasan con una frecuencia alarmante."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué demostró el modelo Phi-1 de Microsoft en 2023 sobre calidad vs cantidad de datos?",
+                "opciones": [
+                  "Que los modelos más grandes con más datos siempre son mejores",
+                  "Que datos sintéticos de alta calidad pedagógica pueden producir modelos que superan a otros 10 veces más grandes entrenados con datos masivos de baja calidad",
+                  "Que el fine-tuning no funciona para modelos pequeños de menos de 7B parámetros",
+                  "Que se necesitan mínimo 10B parámetros para obtener resultados útiles en producción"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Phi-1 de Microsoft fue entrenado con 7GB de datos sintéticos generados por GPT-4 siguiendo el principio de 'libros de texto de alta calidad'. Con 1.3B parámetros superó a modelos de 13B+ parámetros entrenados con billones de tokens de internet. Este resultado fundamentó el cambio de paradigma: de 'más datos siempre es mejor' a 'datos de mayor calidad pedagógica producen modelos más eficientes por parámetro'. Hoy Phi-3 y modelos similares son más útiles en producción que GPT-3 con 175B parámetros.",
+                "concepto_reforzado": "Calidad sobre cantidad en el entrenamiento de modelos modernos"
+              },
+              {
+                "pregunta": "Para un proyecto de fine-tuning empresarial, ¿cuántos ejemplos de alta calidad son generalmente suficientes?",
+                "opciones": [
+                  "Al menos 1 millón de ejemplos para resultados confiables",
+                  "500-1000 ejemplos perfectamente curados y representativos del caso de uso real",
+                  "Exactamente 10,000 ejemplos — ni más ni menos",
+                  "El fine-tuning siempre requiere millones de datos para funcionar"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Las investigaciones recientes y la práctica empresarial muestran consistentemente que 500-1000 ejemplos de alta calidad son suficientes para un fine-tuning efectivo. Lo crítico es que los ejemplos estén correctamente anotados por expertos del dominio, cubran los casos de uso principales de forma representativa, y sean consistentes en estilo y calidad. Intentar compensar con cantidad lo que falta en calidad produce resultados peores — a veces incluso peores que el modelo base sin fine-tuning.",
+                "concepto_reforzado": "Cantidad óptima de datos para fine-tuning efectivo"
+              },
+              {
+                "pregunta": "¿Qué es el 'catastrophic forgetting' en el contexto de fine-tuning?",
+                "opciones": [
+                  "Cuando el modelo olvida responder en el idioma correcto al cambiar de tema",
+                  "Cuando datos de fine-tuning de mala calidad sobreescriben conocimiento valioso del modelo base, degradando capacidades que antes funcionaban bien",
+                  "Cuando el servidor se queda sin memoria RAM durante el proceso de entrenamiento",
+                  "Cuando el modelo falla consistentemente en tareas que nunca estuvo diseñado para hacer"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El catastrophic forgetting ocurre cuando durante el fine-tuning, los pesos del modelo se ajustan tan drásticamente que el modelo 'olvida' capacidades que tenía del preentrenamiento. Es especialmente probable con datos de fine-tuning de baja calidad, sesgados o no representativos. El resultado es un modelo que hace bien las tareas nuevas pero falla en razonamiento general que antes manejaba perfectamente. Técnicas como LoRA y QLoRA fueron diseñadas parcialmente para mitigar este problema al limitar cuántos parámetros se modifican durante el fine-tuning.",
+                "concepto_reforzado": "Riesgos del fine-tuning con datos de mala calidad"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de retail colombiana quiere entrenar un modelo para clasificar automáticamente las quejas de clientes en 4 categorías: envío, producto, facturación, servicio. Tienen dos opciones: (A) usar todos los emails de soporte de los últimos 5 años — 200,000 emails sin revisar exportados de Zendesk, o (B) seleccionar manualmente 1,000 emails representativos, verificar que cada uno tenga la categoría correcta y anotar brevemente por qué pertenece a esa categoría.",
+              "instruccion": "Argumenta cuál opción produce el mejor modelo, explica los riesgos específicos de la opción descartada, y describe cómo validarías que el modelo funciona correctamente antes de lanzarlo a producción.",
+              "input_malo": "Elegir la opción A porque 'más datos siempre es mejor' y simplemente correr el entrenamiento a ver qué pasa — total, el modelo es inteligente y aprenderá solo a ignorar el ruido.",
+              "pista": "¿Cuántos de esos 200,000 emails tienen la categoría correctamente asignada? ¿Cuántos son respuestas automáticas, spam, emails internos, o tickets mal categorizados por agentes de soporte con distintos criterios?",
+              "solucion": "Opción B es correcta. Con 200,000 emails sin revisar, al menos el 20-30% estarán mal categorizados (errores humanos de los agentes, criterios inconsistentes, emails ambiguos forzados a una categoría). El modelo aprende los errores sistemáticamente. Con 1,000 ejemplos perfectamente anotados y balanceados (250 por categoría), el modelo aprende patrones claros y confiables. Validación: crear un conjunto de prueba de 200 ejemplos no vistos, verificados manualmente por el equipo. Métrica objetivo: F1-score por categoría mayor a 0.85. Si alguna categoría está por debajo, necesitas más ejemplos de esa categoría específica y analizar si la definición de la categoría es suficientemente clara.",
+              "criterios_de_exito": [
+                "Elige opción B con justificación explícita basada en calidad vs cantidad",
+                "Identifica el problema concreto del ruido y etiquetado inconsistente en datos sin revisar",
+                "Propone un método de validación con métricas específicas y criterio de éxito numérico"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Data augmentation y técnicas de enriquecimiento",
+              "por_que_importa_despues": "Una vez que entiendes que la calidad supera a la cantidad, el siguiente paso práctico es aprender a maximizar lo que tienes con data augmentation — cómo multiplicar datos de alta calidad cuando son escasos."
             }
           }
         },
@@ -4524,26 +4647,67 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Data augmentation es el conjunto de técnicas que permiten aumentar artificialmente el tamaño y la diversidad de un dataset a partir de datos existentes. Es especialmente crítica cuando tienes datos de alta calidad pero en cantidad insuficiente — el escenario más común en proyectos empresariales en LATAM.\n\nEn visión computacional, data augmentation es estándar desde los años 2010. Las técnicas incluyen: rotación de imágenes (0°, 90°, 180°, 270°), volteo horizontal o vertical, cambios de brillo y contraste, recortes aleatorios, zoom, ruido gaussiano y transformaciones de color. Una sola imagen de un tumor médico se convierte en 20-50 variantes que el modelo interpreta como experiencias de aprendizaje independientes. Esto es fundamental cuando tienes 500 imágenes de pacientes, no 50,000.\n\nEn NLP y texto, data augmentation es más reciente pero poderosa. Las técnicas más importantes son:\n\nBack-translation: traducir texto español → inglés → español produce paráfrasis naturales con el mismo significado pero diferente estructura gramatical. Es gratuita con modelos modernos de traducción y produce variantes de alta naturalidad lingüística.\n\nParafraseo con LLMs: usar Claude o GPT-4 para reformular oraciones manteniendo la etiqueta semántica. Es la técnica más poderosa y flexible — puedes especificar el nivel de formalidad, el registro y el vocabulario objetivo.\n\nSynonym replacement: reemplazar palabras con sinónimos preservando el sentido. Más mecánico que el parafraseo pero rápido y escalable para grandes volúmenes.\n\nRandom insertion y deletion: insertar o eliminar palabras aleatoriamente crea variantes que entrenan al modelo para ser robusto a texto imperfecto o informal.\n\nDatos sintéticos con LLMs es la técnica más transformadora de 2024-2026. Si tienes 100 ejemplos de fine-tuning, puedes pedirle a Claude que genere 900 variantes manteniendo las características esenciales de cada clase. Para empresas en LATAM con pocos datos etiquetados en dominios específicos, esto puede ser la diferencia entre un proyecto viable y uno que no arranca.\n\nEnriquecimiento de datos va más allá de la augmentation: consiste en añadir información externa que mejora las predicciones. Un modelo de scoring crediticio mejora si combinas datos internos (historial de pagos) con datos externos (indicadores macroeconómicos del DANE, historial en centrales de riesgo). Un modelo de demanda para retail mejora dramáticamente al añadir datos de días festivos, eventos locales y datos climáticos.\n\nCuándo usar data augmentation: cuando tienes menos de 1,000 ejemplos en alguna clase, cuando el modelo muestra overfitting (buen rendimiento en entrenamiento pero pobre en validación), y cuando quieres hacer el modelo más robusto a variaciones del mundo real.\n\nLímites importantes: data augmentation no puede compensar la ausencia total de datos para casos edge críticos. Si nunca viste ejemplos de fraude en tiempos de crisis, augmentar datos de fraude normal no te enseñará a detectar el fraude específico de crisis. Algunos patrones solo se aprenden con datos reales del fenómeno.",
+              "analogia": "Es como un maestro de idiomas que hace que sus 30 estudiantes practiquen la misma frase de 20 maneras diferentes — con acento formal, informal, con sinónimos, con paráfrasis. El cerebro procesa cada variante como una experiencia de aprendizaje distinta, reforzando el concepto desde múltiples ángulos hasta que se vuelve robusto y transferible.",
+              "ejemplo_malo": "Entrenar un modelo de detección de fraude financiero solo con los datos de los últimos 6 meses sin augmentation — el modelo no aprenderá patrones de fraude estacionales, fraude en fechas especiales como temporada navideña, ni variaciones que aparecen con baja frecuencia.",
+              "ejemplo_bueno": "Usar back-translation para generar 5 variantes de cada email de soporte antes de entrenar el clasificador de intenciones — aumentas el dataset de 1,000 a 6,000 ejemplos sin nueva anotación humana, mejorando la robustez del modelo a diferentes formas de expresar el mismo problema.",
+              "por_que_importa": "En LATAM, los datos etiquetados de alta calidad son escasos y costosos de obtener. Data augmentation es la forma más económica de multiplicar el valor de cada dato que tienes — puede ser la diferencia entre un proyecto que funciona con los datos disponibles y uno que requiere meses de recopilación adicional.",
+              "tip_profesional": "Para datasets de texto en español, back-translation español→inglés→español es especialmente efectiva porque cambia la estructura gramatical mientras preserva el significado — produciendo variantes más robustas que la simple sustitución de sinónimos. Herramientas gratuitas: Helsinki-NLP en Hugging Face tiene modelos de traducción de alta calidad para español-inglés que puedes usar localmente sin costo de API."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué es el back-translation en data augmentation de texto?",
+                "opciones": [
+                  "Traducir textos de documentos históricos hacia el español moderno",
+                  "Traducir texto a otro idioma y volverlo a traducir al original, produciendo una paráfrasis natural con diferente estructura gramatical",
+                  "Eliminar palabras del final del texto hacia el principio para crear variantes cortas",
+                  "Un tipo de normalización que elimina palabras de baja frecuencia del dataset"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El back-translation toma un texto (por ejemplo en español), lo traduce a otro idioma (inglés) y luego retraduce al español original. El resultado es una paráfrasis que preserva el significado semántico pero cambia la estructura gramatical y el vocabulario de forma natural. Es especialmente valiosa porque produce variantes lingüísticamente naturales — a diferencia de la simple sustitución de sinónimos que puede sonar artificial — y es prácticamente gratuita con modelos modernos de traducción automática de alta calidad.",
+                "concepto_reforzado": "Técnica de back-translation para data augmentation en texto"
+              },
+              {
+                "pregunta": "¿En qué situaciones es más recomendable aplicar data augmentation?",
+                "opciones": [
+                  "Solo cuando tienes millones de datos y quieres más",
+                  "Cuando tienes menos de 1,000 ejemplos en alguna clase o cuando el modelo muestra overfitting",
+                  "Únicamente en proyectos de visión computacional con imágenes",
+                  "Solo si no tienes acceso a GPU para entrenar modelos grandes"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Data augmentation es más valiosa cuando el dataset es pequeño o desbalanceado. La señal principal de que la necesitas es el overfitting: cuando el modelo tiene rendimiento excelente en datos de entrenamiento pero pobre en validación. Esto indica que memorizó los datos en lugar de aprender patrones generalizables. Augmentar el dataset con variantes fuerza al modelo a aprender los patrones subyacentes, no los detalles superficiales de los ejemplos originales. También es crítica cuando alguna clase tiene menos de 1,000 ejemplos en un problema de clasificación.",
+                "concepto_reforzado": "Cuándo y por qué aplicar data augmentation"
+              },
+              {
+                "pregunta": "¿Qué ventaja ofrecen los datos sintéticos generados con LLMs para empresas en LATAM?",
+                "opciones": [
+                  "Son siempre idénticos en calidad a los datos reales, sin diferencia práctica",
+                  "Permiten crear datos etiquetados en español y dominios específicos donde los datos reales son escasos y costosos, multiplicando por 5-10x el volumen de entrenamiento",
+                  "Son más económicos de almacenar que los datos reales en la nube",
+                  "Eliminan completamente la necesidad de cualquier dato real para el entrenamiento"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "En LATAM, conseguir datos etiquetados de alta calidad en español y en dominios específicos (derecho colombiano, terminología médica regional, jerga comercial local) es caro y lento. Los LLMs como Claude pueden generar variantes de alta calidad de ejemplos existentes, crear casos edge que rara vez aparecen en datos reales, y producir ejemplos con reasoning explícito que enriquecen el dataset. No reemplazan los datos reales para validación final — el conjunto de prueba siempre debe ser datos reales — pero pueden multiplicar el volumen de entrenamiento de forma económica.",
+                "concepto_reforzado": "Datos sintéticos con LLMs para proyectos con datos escasos"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una clínica en Bogotá quiere construir un clasificador de urgencias médicas basado en la descripción textual del paciente al llegar. Tienen 200 casos reales bien documentados en 5 categorías (urgencia crítica, alta, media, baja, no urgencia), pero el médico jefe advierte que los casos de urgencia crítica son solo 15 en el dataset — muy pocos para que el modelo aprenda esa clase con confianza.",
+              "instruccion": "Propón una estrategia concreta de data augmentation para los 15 casos de urgencia crítica. Especifica qué técnicas usarías, en qué orden, y qué controles de calidad aplicarías antes de incluir los datos augmentados en el entrenamiento.",
+              "input_malo": "Simplemente usar los 15 casos de urgencia crítica tal como están y esperar que el modelo aprenda algo — o usar oversampling automático (duplicar los 15 casos) sin generar variantes reales.",
+              "pista": "Urgencia crítica es la clase más importante de todas — un falso negativo (clasificar un caso crítico como bajo) puede costar una vida. Por eso, la calidad y la revisión médica de cualquier dato augmentado es no negociable. ¿Cómo generarías variantes de alta calidad sin introducir síntomas incorrectos?",
+              "solucion": "Estrategia en 4 pasos: 1) Validación médica base: los 15 casos originales deben ser validados por dos médicos senior independientemente — ninguna augmentation puede compensar datos base incorrectos en un dominio de salud. 2) Back-translation: traducir cada caso al inglés y retraducir al español, generando 15 variantes adicionales con diferente vocabulario pero mismos síntomas críticos preservados. Revisión médica de las 15 variantes. 3) Parafraseo con Claude: pedir a Claude que reescriba cada caso 3 veces variando el vocabulario del paciente (formal vs informal, adulto mayor vs joven, descripción técnica vs coloquial) pero manteniendo EXACTAMENTE los mismos síntomas de urgencia crítica. Genera 45 ejemplos más. 4) Revisión médica final: un médico revisa TODOS los 60 ejemplos sintéticos para confirmar que los síntomas de urgencia crítica son correctos y no se introdujeron errores médicos. Total: 15 reales + 60 revisados y aprobados = 75 ejemplos. Advertencia crítica: el conjunto de validación final debe usar SOLO casos reales — nunca datos augmentados para evaluar el rendimiento real del modelo.",
+              "criterios_de_exito": [
+                "Prioriza la revisión médica como paso no negociable antes y después de la augmentation",
+                "Propone al menos dos técnicas concretas de augmentation apropiadas para texto médico",
+                "Distingue explícitamente entre uso de datos augmentados en entrenamiento vs validación"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Bases de datos vectoriales: Pinecone, Weaviate, pgvector",
+              "por_que_importa_despues": "Con los datos bien preparados y enriquecidos, el siguiente desafío es cómo almacenarlos y recuperarlos eficientemente para que los LLMs puedan usarlos en tiempo real — ahí entran las bases de datos vectoriales."
             }
           }
         },
@@ -4556,26 +4720,67 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Para entender las bases de datos vectoriales, primero necesitas entender los embeddings: representaciones numéricas del significado semántico. Cuando un modelo procesa el texto 'perro', no guarda la palabra — guarda un vector de 1,536 números que captura el concepto 'perro' en relación con todos los otros conceptos que el modelo conoce. 'Perro' y 'canino' tendrán vectores muy similares (alta similitud coseno). 'Perro' y 'automóvil' tendrán vectores muy diferentes (baja similitud). Esta propiedad es la base de toda búsqueda semántica moderna.\n\nUna base de datos vectorial está optimizada para una operación que las bases de datos relacionales hacen muy mal: búsqueda por similitud semántica. En SQL, buscar 'documentos similares a este' requeriría comparar cada documento con cada otro — una operación O(n²) que escala terriblemente. Con 1 millón de documentos serían 1 billón de comparaciones. Las bases de datos vectoriales usan algoritmos de búsqueda aproximada (ANN — Approximate Nearest Neighbor) como HNSW (Hierarchical Navigable Small World) que pueden encontrar los K vectores más similares en milisegundos, incluso con decenas de millones de vectores.\n\nPinecone fue la primera base de datos vectorial como servicio (DBaaS) en alcanzar escala empresarial. Completamente gestionada, con API simple, escalable a billones de vectores sin configurar infraestructura. Es la opción más fácil de usar pero la más cara para volúmenes altos. Usada por empresas como Shopify y Discord para búsqueda semántica de millones de productos y mensajes. Ideal para startups que priorizan velocidad de desarrollo sobre costo.\n\nWeaviate es open source y puede desplegarse en la infraestructura propia o en nube. Sus ventajas únicas: búsqueda híbrida (vectorial más texto tradicional simultáneamente), soporte nativo de módulos de embedding con múltiples proveedores, y una API GraphQL flexible para consultas complejas con filtros. Ideal para empresas que necesitan control total de sus datos por razones de privacidad o regulación.\n\npgvector es la extensión de PostgreSQL que añade capacidades vectoriales a la base de datos que probablemente ya tienes en producción. Añades una columna de tipo vector a tu tabla existente y listo — búsqueda semántica en la misma base de datos que ya gestiona el resto de tu aplicación. Para proyectos que ya usan Postgres (la mayoría en LATAM), pgvector es la opción más pragmática. Supabase incluye pgvector de forma nativa — perfecto para proyectos que ya usan Supabase.\n\nChroma y Qdrant son alternativas open source populares en 2024-2026. Chroma es ideal para prototipos por su simplicidad extrema (puede ejecutarse completamente en memoria). Qdrant tiene el mejor rendimiento benchmarked para volúmenes medios (1-100 millones de vectores) y excelente soporte para filtrado por metadata.\n\nCuándo necesitas una base de datos vectorial: cuando implementas RAG para que el LLM busque documentos relevantes antes de responder, cuando necesitas búsqueda semántica de productos o documentos, cuando construyes sistemas de recomendación basados en similitud de contenido, o cuando necesitas detectar duplicados semánticos.\n\nPara startups y proyectos en LATAM: empieza con pgvector si ya usas Postgres o Supabase (costo cero, sin nueva infraestructura). Pasa a Pinecone si necesitas escalar rápido sin devops. Considera Weaviate si necesitas despliegue on-premise por requisitos regulatorios de privacidad.",
+              "analogia": "Una base de datos vectorial es como una biblioteca con un sistema de clasificación por significado en vez de por título o autor. Puedes pedirle 'dame los 5 libros cuyo contenido sea más similar a este párrafo' y la biblioteca responde en milisegundos revisando millones de libros — algo imposible para una bibliotecaria humana revisando uno por uno.",
+              "ejemplo_malo": "Usar SQL LIKE '%iniciar sesión%' para buscar artículos de soporte relevantes cuando un cliente escribe 'no puedo entrar a mi cuenta' — pierde todos los artículos que usan términos como 'acceso', 'login', 'contraseña', 'autenticación' aunque sean exactamente lo que el cliente necesita.",
+              "ejemplo_bueno": "Usar pgvector para que cuando un cliente escriba 'problema al iniciar sesión', el sistema encuentre semánticamente los 10 artículos de soporte más relevantes aunque ninguno contenga exactamente esas palabras — incluyendo artículos sobre 'restablecer contraseña' o 'verificación de dos pasos'.",
+              "por_que_importa": "Las bases de datos vectoriales son la infraestructura fundamental de RAG, que es la arquitectura dominante para aplicaciones empresariales de LLMs en 2026. Sin entender cómo funcionan los vectores y por qué las búsquedas semánticas son diferentes de SQL, no puedes diseñar ni evaluar sistemas de IA empresariales.",
+              "tip_profesional": "Para la mayoría de proyectos en LATAM con menos de 1 millón de documentos, pgvector es más que suficiente y tiene costo cero adicional si ya usas Postgres o Supabase. No saltes a Pinecone hasta tener un problema de escala real — la sobre-ingeniería temprana mata proyectos. El costo de Pinecone escala linealmente con el volumen y puede convertirse en un gasto significativo antes de que el producto haya generado un solo peso de revenue."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Qué es un embedding en el contexto de bases de datos vectoriales?",
+                "opciones": [
+                  "Un tipo de compresión de archivos para reducir tamaño en disco",
+                  "Una representación numérica (vector) del significado semántico donde conceptos similares tienen vectores matemáticamente cercanos",
+                  "Una técnica de encriptación para proteger datos en la nube",
+                  "El proceso de cargar archivos PDF a una base de datos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los embeddings son representaciones matemáticas del significado. Un texto se convierte en un vector de cientos o miles de números que capturan su significado en un espacio multidimensional. La propiedad fundamental: la similitud semántica se preserva matemáticamente como similitud coseno o distancia euclidiana. 'Médico' y 'doctor' tienen vectores muy cercanos; 'médico' y 'automóvil' tienen vectores muy distantes. Esta propiedad permite búsqueda por concepto —no por palabra exacta— que es la base de todos los sistemas RAG modernos y de búsqueda semántica.",
+                "concepto_reforzado": "Qué son los embeddings y por qué permiten búsqueda semántica"
+              },
+              {
+                "pregunta": "¿Por qué las bases de datos vectoriales son superiores a SQL para búsqueda de documentos similares?",
+                "opciones": [
+                  "Son más baratas de operar que PostgreSQL",
+                  "Usan algoritmos ANN que encuentran documentos semánticamente similares en milisegundos incluso con millones de documentos, mientras SQL requeriría comparaciones O(n²)",
+                  "Almacenan más datos en menos espacio de disco",
+                  "Tienen mejores medidas de seguridad contra accesos no autorizados"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La búsqueda por similitud en SQL requeriría comparar cada documento con cada otro — una operación O(n²) que escala desastrosamente: 1 millón de documentos = 1 billón de comparaciones. Las bases de datos vectoriales usan algoritmos como HNSW (Hierarchical Navigable Small World) que organizan los vectores en grafos jerárquicos, permitiendo encontrar los K más similares en O(log n). La diferencia práctica: buscar entre 1 millón de documentos toma minutos en SQL versus milisegundos en una base vectorial — la diferencia entre un sistema inutilizable y uno que funciona en producción real.",
+                "concepto_reforzado": "Ventajas de las bases vectoriales sobre SQL para búsqueda semántica"
+              },
+              {
+                "pregunta": "Para una startup en LATAM que ya usa Supabase/PostgreSQL y quiere implementar RAG con 200,000 documentos, ¿qué base de datos vectorial recomiendas?",
+                "opciones": [
+                  "Pinecone — es la más popular y tiene mejor marketing",
+                  "pgvector — ya está incluida en Supabase, costo cero, y tiene rendimiento más que suficiente para ese volumen",
+                  "Weaviate — es open source y tiene más features",
+                  "Siempre necesitas una base de datos vectorial dedicada para producción"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "pgvector es la extensión de PostgreSQL que añade tipos de datos vectoriales y búsqueda ANN nativa. Supabase la incluye habilitada por defecto. Para proyectos con menos de 1 millón de documentos, pgvector tiene rendimiento completamente adecuado para producción, costo cero adicional, y mantiene toda la lógica en una sola base de datos simplificando enormemente el stack. Migrar a Pinecone tiene sentido cuando superas los 10 millones de documentos o necesitas búsqueda vectorial multi-tenant a escala masiva — un problema que la mayoría de startups LATAM no enfrenta en sus primeros 2-3 años.",
+                "concepto_reforzado": "Selección pragmática de base de datos vectorial según escala y contexto"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una consultora de Bogotá tiene 5,000 PDFs de propuestas técnicas de los últimos 10 años. Cuando un nuevo cliente describe un proyecto, el equipo pasa 3-4 horas buscando manualmente propuestas similares del pasado para reutilizar secciones. La empresa quiere automatizar esto con IA para que la búsqueda tome segundos.",
+              "instruccion": "Diseña la arquitectura completa de la solución usando base de datos vectorial. Incluye: qué base de datos vectorial elegirías y por qué, cómo procesarías los 5,000 PDFs, qué metadata guardarías, y cómo funcionaría la búsqueda en producción.",
+              "input_malo": "Construir un buscador de palabras clave — buscar en el texto exacto de los PDFs usando LIKE o CTRL+F. Esto pierde todos los documentos que usan terminología diferente para el mismo concepto.",
+              "pista": "Para procesar PDFs necesitas: extraer texto → dividir en chunks → generar embeddings de cada chunk → almacenar en base vectorial con metadata. Para buscar: convertir la consulta a embedding → búsqueda ANN → recuperar chunks relevantes → mostrar propuestas completas de origen. ¿Qué metadata sería útil para filtrar?",
+              "solucion": "Arquitectura completa: 1) Base de datos: pgvector en Supabase (la consultora probablemente ya usa Postgres, costo cero adicional). 2) Procesamiento de PDFs: PyMuPDF para extraer texto, dividir en chunks de 500 tokens con 50 tokens de overlap. Cada chunk almacenado con metadata: nombre del archivo, número de página, industria del cliente, año, tipo de proyecto, consultor responsable. 3) Embeddings: API text-embedding-3-small de OpenAI o voyage-2 de Voyage AI. 5,000 PDFs × 10 chunks promedio = 50,000 embeddings, costo total aproximado 3-5 USD. 4) Búsqueda en producción: el consultor describe el nuevo proyecto en lenguaje natural → se genera embedding de esa descripción → pgvector devuelve los 10 chunks más similares → se presentan las propuestas completas de donde vienen esos chunks, ordenadas por similitud y con filtros opcionales por industria o año. Resultado medible: búsqueda de 3-4 horas reducida a 30 segundos con resultados más completos.",
+              "criterios_de_exito": [
+                "Elige pgvector como solución pragmática y justifica la elección para el volumen dado",
+                "Describe el pipeline completo de procesamiento de PDFs hasta almacenamiento",
+                "Incluye metadata relevante para filtrado posterior (industria, año, tipo de proyecto)"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "RAG: Retrieval Augmented Generation explicado desde cero",
+              "por_que_importa_despues": "Las bases de datos vectoriales son la infraestructura de RAG — ahora que sabes cómo almacenar y buscar vectores eficientemente, veremos cómo usar esa capacidad para que un LLM responda preguntas sobre tus documentos específicos con precisión y trazabilidad."
             }
           }
         },
@@ -4588,26 +4793,67 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "RAG (Retrieval Augmented Generation) es la arquitectura que resuelve el problema más importante de los LLMs en producción empresarial: el conocimiento del modelo está congelado en su fecha de entrenamiento y no sabe nada sobre tus documentos internos, tus procesos actualizados, ni la información que cambió después de esa fecha. RAG conecta el poder generativo del LLM con el conocimiento específico y actualizable de tu empresa.\n\nEl problema que RAG resuelve: un LLM como Claude fue entrenado hasta agosto 2025. No sabe nada de tus procedimientos internos actualizados en 2026, ni de los contratos que firmaste el mes pasado, ni de los cambios en la regulación colombiana de esta semana. Si le preguntas sobre eso, o admite que no sabe (si está bien calibrado) o alucina con información plausible pero incorrecta.\n\nCómo funciona RAG: el pipeline completo tiene dos fases y cinco pasos.\n\nFase Offline (una sola vez): Paso 1 — Indexación: tomas todos tus documentos (PDFs, Word, emails, base de conocimiento), los divides en chunks de texto manejables (típicamente 256-512 tokens), generas un embedding para cada chunk con un modelo de embeddings, y los almacenas en tu base de datos vectorial con metadata relevante.\n\nFase Online (por cada consulta): Paso 2 — Consulta del usuario: el usuario hace una pregunta específica. Paso 3 — Retrieval: la pregunta se convierte en un embedding y la base vectorial devuelve los 3-10 chunks más semánticamente similares en milisegundos. Paso 4 — Augmentation: los chunks recuperados se insertan en el prompt del LLM como contexto, junto con instrucciones sobre cómo usarlos. Paso 5 — Generation: el LLM genera una respuesta basada en el contexto recuperado, no en su conocimiento base, y puede citar los documentos fuente.\n\nVentajas de RAG sobre fine-tuning para conocimiento empresarial: no requiere re-entrenar el modelo (ahorro masivo de costo y tiempo), el conocimiento se actualiza en tiempo real simplemente añadiendo documentos a la base vectorial, hay trazabilidad completa (puedes mostrar exactamente qué documentos usó para responder), y hay menor riesgo de alucinaciones cuando los documentos proveen contexto factual claro.\n\nLimitaciones de RAG a conocer: la calidad de los chunks es crítica — si los documentos están mal estructurados o los chunks mal divididos, la retrieval falla y el modelo no encuentra la información relevante. RAG tiene dificultades con preguntas que requieren razonamiento sobre múltiples documentos simultáneamente (multi-hop reasoning). Añade latencia al pipeline por el paso de retrieval. Y no es óptimo para conocimiento procedimental profundo que requiere razonamiento paso a paso (para eso es mejor el fine-tuning).\n\nRAG vs fine-tuning: son complementarios, no competidores. RAG para conocimiento factual, documentos específicos e información actualizable. Fine-tuning para estilo de comunicación, formato de respuestas y comportamiento consistente de marca. Los mejores sistemas empresariales de 2026 combinan ambos: fine-tuning para el comportamiento base y RAG para el conocimiento específico del dominio.\n\nEl parámetro más ignorado: el chunk size. Chunks muy pequeños (100 tokens) dan retrieval preciso pero contexto insuficiente. Chunks muy grandes (1000+ tokens) dan mucho contexto pero retrieval impreciso. El sweet spot es 300-500 tokens con 50-100 tokens de overlap entre chunks consecutivos.",
+              "analogia": "El LLM es un experto generalista brillante con conocimiento hasta cierta fecha. RAG es el asistente que antes de cada reunión va a la biblioteca interna de la empresa, saca los 5 documentos más relevantes para la pregunta, y los pone en el escritorio del experto para que los lea antes de responder — garantizando respuestas actualizadas y basadas en información real de la empresa.",
+              "ejemplo_malo": "Pedirle a Claude sin contexto que responda sobre los procedimientos específicos de reembolso de tu empresa — inventará procedimientos plausibles que suenan profesionales pero no corresponden a tu política real, y tus clientes recibirán información incorrecta con confianza.",
+              "ejemplo_bueno": "Sistema RAG donde Claude recibe los fragmentos más relevantes del manual de políticas de tu empresa antes de responder, citando específicamente 'según la Sección 3.2 de la Política de Reembolsos actualizada en enero 2026...' con información verificable y trazable.",
+              "por_que_importa": "RAG es la arquitectura dominante para aplicaciones empresariales de LLMs en 2026 — chatbots de soporte, asistentes internos de HR, sistemas de búsqueda en documentación técnica, consultas legales. Si solo aprendes una arquitectura de IA en todo este módulo, que sea RAG.",
+              "tip_profesional": "El 'chunk size' es el parámetro más importante de RAG y el más ignorado. Chunks de 400 tokens con 75 tokens de overlap es un punto de partida sólido para la mayoría de documentos empresariales. Si el modelo frecuentemente dice 'no encontré información sobre eso' para preguntas que sabes que están en los documentos, reduce el chunk size. Si las respuestas son irrelevantes o fuera de contexto, aumenta el overlap."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es el problema principal que resuelve la arquitectura RAG?",
+                "opciones": [
+                  "Hace que los LLMs respondan más rápido reduciendo la latencia",
+                  "Permite a los LLMs responder sobre información posterior a su entrenamiento, incluyendo documentos internos de la empresa actualizados en tiempo real",
+                  "Reduce el costo de las llamadas a la API de los modelos de lenguaje",
+                  "Mejora la gramática y el estilo de las respuestas del modelo"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los LLMs tienen un knowledge cutoff — solo conocen lo que estaba en sus datos de entrenamiento hasta una fecha específica. RAG resuelve esto conectando el modelo con una base de conocimiento externa y actualizable en tiempo real. Cuando el usuario pregunta sobre procedimientos internos actualizados, contratos recientes o legislación nueva, RAG recupera los documentos relevantes y los provee como contexto al LLM en cada consulta. Esto elimina la necesidad de re-entrenar el modelo cada vez que cambia la información de la empresa.",
+                "concepto_reforzado": "El problema que RAG resuelve y por qué es la arquitectura dominante"
+              },
+              {
+                "pregunta": "¿Cuál es el orden correcto de los pasos en el pipeline de RAG en producción?",
+                "opciones": [
+                  "Generation primero, luego Retrieval, finalmente Indexación",
+                  "Indexación offline una vez, luego por consulta: Retrieval → Augmentation del prompt → Generation",
+                  "Consulta del usuario → Indexación en tiempo real → Generation → Retrieval",
+                  "Todos los pasos ocurren simultáneamente en paralelo"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El pipeline de RAG tiene dos fases claramente separadas. Offline: la indexación transforma documentos en chunks, genera embeddings y los almacena en la base vectorial — se hace una sola vez y se actualiza incremetalmente cuando hay documentos nuevos. Online (por cada consulta del usuario): el sistema recupera los chunks más relevantes (Retrieval), los inserta en el prompt del LLM (Augmentation), y el modelo genera una respuesta basada en ese contexto (Generation). La separación entre indexación offline y consulta online es lo que hace al sistema escalable y eficiente en producción.",
+                "concepto_reforzado": "Pipeline completo de RAG: fases offline y online"
+              },
+              {
+                "pregunta": "¿Cuándo conviene usar RAG en lugar de fine-tuning para un sistema empresarial?",
+                "opciones": [
+                  "RAG es siempre superior al fine-tuning en todos los casos",
+                  "RAG para conocimiento factual actualizable como documentos y políticas; fine-tuning para estilo, formato y comportamiento consistente de la marca",
+                  "Fine-tuning siempre es mejor porque el modelo aprende permanentemente",
+                  "Son completamente equivalentes; se elige solo por el costo de implementación"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "RAG y fine-tuning resuelven problemas fundamentalmente diferentes y son más poderosos en combinación que por separado. RAG es ideal para conocimiento factual que cambia con el tiempo — documentos de empresa, legislación, precios, inventarios — porque solo hay que actualizar la base vectorial sin re-entrenar el modelo. Fine-tuning es mejor para enseñar al modelo a comunicarse con un estilo específico, seguir un formato exacto de respuesta, o adoptar la 'personalidad' de la marca de forma consistente. Los sistemas más sofisticados de 2026 combinan ambos: fine-tuning para el comportamiento base más RAG para el conocimiento dominio-específico.",
+                "concepto_reforzado": "Cuándo usar RAG vs fine-tuning y su combinación óptima"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Un banco en Colombia quiere construir un asistente interno para sus 500 asesores comerciales. Los asesores pasan 2-3 horas diarias buscando en manuales de producto (300 PDFs de productos bancarios actualizados trimestralmente), tarifas vigentes (actualizadas mensualmente) y normativa del Banco de la República (se actualiza constantemente). Todos los documentos están en SharePoint.",
+              "instruccion": "Diseña el sistema RAG completo especificando: qué se indexa, cómo se mantiene actualizado, qué tipos de preguntas puede responder bien, y qué consultas críticas NO debe responder con RAG.",
+              "input_malo": "'Le damos al asistente todos los documentos en el prompt cada vez que hace una pregunta' — un contexto de 300 PDFs no cabe en ningún modelo y costaría miles de dólares por consulta.",
+              "pista": "Piensa en: ¿con qué frecuencia se actualiza cada tipo de documento y cómo automatizas la re-indexación? ¿Qué tipo de preguntas haría un asesor commercial? ¿Qué información crítica NO debería venir de RAG porque tiene riesgos regulatorios o requiere acceso controlado a datos de clientes específicos?",
+              "solucion": "Arquitectura completa: 1) Indexación: PDFs de productos → chunks de 400 tokens con metadata (producto, categoría, fecha de versión). Tarifas → formato estructurado con fecha de vigencia y tipo de tasa. Normativa → chunks con referencia al artículo y circular específica. Base vectorial: pgvector en Supabase. 2) Actualización automática: webhook en SharePoint que detecta cuando un documento cambia → re-indexa solo los documentos modificados automáticamente, sin intervención manual. 3) Qué responde bien: '¿Cuáles son los requisitos para un CDT empresarial?', '¿Cuál es la tasa vigente del crédito de vivienda?', '¿Qué normativa regula las cuentas de no residentes?'. 4) Qué NO debe responder con RAG (crítico): datos personales o financieros de clientes específicos (requiere integración con core bancario con controles de acceso separados, logs de auditoría, y permisos por rol — no en RAG), transacciones recientes en tiempo real (datos en sistemas transaccionales, no documentos). Beneficio medible: 2-3 horas de búsqueda manual reducidas a respuesta en menos de 30 segundos con citación del documento fuente y fecha de vigencia.",
+              "criterios_de_exito": [
+                "Describe la estrategia de indexación con metadata relevante para el contexto bancario",
+                "Incluye plan concreto de actualización automática conectado a SharePoint",
+                "Identifica explícitamente qué consultas críticas NO deben manejarse con RAG y por qué"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Privacidad, GDPR y datos sensibles en IA",
+              "por_que_importa_despues": "RAG conecta LLMs con datos internos de la empresa — lo que nos lleva directamente a la pregunta crucial de diseño responsable: ¿qué datos puedes y no puedes usar, y cómo los proteges cuando los integras con IA?"
             }
           }
         },
@@ -4620,26 +4866,67 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Cuando construyes sistemas de IA con datos empresariales, la privacidad y protección de datos no es un tema de compliance que puedes delegar al equipo legal — es una restricción técnica y de negocio que debes entender desde el diseño. Los errores aquí no son bugs que se parchean: son multas de hasta el 4% de la facturación global, reputación destruida, y proyectos cancelados por entes reguladores.\n\nEl marco global: GDPR. El Reglamento General de Protección de Datos de la Unión Europea (2018) es el estándar de facto mundial. Sus principios aplican a cualquier empresa que procese datos de ciudadanos europeos, independientemente de dónde esté ubicada. Los principios clave para IA son: minimización de datos (usar solo los estrictamente necesarios para la finalidad declarada), limitación de propósito (datos recopilados para X no pueden usarse para Y sin consentimiento explícito nuevo), exactitud (los datos deben mantenerse actualizados y corregibles), y derecho al olvido (las personas pueden exigir que sus datos sean eliminados, incluyendo de sistemas de IA entrenados con esos datos).\n\nColombia: Ley 1581 de 2012 y Decreto 1377 de 2013. Colombia tiene su propio marco de protección de datos personales, supervisado por la Superintendencia de Industria y Comercio (SIC). Los principios son similares al GDPR: consentimiento previo, expreso e informado para cada finalidad de tratamiento; seguridad adecuada; derechos de habeas data (acceder, rectificar, cancelar, oponerse). Para proyectos de IA en Colombia, debes tener una política de tratamiento de datos registrada en la SIC y obtener consentimiento para cada finalidad.\n\nCategorías de datos sensibles en IA: datos de salud (historiales médicos, diagnósticos, medicamentos), datos financieros (números de cuenta, transacciones, scoring crediticio), datos biométricos (huellas, reconocimiento facial, grabaciones de voz), datos de menores de 18 años, orientación política o religiosa, y datos de localización precisa.\n\nImplicaciones prácticas para proyectos de IA: ¿Puedes enviar datos de clientes a Claude API? Técnicamente sí, pero debes verificar que tus términos de servicio informan a los clientes sobre el uso de IA, que Anthropic's Business Associate Agreement cubre tus requisitos si manejas datos de salud, y que los datos de clientes colombianos tienen consentimiento para ser procesados por servicios en la nube.\n\nFine-tuning con datos de clientes: requiere anonimización robusta antes de usar cualquier dato de cliente para entrenar modelos. Pseudonimización (cambiar nombres por IDs) no es suficiente si los patrones de comportamiento permiten re-identificación. La anonimización real debe ser irreversible.\n\nRAG con datos internos: los documentos de empresa generalmente no tienen datos personales si están bien estructurados. Los riesgos son los manuales con ejemplos de casos reales (anonimizar), emails internos (evitar sin revisión legal), y contratos con datos de clientes (anonimizar campos sensibles o excluirlos).\n\nEl derecho al olvido en modelos entrenados es el desafío técnico más complejo. Si usaste datos de un cliente para entrenar un modelo y ese cliente pide ser olvidado, ¿cómo eliminas su influencia del modelo? Machine unlearning (desaprender datos específicos) es un campo de investigación activo en 2026 sin solución completamente satisfactoria. La mejor práctica es no usar datos personales sin anonimización robusta en entrenamiento.\n\nPrivacy by Design significa incorporar protecciones de privacidad desde el inicio de la arquitectura: mínimos datos necesarios, anonimización por defecto, acceso basado en roles, logs de auditoría. Implementarlo desde el inicio cuesta 10 veces menos que añadirlo después.",
+              "analogia": "Los datos personales son como las llaves de la casa de tus clientes. Puedes tenerlas temporalmente para hacer el trabajo contratado (proporcionar el servicio), pero no puedes hacer copias sin permiso, prestárselas a terceros sin consentimiento explícito, ni usarlas para entrar cuando quieras a otros propósitos. Y si el cliente te pide que devuelvas las llaves, debes poder hacerlo completamente.",
+              "ejemplo_malo": "Usar historiales de conversaciones de soporte de clientes (con nombres, documentos de identidad, números de cuenta) para hacer fine-tuning de un chatbot sin anonimización, sin verificar los consentimientos, y sin documentar el proceso para la SIC.",
+              "ejemplo_bueno": "Antes de cualquier proyecto de IA con datos de clientes, realizar un Data Protection Impact Assessment (DPIA) que identifique qué datos se usan, para qué finalidad específica, por cuánto tiempo, con qué medidas de seguridad técnicas, y cómo los titulares pueden ejercer sus derechos de habeas data.",
+              "por_que_importa": "En LATAM la regulación de datos se endurece siguiendo el modelo europeo. Las empresas que construyen sus sistemas de IA con Privacy by Design tendrán ventaja cuando lleguen regulaciones más estrictas — y serán las que eviten las multas que comenzarán a aplicarse con más rigurosidad en 2026-2027.",
+              "tip_profesional": "El concepto de 'Privacy by Design' (privacidad desde el diseño) se aplica prácticamente así: en el primer sprint de cualquier proyecto de IA, incluye en el backlog los tickets de anonimización, control de acceso por roles, y auditoría de logs. No como deuda técnica para después — como features de primera clase. El costo de implementarlos al inicio es 10-50 veces menor que retrofitearlos cuando ya hay datos de usuarios en producción."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la ley colombiana de protección de datos personales que aplica a proyectos de IA?",
+                "opciones": [
+                  "GDPR — aplica en Colombia por ser el estándar internacional obligatorio",
+                  "Ley 1581 de 2012, supervisada por la Superintendencia de Industria y Comercio (SIC)",
+                  "Ley 527 de 1999 sobre comercio electrónico",
+                  "Decreto 2364 de 2012 sobre firma electrónica"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La Ley 1581 de 2012 y el Decreto 1377 de 2013 son el marco de protección de datos personales en Colombia, supervisado por la SIC. Para cualquier proyecto de IA que procese datos personales de colombianos se requiere: política de tratamiento de datos publicada y registrada, consentimiento previo e informado para cada finalidad de tratamiento, medidas de seguridad adecuadas al riesgo, y mecanismos para ejercer derechos de habeas data. El incumplimiento puede resultar en sanciones de hasta 2,000 SMMLV y la suspensión de las operaciones de tratamiento de datos.",
+                "concepto_reforzado": "Marco legal colombiano de protección de datos para proyectos de IA"
+              },
+              {
+                "pregunta": "¿Qué implica el 'derecho al olvido' para modelos de IA entrenados con datos de clientes?",
+                "opciones": [
+                  "Solo implica borrar los datos del cliente de la base de datos de usuarios del sistema",
+                  "El cliente puede exigir que sus datos sean eliminados incluyendo su influencia en modelos entrenados con esos datos — un problema técnico aún sin solución perfecta llamado machine unlearning",
+                  "El derecho al olvido no aplica a sistemas de IA, solo a redes sociales y marketing",
+                  "Significa que el sistema no puede mostrar al cliente su historial de interacciones anteriores"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El derecho al olvido (Art. 17 GDPR, principio similar en Ley 1581) obliga a eliminar los datos personales cuando el titular lo solicita. En sistemas tradicionales es directo: eliminar el registro de la base de datos. En modelos de ML entrenados con esos datos, es técnicamente complejo porque los datos han influido en los pesos del modelo de forma difusa. Machine unlearning —desaprender datos específicos sin re-entrenar desde cero— es un campo de investigación activo en 2026. Por eso la mejor práctica es no usar datos personales sin anonimización robusta e irreversible antes del entrenamiento.",
+                "concepto_reforzado": "El derecho al olvido y sus implicaciones técnicas en sistemas de IA"
+              },
+              {
+                "pregunta": "¿Qué significa 'Privacy by Design' aplicado a sistemas de IA?",
+                "opciones": [
+                  "Usar diseños visuales sin colores que identifiquen datos privados en la interfaz",
+                  "Incorporar desde el inicio de la arquitectura: minimización de datos, anonimización por defecto, control de acceso por roles, y logs de auditoría de todos los accesos",
+                  "No compartir los diagramas de arquitectura del sistema con terceros externos",
+                  "Diseñar sistemas que no recopilan ningún dato de usuarios para garantizar la privacidad máxima"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Privacy by Design es el principio de construir protecciones de privacidad como características arquitectónicas de primera clase desde el inicio, no como capas añadidas después cuando ya hay un problema. Para sistemas de IA implica concretamente: recopilar solo los datos estrictamente necesarios (minimización), aplicar anonimización o pseudonimización por defecto antes de cualquier procesamiento de ML, implementar control de acceso basado en roles para todos los datos sensibles, mantener logs de auditoría inmutables de todos los accesos, y tener un proceso documentado de respuesta a solicitudes de ejercicio de derechos. Implementarlo desde el inicio es 10-50 veces más barato que retrofitearlo.",
+                "concepto_reforzado": "Privacy by Design como práctica arquitectónica en sistemas de IA"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una EPS (aseguradora de salud) colombiana quiere construir un asistente de IA para sus médicos autorizadores. El sistema debe acceder al historial médico completo de los pacientes para recomendar si se autoriza o no un procedimiento. Los datos incluyen diagnósticos, medicamentos actuales, procedimientos pasados, notas del médico y resultados de laboratorio.",
+              "instruccion": "Identifica los riesgos de privacidad clave, qué regulaciones colombianas aplican específicamente, y cuáles son las medidas técnicas mínimas no negociables que debe tener el sistema antes de entrar en producción.",
+              "input_malo": "'Simplemente subimos todos los historiales médicos a RAG y el modelo responde las preguntas de los médicos — la información es para uso médico interno, nadie externo accede.' Esta aproximación ignora múltiples regulaciones críticas.",
+              "pista": "Los datos de salud son la categoría de máxima sensibilidad en Ley 1581. En Colombia también aplica la Resolución 1995 de 1999 (historias clínicas) y la Ley 1751 de 2015 (Ley Estatutaria de Salud). Piensa en: ¿quién puede acceder a qué? ¿Cómo se audita? ¿Cómo se almacenan los datos?",
+              "solucion": "Riesgos identificados: datos de salud = categoría de tratamiento especialmente protegida bajo Ley 1581 (Art. 6), requiere consentimiento previo y expreso del paciente para tratamiento por IA. Regulaciones aplicables: Ley 1581 de 2012 (datos personales), Resolución 1995 de 1999 (custodia y acceso a historias clínicas), Ley 1751 de 2015 (derecho fundamental a la salud, confidencialidad), y si hay cobertura internacional posiblemente HIPAA o GDPR. Medidas técnicas mínimas no negociables: 1) Control de acceso por rol específico — un médico autorizador solo accede al historial del paciente cuyo caso está evaluando en ese momento, no a todos los historiales. 2) Logs de auditoría inmutables: cada acceso registrado con identidad del médico, paciente, timestamp, y propósito declarado. 3) Datos no salen a APIs externas — el modelo debe desplegarse on-premise o en nube colombiana con Acuerdo de Procesamiento de Datos firmado con el proveedor. 4) Encriptación en reposo (AES-256) y en tránsito (TLS 1.3). 5) DPIA realizado y documentado antes del lanzamiento. 6) Consentimiento informado de pacientes para el uso de IA en la revisión de sus historiales.",
+              "criterios_de_exito": [
+                "Identifica datos de salud como categoría de máxima sensibilidad bajo Ley 1581",
+                "Menciona al menos 3 regulaciones colombianas específicas aplicables",
+                "Propone control de acceso granular por rol y logs de auditoría como medidas no negociables"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Datasets públicos: Hugging Face, Kaggle, Common Crawl",
+              "por_que_importa_despues": "Conocer las restricciones de privacidad en datos propios te llevará a valorar correctamente los datasets públicos disponibles — y entender cuándo son una alternativa viable y cuándo definitivamente necesitas datos propios con todos sus controles."
             }
           }
         },
@@ -4652,26 +4939,67 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "No todos los proyectos de IA requieren datos propios desde cero. Existe un ecosistema rico de datasets públicos que cubren miles de casos de uso — desde reconocimiento de imágenes hasta análisis de sentimiento en español latinoamericano. Saber dónde encontrarlos, cómo evaluarlos y cuándo usarlos puede acelerar un proyecto en semanas.\n\nHugging Face Datasets es la biblioteca más importante de datasets para ML en 2026. Con más de 200,000 datasets públicos organizados por tarea (clasificación, traducción, Q&A, resumen), modalidad (texto, imagen, audio) e idioma, tiene integración nativa con PyTorch y TensorFlow. El comando datasets.load_dataset('nombre') descarga y preprocesa el dataset en una línea de Python. Datasets destacados: SQUAD (preguntas y respuestas, el benchmark estándar de comprensión), Common Voice de Mozilla (más de 100 idiomas incluyendo español), OSCAR (texto web multilingüe filtrado), y miles de datasets específicos para tareas como detección de odio, resumen de noticias y clasificación de documentos.\n\nKaggle es la plataforma de competencias de ML con el repositorio de datasets más diverso para casos de uso empresariales. Más de 50,000 datasets públicos cubren: datos financieros (precios de acciones, transacciones fraudulentas), datos de salud (radiografías etiquetadas, datos de pacientes anonimizados), datos de retail (historial de compras, abandono de carrito), y datos de texto (reseñas de productos, análisis de sentimiento). El dataset de fraude de IEEE-CIS con 590,000 transacciones es uno de los más usados globalmente para entrenar detectores de fraude bancario.\n\nCommon Crawl, además de ser la fuente de preentrenamiento de los LLMs, tiene subconjuntos accesibles para proyectos específicos. CC-News (noticias) y CC-Stories son útiles para tareas de comprensión de texto y análisis temporal de lenguaje.\n\nDatasets específicos para LATAM y español: SQUAD-es (versión en español del benchmark de Q&A), OPUS (colecciones multilingüe de traducción incluido español latinoamericano), MeLi Challenge (MercadoLibre publica datasets de categorización de productos en español), CONLL 2002 (reconocimiento de entidades nombradas en español), y TASS (análisis de sentimiento en español de Twitter).\n\nCómo evaluar un dataset público antes de usarlo — 5 filtros obligatorios: Primero, licencia: ¿es CC0 (dominio público), CC-BY (con atribución) o tiene restricciones comerciales? Algunos datasets no pueden usarse para entrenar modelos comerciales. Segundo, fecha y actualidad: un dataset de 2018 puede no reflejar el lenguaje, precios o comportamientos actuales. Tercero, origen y sesgos: ¿de dónde vienen los datos? Twitter tiene sesgo hacia usuarios tech. Reddit hacia inglés norteamericano. Cuarto, balance de clases: muchos datasets reales son muy desbalanceados. Quinto, tamaño real vs útil: un dataset de 1 millón de filas con 70% de datos faltantes tiene solo 300,000 filas realmente utilizables.\n\nCuándo los datos públicos son suficientes: para modelos de propósito general sin conocimiento específico de tu empresa, para prototipado y prueba de concepto antes de invertir en datos propios, y para benchmarking (comparar tu modelo contra el estado del arte del campo).\n\nCuándo necesitas datos propios: cuando tu caso de uso requiere terminología o procesos únicos de tu empresa, cuando el rendimiento con datos públicos no alcanza el umbral de negocio requerido, y cuando la privacidad impide usar datos en plataformas públicas.",
+              "analogia": "Los datasets públicos son como las bibliotecas públicas — accesibles, bien organizadas, cubren conocimiento general amplio. Si necesitas los archivos internos de tu empresa, los contratos específicos de tu industria, o el historial de conversaciones con tus clientes, necesitas tu propia biblioteca privada. Las dos se complementan; la pública no reemplaza a la privada.",
+              "ejemplo_malo": "Usar un dataset de análisis de sentimiento en inglés de reseñas de Amazon para entrenar un modelo de análisis de comentarios de clientes colombianos en español — los patrones lingüísticos, el vocabulario, las referencias culturales y el contexto son completamente diferentes. El modelo aprenderá a no entender a tus clientes.",
+              "ejemplo_bueno": "Usar TASS (análisis de sentimiento en español de Twitter) como conjunto de preentrenamiento base y luego enriquecer con 500 reseñas de tus propios clientes colombianos anotadas manualmente, ajustando al vocabulario y contexto local de tu industria específica.",
+              "por_que_importa": "Antes de invertir en recopilación de datos propios (costosa y lenta), un profesional de IA siempre evalúa si existe un dataset público que cubra el 80% del caso de uso. Esto puede acelerar el proyecto en semanas y proporcionar una línea base de rendimiento contra la cual comparar cualquier mejora.",
+              "tip_profesional": "Hugging Face tiene un sistema de 'datasets destacados' curados editorialmente — empieza siempre por ahí antes de explorar los 200,000+ opciones. Para datasets en español para LATAM, busca específicamente con el filtro de idioma 'es' y la región 'South America'. El modelo MeLi Challenge de MercadoLibre es especialmente valioso para proyectos de e-commerce latinoamericano."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la plataforma más completa para encontrar datasets de ML en 2026?",
+                "opciones": [
+                  "Google Dataset Search — tiene el mayor índice de datasets del mundo",
+                  "Hugging Face Datasets — más de 200,000 datasets organizados por tarea, modalidad e idioma con integración nativa con PyTorch/TensorFlow",
+                  "GitHub — todos los datasets importantes están ahí",
+                  "Kaggle exclusivamente — es la única plataforma de datos seria para ML"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Hugging Face Datasets se ha convertido en el hub central del ecosistema de ML open source. Con más de 200,000 datasets, integración nativa con los frameworks principales, API unificada para descarga y preprocesamiento, y metadatos ricos sobre licencias, idiomas y tareas, es el primer lugar donde buscar antes de recopilar datos propios. Kaggle es valioso para datasets empresariales específicos y competencias con problemas reales de negocio, pero Hugging Face tiene mayor diversidad y cobertura multilingüe.",
+                "concepto_reforzado": "Ecosistema de datasets públicos para ML"
+              },
+              {
+                "pregunta": "¿Cuál es el primer aspecto a revisar al evaluar un dataset público para un proyecto comercial?",
+                "opciones": [
+                  "El tamaño total del dataset en número de ejemplos",
+                  "La licencia — algunos datasets prohíben explícitamente el entrenamiento de modelos comerciales",
+                  "El formato de los archivos (CSV, JSON, Parquet)",
+                  "El año de publicación del dataset"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La licencia es el primer filtro obligatorio para uso comercial. Los tipos principales son: CC0 (dominio público, uso completamente libre), CC-BY (uso libre con atribución), CC-BY-NC (solo para uso no comercial — prohibido para productos comerciales), y licencias propietarias. Algunos datasets populares como el de Twitter (ahora X) tienen términos que prohíben el entrenamiento de modelos. Usar un dataset con licencia incorrecta puede resultar en disputas legales costosas cuando el modelo está en producción generando ingresos.",
+                "concepto_reforzado": "Evaluación de licencias en datasets públicos para uso comercial"
+              },
+              {
+                "pregunta": "¿Cuándo son insuficientes los datasets públicos para un proyecto empresarial específico?",
+                "opciones": [
+                  "Siempre que el dataset tenga menos de 1 millón de ejemplos",
+                  "Cuando el caso de uso requiere terminología, procesos o contexto específico de la empresa que no existe en ningún dataset público",
+                  "Los datasets públicos siempre son insuficientes para cualquier proyecto serio",
+                  "Cuando el dataset está en inglés y el proyecto es en español"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los datasets públicos son excelentes para tareas generales pero tienen limitaciones claras para casos muy específicos. Si necesitas que el modelo entienda los códigos internos de tu empresa, la terminología técnica de tu industria local, los procesos únicos de tu negocio, o el vocabulario específico de tus clientes colombianos en tu sector, ningún dataset público tendrá esos ejemplos. El indicador práctico: si un modelo entrenado con datos públicos tiene rendimiento del 80% pero el negocio requiere 95%, la diferencia casi siempre viene de datos propios que capturan los matices del dominio específico.",
+                "concepto_reforzado": "Cuándo los datos públicos son insuficientes y se necesitan datos propios"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Quieres construir un sistema de moderación de contenido para una plataforma de e-commerce colombiana. El sistema debe clasificar comentarios de usuarios en 4 categorías: apropiado, spam, lenguaje ofensivo, o desinformación sobre productos. Antes de recopilar datos propios, evalúas qué datasets públicos podrían ayudar.",
+              "instruccion": "Identifica qué datasets públicos serían útiles como punto de partida, qué limitaciones específicas tendrían para el contexto colombiano, y qué datos propios serían absolutamente indispensables recopilar para que el sistema funcione bien.",
+              "input_malo": "Buscar en Google 'dataset moderación contenido español', descargar el primer resultado sin verificar licencia, idioma concreto ni representatividad para Colombia, y asumir que será suficiente para producción.",
+              "pista": "Piensa en: ¿cuáles son los tipos de spam y lenguaje ofensivo específicos del contexto colombiano que no aparecerían en datasets genéricos de inglés o español de España? ¿Qué jerga local, referencias culturales o trucos de spam específicos de vendedores colombianos necesitarías?",
+              "solucion": "Datasets públicos útiles como base: TASS (sentimiento en español de Twitter) para patrones de lenguaje ofensivo en español general; HatEval (odio en español de Twitter de España y México) para hate speech; datasets de spam en español de Kaggle para patrones generales. Limitaciones para Colombia: jerga colombiana específica (parcero, chanda, guache, slang regional), referencias culturales locales e insultos regionales, trucos de spam típicos de vendedores informales colombianos (precios muy bajos con texto ofuscado, promesas exageradas con regionalismos), formas locales de desinformación sobre marcas nacionales conocidas. Datos propios indispensables: 1,000-2,000 comentarios reales de la plataforma etiquetados por moderadores colombianos que conozcan el contexto cultural local. Sin esto, el modelo fallará consistentemente en el 20-30% de casos culturalmente específicos — precisamente los más difíciles y los que más dañan la plataforma. Estrategia óptima: dataset público como preentrenamiento base + datos propios para fine-tuning específico de Colombia.",
+              "criterios_de_exito": [
+                "Identifica al menos 2 datasets públicos relevantes para moderación en español",
+                "Explica las limitaciones culturales y lingüísticas específicas para Colombia",
+                "Distingue claramente qué datos propios son indispensables versus complementarios"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Cómo preparar tus propios datos para entrenar con IA",
+              "por_que_importa_despues": "Después de explorar los datos públicos disponibles, si necesitas datos propios para cubrir los gaps, la última lección del bloque te enseña exactamente cómo prepararlos para que sean realmente útiles — el pipeline completo de datos listos para producción."
             }
           }
         },
@@ -4684,26 +5012,67 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Tienes los datos. Están en tu empresa: emails de soporte, tickets de ayuda, contratos escaneados, notas de ventas, registros de bases de datos. El problema es que en su forma cruda son inutilizables para entrenar o customizar modelos de IA. La preparación de datos es el paso más subestimado y, paradójicamente, el que más determina el éxito o el fracaso del proyecto.\n\nEl pipeline de preparación de datos para proyectos de IA empresarial tiene 7 etapas.\n\nEtapa 1 — Inventario y auditoría: antes de hacer nada técnico, mapea qué datos tienes, dónde están, en qué formato, y a qué problemas de negocio responden. Una empresa típica en LATAM tiene datos dispersos en: Google Drive (documentos), CRM (Salesforce/HubSpot), base de datos SQL, emails en Gmail/Outlook, PDFs escaneados y archivos Excel en SharePoint. El inventario revela sorpresas: datos que creías bien estructurados a menudo son caóticos, y datos que nunca consideraste resultan ser muy valiosos.\n\nEtapa 2 — Extracción y consolidación: extraer datos de sistemas heterogéneos. Para PDFs escaneados: OCR con Azure Document Intelligence (maneja español latinoamericano mejor que Tesseract). Para bases de datos SQL: queries directos con validación de integridad referencial. Para emails: exportación con metadata completa (fecha, remitente, destinatario, asunto, hilo completo). Para CRM: exportación via API con normalización de campos.\n\nEtapa 3 — Limpieza: el paso más costoso en tiempo. Incluye: eliminar duplicados exactos y near-duplicates (documentos casi idénticos), normalizar formatos de fecha (dd/mm/yyyy vs mm/dd/yyyy vs ISO 8601 — los problemas de fecha en datos colombianos son muy comunes), corregir encoding (problemas con tildes son frecuentes en datos latinoamericanos — UTF-8 vs Latin-1), eliminar PII sin consentimiento, y manejar valores faltantes con estrategia explícita documentada.\n\nEtapa 4 — Anonimización: usar Named Entity Recognition (NER) con SpaCy y el modelo es_core_news_lg para detectar automáticamente nombres, cédulas, números de teléfono, direcciones, y nombres de empresas. Reemplazar con tokens no reversibles: 'NOMBRE_1', 'CC_REDACTADA', 'TEL_REDACTADO'. La diferencia con pseudonimización: los tokens no pueden ser revertidos a los valores originales — la anonimización es irreversible.\n\nEtapa 5 — Estructuración y formato: los LLMs para fine-tuning necesitan formato JSONL con la estructura estándar de mensajes: sistema (instrucciones del comportamiento del modelo), usuario (input), asistente (respuesta ideal). Para RAG: documentos en texto plano o markdown, divididos en chunks con metadata. Para clasificación ML clásico: CSV con columnas texto y etiqueta.\n\nEtapa 6 — Anotación y etiquetado: principios para anotación de calidad. Usa expertos del dominio, no solo cualquier persona. Define una rubrica de etiquetado clara con ejemplos de cada categoría antes de empezar. Mide el inter-annotator agreement (IAA): si dos anotadores independientes discrepan en más del 20% de los casos, la tarea es ambigua — redefine la rubrica antes de continuar. Comienza con un batch piloto de 50 ejemplos para calibrar anotadores.\n\nEtapa 7 — Validación y control de calidad: antes de entrenar, revisa una muestra aleatoria del 5% del dataset final. Verifica la distribución de clases. Compara características estadísticas de entrenamiento vs validación. Detecta y elimina data leakage (cuando datos de validación se contaminan con información de entrenamiento).\n\nHerramientas clave en 2026: Pandas y Polars para datos tabulares, Argilla para anotación colaborativa de texto (open source), Label Studio para anotación de imágenes y audio, Azure Document Intelligence para PDFs complejos con tablas y formularios, SpaCy con es_core_news_lg para NER en español.\n\nEl tiempo real de un proyecto de IA bien hecho: 60-80% preparación de datos, 20-40% modelado e infraestructura. Los proyectos que invierten al revés — poco en datos, mucho en el modelo — fracasan con regularidad predecible.",
+              "analogia": "Preparar datos para IA es como preparar ingredientes para un restaurante de alta cocina. El chef más talentoso del mundo no puede hacer nada con tomates podridos, medidas inexactas e ingredientes sin lavar. La preparación meticulosa e invisible de ingredientes es el trabajo que hace posible el plato final — y los clientes nunca la ven pero la sienten en cada bocado.",
+              "ejemplo_malo": "Descargar todos los emails de la empresa en CSV y pasarlos directamente a fine-tuning sin revisión — incluirá spam, emails con datos personales de clientes, respuestas automáticas de notificación, cadenas sin contexto y contenido completamente irrelevante. El modelo aprenderá todo el ruido junto con la señal y quedará inutilizable.",
+              "ejemplo_bueno": "Definir exactamente qué tipo de interacciones quieres que el modelo aprenda, seleccionar manualmente los 500 mejores ejemplos resueltos exitosamente, anonimizarlos con NER, estructurarlos en formato JSONL con conversación completa de contexto, y validar que el inter-annotator agreement supera el 85% antes de entrenar.",
+              "por_que_importa": "En proyectos de IA empresariales reales, la preparación de datos es el 60-80% del trabajo total. No es overhead — es el trabajo central que determina si el proyecto tiene éxito o falla. Los equipos que lo subestiman gastan meses de trabajo de ML sobre una base de datos que nunca puede producir buenos resultados.",
+              "tip_profesional": "Crea una 'dataset card' (tarjeta de dataset) para cada dataset que prepares: describe el origen, el proceso de limpieza con decisiones importantes documentadas, las limitaciones conocidas, los sesgos potenciales, y cómo se puede y no se puede usar. Esta documentación ahorra semanas cuando alguien más — o tú mismo en 6 meses — retoma el proyecto y necesita entender exactamente qué se preparó y por qué."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es el paso que consume más tiempo en la preparación de datos para IA?",
+                "opciones": [
+                  "Inventario y auditoría inicial de las fuentes disponibles",
+                  "Limpieza: deduplicación, normalización de formatos, corrección de encoding y manejo de valores faltantes",
+                  "Almacenamiento y backup del dataset final preparado",
+                  "Descarga inicial de los datos desde los sistemas fuente"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La limpieza de datos consume consistentemente entre el 40-60% del tiempo total de preparación. Los problemas más comunes en datos empresariales latinoamericanos son: problemas de encoding con tildes y caracteres especiales (UTF-8 vs Latin-1 produce texto corrupto en español), inconsistencias en formatos de fecha (Colombia usa dd/mm/yyyy pero muchos sistemas importados usan mm/dd/yyyy, causando inversión de días y meses), duplicados near-exact con ligeras diferencias de formato, y valores faltantes con patrones no aleatorios que deben tratarse cuidadosamente para no introducir sesgos sistemáticos en el modelo.",
+                "concepto_reforzado": "Pipeline de preparación de datos y el peso relativo de cada etapa"
+              },
+              {
+                "pregunta": "¿Qué es el inter-annotator agreement (IAA) y cuándo indica un problema?",
+                "opciones": [
+                  "El contrato legal que firman los anotadores antes de trabajar con datos de la empresa",
+                  "La medida de cuánto coinciden anotadores independientes al etiquetar los mismos datos — si es menor al 80%, la tarea es ambigua y la rubrica necesita redefinirse",
+                  "El porcentaje del dataset que ya tiene etiquetas correctas del sistema anterior",
+                  "El acuerdo de nivel de servicio entre el equipo de datos y el equipo de ML"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El inter-annotator agreement mide la consistencia entre personas que etiquetan independientemente los mismos ejemplos. Se calcula con métricas como Cohen's Kappa o porcentaje simple de acuerdo. Un IAA menor al 80% indica que la tarea de etiquetado es ambigua — los anotadores no comparten el mismo entendimiento de las categorías. Antes de invertir semanas etiquetando miles de ejemplos con bajo IAA, es más rentable redefinir la rubrica con ejemplos concretos y edge cases de cada categoría hasta alcanzar consistencia alta. Las etiquetas inconsistentes son un tipo de ruido que degrada el modelo.",
+                "concepto_reforzado": "Inter-annotator agreement como indicador de calidad del etiquetado"
+              },
+              {
+                "pregunta": "¿Cuál es el formato correcto de datos para fine-tuning de modelos de chat como Claude o GPT?",
+                "opciones": [
+                  "Texto plano en archivos .txt, uno por ejemplo de entrenamiento",
+                  "Formato JSONL con la estructura de mensajes: sistema (instrucciones), usuario (input), asistente (respuesta ideal)",
+                  "CSV con columnas 'pregunta' y 'respuesta' separadas por coma",
+                  "XML con tags específicos de diálogo para cada turno de la conversación"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los modelos de chat modernos como Claude y GPT requieren datos en formato JSONL (JSON Lines) donde cada línea es un objeto JSON independiente con una lista de mensajes. La estructura estándar tiene el campo 'messages' con objetos {role, content} donde role puede ser 'system' (instrucciones del comportamiento del asistente), 'user' (pregunta o input del usuario), o 'assistant' (la respuesta ideal que el modelo debe aprender). Este formato preserva el contexto conversacional completo incluyendo múltiples turnos, que es fundamental para que el modelo aprenda coherencia en conversaciones largas.",
+                "concepto_reforzado": "Formato JSONL para fine-tuning de modelos de chat"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa colombiana de telecomunicaciones quiere preparar un dataset para fine-tuning de un asistente de soporte técnico. Tienen 50,000 tickets de soporte del último año en Zendesk, exportados como CSV con: número de ticket, descripción del problema del cliente, primera respuesta del agente, resolución final, tiempo de resolución en horas, ID del agente, y calificación del cliente de 1 a 5.",
+              "instruccion": "Diseña el pipeline completo de preparación de datos desde el CSV de Zendesk hasta el JSONL listo para fine-tuning. Especifica qué filtros aplicar, qué anonimizar, cómo estructurar el formato final, y qué tamaño final del dataset esperas.",
+              "input_malo": "Convertir directamente todos los 50,000 tickets al formato JSONL y enviarlos a fine-tuning — el modelo aprenderá también de tickets resueltos incorrectamente, respuestas de mala calidad calificadas con 1 estrella, y datos personales de clientes.",
+              "pista": "De los 50,000 tickets, ¿cuántos usarías realmente? ¿Qué criterios de calidad garantizan que el modelo aprende de los mejores ejemplos? ¿Qué información personal del cliente y del agente debes anonimizar antes de cualquier procesamiento?",
+              "solucion": "Pipeline completo: 1) Filtros de calidad: conservar solo tickets con calificación 4 o 5 sobre 5 (el cliente quedó satisfecho = la respuesta fue útil y correcta). Conservar solo tickets con tiempo de resolución menor a 24 horas (respuestas eficientes). Eliminar tickets de agentes con calificación promedio menor a 3.5 (patrones de mala calidad). Resultado esperado: aproximadamente 15,000-20,000 tickets de alta calidad de los 50,000 originales. 2) Anonimización: aplicar NER con SpaCy es_core_news_lg para detectar nombres de clientes, cédulas, números de teléfono y nombres de barrios o ciudades en las descripciones. Reemplazar con tokens: CLIENTE_REDACTADO, CEDULA_REDACTADA, TEL_REDACTADO. Eliminar también el ID del agente — el modelo no debe aprender nombres específicos de agentes. 3) Deduplicación semántica: eliminar tickets con descripción mayor al 80% de similitud — son el mismo problema reportado múltiples veces. Conservar el que tenga mejor calificación. 4) Estructuración JSONL: cada línea es un objeto con messages: system (instrucciones del asistente de telecomunicaciones), user (descripción del problema anonimizada), assistant (resolución final anonimizada). 5) Split final: 80% entrenamiento, 20% validación. Nunca mezclar tickets del mismo período o del mismo agente entre entrenamiento y validación para evitar data leakage.",
+              "criterios_de_exito": [
+                "Aplica filtros de calidad basados en calificación del cliente y tiempo de resolución",
+                "Incluye anonimización de datos PII específicos del contexto colombiano",
+                "Estructura el JSONL correctamente con los tres roles: system, user y assistant"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Bloque 6 — El ecosistema actual completo",
+              "por_que_importa_despues": "Con el bloque de datos completamente dominado — tipos, recopilación, calidad, augmentation, vectores, RAG, privacidad, datasets públicos y preparación — el siguiente bloque mapea el ecosistema completo de herramientas, empresas y plataformas sobre el que construyes todo esto."
             }
           }
         }
