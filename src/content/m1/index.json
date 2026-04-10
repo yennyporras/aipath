@@ -7139,33 +7139,99 @@
         },
         {
           "id": "m1-b8-l4",
-          "titulo": "Inferencia: cómo ejecutar modelos en producción",
+          "titulo": "APIs vs modelos propios: cuándo cada uno",
           "bloque": 8,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Una de las decisiones estratégicas más importantes en cualquier proyecto de IA no es qué modelo usar, sino cómo acceder a ese modelo: ¿consumir una API externa o desplegar tu propio modelo? Esta decisión impacta costos, velocidad de desarrollo, privacidad de datos, personalización y escalabilidad a largo plazo.\n\nLas APIs externas (Claude, GPT-4o, Gemini, Mistral) ofrecen ventajas claras para comenzar: cero infraestructura, acceso inmediato a modelos de punta, sin costos fijos, y actualizaciones automáticas. Un desarrollador puede tener un prototipo funcional en horas. El modelo más reciente de Anthropic o OpenAI está disponible con una sola llamada HTTP. Para startups validando ideas o proyectos con presupuesto limitado, esta es la ruta obvia.\n\nSin embargo, las APIs tienen limitaciones reales. El costo escala linealmente: si procesas 100 millones de tokens al mes con Claude Sonnet, pagas ~$300 en entradas y más en salidas. En volúmenes altos, esto se vuelve costoso. Además, tus datos viajan a servidores de terceros, lo cual es problemático en sectores regulados: banca (Superfinanciera Colombia exige control de datos), salud (datos de pacientes), o contratos con cláusulas de confidencialidad. La latencia depende de la red y del proveedor. Y si el proveedor cambia precios o depreca un modelo, estás expuesto.\n\nLos modelos propios (self-hosted) invierten la ecuación. Una vez que tienes la infraestructura, el costo marginal por inferencia es casi cero. Llama 3.1 70B en un A100 puede procesar millones de tokens sin costo adicional de API. Tienes control total: los datos nunca salen de tu infraestructura, puedes hacer fine-tuning específico para tu dominio, personalizar el comportamiento sin límites de los ToS del proveedor, y ajustar latencia según tus necesidades de hardware.\n\nPero el self-hosting tiene costos ocultos: ingeniería para desplegar y mantener el modelo, servidores GPU (un A100 cuesta $3-4/hora o $20,000-$30,000 comprado), monitoreo, actualizaciones de seguridad, y el hecho de que los modelos open-source más accesibles (Llama 3.1 8B, Mistral 7B) son significativamente menos capaces que GPT-4o o Claude Sonnet para tareas complejas.\n\nEl punto de quiebre económico típico es: si gastas más de $2,000-3,000/mes en APIs, vale la pena evaluar self-hosting. Por debajo de ese umbral, la API casi siempre es más económica cuando incluyes costos de ingeniería y mantenimiento. Existe también un camino intermedio: plataformas de inferencia gestionada como Together AI, Groq, Fireworks AI, o Anyscale que ofrecen modelos open-source via API a precios mucho menores que los grandes proveedores (Llama 3.1 70B a $0.90/M tokens vs Claude Sonnet a $3/M), con la ventaja de que alguien más gestiona la infraestructura.",
+              "analogia": "Es como decidir entre usar un taxi/Uber (API externa) vs comprar tu propio carro (modelo propio). El taxi es perfecto para empezar: disponible inmediatamente, sin inversión inicial, pagas solo cuando lo usas. Pero si haces 10 viajes diarios, el costo mensual supera el de tener tu propio vehículo. Y si necesitas transportar documentos confidenciales sin que nadie los vea, definitivamente quieres tu propio carro. La decisión correcta depende de la frecuencia de uso, las necesidades de privacidad y tu capacidad para mantener un vehículo.",
+              "ejemplo_malo": "Una empresa de tecnología médica en Bogotá construye un sistema de análisis de historias clínicas usando directamente la API de OpenAI, enviando datos de pacientes sin anonimizar. A los 3 meses, su cliente principal (una clínica privada) descubre que los datos pasan por servidores en EE.UU., violando su política interna de datos y potencialmente la normativa de habeas data colombiana. El proyecto se paraliza, pierden el cliente y deben reconstruir toda la arquitectura usando un modelo propio. Costo total: 4 meses de desarrollo perdido + $50,000 en multas.",
+              "ejemplo_bueno": "Una fintech colombiana de scoring crediticio empieza con la API de Claude Haiku para validar su modelo de negocio ($0.80/M tokens). Con 50,000 evaluaciones/mes iniciales, pagan ~$40/mes, perfectamente razonable. A los 6 meses, cuando escalan a 2 millones de evaluaciones/mes, re-evalúan: el costo en API sería $1,600/mes. Despliegan Llama 3.1 8B en dos A10G (costo total ~$2,400/mes en cómputo pero con control total), anonimizando datos antes del modelo y cumpliendo con Superfinanciera. La decisión de migrar fue data-driven y en el momento correcto.",
+              "por_que_importa": "Esta decisión define la arquitectura de tu producto de IA para años. Una startup que construye sobre APIs externas puede escalar rápido pero queda atada a precios y condiciones de terceros. Una empresa que invierte demasiado pronto en infraestructura propia puede gastar recursos escasos en ingeniería antes de validar su producto. Para proyectos en sectores regulados de LATAM (banca, salud, legal), la privacidad de datos puede hacer esta decisión obvia: algunos datos simplemente no pueden salir de tu infraestructura.",
+              "tip_profesional": "Usa un modelo híbrido: API externa para desarrollar rápido y validar, con una abstracción en tu código (un servicio de IA interno que puede apuntar a diferentes backends). Cuando llegues al punto de quiebre económico o de privacidad, migras el backend sin tocar el resto de tu código. Herramientas como LiteLLM te permiten hacer esto elegantemente, abstrayendo Claude, OpenAI, y modelos locales detrás de una sola interfaz."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "Una empresa farmacéutica quiere usar IA para analizar investigaciones internas confidenciales. ¿Cuál es el factor más determinante para elegir modelo propio vs API?",
+                "opciones": [
+                  "La privacidad y control de datos confidenciales que no pueden salir de la infraestructura interna",
+                  "El costo por token de las diferentes APIs disponibles en el mercado",
+                  "La velocidad de respuesta del modelo para el caso de uso específico",
+                  "La facilidad de integración con los sistemas existentes de la empresa"
+                ],
+                "correcta": 0,
+                "explicacion_profunda": "En sectores con datos altamente sensibles como farmacéutica, las investigaciones internas representan propiedad intelectual crítica y pueden estar sujetas a regulaciones de confidencialidad contractual o sectorial. Enviar estos datos a una API externa (incluso con acuerdos de procesamiento de datos) implica que atraviesan redes externas y residen en servidores de terceros, lo cual puede violar políticas internas, acuerdos de confidencialidad con socios o regulaciones sectoriales. El modelo propio elimina este riesgo completamente: los datos nunca salen del perímetro controlado de la organización. Aunque el costo y la latencia son consideraciones válidas, la privacidad es el factor no negociable en este contexto específico.",
+                "concepto_reforzado": "Privacidad de datos como factor decisivo en la elección entre APIs externas y modelos propios"
+              },
+              {
+                "pregunta": "¿En qué punto de gasto mensual en APIs externas generalmente vale la pena evaluar seriamente el self-hosting?",
+                "opciones": [
+                  "Desde $100/mes porque cualquier ahorro es positivo para la empresa",
+                  "A partir de $2,000-3,000/mes, cuando el ahorro puede cubrir costos de ingeniería y mantenimiento",
+                  "Solo cuando se superan $50,000/mes porque la infraestructura GPU es muy costosa",
+                  "Nunca, porque el self-hosting siempre tiene costos ocultos que superan las APIs"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El punto de quiebre de $2,000-3,000/mes refleja la realidad económica del self-hosting: necesitas pagar ingenieros para desplegar y mantener el sistema, servidores GPU (un A100 cuesta ~$3-4/hora o $20,000+ si lo compras), monitoreo, y gestión de actualizaciones. Por debajo de $2,000-3,000/mes en APIs, estos costos operativos hacen el self-hosting más caro en total. Por encima de ese umbral, la economía empieza a favorecer la infraestructura propia, especialmente si también tienes requisitos de privacidad. Este cálculo debe incluir siempre el costo total de propiedad, no solo el costo del hardware.",
+                "concepto_reforzado": "Análisis de punto de quiebre económico entre APIs externas y self-hosting"
+              },
+              {
+                "pregunta": "¿Qué ventaja ofrece usar plataformas de inferencia gestionada (Together AI, Groq, Fireworks) sobre una API directa de OpenAI o Anthropic?",
+                "opciones": [
+                  "Acceso a modelos más potentes que GPT-4o y Claude Opus",
+                  "Modelos open-source a precios significativamente menores, sin gestionar infraestructura propia",
+                  "Mayor privacidad porque los datos no salen de tu país",
+                  "Latencia más baja en todos los casos de uso"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Las plataformas de inferencia gestionada como Together AI, Groq, o Fireworks AI ofrecen modelos open-source (Llama, Mistral, Mixtral) a través de una API estándar pero a precios considerablemente menores: Llama 3.1 70B a ~$0.90/M tokens vs Claude Sonnet a $3/M (una tercera parte del precio). Son un punto medio valioso: obtienes la simplicidad de una API (sin gestionar infraestructura propia) con el costo reducido de los modelos open-source. La desventaja es que los modelos open-source disponibles son menos capaces que los propietarios de frontera para tareas complejas, y los datos aún salen de tu infraestructura. No ofrecen mayor privacidad ni latencia garantizada.",
+                "concepto_reforzado": "Plataformas de inferencia gestionada como alternativa intermedia entre APIs propietarias y self-hosting"
+              },
+              {
+                "pregunta": "Una startup valida su idea de chatbot de atención al cliente con 10,000 conversaciones/mes. ¿Qué arquitectura es más adecuada en esta fase inicial?",
+                "opciones": [
+                  "Desplegar Llama 70B propio para minimizar costos desde el inicio y tener control total",
+                  "API externa con abstracción de código para migrar fácilmente cuando escale",
+                  "Fine-tuning de un modelo pequeño para optimizar costos antes de validar el producto",
+                  "Construir su propio modelo de lenguaje para tener ventaja competitiva"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "En la fase de validación, la velocidad y el costo de oportunidad son más importantes que la optimización de costos de infraestructura. Una API externa permite tener el prototipo funcional en horas o días, con cero inversión en infraestructura. Con 10,000 conversaciones/mes (digamos ~500 tokens promedio cada una = 5M tokens), el costo con Claude Haiku sería ~$4/mes, completamente trivial. Lo crítico es la abstracción: escribir el código de manera que el proveedor de IA sea intercambiable, para poder migrar sin reescribir todo cuando el volumen lo justifique. Desplegar Llama 70B desde el inicio sería gastar recursos de ingeniería en infraestructura antes de saber si el producto tiene demanda.",
+                "concepto_reforzado": "Estrategia de start with APIs, migrate when justified para startups y proyectos nuevos"
+              },
+              {
+                "pregunta": "¿Qué herramienta permite abstraer múltiples proveedores de IA (Claude, OpenAI, modelos locales) detrás de una sola interfaz unificada?",
+                "opciones": [
+                  "Docker Compose para containerizar cada proveedor por separado",
+                  "LiteLLM, que provee una interfaz unificada para cambiar de proveedor sin modificar el código de la aplicación",
+                  "Kubernetes para gestionar réplicas de múltiples modelos simultáneamente",
+                  "Terraform para provisionar infraestructura en diferentes clouds automáticamente"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "LiteLLM es una librería Python (y proxy HTTP) que implementa la interfaz de la API de OpenAI pero redirige las llamadas a cualquier proveedor: Claude, Gemini, Mistral, Cohere, Llama local via Ollama, y decenas más. Tu código solo llama a `litellm.completion(model='claude-3-5-sonnet', ...)` o cambia a `model='gpt-4o'` o `model='ollama/llama3'` sin modificar nada más. Esto implementa el patrón estratégico recomendado: construir con APIs externas y migrar fácilmente cuando sea conveniente. Docker y Kubernetes son herramientas de infraestructura/orquestación valiosas pero no resuelven el problema de abstracción de proveedores de IA. Terraform es para infraestructura como código.",
+                "concepto_reforzado": "LiteLLM y el patrón de abstracción de proveedores para flexibilidad estratégica"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Eres el CTO de una empresa colombiana de análisis legal que usa IA para revisar contratos. Actualmente procesan 5,000 contratos/mes (~2,000 tokens promedio cada uno = 10M tokens de input + 500K tokens de output). Usan Claude Sonnet a $3/M input y $15/M output. Tienen dos tipos de contratos: 60% son contratos comerciales estándar (baja sensibilidad), y 40% son contratos con información confidencial de clientes (alta sensibilidad). Tu CFO pregunta si deberían migrar a un modelo propio.",
+              "instruccion": "Analiza la situación y elabora una recomendación fundamentada. Calcula: (1) el costo mensual actual con la API, (2) si el self-hosting justifica económicamente la migración, (3) qué arquitectura híbrida podría funcionar considerando los distintos niveles de sensibilidad de los contratos.",
+              "input_malo": "Deberían usar su propio modelo porque es más barato y privado. Llama es gratuito así que el ahorro sería total.",
+              "pista": "Calcula primero el costo actual: 10M tokens input × $3/M + 0.5M tokens output × $15/M. Luego considera: ¿qué parte de los contratos realmente necesita privacidad absoluta? ¿Podría una arquitectura híbrida optimizar tanto costo como privacidad?",
+              "solucion": "Costo actual: (10M × $3) + (0.5M × $15) = $30 + $7.50 = $37.50/mes en API. A este volumen, el self-hosting NO se justifica económicamente: un servidor A10G costaría ~$1,000-1,500/mes solo en cómputo, más ingeniería de mantenimiento. Sin embargo, el 40% de contratos sensibles sí tiene un caso de privacidad. Recomendación híbrida: (1) Para el 60% de contratos estándar: continuar con Claude Sonnet vía API — calidad superior, bajo costo, sin riesgo de compliance. (2) Para el 40% sensible: evaluar Llama 3.1 70B en Together AI o Fireworks a ~$0.90/M tokens (70% más barato) o desplegar un modelo propio solo para estos. El costo por el 40% sensible bajaría de ~$15/mes a ~$5/mes. Conclusión: arquitectura híbrida con abstracción vía LiteLLM permite optimizar costo Y privacidad sin el overhead de gestionar infraestructura completa.",
+              "criterios_de_exito": [
+                "Calcula correctamente el costo mensual actual (~$37.50/mes) y concluye que NO justifica migración completa",
+                "Identifica la dimensión de privacidad como factor diferenciador que justifica una solución para los contratos sensibles",
+                "Propone arquitectura híbrida que separa contratos por sensibilidad con diferentes backends",
+                "Menciona la abstracción (LiteLLM u similar) como mecanismo para implementar la solución sin duplicar código"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Latencia y throughput: métricas que importan",
+              "por_que_importa_despues": "Elegir entre API propia y externa es solo una parte de la decisión. El siguiente paso es entender cómo medir el rendimiento de tu sistema de IA: cuánto tarda en responder (latencia) y cuántas solicitudes puede manejar simultáneamente (throughput). Estas métricas determinan si tu arquitectura elegida puede cumplir los SLAs de tu producto en producción real."
             }
           }
         },
