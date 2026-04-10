@@ -9660,33 +9660,99 @@
         },
         {
           "id": "m1-b11-l8",
-          "titulo": "Plan de 6 meses para ser referente en IA desde cero",
+          "titulo": "Tu roadmap personal hacia Octubre 2026",
           "bloque": 11,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Has completado M1 — 110 lecciones sobre los fundamentos de IA. Eso te pone en el top 1% de comprensión conceptual en LATAM. Pero el conocimiento sin dirección es energía sin vector. Esta lección te da el vector: un roadmap personal hacia Octubre 2026 que integra todo lo que aprendiste en B11 — roles, salarios, portafolio, GitHub, comunidades, visibilidad, y LinkedIn — en un plan accionable diseñado para tu punto de partida real.\n\n**Por qué Octubre 2026.** No es arbitrario. El mercado de IA tiene ciclos de adopción aproximados de 18 meses. Las empresas que empezaron a experimentar con LLMs en 2024 están buscando implementación en 2025-2026. Los proyectos piloto se convierten en contratos de 6-12 meses justo alrededor de ese horizonte. Posicionarte bien hoy para ese momento es estratégicamente correcto. Además, con 6 meses de trabajo constante, los resultados en GitHub, LinkedIn, y comunidades se vuelven comprobables — tienes evidencia real, no promesas.\n\n**Los tres perfiles de partida y sus rutas.** El roadmap varía según tu situación actual. **Perfil A — Estudiante o recién egresado (0-2 años experiencia):** Tu ventaja es tiempo y energía. Prioridad: completar M4 (Prompt Engineering) y M7 (Python para IA) en paralelo con M1, construir un proyecto de portafolio mensual documentado públicamente, y entrar a una comunidad activa de IA donde puedas hacer preguntas y eventualmente responderlas. Meta para Octubre: 6 proyectos en GitHub con README excelentes, 1,000 seguidores en LinkedIn, y primera consultoría o freelance completada. **Perfil B — Profesional en transición (2-8 años en otro campo):** Tu ventaja es experiencia sectorial. Prioridad: identificar dónde se conecta IA con tu industria anterior, construir proyectos que resuelvan problemas reales de ese sector, y posicionarte como el puente entre IA y ese dominio. Un abogado con 5 años de experiencia que construye herramientas de análisis de contratos con LLMs no compite con AI engineers generales — está en una categoría propia. Meta para Octubre: 3 casos de estudio sectoriales, 2 clientes o empleadores del sector, y un artículo técnico publicado. **Perfil C — Técnico avanzado (ingeniero, programador, data analyst):** Tu ventaja es profundidad técnica. Prioridad: hacer la transición de 'técnico que sabe IA' a 'AI engineer con proyectos en producción'. Construir algo que funcione de verdad — no demo, sino algo que una empresa real podría usar. Contribuir a OSS para crear credibilidad externa. Meta para Octubre: 1 proyecto en producción o con usuario real, primera contribución aceptada a OSS relevante, y entrevistas activas con empresas de EE.UU. o Europa para trabajo remoto.\n\n**El calendario de los próximos 6 meses.** Independiente del perfil, hay una secuencia que funciona. **Abril-Mayo 2026 (Fundamentos sólidos):** Completa M4 de AIPath (Prompt Engineering). Es el módulo que más inmediatamente se traduce en trabajo remunerado — las empresas contratan prompt engineers hoy. Actualiza tu LinkedIn con los cambios de la lección anterior. Entra a una comunidad de IA (Discord de Hugging Face o Anthropic) y participa 3 veces por semana. **Junio-Julio 2026 (Primer proyecto real):** Construye y documenta un proyecto que resuelva un problema real. No tiene que ser perfecto — tiene que ser público y funcional. Deploya en Hugging Face Spaces o Vercel. Empieza a documentarlo en LinkedIn semanalmente (progreso, errores, soluciones). Esto genera contenido auténtico durante dos meses. **Agosto-Septiembre 2026 (Expansión y visibilidad):** Con un proyecto real publicado, empieza a aplicar a trabajos remotos (si buscas empleo) o contacta empresas locales para consultoría (si buscas clientes). Completa M7 (Python para IA) para profundizar técnicamente. Asiste o presenta en un meetup de IA — el calendario de Octubre en LATAM típicamente tiene conferencias para las que se puede proponer charlas en Agosto. **Octubre 2026 (Evaluación y ajuste):** Mide: ¿cuántos proyectos públicos tienes? ¿Cuántos seguidores activos en LinkedIn? ¿Qué oportunidades reales tocaron tu puerta? ¿Qué aprendiste que no estaba en el plan? Ajusta el roadmap para los próximos 6 meses.\n\n**La regla de los 3 activos.** Para Octubre 2026, necesitas tres activos construidos: (1) Al menos 3 proyectos públicos documentados que demuestren que resuelves problemas reales con IA. (2) Una presencia activa en al menos una comunidad donde ya no eres desconocido. (3) Una narrativa de LinkedIn que cuente tu historia de manera que alguien que no te conoce entienda en 30 segundos por qué debería contratarte o contratarte como consultor. Estos tres activos se refuerzan mutuamente: los proyectos dan contenido para LinkedIn y credibilidad en comunidades; la comunidad da feedback para mejorar proyectos y visibilidad en LinkedIn; LinkedIn amplifica proyectos y conecta con oportunidades.\n\n**Lo que no está en el plan importa tanto como lo que está.** No planifiques estudiar diez módulos al mismo tiempo — la dispersión es el enemigo del progreso. No esperes a 'estar listo' para publicar — nadie lo está nunca. No midas éxito solo en salario — mide también en aprendizaje, proyectos, y red construida. No abandones en el mes 3 cuando todavía no hay resultados visibles — el compounding de IA tarda 4-6 meses en hacerse visible. El profesional de IA más exitoso no es el más talentoso — es el más constante.",
+              "analogia": "Un roadmap de carrera en IA es como entrenar para una maratón. No puedes correr 42 km el primer día. Pero tampoco llegas al maratón entrenando sin plan — cada semana tiene su distancia, su intensidad, y su recuperación. Los primeros dos meses son las tiradas largas iniciales: incómodas pero necesarias para construir base. Los meses tres y cuatro son el peak training: máximo esfuerzo, máxima construcción. El mes cinco es el taper: menos volumen, más calidad. En Octubre llega la carrera: ya entrenaste para esto.",
+              "ejemplo_malo": "Resolución de enero: 'Este año me vuelvo experto en IA'. Plan: ver todos los cursos de Coursera sobre ML, leer todos los papers de arXiv sobre LLMs, aprender Python, TensorFlow, PyTorch, LangChain, LlamaIndex, y RAG. Publicar en LinkedIn cuando tenga algo impresionante que mostrar. Aplicar a trabajos de IA cuando me sienta listo. Resultado típico: tres meses de consumo de contenido, ningún proyecto terminado, ninguna publicación, y en Octubre la misma situación que en enero pero más agotado.",
+              "ejemplo_bueno": "Plan de Valentina (diseñadora UX, 6 años, Bogotá): Abril-Mayo: completó M1 y M4 de AIPath, actualizó LinkedIn con headline 'AI UX Designer | Diseño de interfaces para productos de IA | Bogotá'. Junio-Julio: construyó un evaluador de experiencia de usuario en chatbots — tool que analiza conversaciones y detecta puntos de fricción. Agosto: consiguió su primer cliente: una startup en Medellín con un chatbot de ventas que tenía mala retención. Septiembre: presentó el caso de estudio en un meetup de IA en Bogotá. Octubre: tiene 3 clientes, $4,000 USD/mes en consultoría, y fue invitada a hablar en una conferencia regional de IA-UX. Su ventaja no fue saber más IA que todos — fue ser la única con perspectiva UX profunda en el ecosistema de IA en LATAM.",
+              "por_que_importa": "La IA no es una moda que pasa — es una transformación de infraestructura comparable a la llegada del internet. Los profesionales que estén bien posicionados en 2026 tendrán ventajas compuestas que durarán décadas. El momento de construir esa posición es ahora, cuando el mercado todavía tiene menos competencia que tendrá en 2028. M1 te dio los fundamentos conceptuales. El roadmap te da la dirección para convertir esos fundamentos en una carrera real.",
+              "tip_profesional": "La trampa más común al terminar M1 es empezar inmediatamente M2 (Machine Learning Clásico) en lugar de M4 (Prompt Engineering). M4 es el módulo de mayor ROI inmediato: las habilidades de Prompt Engineering se aplican hoy, se facturan hoy, y construyen portafolio hoy. M2 y M3 son importantes para la Fase 2, pero no para la primera oportunidad remunerada. Termina M1 → empieza M4 → tu primer proyecto remunerado probablemente sea de Prompt Engineering, no de ML clásico."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué Octubre 2026 es un horizonte estratégico específico para posicionarse en IA?",
+                "opciones": [
+                  "Porque es cuando la mayoría de certificaciones de IA expiran y necesitan renovación",
+                  "Porque coincide con ciclos de adopción de LLMs donde los proyectos piloto se convierten en contratos",
+                  "Porque es la fecha límite de los programas de beca de Google y Anthropic",
+                  "Porque el mercado laboral de IA solo contrata en el cuarto trimestre del año"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Octubre 2026 no es una fecha arbitraria sino el resultado de entender los ciclos de adopción tecnológica empresarial. Las empresas que empezaron a experimentar con LLMs en 2024 típicamente pasan por una fase de exploración de 6-12 meses, luego una fase de piloto de otros 6-12 meses, antes de comprometerse con implementación. Eso sitúa la demanda real de implementación entre 2025 y 2026. Además, 6 meses de trabajo constante en portafolio, GitHub, LinkedIn y comunidades produce resultados comprobables — no promesas sino evidencia. La ventana entre ahora y Octubre 2026 es también cuando el mercado de IA en LATAM tiene menos competencia que tendrá en 2028, cuando muchos más profesionales habrán completado el ciclo de formación que tú estás comenzando ahora.",
+                "concepto_reforzado": "Timing estratégico en adopción de IA empresarial y ciclos de mercado"
+              },
+              {
+                "pregunta": "¿Cuál es la ventaja principal de un profesional en transición desde otro campo (ej: abogado, médico, contador) frente a un recién egresado en tecnología?",
+                "opciones": [
+                  "Tiene más tiempo para estudiar porque no trabaja en una empresa de tecnología",
+                  "Tiene experiencia sectorial que crea una categoría propia al combinarla con IA",
+                  "Tiene mejores habilidades de programación por su experiencia en el sector anterior",
+                  "Las empresas prefieren contratar perfiles mixtos porque son más baratos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La ventaja del profesional en transición es la experiencia sectorial acumulada — conocimiento profundo de cómo funciona una industria que el recién graduado en tecnología no tiene. Un abogado que aprende IA no compite con AI engineers para los mismos trabajos: crea una categoría diferente ('AI + legal tech') donde hay mucha menos competencia y mayor prima por esa combinación específica. Lo mismo aplica para médicos (IA en salud), contadores (IA en finanzas), o profesores (IA en educación). Esta especialización vertical — dominio de industria + IA — suele pagar más que la especialización técnica horizontal porque es más difícil de replicar. No necesitas ser el mejor programador del mercado; necesitas ser el experto de tu industria que entiende cómo aplicar IA en ella.",
+                "concepto_reforzado": "Ventaja competitiva en IA: especialización vertical por industria"
+              },
+              {
+                "pregunta": "¿Cuál es el orden correcto del roadmap de módulos de AIPath para maximizar ROI inmediato?",
+                "opciones": [
+                  "M1 → M2 → M3 → M4, siguiendo el orden numérico del pensum",
+                  "M1 → M4 → M7 → M8, priorizando habilidades aplicables inmediatamente",
+                  "M1 → M7 → M2 → M4, empezando por Python antes que cualquier otra cosa",
+                  "M4 → M1 → M5 → M8, empezando por el módulo más práctico"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El orden M1 → M4 → M7 → M8 está diseñado para maximizar el tiempo hasta la primera oportunidad remunerada. M4 (Prompt Engineering) es el módulo de mayor ROI inmediato: las habilidades son aplicables sin necesidad de programación avanzada, el mercado de prompt engineers está activo hoy, y construye portafolio demostrable en semanas. M7 (Python para IA) profundiza la capacidad técnica para proyectos más complejos. M8 (Construir con APIs) permite construir productos reales que usen IA. M2 y M3 (Machine Learning Clásico y Deep Learning) son importantes pero pertenecen a la Fase 2 cuando ya tienes la base práctica consolidada. El error común es seguir el orden numérico — M2 y M3 requieren más tiempo de maduración y tienen menos impacto inmediato en oportunidades laborales que M4.",
+                "concepto_reforzado": "Secuencia óptima de aprendizaje en AIPath para máximo ROI"
+              },
+              {
+                "pregunta": "¿Qué son los 'tres activos' que debes tener construidos para Octubre 2026?",
+                "opciones": [
+                  "Tres certificaciones de IA, tres años de experiencia, y un título universitario en ciencias de datos",
+                  "Tres proyectos públicos documentados, presencia activa en una comunidad, y narrativa de LinkedIn clara",
+                  "Tres empleos anteriores en IA, tres publicaciones académicas, y tres recomendaciones de LinkedIn",
+                  "Tres clientes como consultor, tres repositorios en GitHub, y tres artículos publicados"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los tres activos definidos en la lección son complementarios y se refuerzan mutuamente: (1) proyectos públicos documentados — la prueba tangible de que resuelves problemas reales con IA, accesibles a cualquier reclutador o cliente que te busque; (2) presencia activa en comunidad — donde eres conocido, donde puedes dar y recibir feedback, y donde las oportunidades circulan antes de llegar a LinkedIn; y (3) narrativa de LinkedIn — el puente entre tu trabajo técnico y las oportunidades formales. La razón de elegir estos tres sobre certificaciones, publicaciones académicas, o títulos es pragmática: son los activos que más directamente generan oportunidades remuneradas en el mercado de IA de 2026, particularmente en LATAM donde el mercado valora demostraciones concretas más que credenciales.",
+                "concepto_reforzado": "Los tres activos fundamentales para posicionamiento en IA"
+              },
+              {
+                "pregunta": "¿Qué señal indica que el compounding del trabajo en IA está funcionando, según la lección?",
+                "opciones": [
+                  "Tener más de 10,000 seguidores en LinkedIn antes de los 6 meses",
+                  "Haber completado todos los módulos de AIPath en el tiempo previsto",
+                  "Recibir oportunidades inbound sin buscarlas activamente después de 4-6 meses",
+                  "Ser aceptado en un programa de becas o acelerador de IA reconocido"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El compounding en carrera de IA funciona diferente al compounding financiero en que los primeros 3-4 meses de trabajo constante producen resultados aparentemente pequeños — algunos proyectos publicados, un crecimiento lento de seguidores, participación en comunidades donde todavía no te conocen bien. La señal de que el compounding está funcionando es cuando las oportunidades empiezan a llegar sin buscarse activamente: reclutadores que te escriben después de ver un post, empresas que llegan por referencia de alguien en una comunidad, clientes que encontraron un proyecto tuyo en Hugging Face Spaces. Este cambio de modo — de búsqueda activa a atracción inbound — típicamente ocurre entre los meses 4 y 6 para quienes han sido consistentes. Es también la razón por la que no abandonar en el mes 3 es crítico: la mayoría se rinde justo antes del punto de inflexión.",
+                "concepto_reforzado": "Compounding de carrera en IA y el punto de inflexión a los 4-6 meses"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Eres tú. Hoy es Abril 2026 y acabas de completar M1 de AIPath — 110 lecciones sobre fundamentos de IA. Tienes 6 meses hasta Octubre. Tu punto de partida real: sabes los conceptos pero no tienes proyectos públicos de IA todavía, tu LinkedIn no está optimizado para IA, y todavía no participas activamente en ninguna comunidad de IA. Tienes disponibles aproximadamente 1-2 horas diarias entre semana y 3-4 horas los fines de semana para dedicar a esto.",
+              "instruccion": "Diseña tu roadmap personal hacia Octubre 2026. Identifica primero tu perfil (A: estudiante/recién egresado, B: profesional en transición, C: técnico avanzado) y tu ventaja diferencial única. Luego construye un plan mes a mes con: (1) módulo de AIPath a completar, (2) proyecto a construir o documentar, (3) actividad de comunidad/visibilidad, y (4) métrica de éxito medible para ese mes. El plan debe ser realista dado el tiempo disponible (1-2h diarias) y específico a tu situación real, no un plan genérico.",
+              "input_malo": "Perfil: C (técnico avanzado). Plan: Abril: estudiar IA. Mayo: hacer proyectos. Junio: LinkedIn. Julio: aplicar a trabajos. Agosto: mejorar habilidades. Septiembre: seguir aprendiendo. Octubre: conseguir trabajo en IA. Métrica: conseguir trabajo.",
+              "pista": "Tu ventaja diferencial es la intersección entre lo que ya sabes y lo que aprendes en IA. Si eres diseñador, esa intersección es diseño de interfaces para IA. Si eres abogado, es IA para análisis de documentos legales. Si eres marketero, es automatización de contenido con IA. Si no tienes background técnico, tu ventaja es entender el problema de negocio mejor que un ingeniero. Sé específico: ¿qué proyecto construirías en junio que nadie más en LATAM con tu background exacto construiría?",
+              "solucion": "**Ejemplo de roadmap real (Perfil B — Marketera de contenido, 4 años, Cali):** Ventaja diferencial: única persona en LATAM con experiencia profunda en content marketing Y en LLMs aplicados a creación de contenido. Abril 2026: completar M4 (Prompt Engineering) — 82 lecciones en 4 semanas a 20 min/día entre semana + 1h fines de semana. Métrica: aprobar el quiz final de M4 con 90%+. LinkedIn actualizado: 'AI Content Strategist | Automatización de contenido con LLMs para marcas LATAM'. Mayo 2026: construir 'ContentAI Audit' — herramienta que analiza el tono, consistencia y efectividad del contenido de una marca y sugiere mejoras usando Claude API. Deploy en Hugging Face Spaces. Métrica: 3 personas de su red lo usen y den feedback. Junio 2026: primer cliente — ofrecer auditoría de contenido con IA a una marca local por $200 USD. Documentar el caso en LinkedIn (3 posts: problema, proceso, resultado). Entrar al canal #marketing del Discord de Hugging Face. Métrica: cliente pagado + 200 seguidores nuevos en LinkedIn. Julio 2026: completar M7 (Python para IA) para construir versiones más robustas. Agosto-Septiembre: caso de estudio completo con resultados medibles del cliente de junio. Proponer charla en meetup regional de IA en Colombia. Octubre: segundo cliente, 1,500 seguidores en LinkedIn, y entrevistas con 2 agencias digitales regionales para rol de AI Content Lead.",
+              "criterios_de_exito": [
+                "El roadmap identifica una ventaja diferencial específica y única, no 'me gusta la IA' en general",
+                "Cada mes tiene un entregable concreto y medible, no solo una actividad ('aprobar M4' o 'publicar proyecto X', no 'estudiar IA')",
+                "El plan es realista para 1-2 horas diarias — no intenta completar 5 módulos en 2 meses",
+                "El proyecto de mayo-junio resuelve un problema real en la intersección entre el background previo y IA, no un tutorial genérico"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "M4 — Prompt Engineering: el arte de hablar con IA",
+              "por_que_importa_despues": "Has completado M1 — los 110 fundamentos conceptuales de IA. Ahora empieza la parte práctica de alta velocidad. M4 es el módulo de mayor ROI inmediato en AIPath: Prompt Engineering es la habilidad que más directamente se traduce en trabajo remunerado hoy. Las empresas contratan prompt engineers, los consultores facturan por optimización de prompts, y los AI engineers más efectivos son los que saben exactamente cómo hablar con los modelos para obtener lo que necesitan. M1 te dio el mapa. M4 te da la herramienta principal."
             }
           }
         }
