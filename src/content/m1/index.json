@@ -6355,33 +6355,98 @@
         },
         {
           "id": "m1-b7-l4",
-          "titulo": "BLEU, ROUGE y métricas para texto generado",
+          "titulo": "Evaluación humana vs automática",
           "bloque": 7,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Hay dos formas fundamentales de evaluar un modelo de IA: de forma automática (cálculo computacional de métricas) o con evaluación humana (personas que juzgan las respuestas). Ninguna es universalmente superior —cada una tiene contextos donde es la herramienta correcta. Entender cuándo usar cada una, y cómo combinarlas, es una competencia central del consultor de IA.\n\n**Evaluación automática: qué es y cuándo funciona**\nLa evaluación automática calcula métricas de forma computacional sin intervención humana. Para clasificación: accuracy, Precision, Recall, F1. Para texto generado: BLEU (Bilingual Evaluation Understudy) mide solapamiento de n-gramas entre el texto del modelo y una referencia; ROUGE (Recall-Oriented Understudy for Gisting Evaluation) hace algo similar con enfoque en recall; perplexity mide cuán 'sorprendido' está el modelo por el texto, proxy para fluidez.\n\nVentajas de la evaluación automática: escala perfectamente (puedes evaluar millones de ejemplos en segundos), es reproducible (el mismo test siempre da el mismo resultado), es rápida (feedback inmediato durante el desarrollo), y es barata (sin costo de mano de obra humana).\n\nLimitaciones críticas: las métricas automáticas para texto generado tienen problemas estructurales. BLEU puede dar score bajo a una paráfrasis perfecta que usa sinónimos. ROUGE puede dar score alto a texto redundante que repite palabras de la referencia sin agregar valor. Ninguna métrica automática captura bien: factualidad (¿el texto es verdad?), coherencia lógica (¿el argumento tiene sentido?), utilidad para el usuario (¿resuelve el problema?), o tono y registro apropiado.\n\n**Evaluación humana: qué es y cuándo es irremplazable**\nLa evaluación humana involucra personas que juzgan outputs del modelo según criterios definidos. Puede ser comparativa (¿cuál de estas dos respuestas es mejor?) o absoluta (¿qué puntaje del 1-5 le darías a esta respuesta en utilidad?).\n\nCuándo la evaluación humana es irremplazable:\n1. Tareas de generación libre donde no hay respuesta de referencia única: redacción creativa, resúmenes ejecutivos, correos de negocios.\n2. Evaluación de factualidad en dominios especializados: ¿este análisis legal es correcto? Requiere un abogado.\n3. Evaluación de tono y registro: ¿este mensaje de condolencias tiene el tono apropiado? No hay métrica automática que capture eso.\n4. Detección de alucinaciones: ¿el modelo inventó datos? Requiere verificación contra fuentes reales.\n5. Casos límite y edge cases donde el criterio de 'correcto' es ambiguo.\n\n**LLM-as-a-Judge: el enfoque emergente**\nEn 2026, un patrón cada vez más común es usar un LLM poderoso (Claude Opus, GPT-4o) como evaluador de los outputs de otro modelo. El 'juez' recibe el prompt original, la respuesta del modelo evaluado, y criterios de evaluación, y genera una puntuación con justificación. Esto combina la escala de la evaluación automática con una aproximación a la calidad de la evaluación humana. Las limitaciones: el juez puede tener sesgos propios (los LLMs tienden a preferir respuestas más largas y elaboradas), y puede que no sea más confiable que el modelo que evalúa en tareas que ambos realizan mal.\n\n**El protocolo de combinación óptima:**\nPara proyectos de producción, el enfoque más sólido es: (1) evaluación automática continua como monitor de performance (detecta cuando el modelo empeora rápidamente), (2) evaluación humana periódica sobre una muestra representativa (5-10% de los outputs) para validar que las métricas automáticas correlacionan con calidad real, y (3) evaluación humana intensiva al lanzar nuevas versiones del modelo o al detectar degradación con las métricas automáticas.",
+              "analogia": "La evaluación automática es como el medidor de temperatura de un horno: preciso, instantáneo, escalable. La evaluación humana es como probar el plato: irreemplazable para saber si realmente sabe bien. El chef profesional usa ambas — el termómetro para eficiencia, el paladar para certeza.",
+              "ejemplo_malo": "Confiar exclusivamente en BLEU score para evaluar un modelo que genera reportes de auditoría financiera. BLEU no mide si los números son correctos, si las conclusiones son válidas, ni si el reporte cumple estándares regulatorios.",
+              "ejemplo_bueno": "Para un modelo de resumen de noticias: calcular ROUGE automáticamente en todo el corpus de evaluación, luego hacer evaluación humana en una muestra de 50 resúmenes midiendo: (1) factualidad (escala 1-5), (2) completitud (¿cubre los puntos principales?), (3) concisión (¿tiene información redundante?). Usar la correlación entre ROUGE y la evaluación humana para validar si ROUGE predice calidad en este caso específico.",
+              "por_que_importa": "En presentaciones de proyectos de IA, deberás justificar cómo evalúas la calidad del modelo. 'Calculamos BLEU' sin más es insuficiente para un cliente sofisticado. Un protocolo que combine evaluación automática con muestreo humano demuestra rigor y genera confianza.",
+              "tip_profesional": "Para evaluar con humanos, siempre define las dimensiones de evaluación y la escala ANTES de mostrar los ejemplos. Si primero muestras los resultados y luego defines cómo evaluarlos, los evaluadores anclan sus criterios en lo que vieron. Guía de evaluación primero, ejemplos después."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la principal ventaja de la evaluación automática sobre la evaluación humana?",
+                "opciones": [
+                  "Siempre produce evaluaciones más precisas que los humanos",
+                  "Escala perfectamente — puede evaluar millones de ejemplos en segundos de forma reproducible y a bajo costo",
+                  "Puede evaluar cualquier aspecto del lenguaje incluyendo factualidad y coherencia",
+                  "No requiere definir criterios de evaluación previamente"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La ventaja principal de la evaluación automática es la escala y la reproducibilidad. Con herramientas como la API de evaluación o scripts de Python, puedes calcular métricas sobre miles de ejemplos en minutos, obtener el mismo resultado cada vez que corres el mismo test (reproducibilidad crítica para detectar regresiones), y hacerlo sin costo de mano de obra humana. Esto la hace ideal para monitoreo continuo en producción: calcular métricas automáticamente cada hora sobre una muestra de outputs y alertar cuando se detecta degradación. La evaluación humana, aunque más precisa en dimensiones cualitativas, tarda días en completarse para conjuntos de datos medianos y tiene costo proporcional al volumen.",
+                "concepto_reforzado": "Ventajas de escala y reproducibilidad de la evaluación automática"
+              },
+              {
+                "pregunta": "¿Por qué BLEU puede penalizar una paráfrasis perfecta de alta calidad?",
+                "opciones": [
+                  "Porque BLEU solo funciona para texto en inglés",
+                  "Porque BLEU mide solapamiento de palabras exactas con el texto de referencia — una paráfrasis que usa sinónimos correctos puede tener BLEU bajo aunque sea semánticamente idéntica a la referencia",
+                  "Porque BLEU requiere que el texto sea exactamente el mismo largo que la referencia",
+                  "Porque BLEU penaliza el texto que es más largo que la referencia"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "BLEU (Bilingual Evaluation Understudy) calcula qué porcentaje de los n-gramas (secuencias de palabras) del texto generado aparecen en el texto de referencia. Si la referencia dice 'el mercado experimentó una caída significativa' y el modelo genera 'el mercado sufrió una bajada considerable', las palabras 'mercado' coincide pero 'sufrió', 'bajada', 'considerable' no coinciden con 'experimentó', 'caída', 'significativa'. El BLEU será bajo aunque el significado sea prácticamente idéntico. Esta limitación es especialmente problemática para idiomas como el español donde la riqueza léxica permite muchas formas de decir lo mismo con igual o mayor calidad. La consecuencia práctica: un modelo que genera paráfrasis creativas pero correctas puede tener BLEU más bajo que uno que copia fragmentos de la referencia — una señal completamente invertida.",
+                "concepto_reforzado": "Limitación de BLEU con paráfrasis y vocabulario diverso"
+              },
+              {
+                "pregunta": "¿Cuándo es la evaluación humana absolutamente irremplazable para un modelo de LLM?",
+                "opciones": [
+                  "Siempre, porque los humanos siempre evalúan mejor que las métricas automáticas",
+                  "Nunca, porque los LLMs ya pueden evaluarse mutuamente con LLM-as-a-Judge",
+                  "Para dimensiones como factualidad en dominios especializados, tono apropiado, detección de alucinaciones y tareas donde no existe una respuesta de referencia única correcta",
+                  "Solo cuando el presupuesto del proyecto lo permite"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "La evaluación humana es irremplazable en situaciones donde la métrica de calidad requiere juicio que ningún sistema automático puede capturar confiablemente. Factualidad especializada: ¿este análisis de un contrato laboral es jurídicamente correcto? Requiere un abogado laboral, no una métrica de solapamiento de palabras. Tono y registro: ¿este email a un cliente que perdió un ser querido tiene el tono apropiado? Las dimensiones emocionales y culturales son difíciles de capturar automáticamente. Detección de alucinaciones: cuando el modelo inventa fechas, nombres o cifras con confianza, solo comparar con fuentes reales lo detecta. Y para generación creativa donde no hay una respuesta 'correcta' definida, el juicio humano sobre si el texto logra su propósito es irremplazable. LLM-as-a-Judge ayuda a escalar la evaluación pero tiene sus propios sesgos y no elimina la necesidad de calibración humana periódica.",
+                "concepto_reforzado": "Casos donde la evaluación humana es irremplazable"
+              },
+              {
+                "pregunta": "¿Qué es LLM-as-a-Judge y cuál es su limitación principal?",
+                "opciones": [
+                  "Un sistema legal para regular el uso de LLMs en evaluaciones académicas",
+                  "Usar un LLM poderoso como evaluador automático de los outputs de otro modelo, con la limitación de que el juez puede tener sesgos propios como preferencia por respuestas más largas",
+                  "Un benchmark creado por Claude para evaluar otros modelos de IA",
+                  "La práctica de que los desarrolladores evalúen sus propios modelos antes de lanzarlos"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "LLM-as-a-Judge emergió como solución al problema de la evaluación a escala de generación de texto. En vez de calcular BLEU (limitado) o contratar evaluadores humanos (lento y caro), se envía el prompt original + la respuesta del modelo + criterios de evaluación a un LLM potente (Claude Opus, GPT-4o) que genera una puntuación con justificación. Esto es más escalable que la evaluación humana y más matizada que BLEU. La limitación documentada más importante es el sesgo de longitud: los LLMs como jueces tienden a preferir respuestas más largas y elaboradas, incluso cuando respuestas concisas son de mayor calidad. También tienen sesgo hacia su propio estilo de escritura. Si usas Claude como juez para evaluar modelos competidores, puede producir evaluaciones sesgadas sin mala intención. La práctica recomendada es calibrar el LLM-juez comparando sus evaluaciones con las de humanos expertos en una muestra antes de confiar en él para evaluaciones masivas.",
+                "concepto_reforzado": "LLM-as-a-Judge: metodología y sesgos conocidos"
+              },
+              {
+                "pregunta": "¿Cuál es el protocolo óptimo de evaluación para un modelo de IA en producción?",
+                "opciones": [
+                  "Evaluar solo con métricas automáticas para maximizar la eficiencia del equipo",
+                  "Evaluar solo con humanos para garantizar la calidad más alta posible",
+                  "Evaluación automática continua para monitoreo, evaluación humana periódica en muestra del 5-10% para validar correlación, y evaluación humana intensiva al lanzar nuevas versiones",
+                  "Evaluar una vez al lanzamiento y luego confiar en el modelo indefinidamente"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "El protocolo de tres capas combina las ventajas de cada método. La evaluación automática continua actúa como sistema de alarma temprana: calcula métricas sobre una muestra de outputs cada hora y alerta cuando se detecta degradación. No puede confirmarte que el modelo es bueno, pero puede detectar rápidamente cuando algo empeoró. La evaluación humana periódica (5-10% de muestras semanalmente o mensualmente) sirve para validar que las métricas automáticas siguen correlacionando con calidad real — a veces el modelo encuentra formas de tener métricas automáticas altas con menor calidad real (overfitting a la métrica). La evaluación humana intensiva al lanzar nuevas versiones o detectar degradación asegura que los cambios importantes sean validados con el estándar de mayor calidad antes de impactar a todos los usuarios. Este protocolo equilibra costo (la evaluación humana es cara), velocidad (la automática es inmediata) y confiabilidad (la humana es más honesta).",
+                "concepto_reforzado": "Protocolo de evaluación mixta para producción"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de medios digitales en Colombia usa un LLM para generar titulares de noticias a partir de artículos completos. Generan 200 titulares al día. El equipo técnico propone evaluar la calidad calculando ROUGE automáticamente contra los titulares originales escritos por los periodistas. El editor jefe dice: 'No me fío de esos números, quiero que revisemos todos los titulares manualmente.' El presupuesto permite pagar 2 horas de revisión editorial al día.",
+              "instruccion": "Diseña un protocolo de evaluación que satisfaga tanto al equipo técnico como al editor jefe. Indica: (1) cómo usarías ROUGE de forma apropiada (y sus limitaciones en este caso), (2) cuántos titulares revisarías manualmente al día y con qué criterios, y (3) cómo confirmarías que ROUGE correlaciona con la calidad real percibida por los editores.",
+              "input_malo": "Usaría solo ROUGE porque es objetivo y escalable. El editor puede leer los titulares si quiere pero no es necesario para la evaluación.",
+              "pista": "200 titulares/día. 2 horas de revisión editorial. Si cada titular toma 1-2 minutos de revisión: puedes revisar entre 60-120 titulares/día. ¿Qué muestra representativa sería útil? Considera que ROUGE con titulares tiene un problema específico: los titulares creativos (que pueden ser mejores) a menudo difieren más del original.",
+              "solucion": "Protocolo de evaluación mixta: (1) ROUGE CON CONTEXTO APROPIADO: Calcular ROUGE automáticamente para todos los 200 titulares, pero usarlo como señal de 'distancia léxica del original', no como métrica de calidad directa. Un titular con ROUGE bajo puede ser creativamente superior al original — no es señal de error sino de variación. Usar ROUGE principalmente para detectar outliers: titulares con ROUGE extremadamente bajo (posible contenido desconectado) o extremadamente alto (copia casi textual del original, no agrega valor). (2) REVISIÓN HUMANA ESTRATIFICADA: Con 2 horas/día (~80-90 titulares a 1.5 min/titular), revisar: los 10 titulares con ROUGE más bajo (posibles problemas), los 10 con ROUGE más alto (posible copia sin creatividad), y 60 titulares aleatorios del rango medio. Criterios de revisión: factualidad (¿refleja el contenido del artículo?), atractivo (¿generaría clicks?), tono (¿apropiado para la sección?) en escala 1-3. (3) CALIBRACIÓN: Después de 2 semanas, analizar si los titulares con ROUGE bajo/alto tienen calificaciones humanas sistemáticamente más bajas o altas. Si correlacionan, ROUGE sirve como proxy confiable y se puede reducir la muestra humana. Si no correlacionan, ROUGE no aporta información útil y la evaluación humana se enfoca en la muestra aleatoria.",
+              "criterios_de_exito": [
+                "Reconoce la limitación de ROUGE para titulares creativos y la usa como proxy, no como métrica definitiva",
+                "Define una muestra humana estratégica (no aleatoria pura) que maximiza información con el tiempo disponible",
+                "Propone un mecanismo de calibración para validar si ROUGE correlaciona con calidad real en este caso específico"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Overfitting y underfitting: el balance perfecto",
+              "por_que_importa_despues": "Entendida la evaluación, la siguiente lección examina el fenómeno más común que hace fallar modelos en producción: el overfitting, donde el modelo aprende tan bien los datos de entrenamiento que deja de generalizar a datos nuevos."
             }
           }
         },
