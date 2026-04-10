@@ -5765,33 +5765,98 @@
         },
         {
           "id": "m1-b6-l8",
-          "titulo": "Comunidades: Hugging Face, Discord, X/Twitter de IA",
+          "titulo": "Cómo comparar modelos con criterio técnico",
           "bloque": 6,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Comparar modelos de IA es una habilidad que diferencia a un consultor superficial de uno riguroso. La comparación superficial dice: 'GPT-4o tiene mejor score en MMLU'. La comparación rigurosa dice: 'Para tu caso de uso específico, con este volumen de tokens, estos requisitos de latencia y esta restricción de privacidad, GPT-4o tiene estas ventajas y estas limitaciones concretas'. Esta lección te da un framework estructurado para hacer la segunda versión.\n\nEl framework de comparación tiene seis dimensiones relevantes para decisiones empresariales:\n\n**1. Calidad en el caso de uso específico**: La más importante pero más difícil de medir. Requiere construir un conjunto de evaluación (eval set) con 20-100 ejemplos representativos del caso de uso real —no preguntas genéricas sino inputs exactamente como los que llegará al modelo en producción. Evalúas con métricas apropiadas: para clasificación de texto, accuracy y F1; para generación libre, evaluación humana de 1-5 en calidad, precisión factual y seguimiento de instrucciones. Esta dimensión siempre debe tener más peso que los benchmarks públicos.\n\n**2. Costo total por caso de uso**: No el costo por token en abstracto sino el costo por operación del negocio. Si cada análisis de contrato requiere 15,000 tokens de entrada y 2,000 de salida, calcula el costo por contrato analizado en cada modelo. Incluye también costos indirectos: latencia (¿pagas por tiempo de espera del usuario?), reintentos por errores, y cualquier markup de plataforma si usas AWS Bedrock, Google Vertex o Azure en vez de la API directa.\n\n**3. Latencia**: Tiempo desde que envías la solicitud hasta que recibes la respuesta completa. Para interfaces de usuario sincrónicas (el usuario espera la respuesta), latencias mayores a 3-5 segundos degradan la experiencia. Para procesos batch nocturnos, la latencia puede ser irrelevante. Mide time-to-first-token (cuando empieza a responder) y total completion time por separado —son métricas diferentes para casos de uso diferentes.\n\n**4. Ventana de contexto y longitud de input**: ¿Cuánto texto puede procesar el modelo en una sola llamada? Esta limitación es binaria: si tu caso de uso requiere procesar documentos de 100,000 tokens y el modelo tiene ventana de 8,000, el modelo no sirve sin importar su calidad en otros aspectos. En 2026: Claude Opus 200K tokens, GPT-4o 128K, Gemini 1.5 Pro 1M, modelos más pequeños de Llama 4K-32K.\n\n**5. Privacidad y compliance**: ¿Los datos del cliente pueden salir de su infraestructura? ¿Hay requisitos regulatorios de residencia de datos? ¿Los términos del proveedor permiten usar datos del cliente para entrenamiento? Esta dimensión puede eliminar completamente opciones que son superiores en todas las otras dimensiones.\n\n**6. Confiabilidad y SLA (Service Level Agreement)**: ¿Qué uptime garantiza el proveedor? ¿Qué pasa cuando la API tiene outages? ¿Hay límites de rate limiting que afecten volúmenes pico? Para aplicaciones de producción críticas, un SLA del 99.9% significa un máximo de 8.7 horas de downtime al año —¿es eso aceptable para tu caso de uso?\n\nEl proceso práctico: primero define las dimensiones más críticas para el caso de uso (ej: si la privacidad es no negociable, empieza filtrando por eso), luego elimina opciones que no cumplen requisitos mínimos en esas dimensiones, luego construye un eval set pequeño con los modelos restantes para medir calidad real, y finalmente calcula el costo total de propiedad (TCO) de cada opción incluyendo desarrollo, mantenimiento y escalado.",
+              "analogia": "Comparar modelos de IA sin un framework es como comparar automóviles solo por el precio de la gasolina: un factor relevante, pero ignora si el auto cabe en tu estacionamiento, si tiene suficiente espacio para tu familia, y si el concesionario más cercano está a 500 km.",
+              "ejemplo_malo": "Recomendar el modelo con el menor costo por millón de tokens sin haber medido cuántos tokens requiere el caso de uso real —el 'más barato por token' puede ser 3× más caro por análisis si necesita el doble de tokens para dar la misma respuesta.",
+              "ejemplo_bueno": "Construir un eval set de 30 contratos laborales reales del cliente (con revisión humana previa como ground truth), ejecutar GPT-4o y Claude Sonnet sobre los 30, calcular precision/recall en la detección de cláusulas problemáticas, multiplicar por el costo por contrato de cada modelo, y presentar la comparación en esos términos al cliente.",
+              "por_que_importa": "Tu valor como consultor no es saber el nombre de todos los modelos —eso cualquiera lo puede googlear. Tu valor es saber qué preguntas hacer para llegar a la decisión correcta para el contexto específico del cliente.",
+              "tip_profesional": "Chatbot Arena (lmsys.org) es la herramienta más honesta para comparar modelos en 2026: humanos reales dan sus preferencias entre respuestas de modelos anónimos en miles de conversaciones. El ranking resultante (Elo score) correlaciona mejor con satisfacción de usuario real que cualquier benchmark académico. Cuando tengas dudas entre dos modelos para un caso de uso de generación de texto, revisa su posición relativa en Chatbot Arena primero."
             },
-            "verificacion": [],
+            "verificacion": [
+              {
+                "pregunta": "¿Por qué la 'calidad en el caso de uso específico' es la dimensión más importante de comparación de modelos?",
+                "opciones": [
+                  "Porque es la métrica más fácil de medir con herramientas automáticas",
+                  "Porque los benchmarks públicos son suficientes para cualquier decisión empresarial",
+                  "Porque los benchmarks generales no predicen el performance en tareas específicas, y el caso de uso real del cliente puede tener características que ningún benchmark estándar mide",
+                  "Porque el precio siempre refleja la calidad en modelos de IA"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "Un modelo con 90% en MMLU puede tener performance mediocre en análisis de contratos de seguros en español colombiano. Un modelo con 85% en MMLU puede ser excelente en ese caso específico porque fue fine-tuneado en datos del dominio legal latinoamericano. Los benchmarks públicos miden capacidades generales promediadas sobre miles de preguntas de múltiples dominios —no el desempeño específico en el caso de uso del cliente. Construir un eval set con ejemplos reales del caso de uso (aunque sea pequeño: 20-30 ejemplos) y medir calidad directamente en esas tareas es siempre más predictivo del performance en producción que cualquier benchmark académico. Esta es la habilidad que separa a los consultores de IA rigurosos de los que simplemente citan números de marketing.",
+                "concepto_reforzado": "Evaluación específica del caso de uso vs benchmarks generales"
+              },
+              {
+                "pregunta": "¿Cómo se calcula correctamente el 'costo total por caso de uso' para comparar modelos?",
+                "opciones": [
+                  "Comparando el precio por millón de tokens de entrada de cada modelo",
+                  "Calculando el costo completo por operación del negocio: tokens de entrada + salida reales por operación, multiplicados por el precio de cada modelo, incluyendo costos indirectos",
+                  "Usando el costo del plan enterprise anunciado en la página web del proveedor",
+                  "El costo no importa si el modelo tiene mejor calidad"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El costo por millón de tokens en abstracto es un número sin contexto. Lo que importa es cuántos tokens consume tu caso de uso específico por operación. Un análisis de contrato puede requerir 20,000 tokens de entrada y generar 3,000 tokens de salida. Si Claude Sonnet cuesta $3/M de entrada y $15/M de salida, esa operación cuesta $0.06 + $0.045 = $0.105. Si GPT-4o cuesta $5/M de entrada y $15/M de salida, la misma operación cuesta $0.10 + $0.045 = $0.145. Pero si GPT-4o genera respuestas más concisas y usa solo 2,000 tokens de salida, el costo es $0.10 + $0.030 = $0.13 vs el $0.105 de Claude. La comparación real requiere medir el consumo real de tokens de cada modelo en el caso de uso específico, no asumir que son iguales.",
+                "concepto_reforzado": "Cálculo de costo real por operación del negocio"
+              },
+              {
+                "pregunta": "¿Qué es time-to-first-token y cuándo es más relevante que el tiempo total de respuesta?",
+                "opciones": [
+                  "El tiempo que tarda el modelo en cargar por primera vez; relevante cuando inicias la aplicación",
+                  "El tiempo desde que se envía la solicitud hasta que el modelo empieza a generar el primer carácter; relevante en interfaces donde el usuario ve la respuesta aparecer progresivamente",
+                  "El tiempo total de la primera respuesta del día; relevante para calcular el costo matutino",
+                  "El número de tokens en la primera oración; relevante para evaluar concisión"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Las interfaces modernas de LLM hacen streaming: muestran la respuesta carácter por carácter mientras el modelo la genera, en vez de esperar a que termine para mostrar todo. En estas interfaces, lo que el usuario percibe como 'velocidad' es principalmente el time-to-first-token —cuánto tiempo pasa hasta que empieza a ver texto en pantalla. Un modelo que tarda 2 segundos en empezar pero luego escribe rápido se siente más ágil que uno que tarda 0.5 segundos en empezar pero escribe lento. En aplicaciones de procesamiento batch (analizas 10,000 documentos de noche sin usuario esperando), el tiempo total de completion es lo que importa, no el time-to-first-token. La métrica correcta depende del patrón de uso.",
+                "concepto_reforzado": "Time-to-first-token vs completion time según patrón de uso"
+              },
+              {
+                "pregunta": "¿Cuándo la dimensión de 'privacidad y compliance' puede descartar modelos superiores en calidad?",
+                "opciones": [
+                  "Solo cuando el cliente trabaja con datos de menores de edad",
+                  "Nunca, porque todos los proveedores principales cumplen con regulaciones de privacidad",
+                  "Cuando los requisitos regulatorios o contractuales impiden enviar datos a servidores externos, haciendo que APIs propietarias sean inviables independientemente de su calidad",
+                  "Solo en proyectos gubernamentales, no en el sector privado"
+                ],
+                "correcta": 2,
+                "explicacion_profunda": "La dimensión de privacidad es binaria cuando aplica: o el modelo cumple el requisito o no sirve, sin importar su calidad técnica. Los casos en LATAM son más frecuentes de lo que parece: bancos bajo supervisión de la Superfinanciera colombiana o SBS peruana con restricciones de transferencia de datos de clientes, hospitales con datos de salud bajo normativas de protección de datos nacionales, multinacionales con subsidiarias en Europa bajo GDPR, empresas con contratos de clientes que incluyen cláusulas de confidencialidad que impiden uso de servicios de terceros en la nube. En todos estos casos, Claude API, GPT-4o API y Gemini API pueden ser técnicamente superiores pero regulatoriamente inviables, dejando solo Mistral (servidores europeos), Llama self-hosted, o Azure OpenAI con configuración específica de residencia de datos como opciones válidas.",
+                "concepto_reforzado": "Privacidad y compliance como filtro eliminatorio"
+              },
+              {
+                "pregunta": "¿Qué es Chatbot Arena y por qué sus rankings son más confiables que muchos benchmarks académicos?",
+                "opciones": [
+                  "Un foro de discusión donde expertos de IA votan por el mejor modelo",
+                  "Una plataforma donde humanos reales evalúan preferencias entre respuestas de modelos anónimos en miles de conversaciones, produciendo un ranking Elo basado en satisfacción real de usuarios",
+                  "Un benchmark creado por Stanford que mide razonamiento matemático",
+                  "Una herramienta de OpenAI para comparar versiones internas de GPT"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Chatbot Arena (lmsys.org) tiene una metodología elegante: dos modelos responden la misma pregunta de forma anónima (el usuario no sabe cuál es cuál) y el usuario elige cuál respuesta prefiere. Con decenas de miles de estas comparaciones acumuladas, se construye un ranking Elo —el mismo sistema de rating que usan los torneos de ajedrez. Este ranking tiene tres ventajas sobre benchmarks académicos: (1) evalúa preferencias humanas reales, no respuestas correctas a preguntas de opción múltiple; (2) los modelos están anónimos, eliminando el sesgo de reconocer la marca; (3) acumula preferencias de usuarios diversos con intenciones diversas, no solo preguntas académicas. Para casos de uso donde la satisfacción del usuario final importa —chatbots de atención, asistentes de escritura, generación de contenido—, el ranking de Chatbot Arena predice mejor la adopción real que cualquier benchmark técnico.",
+                "concepto_reforzado": "Chatbot Arena como evaluación basada en preferencias humanas reales"
+              }
+            ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Una empresa de recursos humanos en Medellín necesita un sistema que analice CVs en español y genere un resumen estructurado de cada candidato con: (1) años de experiencia relevante, (2) habilidades técnicas detectadas, (3) red flags potenciales, y (4) puntaje de ajuste al cargo (0-10). Procesan ~500 CVs al mes. Cada CV tiene en promedio 800 palabras (~1,000 tokens). No hay restricciones de privacidad especiales. Presupuesto mensual máximo: $100 USD.",
+              "instruccion": "Aplica el framework de las 6 dimensiones para comparar al menos dos modelos para este caso. Para cada dimensión, indica brevemente cómo la evaluarías y cuál sería tu conclusión. Termina con una recomendación concreta.",
+              "input_malo": "Usaría GPT-4o porque es el modelo más avanzado y para analizar CVs necesitas la mejor IA disponible.",
+              "pista": "Calcula el costo mensual aproximado: 500 CVs × 1,000 tokens input + ~500 tokens output = 750,000 tokens totales al mes. Compara ese costo en Claude Haiku ($0.25/M input + $1.25/M output) y GPT-4o ($5/M input + $15/M output). La calidad en análisis de CVs estructurados es similar entre modelos medianos y los más potentes — ¿justifica el premium?",
+              "solucion": "Aplicación del framework: (1) CALIDAD EN CASO DE USO: El análisis de CVs es extracción estructurada de información + scoring — tarea donde modelos medianos son tan buenos como los top-tier. Construiría un eval set con 20 CVs reales ya revisados por el equipo de HR para comparar Claude Haiku vs GPT-4o Mini vs Claude Sonnet. (2) COSTO: 750K tokens/mes. Claude Haiku: $0.25/M × 0.5M + $1.25/M × 0.25M = $0.125 + $0.31 = ~$0.44/mes. GPT-4o: $5/M × 0.5M + $15/M × 0.25M = $2.50 + $3.75 = ~$6.25/mes. Ambos muy por debajo de $100, pero Haiku es 14× más barato. (3) LATENCIA: Para procesamiento batch que se puede hacer en horas, irrelevante. (4) VENTANA DE CONTEXTO: CVs de 1,000 tokens — cualquier modelo moderno lo maneja sin problema. (5) PRIVACIDAD: Sin restricciones especiales, cualquier API aplica. (6) CONFIABILIDAD: Claude y GPT tienen SLA similar. RECOMENDACIÓN: Claude Haiku para procesamiento batch nocturno. Costo estimado <$1/mes, deja $99 de margen para desarrollo. Si la evaluación con los 20 CVs muestra deficiencias en detección de red flags, escalar a Claude Sonnet (~$10/mes con el mismo volumen).",
+              "criterios_de_exito": [
+                "Aplica al menos 4 de las 6 dimensiones del framework con análisis concreto",
+                "Calcula el costo mensual aproximado para al menos dos modelos con los datos del caso",
+                "Recomienda un modelo específico con justificación basada en el framework, no en preferencia genérica"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Elegir el modelo correcto para cada caso",
+              "por_que_importa_despues": "Con el framework de comparación dominado, la siguiente lección te da un árbol de decisión práctico para llegar rápidamente al modelo correcto en situaciones del mundo real — convirtiendo el framework en una herramienta de trabajo diario."
             }
           }
         },
