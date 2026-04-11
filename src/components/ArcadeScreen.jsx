@@ -5,6 +5,7 @@ import {
   getFlashcardQuestions,
   getBatallaQuestions,
   getCompletaConceptoQuestions,
+  getConexionRapidaQuestions,
 } from "../arcade/questionBank"
 
 const TIEMPO_POR_PREGUNTA = 8
@@ -42,6 +43,26 @@ function Confetti() {
     </div>
   )
 }
+
+/* ─── Utilidad de shuffle local para los juegos ─── */
+function shuffleArr(arr) {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
+/* ─── Secuencias hardcodeadas para Ordena los Pasos ─── */
+const SECUENCIAS_ORDEN = [
+  { titulo: "Entrenar un modelo de IA", pasos: ["Datos", "Preprocesar", "Entrenar", "Evaluar"] },
+  { titulo: "RAG pipeline", pasos: ["Query", "Buscar", "Recuperar", "Generar"] },
+  { titulo: "Prompt engineering", pasos: ["Contexto", "Instrucción", "Ejemplo", "Output"] },
+  { titulo: "Fine-tuning", pasos: ["Base model", "Dataset", "Training", "Deploy"] },
+  { titulo: "EU AI Act", pasos: ["Clasificar", "Evaluar riesgo", "Documentar", "Auditar"] },
+  { titulo: "Proyecto de IA", pasos: ["Problema", "Datos", "Modelo", "Producción"] },
+]
 
 /* ─── Componente del juego Verdadero o Falso ─── */
 function VerdaderoFalsoGame({ onSalir, onXpGanado }) {
@@ -1454,6 +1475,587 @@ function CompletaConceptoGame({ onSalir, onXpGanado }) {
   )
 }
 
+/* ─── Componente del juego Conexión Rápida ─── */
+function ConexionRapidaGame({ onSalir, onXpGanado }) {
+  const RONDAS = 8
+  const TIEMPO_RONDA = 30
+
+  function crearEstadoJuego() {
+    const pares = getConexionRapidaQuestions(RONDAS * 4)
+    const defsOrdenes = Array.from({ length: RONDAS }, (_, i) =>
+      shuffleArr(pares.slice(i * 4, i * 4 + 4).map((p) => p.definicion))
+    )
+    return { pares, defsOrdenes }
+  }
+
+  const [estadoJuego, setEstadoJuego] = useState(crearEstadoJuego)
+  const [ronda, setRonda] = useState(0)
+  const [tiempo, setTiempo] = useState(TIEMPO_RONDA)
+  const [terminoSel, setTerminoSel] = useState(null)
+  const [conectados, setConectados] = useState(new Set())
+  const [shake, setShake] = useState(false)
+  const [fase, setFase] = useState("jugando")
+  const [totalCorrectos, setTotalCorrectos] = useState(0)
+  const timerRef = useRef(null)
+  const rondaRef = useRef(0)
+  const conectadosRef = useRef(new Set())
+  const totalCorrectosRef = useRef(0)
+
+  // Timer — se reinicia cuando cambia ronda o fase
+  useEffect(() => {
+    if (fase !== "jugando") return
+    clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => {
+      setTiempo((t) => {
+        if (t <= 1) {
+          clearInterval(timerRef.current)
+          avanzarRonda()
+          return 0
+        }
+        return t - 1
+      })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+  }, [ronda, fase]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function avanzarRonda() {
+    const sig = rondaRef.current + 1
+    if (sig >= RONDAS) {
+      onXpGanado(totalCorrectosRef.current * 5 + 20)
+      setFase("resultado")
+    } else {
+      rondaRef.current = sig
+      conectadosRef.current = new Set()
+      setConectados(new Set())
+      setTerminoSel(null)
+      setShake(false)
+      setTiempo(TIEMPO_RONDA)
+      setRonda(sig)
+    }
+  }
+
+  function jugarDeNuevo() {
+    const nuevoEstado = crearEstadoJuego()
+    setEstadoJuego(nuevoEstado)
+    rondaRef.current = 0
+    conectadosRef.current = new Set()
+    totalCorrectosRef.current = 0
+    setRonda(0)
+    setConectados(new Set())
+    setTerminoSel(null)
+    setShake(false)
+    setTiempo(TIEMPO_RONDA)
+    setTotalCorrectos(0)
+    setFase("jugando")
+  }
+
+  function tapTermino(termino) {
+    if (conectadosRef.current.has(termino)) return
+    setTerminoSel((prev) => (prev === termino ? null : termino))
+  }
+
+  function tapDefinicion(definicion) {
+    if (!terminoSel) return
+    const pares = estadoJuego.pares.slice(rondaRef.current * 4, rondaRef.current * 4 + 4)
+    const parCorrecto = pares.find((p) => p.termino === terminoSel)
+
+    if (parCorrecto?.definicion === definicion) {
+      const newSet = new Set([...conectadosRef.current, terminoSel])
+      conectadosRef.current = newSet
+      totalCorrectosRef.current += 1
+      setConectados(new Set(newSet))
+      setTotalCorrectos((t) => t + 1)
+      setTerminoSel(null)
+      if (newSet.size >= 4) {
+        clearInterval(timerRef.current)
+        setTimeout(avanzarRonda, 700)
+      }
+    } else {
+      setShake(true)
+      setTimeout(() => {
+        setShake(false)
+        setTerminoSel(null)
+      }, 500)
+    }
+  }
+
+  const paresRonda = estadoJuego.pares.slice(ronda * 4, ronda * 4 + 4)
+  const defsOrden = estadoJuego.defsOrdenes[ronda] || []
+  const tiempoRatio = tiempo / TIEMPO_RONDA
+  const maxCorrectos = RONDAS * 4
+
+  if (fase === "resultado") {
+    const xp = totalCorrectosRef.current * 5 + 20
+    return (
+      <div className="w-full max-w-lg mx-auto px-4 pb-8 pt-8 flex flex-col items-center gap-6">
+        {totalCorrectosRef.current >= maxCorrectos * 0.7 && <Confetti />}
+        <div style={{ fontSize: 52 }}>{totalCorrectosRef.current >= 24 ? "🏆" : "✅"}</div>
+        <h2
+          className="text-2xl font-extrabold text-center"
+          style={{ fontFamily: "'Outfit', sans-serif", color: "var(--color-accent-primary)" }}
+        >
+          ¡Rondas completadas!
+        </h2>
+        <div
+          className="rounded-2xl p-6 text-center w-full"
+          style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}
+        >
+          <p className="text-4xl font-extrabold" style={{ color: "var(--color-accent-primary)" }}>
+            {totalCorrectosRef.current}/{maxCorrectos}
+          </p>
+          <p className="text-sm mt-1" style={{ color: "var(--color-text-secondary)" }}>
+            pares conectados correctamente
+          </p>
+          <p className="text-2xl font-bold mt-3" style={{ color: "#F59E0B" }}>
+            +{xp} XP
+          </p>
+        </div>
+        <div className="flex gap-3 w-full">
+          <button
+            onClick={onSalir}
+            className="flex-1 py-3 rounded-xl text-sm font-semibold"
+            style={{
+              background: "var(--color-border)",
+              color: "var(--color-text-secondary)",
+              fontFamily: "'Outfit', sans-serif",
+            }}
+          >
+            Salir
+          </button>
+          <button
+            onClick={jugarDeNuevo}
+            className="flex-1 py-3 rounded-xl text-sm font-semibold"
+            style={{
+              background: "var(--color-accent-primary)",
+              color: "#fff",
+              fontFamily: "'Outfit', sans-serif",
+            }}
+          >
+            Jugar de nuevo
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="w-full max-w-lg mx-auto px-4 pb-8">
+      {/* Encabezado */}
+      <div className="flex items-center justify-between pt-5 pb-3">
+        <button
+          onClick={onSalir}
+          className="text-sm px-3 py-1.5 rounded-xl"
+          style={{
+            background: "var(--color-border)",
+            color: "var(--color-text-secondary)",
+            fontFamily: "'Outfit', sans-serif",
+          }}
+        >
+          ← Salir
+        </button>
+        <span className="text-sm font-semibold" style={{ color: "var(--color-text-secondary)" }}>
+          Ronda {ronda + 1}/{RONDAS}
+        </span>
+        <span className="text-sm font-bold" style={{ color: "#F59E0B" }}>
+          +{totalCorrectos * 5} XP
+        </span>
+      </div>
+
+      {/* Barra de tiempo */}
+      <div
+        className="h-2 rounded-full mb-4 overflow-hidden"
+        style={{ background: "var(--color-border)" }}
+      >
+        <motion.div
+          className="h-full rounded-full"
+          animate={{ width: `${tiempoRatio * 100}%` }}
+          transition={{ duration: 0.5 }}
+          style={{
+            background:
+              tiempoRatio > 0.5 ? "#00D4AA" : tiempoRatio > 0.25 ? "#F59E0B" : "#EF4444",
+          }}
+        />
+      </div>
+
+      {/* Instrucción */}
+      <p
+        className="text-center text-sm font-bold mb-4"
+        style={{ color: "var(--color-text-primary)", fontFamily: "'Outfit', sans-serif" }}
+      >
+        🔗 Conecta cada término con su definición
+      </p>
+
+      {/* Dos columnas */}
+      <div className="grid grid-cols-2 gap-2">
+        {/* Columna izquierda: términos */}
+        <div className="flex flex-col gap-2">
+          {paresRonda.map((par) => {
+            const esSel = terminoSel === par.termino
+            const esConectado = conectados.has(par.termino)
+            return (
+              <motion.button
+                key={par.termino}
+                onClick={() => tapTermino(par.termino)}
+                animate={esSel && shake ? { x: [0, -8, 8, -8, 8, 0] } : { x: 0 }}
+                transition={{ duration: 0.4 }}
+                className="min-h-[60px] px-2 py-2 rounded-xl text-[11px] leading-tight text-left"
+                style={{
+                  background: esConectado
+                    ? "rgba(16,185,129,0.15)"
+                    : esSel
+                    ? "rgba(0,212,170,0.18)"
+                    : "var(--color-bg-card)",
+                  border: esConectado
+                    ? "1.5px solid rgba(16,185,129,0.7)"
+                    : esSel
+                    ? "2px solid #00D4AA"
+                    : "1px solid var(--color-border)",
+                  color: esConectado ? "#10B981" : esSel ? "#00D4AA" : "var(--color-text-primary)",
+                  cursor: esConectado ? "default" : "pointer",
+                  fontWeight: esSel ? 700 : 500,
+                  transition: "all 0.15s",
+                }}
+              >
+                {esConectado && "✓ "}
+                {par.termino}
+              </motion.button>
+            )
+          })}
+        </div>
+
+        {/* Columna derecha: definiciones mezcladas */}
+        <div className="flex flex-col gap-2">
+          {defsOrden.map((def) => {
+            const parConectado = paresRonda.find(
+              (p) => conectados.has(p.termino) && p.definicion === def
+            )
+            return (
+              <button
+                key={def}
+                onClick={() => tapDefinicion(def)}
+                className="min-h-[60px] px-2 py-2 rounded-xl text-[11px] leading-tight text-left"
+                style={{
+                  background: parConectado ? "rgba(16,185,129,0.15)" : "var(--color-bg-card)",
+                  border: parConectado
+                    ? "1.5px solid rgba(16,185,129,0.7)"
+                    : "1px solid var(--color-border)",
+                  color: parConectado ? "#10B981" : "var(--color-text-secondary)",
+                  cursor: parConectado ? "default" : "pointer",
+                  transition: "all 0.15s",
+                }}
+              >
+                {parConectado && "✓ "}
+                {def}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Marcador inferior */}
+      <div className="mt-4 flex justify-between px-1">
+        <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
+          {conectados.size}/4 pares
+        </span>
+        <span
+          className="text-xs font-bold"
+          style={{
+            color:
+              tiempoRatio > 0.5 ? "#00D4AA" : tiempoRatio > 0.25 ? "#F59E0B" : "#EF4444",
+          }}
+        >
+          {tiempo}s
+        </span>
+      </div>
+    </div>
+  )
+}
+
+/* ─── Componente del juego Ordena los Pasos ─── */
+function OrdenaPasosGame({ onSalir, onXpGanado }) {
+  const TIEMPO_RONDA = 20
+
+  const [ronda, setRonda] = useState(0)
+  const [tiempo, setTiempo] = useState(TIEMPO_RONDA)
+  const [seleccionados, setSeleccionados] = useState([])
+  const [itemsMezclados] = useState(() =>
+    SECUENCIAS_ORDEN.map((s) => shuffleArr([...s.pasos]))
+  )
+  const [correcto, setCorrecto] = useState(false)
+  const [shake, setShake] = useState(false)
+  const [correctas, setCorrectas] = useState(0)
+  const [fase, setFase] = useState("jugando")
+  const timerRef = useRef(null)
+  const rondaRef = useRef(0)
+  const correctasRef = useRef(0)
+
+  // Timer — se pausa cuando la ronda está correcta
+  useEffect(() => {
+    if (fase !== "jugando" || correcto) return
+    clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => {
+      setTiempo((t) => {
+        if (t <= 1) {
+          clearInterval(timerRef.current)
+          avanzarRonda()
+          return 0
+        }
+        return t - 1
+      })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+  }, [ronda, fase, correcto]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Resetear estado al cambiar ronda
+  useEffect(() => {
+    setSeleccionados([])
+    setCorrecto(false)
+    setShake(false)
+    setTiempo(TIEMPO_RONDA)
+  }, [ronda])
+
+  function avanzarRonda() {
+    const sig = rondaRef.current + 1
+    if (sig >= SECUENCIAS_ORDEN.length) {
+      onXpGanado(correctasRef.current * 5 + 20)
+      setFase("resultado")
+    } else {
+      rondaRef.current = sig
+      setRonda(sig)
+    }
+  }
+
+  function jugarDeNuevo() {
+    rondaRef.current = 0
+    correctasRef.current = 0
+    setRonda(0)
+    setCorrectas(0)
+    setFase("jugando")
+  }
+
+  function tapPaso(paso) {
+    if (seleccionados.includes(paso) || correcto || shake) return
+    const nextIdx = seleccionados.length
+    const secuencia = SECUENCIAS_ORDEN[rondaRef.current]
+
+    if (paso === secuencia.pasos[nextIdx]) {
+      const newSel = [...seleccionados, paso]
+      setSeleccionados(newSel)
+      if (newSel.length === 4) {
+        clearInterval(timerRef.current)
+        correctasRef.current += 1
+        setCorrectas((c) => c + 1)
+        setCorrecto(true)
+        setTimeout(avanzarRonda, 1000)
+      }
+    } else {
+      setShake(true)
+      setTimeout(() => {
+        setShake(false)
+        setSeleccionados([])
+      }, 600)
+    }
+  }
+
+  const secuenciaActual = SECUENCIAS_ORDEN[ronda]
+  const mezclados = itemsMezclados[ronda]
+  const tiempoRatio = tiempo / TIEMPO_RONDA
+
+  if (fase === "resultado") {
+    const xp = correctasRef.current * 5 + 20
+    return (
+      <div className="w-full max-w-lg mx-auto px-4 pb-8 pt-8 flex flex-col items-center gap-6">
+        {correctasRef.current >= 4 && <Confetti />}
+        <div style={{ fontSize: 52 }}>{correctasRef.current >= 4 ? "🏆" : "✅"}</div>
+        <h2
+          className="text-2xl font-extrabold text-center"
+          style={{ fontFamily: "'Outfit', sans-serif", color: "var(--color-accent-primary)" }}
+        >
+          ¡Juego terminado!
+        </h2>
+        <div
+          className="rounded-2xl p-6 text-center w-full"
+          style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}
+        >
+          <p className="text-4xl font-extrabold" style={{ color: "var(--color-accent-primary)" }}>
+            {correctasRef.current}/{SECUENCIAS_ORDEN.length}
+          </p>
+          <p className="text-sm mt-1" style={{ color: "var(--color-text-secondary)" }}>
+            secuencias ordenadas correctamente
+          </p>
+          <p className="text-2xl font-bold mt-3" style={{ color: "#F59E0B" }}>
+            +{xp} XP
+          </p>
+        </div>
+        <div className="flex gap-3 w-full">
+          <button
+            onClick={onSalir}
+            className="flex-1 py-3 rounded-xl text-sm font-semibold"
+            style={{
+              background: "var(--color-border)",
+              color: "var(--color-text-secondary)",
+              fontFamily: "'Outfit', sans-serif",
+            }}
+          >
+            Salir
+          </button>
+          <button
+            onClick={jugarDeNuevo}
+            className="flex-1 py-3 rounded-xl text-sm font-semibold"
+            style={{
+              background: "var(--color-accent-primary)",
+              color: "#fff",
+              fontFamily: "'Outfit', sans-serif",
+            }}
+          >
+            Jugar de nuevo
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="w-full max-w-lg mx-auto px-4 pb-8">
+      {/* Encabezado */}
+      <div className="flex items-center justify-between pt-5 pb-3">
+        <button
+          onClick={onSalir}
+          className="text-sm px-3 py-1.5 rounded-xl"
+          style={{
+            background: "var(--color-border)",
+            color: "var(--color-text-secondary)",
+            fontFamily: "'Outfit', sans-serif",
+          }}
+        >
+          ← Salir
+        </button>
+        <span className="text-sm font-semibold" style={{ color: "var(--color-text-secondary)" }}>
+          {ronda + 1}/{SECUENCIAS_ORDEN.length}
+        </span>
+        <span className="text-sm font-bold" style={{ color: "#F59E0B" }}>
+          {correctas} ✓
+        </span>
+      </div>
+
+      {/* Barra de tiempo */}
+      <div
+        className="h-2 rounded-full mb-4 overflow-hidden"
+        style={{ background: "var(--color-border)" }}
+      >
+        <motion.div
+          className="h-full rounded-full"
+          animate={{ width: `${tiempoRatio * 100}%` }}
+          transition={{ duration: 0.5 }}
+          style={{
+            background:
+              tiempoRatio > 0.5 ? "#00D4AA" : tiempoRatio > 0.25 ? "#F59E0B" : "#EF4444",
+          }}
+        />
+      </div>
+
+      {/* Tarjeta de instrucción */}
+      <div
+        className="rounded-2xl p-4 mb-4"
+        style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}
+      >
+        <p className="text-xs font-semibold mb-1" style={{ color: "var(--color-text-secondary)" }}>
+          Toca los pasos en el orden correcto:
+        </p>
+        <p
+          className="text-base font-bold"
+          style={{ color: "var(--color-text-primary)", fontFamily: "'Outfit', sans-serif" }}
+        >
+          {secuenciaActual.titulo}
+        </p>
+      </div>
+
+      {/* Indicador de progreso */}
+      <div className="flex items-center justify-center gap-1 mb-4">
+        {secuenciaActual.pasos.map((_, i) => (
+          <div key={i} className="flex items-center gap-1">
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
+              style={{
+                background:
+                  i < seleccionados.length
+                    ? correcto
+                      ? "rgba(16,185,129,0.25)"
+                      : "rgba(0,212,170,0.2)"
+                    : "var(--color-border)",
+                border:
+                  i < seleccionados.length
+                    ? correcto
+                      ? "2px solid #10B981"
+                      : "2px solid #00D4AA"
+                    : "2px solid transparent",
+                color:
+                  i < seleccionados.length
+                    ? correcto
+                      ? "#10B981"
+                      : "#00D4AA"
+                    : "var(--color-text-secondary)",
+                transition: "all 0.2s",
+              }}
+            >
+              {i < seleccionados.length ? (correcto ? "✓" : i + 1) : i + 1}
+            </div>
+            {i < 3 && (
+              <span style={{ color: "var(--color-text-secondary)", fontSize: 12 }}>→</span>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Opciones de pasos */}
+      <motion.div
+        className="flex flex-col gap-2"
+        animate={shake ? { x: [0, -8, 8, -8, 8, 0] } : { x: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        {mezclados.map((paso) => {
+          const selIdx = seleccionados.indexOf(paso)
+          const esSel = selIdx !== -1
+          return (
+            <button
+              key={paso}
+              onClick={() => tapPaso(paso)}
+              className="w-full py-3 px-4 rounded-xl text-sm font-semibold text-left active:scale-95"
+              style={{
+                background: correcto && esSel
+                  ? "rgba(16,185,129,0.18)"
+                  : esSel
+                  ? "rgba(0,212,170,0.14)"
+                  : "var(--color-bg-card)",
+                border: correcto && esSel
+                  ? "2px solid #10B981"
+                  : esSel
+                  ? "2px solid #00D4AA"
+                  : "1px solid var(--color-border)",
+                color: correcto && esSel
+                  ? "#10B981"
+                  : esSel
+                  ? "#00D4AA"
+                  : "var(--color-text-primary)",
+                cursor: esSel ? "default" : "pointer",
+                transition: "all 0.15s",
+              }}
+            >
+              {esSel ? `${selIdx + 1}. ` : ""}
+              {paso}
+            </button>
+          )
+        })}
+      </motion.div>
+
+      {/* Tiempo */}
+      <p className="text-center mt-3 text-xs" style={{ color: "var(--color-text-secondary)" }}>
+        {tiempo}s
+      </p>
+    </div>
+  )
+}
+
 /* ─── Grid de juegos ─── */
 const juegos = [
   { nombre: "Verdadero o Falso", emoji: "⚡" },
@@ -1480,7 +2082,9 @@ export default function ArcadeScreen() {
 
   function manejarJugar(indice) {
     if (indice === 0) setJuegoActivo("verdadero-falso")
+    if (indice === 1) setJuegoActivo("conexion-rapida")
     if (indice === 2) setJuegoActivo("completa-concepto")
+    if (indice === 3) setJuegoActivo("ordena-pasos")
     if (indice === 4) setJuegoActivo("batalla-conceptos")
     if (indice === 5) setJuegoActivo("speed-cards")
   }
@@ -1527,6 +2131,24 @@ export default function ArcadeScreen() {
   if (juegoActivo === "speed-cards") {
     return (
       <SpeedCardsGame
+        onSalir={() => setJuegoActivo(null)}
+        onXpGanado={manejarXp}
+      />
+    )
+  }
+
+  if (juegoActivo === "conexion-rapida") {
+    return (
+      <ConexionRapidaGame
+        onSalir={() => setJuegoActivo(null)}
+        onXpGanado={manejarXp}
+      />
+    )
+  }
+
+  if (juegoActivo === "ordena-pasos") {
+    return (
+      <OrdenaPasosGame
         onSalir={() => setJuegoActivo(null)}
         onXpGanado={manejarXp}
       />
@@ -1598,14 +2220,13 @@ export default function ArcadeScreen() {
               onClick={() => manejarJugar(i)}
               className="w-full text-sm font-semibold py-1.5 rounded-xl transition-all duration-200 hover:brightness-110 active:scale-95"
               style={{
-                background: (i === 0 || i === 2 || i === 4 || i === 5) ? "var(--color-accent-primary)" : "var(--color-border)",
-                color: (i === 0 || i === 2 || i === 4 || i === 5) ? "#fff" : "var(--color-text-secondary)",
+                background: "var(--color-accent-primary)",
+                color: "#fff",
                 fontFamily: "'Outfit', sans-serif",
-                cursor: (i === 0 || i === 2 || i === 4 || i === 5) ? "pointer" : "not-allowed",
-                opacity: (i === 0 || i === 2 || i === 4 || i === 5) ? 1 : 0.5,
+                cursor: "pointer",
               }}
             >
-              {(i === 0 || i === 2 || i === 4 || i === 5) ? "Jugar" : "Pronto"}
+              Jugar
             </button>
           </motion.div>
         ))}

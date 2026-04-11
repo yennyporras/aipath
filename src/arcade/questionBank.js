@@ -213,6 +213,27 @@ export function getFlashcardQuestions(n = 10) {
 }
 
 /**
+ * Adapta preguntas al formato Conexión Rápida (término ↔ definición).
+ * Garantiza términos únicos para que el matching funcione correctamente.
+ *
+ * Formato de salida: { termino: string, definicion: string }
+ */
+export function getConexionRapidaQuestions(n = 32) {
+  const seen = new Set()
+  return shuffle(QUESTION_POOL)
+    .filter((q) => {
+      if (seen.has(q.concepto_reforzado)) return false
+      seen.add(q.concepto_reforzado)
+      return true
+    })
+    .slice(0, n)
+    .map((q) => ({
+      termino: q.concepto_reforzado,
+      definicion: q.opciones[q.correcta_index],
+    }))
+}
+
+/**
  * Adapta preguntas al formato Batalla de Conceptos (concepto + 2 opciones).
  * Muestra la opción correcta vs una incorrecta aleatoria.
  * El orden de las opciones se mezcla aleatoriamente.
