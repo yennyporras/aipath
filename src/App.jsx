@@ -18,6 +18,10 @@ import ReportButton from "./components/ReportButton"
 import PrivacyScreen from "./components/PrivacyScreen"
 import { usePWAInstall } from "./hooks/usePWAInstall"
 import { playSound } from "./utils/sounds"
+import ArcadeScreen from "./components/ArcadeScreen"
+import ExplorarScreen from "./components/ExplorarScreen"
+import PerfilScreen from "./components/PerfilScreen"
+import BottomNav from "./components/BottomNav"
 
 // Módulos con contenido disponible — import estático (Vite los bundlea)
 import m4Data from "./content/m4-completo.json"
@@ -577,6 +581,27 @@ export default function App() {
     setPantalla("academy")
   }
 
+  function handleLogout() {
+    localStorage.removeItem(SESSION_KEY)
+    setPantalla("login")
+  }
+
+  // Cambio de tab inferior — resetea estado de módulo al salir del flujo
+  function handleTabChange(tab) {
+    if (tab === "academy") {
+      handleVolverAcademy()
+    } else {
+      setModuloActivo(null)
+      setModuloData(null)
+      setBloqueActual(null)
+      setLeccionActual(null)
+      setPantalla(tab)
+    }
+  }
+
+  // Tab activo para BottomNav: las pantallas de módulo cuentan como "academy"
+  const tabActivo = ["arcade", "explorar", "perfil"].includes(pantalla) ? pantalla : "academy"
+
   // Seleccionar módulo desde AcademyScreen
   function handleSelectModulo(mod) {
     const data = MODULO_DATA[mod.id]
@@ -816,17 +841,17 @@ export default function App() {
     </>
   )
 
-  // ── ACADEMY (home) — sin sidebar ──
-  if (pantalla === "academy") {
+  // ── TABS PRINCIPALES (academy, arcade, explorar, perfil) — sin sidebar ──
+  if (["academy", "arcade", "explorar", "perfil"].includes(pantalla)) {
     return (
-      <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-16">
+      <div className="min-h-dvh text-white flex flex-col items-center p-5 pb-20">
         <CustomCursor />
         <AnimatePresence>
           {xpMilestone && (
             <XPMilestoneOverlay xp={xpMilestone} onDone={() => setXpMilestone(null)} />
           )}
         </AnimatePresence>
-        {/* Header simplificado en academy */}
+        {/* Header superior */}
         <div className="w-full max-w-4xl flex justify-between items-center mb-8 animate-reveal">
           <AIPathLogo size="sm" />
           <div className="flex items-center gap-3">
@@ -839,12 +864,26 @@ export default function App() {
             </div>
           </div>
         </div>
+        {/* Contenido de cada tab */}
         <div className="flex-1 w-full">
-          <AcademyScreen progreso={progreso} onSelectModulo={handleSelectModulo} />
+          {pantalla === "academy" && (
+            <AcademyScreen progreso={progreso} onSelectModulo={handleSelectModulo} />
+          )}
+          {pantalla === "arcade" && <ArcadeScreen />}
+          {pantalla === "explorar" && <ExplorarScreen />}
+          {pantalla === "perfil" && (
+            <PerfilScreen
+              session={getSession()}
+              progreso={progreso}
+              onLogout={handleLogout}
+            />
+          )}
         </div>
         {mostrarBanner && isMobile && (
           <InstallBanner onInstall={promptInstall} onDismiss={handleDismissInstall} isMobile={true} />
         )}
+        {/* Navegación inferior mobile */}
+        <BottomNav activo={tabActivo} onChange={handleTabChange} />
       </div>
     )
   }
@@ -1031,6 +1070,8 @@ export default function App() {
       {mostrarBanner && isMobile && (
         <InstallBanner onInstall={promptInstall} onDismiss={handleDismissInstall} isMobile={true} />
       )}
+      {/* Navegación inferior mobile — visible durante el flujo de módulos */}
+      <BottomNav activo={tabActivo} onChange={handleTabChange} />
     </div>
   )
 }
