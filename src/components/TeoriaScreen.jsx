@@ -240,11 +240,6 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
             </motion.button>
           )}
         </div>
-
-        {/* Badge GDPR: contenido generado con IA */}
-        <p className="text-center" style={{ fontSize: "11px", color: "var(--color-text-secondary)", opacity: 0.45 }}>
-          Contenido generado con IA · Revisado por humanos
-        </p>
       </div>
     </motion.div>
   )
