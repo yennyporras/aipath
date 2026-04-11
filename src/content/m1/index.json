@@ -7911,87 +7911,91 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "El EU AI Act (Reglamento UE 2024/1689) es la primera regulación integral de inteligencia artificial en el mundo, en vigor desde agosto de 2024 con períodos de transición escalonados hasta 2026. Para un AI Engineer que trabaja o quiere trabajar en Europa, entender este reglamento no es opcional: define qué puedes construir, cómo debes construirlo y cuáles son las consecuencias de no cumplirlo.\n\nEl EU AI Act clasifica los sistemas de IA en cuatro categorías según su nivel de riesgo. Los sistemas de riesgo inaceptable están prohibidos desde febrero de 2025: incluyen sistemas de puntuación social por gobiernos, reconocimiento facial en tiempo real en espacios públicos para aplicación de la ley, manipulación subliminal, y explotación de vulnerabilidades de grupos específicos. No hay excepciones comerciales para estas categorías.\n\nLos sistemas de alto riesgo (Anexo III) requieren cumplimiento completo antes de desplegarse. La lista incluye: infraestructura crítica (agua, energía, transporte), educación y formación profesional, empleo y gestión de trabajadores, servicios esenciales (crédito, seguros), aplicación de la ley, gestión de fronteras y migración, administración de justicia, y procesos democráticos. Para estos sistemas las obligaciones son: evaluación de conformidad antes del despliegue, registro en la base de datos europea de la UE, sistema de gestión de riesgos documentado, datos de entrenamiento auditables, documentación técnica completa, capacidades de logging, transparencia hacia usuarios, supervisión humana, y robustez y ciberseguridad.\n\nLos sistemas de riesgo limitado tienen obligaciones de transparencia específicas. Los chatbots deben informar que el usuario interactúa con IA. Los deepfakes generados por IA deben estar etiquetados. Los sistemas de generación de contenido deben marcar ese contenido como generado por máquina. Estas obligaciones están en vigor desde agosto de 2026.\n\nLos sistemas de riesgo mínimo (la gran mayoría: filtros de spam, recomendadores de contenido, videojuegos con IA) no tienen obligaciones específicas bajo el EU AI Act, aunque siguen sujetos al GDPR y otras regulaciones.\n\nPara un AI Engineer en una empresa europea, el cumplimiento operativo implica cuatro responsabilidades concretas: primero, clasificar correctamente cualquier sistema que desarrolles o despliegues usando el árbol de decisión del Anexo III. Segundo, si el sistema es de alto riesgo, documentar todo el ciclo de vida: datos de entrenamiento, proceso de evaluación, métricas de performance por subgrupo, decisiones de diseño y sus justificaciones. Tercero, implementar supervisión humana técnicamente, no solo nominalmente. Cuarto, establecer un proceso de gestión de incidentes y reporte a la autoridad nacional competente cuando sea necesario. Las multas por incumplimiento alcanzan 35 millones EUR o el 7% del volumen global de negocio para sistemas prohibidos, 15 millones EUR o 3% para sistemas de alto riesgo que no cumplan, y 7.5 millones EUR o 1.5% por información incorrecta a las autoridades.",
+              "analogia": "Piensa en el EU AI Act como el código de construcción de edificios: no te dice qué edificio construir ni cómo diseñarlo artísticamente, pero sí establece que las estructuras que soporten mucho peso deben usar ciertos materiales, pasar inspecciones obligatorias y tener documentación técnica disponible. Un arquitecto que ignora el código de construcción no puede operar en Europa. Lo mismo aplica a los AI Engineers que construyen sistemas de alto riesgo.",
+              "ejemplo_malo": "Clasificar un sistema de screening de CVs como \"bajo riesgo\" porque solo hace una recomendación inicial y un humano toma la decisión final, sin leer el Anexo III que explícitamente incluye sistemas de empleo y gestión de trabajadores como alto riesgo independientemente de si hay intervención humana posterior.",
+              "ejemplo_bueno": "Al iniciar el desarrollo de un sistema de análisis de solicitudes de crédito, consultar el árbol de decisión del EU AI Act, identificarlo como alto riesgo (Anexo III, categoría 5b), e iniciar desde el día uno el registro de decisiones de diseño, la documentación del dataset de entrenamiento y la implementación del sistema de logging requerido.",
+              "por_que_importa": "El EU AI Act no es una regulación futura: sus plazos ya están en curso y las primeras obligaciones de alto riesgo entran en vigor completamente en agosto de 2026. Los AI Engineers que entiendan la regulación antes que sus empleadores se vuelven indispensables como puente entre el equipo técnico y el equipo legal/compliance. Es una ventaja competitiva real y escasa en el mercado europeo de 2026.",
+              "tip_profesional": "Crea un checklist de clasificación EU AI Act para cualquier proyecto nuevo: (1) ¿Está en la lista de prohibidos? (2) ¿Está en el Anexo III de alto riesgo? (3) ¿Tiene interacción directa con usuarios que requiera transparencia? Responder estas tres preguntas en la fase de diseño tarda 30 minutos y puede ahorrarte meses de trabajo de remediation o multas millonarias más adelante."
             },
             "verificacion": [
               {
-                "pregunta": "El EU AI Act clasifica los sistemas de IA en categorías de riesgo. ¿Cuál es la clasificación correcta de mayor a menor riesgo?",
+                "pregunta": "¿Cuáles de los siguientes sistemas están explícitamente prohibidos bajo el EU AI Act desde febrero de 2025?",
                 "opciones": [
-                  "Riesgo inaceptable (prohibido) → Alto riesgo → Riesgo limitado → Riesgo mínimo",
-                  "Crítico → Alto → Medio → Bajo → Sin riesgo",
-                  "Prohibido → Regulado → Supervisado → Libre",
-                  "Nivel 4 → Nivel 3 → Nivel 2 → Nivel 1 (como en conducción autónoma)"
+                  "Sistemas de puntuación social gubernamental y reconocimiento facial en tiempo real en espacios públicos para aplicación de la ley",
+                  "Todos los sistemas de reconocimiento facial sin excepción, incluyendo desbloqueo de smartphones",
+                  "Sistemas de recomendación de contenido en redes sociales que usen datos de comportamiento",
+                  "Modelos de lenguaje con más de 10 mil millones de parámetros desplegados en territorio europeo"
                 ],
                 "correcta": 0,
-                "explicacion_profunda": "El EU AI Act (Reglamento 2024/1689, en vigor desde agosto 2024 con aplicación gradual hasta 2026) establece cuatro categorías: (1) Riesgo inaceptable: sistemas prohibidos como manipulación subliminal, scoring social gubernamental, reconocimiento facial en espacios públicos en tiempo real para vigilancia masiva; (2) Alto riesgo: sistemas en infraestructura crítica, educación, empleo, crédito, justicia penal — requieren evaluación de conformidad, registro y supervisión humana; (3) Riesgo limitado: chatbots y sistemas generativos que deben informar que el usuario interactúa con IA; (4) Riesgo mínimo: juegos, filtros de spam — sin requisitos especiales. Esta taxonomía importa porque determina las obligaciones legales específicas de cada producto. Un desarrollador que lanza una app de crédito automatizado en Europa está en categoría Alto Riesgo con requisitos estrictos.",
-                "concepto_reforzado": "Clasificación de riesgo del EU AI Act y sus cuatro categorías"
+                "explicacion_profunda": "El EU AI Act prohíbe explícitamente (Art. 5) desde febrero de 2025: sistemas de puntuación social por entidades públicas, reconocimiento biométrico remoto en tiempo real en espacios públicos para aplicación de la ley (con excepciones muy limitadas como búsqueda de víctimas de tráfico), categorización biométrica que infiera características protegidas, identificación biométrica retroactiva salvo autorización judicial para crímenes graves, manipulación subliminal que afecte comportamiento sin conciencia del usuario, y explotación de vulnerabilidades de grupos específicos. El reconocimiento facial en smartphones para desbloqueo no está prohibido porque es un sistema de identificación personal consentida, no vigilancia masiva. Los sistemas de recomendación y los LLMs tienen otras obligaciones pero no están en la categoría de prohibidos.",
+                "concepto_reforzado": "Categoría de riesgo inaceptable del EU AI Act: sistemas prohibidos"
               },
               {
-                "pregunta": "Si una startup colombiana lanza un sistema de IA para selección de empleados que será usado por empresas europeas, ¿le aplica el EU AI Act?",
+                "pregunta": "Un sistema de IA que analiza automáticamente solicitudes de empleo y genera una puntuación de idoneidad que el reclutador humano usa como referencia, ¿en qué categoría de riesgo cae bajo el EU AI Act?",
                 "opciones": [
-                  "Sí, porque el EU AI Act tiene alcance extraterritorial: aplica a sistemas cuyo output afecta a personas en la UE, independientemente de dónde esté el desarrollador",
-                  "No, porque el EU AI Act solo aplica a empresas con sede legal en la Unión Europea",
-                  "Solo si la startup tiene más de 50 empleados o factura más de 10 millones de euros anuales",
-                  "Solo si el sistema procesa datos personales de ciudadanos europeos bajo GDPR"
+                  "Alto riesgo (Anexo III), porque los sistemas de empleo y gestión de trabajadores están explícitamente incluidos independientemente de si hay revisión humana posterior",
+                  "Riesgo limitado, porque el reclutador humano toma la decisión final y el sistema es solo una herramienta de apoyo",
+                  "Riesgo mínimo, porque no toma decisiones vinculantes sino que genera recomendaciones no obligatorias",
+                  "Riesgo inaceptable, porque cualquier sistema que evalúe personas para empleo está prohibido"
                 ],
                 "correcta": 0,
-                "explicacion_profunda": "El EU AI Act sigue el modelo regulatorio del GDPR con alcance extraterritorial: aplica a cualquier proveedor que ponga en el mercado de la UE sistemas de IA, y a cualquier operador que los use para afectar a personas en la UE, independientemente de dónde esté ubicada la empresa. Para la startup colombiana del ejemplo: un sistema de selección de empleados está clasificado como Alto Riesgo bajo el Anexo III del EU AI Act. Si sus clientes europeos lo usan para tomar decisiones de contratación que afectan a personas en Europa, la startup está sujeta a sus requisitos: sistema de gestión de riesgos, documentación técnica, transparencia a los afectados, supervisión humana, y registro en la base de datos de la UE. El incumplimiento puede resultar en multas de hasta 30 millones de euros o el 6% de la facturación global.",
-                "concepto_reforzado": "Alcance extraterritorial del EU AI Act para empresas fuera de la UE"
+                "explicacion_profunda": "El Anexo III del EU AI Act incluye explícitamente en la categoría de alto riesgo los 'sistemas de IA destinados a ser utilizados para el reclutamiento y selección de personas físicas, en particular para publicar ofertas de empleo específicas, filtrar o evaluar solicitudes, tomar decisiones en la selección o en la entrevista.' La presencia de un humano que finalmente 'aprieta el botón' no cambia la clasificación: el acto de usar un sistema automatizado de puntuación de candidatos ya crea la obligación de cumplimiento. Esta es una confusión común: muchas empresas creen que añadir un paso de revisión humana nominal les exime de las obligaciones de alto riesgo. El regulador europeo rechaza explícitamente esta interpretación en las guías de orientación publicadas por la Comisión Europea en 2025.",
+                "concepto_reforzado": "Clasificación de sistemas de empleo como alto riesgo en EU AI Act Anexo III"
               },
               {
-                "pregunta": "¿Qué distingue un 'sistema de IA de propósito general' (GPAI) de un sistema de IA de alto riesgo según el EU AI Act, y qué obligaciones tiene cada uno?",
+                "pregunta": "¿Cuál es la multa máxima que puede imponer el EU AI Act por desplegar un sistema de IA de alto riesgo que no cumple con sus obligaciones de conformidad?",
                 "opciones": [
-                  "GPAI son modelos fundacionales como GPT-4 o Claude usados como base; sus proveedores tienen obligaciones de transparencia técnica y evaluación de riesgos sistémicos si son muy capaces",
-                  "GPAI son sistemas con más de 1 billón de parámetros; requieren licencia gubernamental para operar en Europa",
-                  "GPAI son sistemas que pueden hacer múltiples tareas; están exentos de regulación porque no tienen aplicación específica de alto riesgo",
-                  "GPAI y sistemas de alto riesgo son la misma categoría con nombres alternativos en el texto legal"
+                  "15 millones EUR o el 3% del volumen de negocio global anual de la empresa, la cifra que sea mayor",
+                  "500.000 EUR por incidente reportado con un máximo de 5 millones EUR al año",
+                  "1% del volumen de negocio anual, con un máximo de 10 millones EUR para empresas fuera de la UE",
+                  "Las multas del EU AI Act no tienen límite superior definido y quedan a discreción del regulador nacional"
                 ],
                 "correcta": 0,
-                "explicacion_profunda": "El EU AI Act introdujo en sus negociaciones finales (2023-2024) la categoría de 'General Purpose AI' (GPAI) o modelos de IA de propósito general, que incluye modelos fundacionales como GPT-4, Claude, Gemini y Llama. Sus proveedores tienen obligaciones de: publicar resumen de datos de entrenamiento, política de copyright, y documentación técnica. Los GPAI con 'impacto sistémico' (definido aproximadamente como modelos entrenados con más de 10^25 FLOPs) tienen obligaciones adicionales: evaluación adversarial, reporte de incidentes graves, y medidas de ciberseguridad. Un sistema de alto riesgo que usa un GPAI como base tiene requisitos adicionales sobre cómo implementa y monitorea ese modelo. La distinción es relevante para startups LATAM que construyen sobre APIs de OpenAI o Anthropic: ellas son 'deployers' de GPAI y tienen sus propias obligaciones como operadores de sistemas de alto riesgo.",
-                "concepto_reforzado": "GPAI vs sistemas de alto riesgo en el EU AI Act"
+                "explicacion_profunda": "El EU AI Act establece un régimen de multas escalonado por gravedad: sistemas prohibidos (Art. 5) incumplen con hasta 35 millones EUR o 7% del volumen de negocio global anual. Sistemas de alto riesgo (Anexo III) que no cumplan las obligaciones de conformidad enfrentan multas de hasta 15 millones EUR o 3% del volumen global. La información incorrecta proporcionada a autoridades supervisoras conlleva hasta 7.5 millones EUR o 1.5%. Para las PME y startups, la multa máxima se calcula sobre el 3% y no sobre los 15 millones si ese importe resulta menor. La referencia al volumen global (no solo europeo) es deliberada: evita que multinacionales reduzcan artificialmente sus operaciones europeas para minimizar la exposición regulatoria.",
+                "concepto_reforzado": "Régimen de multas del EU AI Act por categoría de incumplimiento"
               },
               {
-                "pregunta": "Un developer construye un chatbot de atención al cliente con IA para una tienda de e-commerce. ¿En qué categoría cae bajo el EU AI Act y cuál es su obligación principal?",
+                "pregunta": "¿Qué obligación técnica específica tienen los chatbots y asistentes conversacionales bajo el EU AI Act (categoría de riesgo limitado)?",
                 "opciones": [
-                  "Riesgo limitado: debe informar claramente que el usuario interactúa con un sistema de IA, no con un humano",
-                  "Alto riesgo: requiere registro en la base de datos de la UE y evaluación de conformidad antes del lanzamiento",
-                  "Riesgo inaceptable: los chatbots de ventas están prohibidos por manipulación psicológica implícita",
-                  "Riesgo mínimo: sin obligaciones porque e-commerce no es infraestructura crítica"
+                  "Informar de forma clara y comprensible que el usuario está interactuando con un sistema de IA y no con un humano",
+                  "Almacenar todos los registros de conversación durante un mínimo de 5 años para auditorías regulatorias",
+                  "Obtener consentimiento explícito del usuario antes de cada conversación para procesar sus datos",
+                  "Limitarse a responder preguntas de información y no generar contenido creativo ni dar consejos"
                 ],
                 "correcta": 0,
-                "explicacion_profunda": "Un chatbot de e-commerce cae en la categoría de Riesgo Limitado porque es un sistema que interactúa directamente con humanos pero no toma decisiones de alto impacto (salud, empleo, justicia, crédito). La obligación principal bajo el Art. 52 del EU AI Act es transparencia: el usuario debe saber que está interactuando con IA, no con un agente humano. Esto aplica salvo que sea obvio por contexto. No se requiere evaluación de conformidad formal ni registro en bases de datos de la UE. Sin embargo, si ese mismo chatbot tomara decisiones sobre si aprobar devoluciones de dinero, determinar si una queja procede, o evaluar si un usuario es fraudulento con consecuencias significativas, podría escalar a alto riesgo. La categoría depende del uso concreto y las decisiones que el sistema automatiza, no solo del tipo técnico de sistema.",
-                "concepto_reforzado": "Riesgo limitado en EU AI Act: chatbots y obligación de transparencia"
+                "explicacion_profunda": "Los sistemas de IA de riesgo limitado tienen obligaciones de transparencia específicas bajo el Art. 50 del EU AI Act. Los sistemas de interacción con personas (chatbots, asistentes conversacionales) deben informar a los usuarios de manera clara, comprensible e inequívoca que están interactuando con un sistema de IA cuando esto no sea evidente por el contexto. La excepción es cuando el sistema esté específicamente autorizado por ley o cuando el usuario haya sido informado y haya consentido. Los deepfakes e imágenes, audio y video generados por IA deben marcarse como contenido sintético (watermarking técnico). Estas obligaciones de transparencia entran completamente en vigor en agosto de 2026. El almacenamiento de conversaciones, el consentimiento antes de cada sesión y las limitaciones de funcionalidad no son requisitos del EU AI Act para chatbots de riesgo limitado.",
+                "concepto_reforzado": "Obligaciones de transparencia para sistemas de riesgo limitado bajo EU AI Act Art. 50"
               },
               {
-                "pregunta": "¿Cuáles son las sanciones máximas previstas en el EU AI Act y a qué tipo de infracciones corresponden?",
+                "pregunta": "¿Cuál de las siguientes acciones es responsabilidad del AI Engineer (no del equipo legal o ejecutivo) en el cumplimiento del EU AI Act para un sistema de alto riesgo?",
                 "opciones": [
-                  "Hasta 35M€ o 7% facturación por sistemas prohibidos; hasta 15M€ o 3% por incumplir obligaciones de alto riesgo; hasta 7.5M€ o 1.5% por información incorrecta",
-                  "Hasta 20M€ o 4% facturación para todas las infracciones, igual que el GDPR",
-                  "Solo advertencias y suspensión temporal del servicio; no hay multas monetarias directas",
-                  "Hasta 100M€ por accidente grave; sin límite máximo para daños sistémicos"
+                  "Documentar las decisiones de diseño del sistema, los datos de entrenamiento usados y las métricas de evaluación por subgrupo en el registro técnico obligatorio",
+                  "Firmar la declaración de conformidad CE que el reglamento exige antes del despliegue del sistema",
+                  "Registrar el sistema en la base de datos oficial de la UE con los datos de la empresa y el responsable legal",
+                  "Contratar el seguro de responsabilidad civil exigido por el reglamento para sistemas de alto riesgo"
                 ],
                 "correcta": 0,
-                "explicacion_profunda": "El EU AI Act establece un régimen de sanciones escalonado proporcional a la gravedad: (1) Las violaciones más graves —desplegar sistemas de IA prohibidos como vigilancia biométrica masiva o scoring social— pueden resultar en multas de hasta 35 millones de euros o el 7% de la facturación anual global (lo que sea mayor). (2) El incumplimiento de obligaciones para sistemas de alto riesgo (falta de documentación, ausencia de supervisión humana, no registrar el sistema) conlleva hasta 15 millones de euros o 3%. (3) Proporcionar información incorrecta a autoridades reguladoras hasta 7.5 millones o 1.5%. Para startups y pymes hay una reducción proporcional. Estas sanciones son comparables al GDPR en estructura pero superiores en cuantía máxima, reflejando que la UE considera los riesgos de la IA potencialmente más graves que los de privacidad de datos.",
-                "concepto_reforzado": "Régimen de sanciones del EU AI Act y su estructura escalonada"
+                "explicacion_profunda": "El EU AI Act distribuye responsabilidades entre distintos roles. La declaración de conformidad y el registro oficial corresponden al proveedor como entidad legal, típicamente firmados por un directivo con responsabilidad legal. El seguro de responsabilidad se gestiona a nivel corporativo. Lo que sí recae directamente sobre el AI Engineer es la creación y mantenimiento de la documentación técnica obligatoria (Art. 11): especificación del sistema, datos de entrenamiento y validación utilizados, proceso de evaluación y métricas de rendimiento desglosadas por subgrupo relevante, decisiones de diseño con sus justificaciones técnicas, y capacidades de logging del sistema. Esta documentación técnica es la evidencia que una auditoría regulatoria examina primero. Un AI Engineer que no documenta durante el desarrollo deja a la empresa sin capacidad de defensa ante una inspección, aunque el equipo legal haya completado todos los procedimientos administrativos.",
+                "concepto_reforzado": "Responsabilidades técnicas del AI Engineer bajo EU AI Act documentación obligatoria"
               }
             ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Tu empresa (startup de HR-tech con sede en Madrid) ha desarrollado un sistema de IA que analiza CVs y entrevistas en video para puntuar candidatos. El CEO acaba de anunciar expansión a clientes en Alemania, Francia y los Países Bajos. El equipo legal pregunta qué obligaciones tiene el sistema bajo el EU AI Act.",
+              "instruccion": "Realiza la clasificación de riesgo del sistema bajo el EU AI Act y lista las 5 obligaciones técnicas más críticas que el equipo de ingeniería debe implementar antes de operar en esos mercados europeos.",
+              "input_malo": "El sistema es de bajo riesgo porque solo hace recomendaciones y los clientes (las empresas) toman las decisiones finales de contratación. No necesitamos registro ni documentación especial, solo asegurarnos de que nuestra política de privacidad cumple el GDPR.",
+              "pista": "Consulta el Anexo III del EU AI Act. La categoría de empleo y recursos humanos es una de las más reguladas. La presencia de intervención humana nominal en la decisión final no cambia la clasificación del sistema de IA subyacente.",
+              "solucion": "Clasificación: Alto Riesgo (Anexo III, punto 4 - Empleo y gestión de trabajadores). El sistema analiza CVs y entrevistas para puntuar candidatos, uso explícitamente listado. Las 5 obligaciones técnicas críticas: (1) Sistema de gestión de riesgos documentado con evaluación antes del despliegue y revisiones periódicas. (2) Documentación técnica del dataset de entrenamiento: origen, volumen, proceso de selección, métricas de calidad y posibles sesgos identificados. (3) Registro de actividad (logging) que permita reconstruir el razonamiento del sistema para cada decisión, almacenado según Art. 12. (4) Evaluación de fairness por grupos protegidos (género, edad, origen) con métricas documentadas y umbrales de aceptación definidos. (5) Implementación de supervisión humana técnicamente efectiva, no nominal: el interfaz debe mostrar explícitamente los factores de la puntuación al reclutador antes de que este tome la decisión. Adicionalmente: registrar el sistema en la base de datos oficial de la UE antes de comercializarlo en la UE.",
+              "criterios_de_exito": [
+                "Identifica correctamente el sistema como alto riesgo citando la categoría específica del Anexo III",
+                "Lista al menos 3 obligaciones técnicas concretas que corresponden al equipo de ingeniería",
+                "Distingue entre obligaciones técnicas del equipo de desarrollo y obligaciones administrativas del equipo legal"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Regulación global de IA: estado 2026",
+              "por_que_importa_despues": "El EU AI Act es la regulación más detallada del mundo, pero no la única. Cuando construyas sistemas que operen globalmente, necesitas navegar el EU AI Act junto con la regulación de EEUU, China, Reino Unido y los estándares internacionales ISO. Entender el panorama completo te convierte en un AI Engineer con visión global."
             }
           }
         },
