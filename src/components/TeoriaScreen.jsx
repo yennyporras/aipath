@@ -2,27 +2,16 @@ import { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { playSound } from "../utils/sounds"
 
-// Agrupa párrafos en páginas de ~150 palabras
+// Divide el texto en segmentos conceptuales usando "---" como separador.
+// Dentro de cada segmento, \n\n produce párrafos separados.
+// Si no hay "---", todo el texto queda en un único segmento (fallback seguro).
 function buildPages(texto) {
   if (!texto) return [[]]
-  const parrafos = texto.split(/\n\n+/).filter(p => p.trim())
-  if (parrafos.length === 0) return [[texto]]
-  const paginas = []
-  let actual = []
-  let palabras = 0
-  for (const para of parrafos) {
-    const w = para.split(/\s+/).length
-    if (palabras + w > 150 && actual.length > 0) {
-      paginas.push(actual)
-      actual = [para]
-      palabras = w
-    } else {
-      actual.push(para)
-      palabras += w
-    }
-  }
-  if (actual.length > 0) paginas.push(actual)
-  return paginas
+  const segmentos = texto.split(/\n\s*---\s*\n/).map(s => s.trim()).filter(Boolean)
+  if (segmentos.length === 0) return [[texto]]
+  return segmentos.map(seg =>
+    seg.split(/\n\n+/).map(p => p.trim()).filter(Boolean)
+  )
 }
 
 // Barra de progreso de lección: 4 pasos
@@ -109,7 +98,7 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
         {total > 1 && (
           <div className="flex flex-col gap-1.5">
             <span className="text-xs font-bold" style={{ color: "#06B6D4" }}>
-              Parte {pagina + 1} de {total}
+              Concepto {pagina + 1} de {total}
             </span>
             <div className="w-full h-1 rounded-full" style={{ background: "rgba(255,255,255,0.06)" }}>
               <div
