@@ -7717,12 +7717,12 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "La fairness en IA no es una cuestión filosófica abstracta: es un requisito técnico, legal y de negocio que todo AI Engineer debe dominar en 2026. Un sistema es justo cuando sus decisiones no producen resultados sistemáticamente desventajosos para grupos específicos basados en características protegidas como género, raza, edad o etnia.\n\nEl caso más citado en Europa es el sistema de contratación de Amazon, cancelado en 2018 tras descubrir que penalizaba CVs con palabras relacionadas con mujeres o universidades femeninas. El modelo había aprendido 10 años de contrataciones históricas donde los hombres dominaban y replicó ese patrón automáticamente. Nadie auditó los outputs por género durante el desarrollo. El coste reputacional y legal fue enorme.\n\nEn sistemas de justicia penal, el algoritmo COMPAS fue analizado por investigadores y mostró tasas de falsos positivos significativamente distintas según etnia. Este debate generó el Impossibility Theorem of Fairness (Chouldechova, 2017): es matemáticamente imposible satisfacer simultáneamente todas las métricas de equidad cuando las tasas base difieren entre grupos. Los developers deben elegir qué tipo de equidad priorizar según el contexto y documentar ese trade-off.\n\nLas métricas principales de fairness son cuatro. Demographic Parity exige igual proporción de predicciones positivas entre grupos. Equal Opportunity requiere igual tasa de verdaderos positivos entre los candidatos realmente cualificados. Predictive Parity pide que cuando el modelo predice 80% de probabilidad, ese porcentaje sea correcto en todos los grupos. Individual Fairness establece que personas similares deben recibir predicciones similares independientemente de su grupo demográfico.\n\nEl EU AI Act, en vigor desde 2024 con plazos de cumplimiento en 2025 y 2026, clasifica sistemas de contratación automatizada y scoring crediticio como de alto riesgo (Art. 6, Anexo III). Esto exige auditorías de fairness previas al despliegue, documentación exhaustiva de los datos de entrenamiento y procesos de supervisión humana. Las multas por incumplimiento alcanzan el 3% del volumen de negocio global anual.\n\nPara auditar fairness en la práctica, las herramientas más utilizadas en 2026 son IBM AI Fairness 360, Fairlearn de Microsoft y Google What-If Tool. El proceso estándar incluye: definir qué grupos protegidos son relevantes para el caso de uso, calcular métricas de disparidad por grupo, identificar el origen del sesgo (datos históricos, features proxy, algoritmo, threshold de decisión) y aplicar técnicas de mitigación como resampling, reweighting del dataset o post-processing de outputs antes del despliegue.",
+              "analogia": "Imagina una báscula que pesa correctamente en promedio para todo el mundo, pero sistemáticamente marca 2 kg de más para personas con determinado tipo de ropa. El instrumento funciona técnicamente, pero sus resultados son injustos para ese grupo. Un modelo de IA puede tener un accuracy excelente globalmente y al mismo tiempo discriminar sistemáticamente a un subgrupo específico.",
+              "ejemplo_malo": "Desplegar un modelo de scoring crediticio sin auditar outputs por género ni edad, argumentando que el modelo no usa directamente esas variables como features y por tanto no puede ser discriminatorio.",
+              "ejemplo_bueno": "Antes del despliegue, calcular métricas de fairness (demographic parity ratio, equal opportunity ratio) por cada grupo protegido relevante, documentar los trade-offs elegidos explícitamente y establecer un pipeline de monitoreo mensual de esas métricas post-deployment.",
+              "por_que_importa": "En Europa, los sistemas de alto riesgo bajo el EU AI Act requieren evaluaciones de fairness obligatorias con documentación. Como AI Engineer, saber auditar y documentar equidad no es opcional: es un requisito legal y una habilidad que te diferencia en el mercado europeo donde la regulación es la más exigente del mundo.",
+              "tip_profesional": "Define los grupos protegidos y las métricas de fairness que usarás ANTES de empezar a entrenar, no después. Esa decisión temprana guía el diseño del dataset y el pipeline de evaluación. Documentar el razonamiento detrás de cada trade-off te protege legalmente y demuestra madurez técnica ante cualquier auditoría del EU AI Act."
             },
             "verificacion": [
               {
@@ -7788,16 +7788,20 @@
             ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Eres AI Engineer en una fintech con sede en Berlín. Tu modelo de scoring crediticio ha pasado revisión técnica (accuracy 87%) pero nadie ha validado fairness por grupos demográficos. El producto se lanza en 3 semanas y el compliance officer acaba de preguntar qué métricas de equidad tiene el sistema.",
+              "instruccion": "Diseña el plan de auditoría de fairness para el modelo. Especifica: qué grupos protegidos evaluarías, qué métricas usarías, con qué herramienta, qué umbral de aceptación definirías y qué harías si el modelo no cumple los umbrales antes del lanzamiento.",
+              "input_malo": "El modelo tiene accuracy del 87% global y no incluye género ni etnia como features directas, por lo que no puede ser discriminatorio. El compliance officer puede revisar los pesos del modelo para verificar que esas variables no están presentes.",
+              "pista": "Un modelo puede discriminar sin usar directamente la variable protegida, a través de proxies como código postal, nivel educativo o historial laboral que están correlacionados con características demográficas. La auditoría debe examinar los outputs desagregados por grupo, no solo los inputs del modelo.",
+              "solucion": "Plan de auditoría: (1) Grupos protegidos para crédito en Europa: género, edad (mayores de 60 y menores de 30), origen nacional (proxy: país de nacimiento si disponible en datos). (2) Métricas: demographic parity ratio (proporción de aprobados por grupo, umbral aceptable 0.8-1.2, es decir regla del 80%) y equal opportunity ratio (tasa de verdaderos positivos entre solicitantes realmente solventes). (3) Herramienta: Fairlearn de Microsoft, nativa en scikit-learn. (4) Si algún grupo sale fuera de umbral: aplicar threshold post-processing por grupo o reweighting del dataset de entrenamiento. (5) Documentar todo en el Model Card del sistema con fecha, metodología y decisiones tomadas. (6) Establecer monitoreo mensual de las mismas métricas post-deployment con alertas automáticas.",
+              "criterios_de_exito": [
+                "Identifica al menos 3 grupos protegidos relevantes para crédito en el contexto europeo",
+                "Menciona al menos 2 métricas de fairness con sus definiciones y umbrales numéricos",
+                "Incluye un plan de acción concreto para el caso de que el modelo falle los umbrales antes del lanzamiento"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Transparencia y explicabilidad en IA",
+              "por_que_importa_despues": "Detectar que un sistema es injusto es el primer paso. El segundo es entender por qué toma cada decisión para poder corregirlo. La explicabilidad es la herramienta que convierte un diagnóstico de bias en una solución técnica accionable."
             }
           }
         },
