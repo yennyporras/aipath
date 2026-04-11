@@ -7452,6 +7452,372 @@
               "por_que_importa_despues": "Has completado el Bloque 9 — el bloque de proyectos reales. Tienes el proceso completo: identificar el caso correcto, diseñar el pipeline, construir el benchmark, iterar, documentar, presentar, y evitar los errores documentados. La siguiente sección es el proyecto final del módulo: ensamblar tu propio portafolio de prompts con un caso de uso real de tu sector."
             }
           }
+        },
+        {
+          "id": "m4-b9-l9",
+          "titulo": "Checklist de entrega profesional",
+          "bloque": 9,
+          "tipo": "leccion",
+          "duracion_min": 25,
+          "xp": 60,
+          "repeticion_espaciada": {
+            "repasar_dia_3": true,
+            "repasar_dia_7": true,
+            "repasar_dia_14": true,
+            "repasar_dia_30": true
+          },
+          "contenido": {
+            "teoria": {
+              "explicacion": "Un proyecto de IA puede ser técnicamente correcto y aun así fallar en la entrega. La diferencia entre un consultor que entrega bien y uno que entrega correctamente está en los detalles que rodean al sistema técnico: la documentación, el handoff, la comunicación de limitaciones, y la preparación del cliente para trabajar con el sistema sin soporte continuo.\n\n---\n\nLos mercados europeos en 2026 tienen estándares específicos de entrega que van más allá del código funcional. El Reglamento de IA de la UE (AI Act), plenamente aplicable desde agosto de 2026, exige documentación de trazabilidad para sistemas de IA de alto riesgo. Aunque la mayoría de sistemas de prompt engineering caen en categorías de riesgo bajo o mínimo, los clientes corporativos europeos han internalizado la cultura de documentación regulatoria y la esperan en cualquier entrega profesional.\n\n---\n\nEl checklist de 10 puntos antes de cualquier entrega:\n\n1. Documentación de sistema: el system prompt, los templates de input, y los parámetros del modelo están documentados y versionados. El cliente puede reproducir el sistema sin acceso al consultor.\n\n2. Benchmark documentado: los resultados del benchmark están en un informe con el dataset de prueba, las métricas medidas, y los criterios de aceptación. El cliente puede auditar los resultados de forma independiente.\n\n3. Limitaciones explícitas: hay un documento o sección en el informe que lista qué tipos de input producen resultados degradados, qué casos están fuera del alcance del sistema, y qué umbrales de confianza se recomiendan para revisión humana.\n\n4. Protocolo de mantenimiento: documento firmado que especifica quién actualiza el benchmark, con qué frecuencia, y bajo qué condiciones (nuevos productos, cambios regulatorios, degradación de métricas).\n\n5. Transferencia de conocimiento: sesión grabada o manual de usuario que permite al equipo del cliente operar y supervisar el sistema sin depender del consultor para operaciones rutinarias.\n\n6. Integración verificada: el sistema ha sido probado en el entorno de producción del cliente, no solo en el entorno de desarrollo. Las credenciales de API, los límites de rate y los endpoints de integración están verificados.\n\n7. Gestión de errores documentada: el sistema tiene comportamiento definido para inputs inesperados, errores de API, y timeouts. El cliente sabe qué pasa cuando el sistema falla y cómo recuperarse.\n\n8. Seguridad revisada: el sistema ha sido revisado contra los vectores de prompt injection relevantes para el caso de uso. Los outputs que van a usuarios finales tienen filtros de contenido apropiados.\n\n9. Costes de operación estimados: el cliente tiene una estimación del coste mensual de operación basada en el volumen real de uso, con escenarios de crecimiento del 2x y 5x.\n\n10. Acuerdo de éxito definido: hay un documento que especifica cuándo el proyecto se considera exitoso, con métricas medibles y fecha de evaluación acordada.\n\n---\n\nLa práctica profesional europea en 2026 incluye solicitar la firma del cliente en los puntos 4, 9 y 10 antes de la entrega final. Estos tres puntos son los que generan más conflictos post-entrega cuando no están documentados: quién paga el mantenimiento, cuánto cuesta operar el sistema, y si el proyecto fue exitoso.",
+              "analogia": "El checklist de entrega es como el informe de salida de una auditoría contable: el trabajo técnico ya está hecho, los números ya están verificados, pero sin el informe firmado que documenta qué se revisó, qué se encontró, y cuáles son las recomendaciones de seguimiento, la auditoría no tiene valor legal ni profesional. Un sistema de IA entregado sin checklist es como una auditoría cuyos resultados están en la cabeza del auditor — técnicamente realizada, profesionalmente incompleta.",
+              "ejemplo_malo": "Aquí tienes acceso al sistema. Los prompts están en el repositorio y el benchmark dio un 91% de accuracy. Cualquier duda me escribes. ¡Éxito con el proyecto!",
+              "ejemplo_bueno": "Adjunto el paquete de entrega que incluye: (1) documentación del sistema con versión 1.0 de todos los prompts y parámetros, (2) informe de benchmark con dataset de 200 casos y resultados por categoría, (3) documento de limitaciones con los 8 tipos de input que requieren revisión humana, (4) protocolo de mantenimiento firmado con revisión trimestral acordada, (5) grabación de la sesión de transferencia de conocimiento de 90 minutos, y (6) estimación de costes de operación para volúmenes de 500, 1.000 y 5.000 transacciones mensuales. La fecha de evaluación de éxito acordada es el 15 de julio con las métricas definidas en el Anexo A.",
+              "por_que_importa": "El checklist de entrega protege tanto al cliente como al consultor. Para el cliente, garantiza que puede operar el sistema de forma autónoma y auditarlo si surgen problemas. Para el consultor, documenta exactamente qué se entregó y en qué condiciones, lo que protege ante reclamaciones post-entrega sobre funcionalidades no incluidas en el alcance o expectativas no documentadas. En el mercado europeo, donde la cultura de documentación es alta y los contratos de consultoría son revisados con detalle, entregar sin este checklist es un riesgo profesional y comercial.",
+              "tip_profesional": "En propuestas a clientes corporativos europeos, incluye el checklist de entrega como anexo del contrato y úsalo como diferenciador competitivo. La mayoría de consultores entregan el sistema técnico y el código — el hecho de que tú entregues 10 documentos adicionales que protegen la inversión del cliente es un argumento de venta concreto y verificable."
+            },
+            "verificacion": [
+              {
+                "pregunta": "¿Qué establece el AI Act de la UE respecto a la documentación en sistemas de IA de alto riesgo, y cómo ha influido en las expectativas de los clientes corporativos europeos?",
+                "opciones": [
+                  "El AI Act prohíbe el uso de LLMs en sistemas de alto riesgo sin certificación previa de la Comisión Europea, lo que hace inaplicables los sistemas de prompt engineering en la mayoría de contextos empresariales",
+                  "El AI Act exige documentación de trazabilidad para sistemas de alto riesgo, y aunque la mayoría de sistemas de prompt engineering son de riesgo bajo o mínimo, los clientes corporativos europeos han internalizado la cultura de documentación regulatoria y la esperan en cualquier entrega profesional",
+                  "El AI Act aplica solo a sistemas de IA desarrollados por empresas con más de 500 empleados, por lo que los consultores independientes no están sujetos a sus requisitos de documentación",
+                  "El AI Act ha reducido la demanda de sistemas de IA en Europa porque los requisitos de documentación son excesivamente costosos para la mayoría de casos de uso empresariales"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El AI Act de la UE clasifica los sistemas de IA por nivel de riesgo: inaceptable (prohibidos), alto (requisitos estrictos de documentación, auditoría y supervisión humana), limitado (obligaciones de transparencia), y mínimo (sin requisitos específicos). La mayoría de sistemas de prompt engineering para automatización de procesos internos caen en riesgo limitado o mínimo. Sin embargo, el efecto práctico del AI Act ha sido elevar las expectativas de documentación en toda la industria: los clientes corporativos europeos que han pasado por procesos de compliance regulatorio esperan el mismo nivel de documentación en proyectos que técnicamente no lo requieren. Esto convierte el checklist de entrega en una práctica de mercado, no solo en una obligación regulatoria.",
+                "concepto_reforzado": "Impacto del AI Act en los estándares de entrega profesional en el mercado europeo"
+              },
+              {
+                "pregunta": "¿Cuáles son los tres puntos del checklist que deben tener firma del cliente antes de la entrega final y por qué generan más conflictos cuando no están documentados?",
+                "opciones": [
+                  "Los puntos de documentación de sistema, benchmark y limitaciones — porque son los que demuestran la calidad técnica del trabajo y sin ellos el cliente puede cuestionar la metodología",
+                  "Los puntos de protocolo de mantenimiento, costes de operación y acuerdo de éxito — porque son los que generan más conflictos post-entrega sobre quién paga el mantenimiento, cuánto cuesta operar el sistema, y si el proyecto fue exitoso",
+                  "Los puntos de integración verificada, seguridad revisada y gestión de errores — porque son los que tienen implicaciones de responsabilidad legal si el sistema falla en producción",
+                  "Los puntos de transferencia de conocimiento, costes de operación y limitaciones explícitas — porque son los que el cliente necesita para operar de forma autónoma y los más frecuentemente omitidos en entregas apresuradas"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los tres puntos que requieren firma previa a la entrega son precisamente los que crean expectativas divergentes cuando no están documentados. El protocolo de mantenimiento sin firmar convierte el mantenimiento en una obligación implícita del consultor o en un servicio sin precio acordado. Los costes de operación sin estimar generan sorpresa cuando la factura de la API llega a final de mes. El acuerdo de éxito sin definir convierte el criterio de éxito en subjetivo: el consultor cree que entregó lo acordado; el cliente cree que el proyecto no funcionó porque la métrica que tenía en mente nunca se discutió. Documentar y firmar estos tres puntos transforma las expectativas implícitas en compromisos explícitos.",
+                "concepto_reforzado": "Puntos de alto conflicto post-entrega y cómo prevenirlos con documentación firmada"
+              },
+              {
+                "pregunta": "¿Qué diferencia a una entrega profesional de una entrega técnicamente correcta pero incompleta, según el checklist de 10 puntos?",
+                "opciones": [
+                  "Una entrega profesional incluye código sin errores y un benchmark con accuracy superior al 90%, mientras que una entrega técnicamente correcta puede tener métricas más bajas pero con justificación documentada",
+                  "Una entrega profesional incluye la documentación, los protocolos, la transferencia de conocimiento, y los acuerdos que permiten al cliente operar, auditar, y mantener el sistema de forma autónoma, mientras que una entrega técnicamente correcta solo garantiza que el sistema funciona en el momento de la entrega",
+                  "Una entrega profesional requiere certificación por un organismo europeo acreditado que verifique el cumplimiento del AI Act, mientras que una entrega técnicamente correcta no requiere validación externa",
+                  "Una entrega profesional incluye un período de garantía de 12 meses con correcciones gratuitas, mientras que una entrega técnicamente correcta tiene un período de garantía estándar de 3 meses"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La distinción entre técnicamente correcto y profesionalmente completo es central en la consultoría de IA madura. Un sistema puede clasificar tickets con 93% de accuracy (técnicamente correcto) y aun así dejar al cliente sin capacidad de operar de forma autónoma si no hay manual de usuario, sin capacidad de auditar si no hay informe de benchmark, sin capacidad de mantener si no hay protocolo de mantenimiento, y sin capacidad de escalar si no hay estimación de costes. El checklist de 10 puntos no evalúa si el sistema funciona — evalúa si la entrega completa el valor prometido al cliente.",
+                "concepto_reforzado": "Diferencia entre calidad técnica y completitud profesional de una entrega"
+              },
+              {
+                "pregunta": "¿Por qué el punto de 'limitaciones explícitas' es esencial en el checklist de entrega y qué información específica debe incluir?",
+                "opciones": [
+                  "Porque las limitaciones son un requisito legal del AI Act para todos los sistemas de IA implementados en empresas europeas con más de 50 empleados",
+                  "Porque documentar las limitaciones protege al consultor de reclamaciones basadas en expectativas no realistas y permite al cliente operar el sistema correctamente — debe incluir tipos de input que producen resultados degradados, casos fuera del alcance, y umbrales de confianza para revisión humana",
+                  "Porque los clientes europeos exigen por contrato que cualquier sistema de IA incluya una sección de limitaciones validada por el departamento legal antes de la entrega",
+                  "Porque las limitaciones explícitas permiten al equipo de desarrollo del cliente continuar mejorando el sistema después de la entrega sin depender del consultor original"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El documento de limitaciones tiene una función dual: protege al cliente (sabe qué casos requieren supervisión humana y puede diseñar flujos de trabajo que lo contemplen) y protege al consultor (si un tipo de caso produce resultados incorrectos y estaba documentado como limitación, eso es transparencia profesional; si no estaba documentado, puede interpretarse como un defecto no divulgado). El contenido específico — tipos de input degradados, casos fuera de alcance, y umbrales de confianza — convierte las limitaciones en información operacional accionable, no en un disclaimer genérico.",
+                "concepto_reforzado": "Función dual del documento de limitaciones: protección del cliente y del consultor"
+              },
+              {
+                "pregunta": "¿Cómo se puede usar el checklist de entrega como diferenciador competitivo en propuestas a clientes corporativos europeos?",
+                "opciones": [
+                  "Añadiendo el checklist al final de la propuesta como lista de entregables adicionales sin coste, para que el cliente perciba que está recibiendo más valor que con otros consultores",
+                  "Incluyendo el checklist como anexo del contrato y presentándolo como diferenciador concreto y verificable: la mayoría de consultores entregan el sistema técnico, mientras que este consultor entrega 10 documentos adicionales que protegen la inversión del cliente",
+                  "Usando el checklist como herramienta de negociación para justificar tarifas más altas que los competidores que no incluyen documentación equivalente",
+                  "Publicando el checklist en el sitio web como evidencia de metodología profesional para que los clientes potenciales lo encuentren antes de solicitar una propuesta"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El checklist como parte del contrato tiene un impacto estratégico preciso: convierte el diferencial de calidad en algo concreto y verificable en la propuesta, no en una afirmación genérica de 'entregamos con calidad'. Un cliente que compara dos propuestas — una que entrega 'el sistema y soporte' y otra que entrega 'el sistema más 10 documentos específicos que protegen la inversión' — puede evaluar objetivamente la diferencia. El hecho de que el checklist sea específico (10 puntos con contenido definido, tres con firma requerida) hace que sea difícil de igualar superficialmente por competidores que no tienen un proceso equivalente.",
+                "concepto_reforzado": "Uso estratégico del proceso de entrega como diferenciador competitivo verificable"
+              }
+            ],
+            "practica": {
+              "tipo": "caso_real",
+              "contexto": "Acabas de completar el desarrollo de un sistema de extracción de datos de facturas para una empresa de logística con sede en Rotterdam. El sistema procesa facturas en holandés, inglés y alemán con un 94% de accuracy en el benchmark. El cliente tiene un departamento de IT con dos personas y espera operar el sistema de forma autónoma. Tienes 3 días antes de la reunión de entrega.",
+              "instruccion": "Crea el índice del paquete de entrega completo aplicando el checklist de 10 puntos. Para cada punto, especifica qué documento o artefacto entregas, su formato, y su extensión aproximada. Identifica cuáles de los 10 puntos requieren firma del cliente.",
+              "input_malo": "Paquete de entrega: 1. Código del sistema. 2. Instrucciones de instalación. 3. Resultados del benchmark. El sistema está listo para producción.",
+              "pista": "Usa los 10 puntos del checklist como estructura. Para cada punto, piensa en el artefacto concreto que existe: no 'documentación del sistema' sino 'system_prompt_v1.0.md con los 3 prompts del pipeline y los parámetros de temperatura y tokens'. Los tres puntos que requieren firma son mantenimiento, costes de operación, y acuerdo de éxito.",
+              "solucion": "Índice del paquete de entrega — Sistema de extracción de facturas, Rotterdam Logistics BV, v1.0\n\n1. Documentación de sistema (system_prompts_v1.0.md, 4 páginas): los 3 prompts del pipeline de extracción con parámetros completos, versionados y con notas de diseño.\n2. Informe de benchmark (benchmark_report_v1.0.pdf, 8 páginas): dataset de 200 facturas estratificado por idioma y tipo, resultados por categoría, metodología de evaluación.\n3. Documento de limitaciones (limitations_v1.0.md, 2 páginas): 6 tipos de facturas con resultados degradados (facturas escaneadas <300dpi, facturas con tablas complejas, facturas en dialecto regional holandés), umbrales de confianza recomendados.\n4. Protocolo de mantenimiento (maintenance_protocol_v1.0.pdf, 2 páginas) — REQUIERE FIRMA: revisión trimestral del benchmark, responsable IT designado, condiciones de actualización.\n5. Grabación de transferencia de conocimiento (training_session_recording.mp4, 90 min): operación del sistema, casos de supervisión humana, proceso de escalación.\n6. Verificación de integración (integration_checklist_v1.0.md, 1 página): resultados de las pruebas en entorno de producción de Rotterdam Logistics con fechas y firma de verificación.\n7. Gestión de errores (error_handling_guide_v1.0.md, 2 páginas): comportamiento ante errores de API, timeouts, inputs fuera de rango, y pasos de recuperación.\n8. Resumen de seguridad (security_review_v1.0.md, 1 página): vectores de prompt injection probados, filtros implementados, recomendaciones para inputs de usuarios externos.\n9. Estimación de costes de operación (cost_estimation_v1.0.xlsx) — REQUIERE FIRMA: escenarios para 1.000, 5.000 y 10.000 facturas mensuales con coste por factura y total mensual.\n10. Acuerdo de éxito (success_criteria_v1.0.pdf, 1 página) — REQUIERE FIRMA: métricas de éxito acordadas, fecha de evaluación (90 días post-lanzamiento), proceso de revisión.",
+              "criterios_de_exito": [
+                "El índice incluye los 10 puntos del checklist con artefacto concreto para cada uno — no puntos genéricos sino documentos específicos con nombre, formato y extensión",
+                "Los tres puntos que requieren firma están identificados correctamente: protocolo de mantenimiento, estimación de costes, y acuerdo de éxito",
+                "Los artefactos son apropiados para un cliente con departamento de IT de dos personas: documentación operacional, no técnica avanzada"
+              ]
+            },
+            "conexion": {
+              "siguiente_concepto": "Autoevaluación del proyecto con rúbrica profesional",
+              "por_que_importa_despues": "Antes de presentar al cliente, necesitas evaluar tu propio trabajo con los mismos criterios con los que el cliente lo evaluará. La autoevaluación honesta con una rúbrica profesional es lo que separa la entrega de confianza de la entrega de esperanza."
+            }
+          }
+        },
+        {
+          "id": "m4-b9-l10",
+          "titulo": "Autoevaluación del proyecto",
+          "bloque": 9,
+          "tipo": "leccion",
+          "duracion_min": 25,
+          "xp": 60,
+          "repeticion_espaciada": {
+            "repasar_dia_3": true,
+            "repasar_dia_7": true,
+            "repasar_dia_14": true,
+            "repasar_dia_30": true
+          },
+          "contenido": {
+            "teoria": {
+              "explicacion": "La autoevaluación honesta es una de las habilidades más difíciles de desarrollar en consultoría técnica. El sesgo de evaluación propia — la tendencia a calificar el trabajo propio más alto de lo que merece — es documentado en la literatura de psicología organizacional y tiene consecuencias concretas: proyectos presentados al cliente antes de estar listos, promesas de calidad no sustentadas por evidencia, y reclamaciones post-entrega que se podrían haber prevenido.\n\n---\n\nLa rúbrica de 10 criterios para proyectos de prompt engineering profesional utiliza la escala europea ECTS: A (Sobresaliente, 90-100), B (Notable, 80-89), C (Bien, 70-79), D (Aprobado, 60-69), E (Suficiente, 50-59), F (Insuficiente, <50). Esta escala es familiar para clientes europeos con formación universitaria y tiene connotaciones culturales precisas: un C en Europa es un resultado decente pero no excelente — muy distinto a la cultura norteamericana donde C implica mediocridad.\n\n---\n\nLos 10 criterios de la rúbrica:\n\n1. Claridad del caso de uso (0-10): el problema de negocio está definido con métricas cuantitativas, stakeholders identificados, y proceso actual documentado.\n\n2. Representatividad del benchmark (0-10): el dataset de prueba incluye variedad real de inputs — incluidos los casos difíciles y atípicos del proceso de producción.\n\n3. Métricas de rendimiento justificadas (0-10): las métricas elegidas (accuracy, F1, BLEU, etc.) son apropiadas para el tipo de tarea y los umbrales de aceptación tienen justificación de negocio.\n\n4. Técnicas aplicadas correctamente (0-10): las técnicas del módulo (CoT, few-shot, XML tags, role prompting, etc.) están aplicadas de forma que resuelven problemas específicos del caso, no decorativamente.\n\n5. Robustez ante inputs adversos (0-10): el sistema ha sido probado con inputs de baja calidad, ambiguos, o en idiomas no esperados, y el comportamiento en estos casos está documentado.\n\n6. Documentación de decisiones (0-10): el por qué de cada decisión de diseño está documentado: por qué se eligió este modelo, por qué esta estructura de prompt, por qué estos parámetros.\n\n7. Estimación de costes de operación (0-10): hay una estimación realista del coste mensual basada en el volumen real de uso, no en el volumen del benchmark.\n\n8. Protocolo de mantenimiento (0-10): existe un documento que especifica quién, cuándo, y bajo qué condiciones actualiza el sistema.\n\n9. Transferencia de conocimiento (0-10): el cliente puede operar, supervisar, y escalar el sistema sin depender del consultor para tareas rutinarias.\n\n10. Seguridad y gestión de errores (0-10): el sistema tiene comportamiento definido ante fallos, y los vectores de prompt injection relevantes han sido probados.\n\n---\n\nCómo puntuarse honestamente: la trampa más frecuente en la autoevaluación es la racionalización — justificar una puntuación alta con razones que no resisten el escrutinio externo. El test de honestidad es simple: ¿estarías cómodo mostrando la evidencia de esta puntuación a un auditor externo que no te conoce? Si la respuesta es no, la puntuación es demasiado alta.\n\n---\n\nPuntuación total: suma los 10 criterios (máximo 100). Conversión a escala ECTS: A (90-100), B (80-89), C (70-79), D (60-69), E (50-59), F (<50). Un proyecto listo para entrega profesional tiene una puntuación mínima de 70 (C) con ningún criterio por debajo de 5. Si algún criterio individual está por debajo de 5, independientemente de la puntuación total, el proyecto no está listo.",
+              "analogia": "Autoevaluarse con honestidad es como calibrar un instrumento de medición: si el instrumento está descalibrado — si mide 10 cuando la realidad es 7 — todas las mediciones siguientes son incorrectas, y el problema se amplifica con cada uso. Un consultor que se sobrevalúa sistemáticamente toma decisiones de presentación, de precio, y de alcance basadas en datos incorrectos. La rúbrica no es una puntuación para mostrar al cliente — es una herramienta de calibración interna.",
+              "ejemplo_malo": "Mi autoevaluación del proyecto: creo que está bastante bien. Los prompts funcionan, el cliente parece contento con las demos, y el benchmark salió bien. Le doy un 8/10 en general.",
+              "ejemplo_bueno": "Autoevaluación con rúbrica:\n- Caso de uso: 9/10 — problema definido con métricas, stakeholders documentados\n- Benchmark: 6/10 — dataset de 150 casos pero solo 12% de casos difíciles (objetivo: 25%)\n- Métricas: 8/10 — F1-score apropiado para la tarea, umbral justificado con el cliente\n- Técnicas: 9/10 — few-shot y XML tags aplicados con ejemplos del dominio\n- Robustez: 5/10 — probado solo con inputs en español; inglés y bilingüe sin probar\n- Documentación: 7/10 — decisiones de modelo documentadas, decisiones de prompt parcialmente\n- Costes: 8/10 — estimación para 3 escenarios de volumen\n- Mantenimiento: 4/10 — protocolo borrador sin firma, responsable no designado\n- Transferencia: 7/10 — sesión grabada, sin manual escrito\n- Seguridad: 6/10 — 3 de 5 vectores probados\nTotal: 69/100 (D). Antes de la entrega: completar pruebas de robustez en inglés, finalizar protocolo de mantenimiento con firma, completar los 2 vectores de seguridad pendientes.",
+              "por_que_importa": "La autoevaluación con rúbrica tiene un valor operacional concreto: permite identificar los dos o tres puntos específicos que están por debajo del umbral y enfocar el trabajo de los últimos días antes de la entrega en exactamente esos puntos. Sin la rúbrica, los días finales del proyecto se gastan en pulir lo que ya está bien en lugar de completar lo que está incompleto.",
+              "tip_profesional": "Comparte la rúbrica con el cliente en la reunión de kickoff y explica que la usarás para autoevaluarte antes de la entrega. Esto comunica metodología profesional, establece expectativas claras sobre qué constituye un proyecto completo, y crea un marco de evaluación compartido que reduce la subjetividad en la discusión de resultados."
+            },
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es el umbral mínimo de puntuación total y la condición adicional para que un proyecto sea considerado listo para entrega profesional según la rúbrica?",
+                "opciones": [
+                  "Puntuación total mínima de 80/100 (Notable en escala ECTS), sin condiciones adicionales sobre criterios individuales",
+                  "Puntuación total mínima de 70/100 (Bien en escala ECTS) y ningún criterio individual por debajo de 5/10 — si algún criterio individual está por debajo de 5, el proyecto no está listo independientemente de la puntuación total",
+                  "Puntuación total mínima de 60/100 (Aprobado en escala ECTS), siempre que los criterios de benchmark y seguridad tengan puntuación superior a 7/10",
+                  "Puntuación total mínima de 75/100, con los tres criterios de documentación, mantenimiento y transferencia de conocimiento con puntuación superior a 8/10"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El doble umbral — total ≥70 y ningún criterio <5 — refleja una característica importante de los proyectos de IA: los puntos débiles tienen efectos desproporcionados. Un proyecto con 85/100 de media pero con protocolo de mantenimiento en 2/10 tiene un riesgo estructural específico: el sistema fallará cuando el negocio cambie y nadie tendrá el mandato ni el proceso para actualizarlo. La puntuación total alta enmascara el riesgo. El umbral por criterio individual evita que las fortalezas en algunos puntos justifiquen debilidades graves en otros.",
+                "concepto_reforzado": "Lógica del doble umbral en rúbricas de evaluación: total mínimo y umbral por criterio individual"
+              },
+              {
+                "pregunta": "¿Qué es el 'test de honestidad' para validar una puntuación en la rúbrica de autoevaluación?",
+                "opciones": [
+                  "Pedir a un colega del equipo que revise la puntuación de forma independiente y promediar los dos resultados para obtener una evaluación más objetiva",
+                  "Preguntarse si estarías cómodo mostrando la evidencia de esa puntuación a un auditor externo que no te conoce — si la respuesta es no, la puntuación es demasiado alta",
+                  "Comparar la puntuación con el promedio de proyectos similares en tu portafolio para verificar que es consistente con evaluaciones anteriores",
+                  "Presentar la autoevaluación al cliente antes de la entrega y pedirle que valide cada puntuación con su criterio independiente"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El test del auditor externo es una técnica de debiasing: cuando evaluamos nuestro propio trabajo, activamos el mismo sistema de memoria que usamos para recordar por qué tomamos cada decisión. Esas memorias son parciales — recordamos más claramente las razones buenas que las limitaciones. El auditor hipotético no tiene ese contexto: solo puede evaluar la evidencia presente. Preguntarte si estarías cómodo con ese escrutinio fuerza la separación entre la intención (por qué tomaste las decisiones) y el resultado (qué evidencia existe de que esas decisiones produjeron un buen resultado).",
+                "concepto_reforzado": "Técnica de debiasing para autoevaluación honesta: el test del auditor externo hipotético"
+              },
+              {
+                "pregunta": "¿Por qué la escala europea ECTS tiene connotaciones culturales diferentes a la escala norteamericana y cómo afecta esto a la comunicación con clientes europeos?",
+                "opciones": [
+                  "En Europa, la escala ECTS es solo usada en contextos académicos y no tiene relevancia en entornos profesionales corporativos donde se prefieren puntuaciones de 1 a 10",
+                  "En la escala ECTS europea, una C (70-79) es un resultado decente pero no excelente — muy distinto a la cultura norteamericana donde C implica mediocridad — por lo que usar esta escala con clientes europeos crea un marco de expectativas más calibrado y culturalmente apropiado",
+                  "La escala ECTS es obligatoria para todos los proyectos de IA en la Unión Europea según las directrices de implementación del AI Act de agosto de 2026",
+                  "Los clientes europeos prefieren la escala ECTS porque les permite comparar directamente los resultados de proyectos de IA con sus propias certificaciones académicas y formación profesional continua"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Las escalas de evaluación tienen semántica cultural, no solo numérica. En el sistema educativo norteamericano, las calificaciones se distribuyen hacia el extremo superior: A es excelente, B es bueno, C es promedio o mediocre. En el sistema europeo ECTS, C (Bien) es un resultado sólido que indica competencia real — está en el tercer nivel de seis y es una calificación respetable en contextos académicos rigurosos. Usar la escala ECTS con clientes europeos, especialmente en propuestas y evaluaciones formales, comunica que tu metodología está alineada con los estándares de calidad europeos, no con expectativas de inflar puntuaciones.",
+                "concepto_reforzado": "Diferencias culturales en escalas de evaluación y su impacto en la comunicación con clientes europeos"
+              },
+              {
+                "pregunta": "¿Cuál es la trampa más frecuente en la autoevaluación y cómo describe la lección su mecanismo psicológico?",
+                "opciones": [
+                  "La infravaloración sistemática del propio trabajo por exceso de autocrítica, que lleva a presentar proyectos tarde porque el consultor nunca considera que están suficientemente bien",
+                  "La racionalización — justificar una puntuación alta con razones que no resisten el escrutinio externo — que ocurre porque al evaluar el propio trabajo se activa la misma memoria que recuerda por qué se tomaron las decisiones, creando una evaluación sesgada hacia el contexto e intenciones en lugar de la evidencia",
+                  "La comparación con proyectos anteriores propios en lugar de con estándares objetivos del mercado, lo que produce evaluaciones relativas que no reflejan la calidad absoluta del trabajo",
+                  "La evaluación por funcionalidad en lugar de por completitud, que lleva a dar puntuaciones altas a sistemas que funcionan técnicamente pero están incompletos en documentación y proceso"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La racionalización en autoevaluación tiene una base cognitiva específica: cuando recordamos por qué tomamos una decisión, el recuerdo activa la justificación que usamos en ese momento, no una evaluación neutral del resultado. Si elegiste un modelo específico porque 'era el más apropiado para el caso', recuerdas esa justificación y la usas para asignarte una puntuación alta en 'documentación de decisiones', aunque la documentación real sean dos líneas en un comentario de código. El auditor externo hipotético no tiene acceso a esa justificación — solo ve las dos líneas. La rúbrica bien aplicada fuerza la misma perspectiva: evaluar la evidencia, no la intención.",
+                "concepto_reforzado": "Mecanismo cognitivo de la racionalización en autoevaluación y técnicas de corrección"
+              },
+              {
+                "pregunta": "¿Qué valor estratégico tiene compartir la rúbrica de autoevaluación con el cliente en el kickoff del proyecto?",
+                "opciones": [
+                  "Permite al cliente participar activamente en la evaluación continua del proyecto y detectar problemas en etapas tempranas antes de que afecten a los entregables finales",
+                  "Comunica metodología profesional, establece expectativas claras sobre qué constituye un proyecto completo, y crea un marco de evaluación compartido que reduce la subjetividad en la discusión de resultados en la reunión de entrega",
+                  "Protege legalmente al consultor porque el cliente ha visto y aprobado los criterios de evaluación antes del inicio del proyecto, lo que previene reclamaciones basadas en expectativas no documentadas",
+                  "Ayuda al cliente a estimar el presupuesto total del proyecto porque la rúbrica especifica exactamente qué entregables se producirán y permite calcular el coste de cada uno independientemente"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La rúbrica en el kickoff tiene un efecto de alineación preventivo. Sin ella, el cliente tiene sus propios criterios implícitos de evaluación que pueden diferir significativamente de los del consultor. En la reunión de entrega, 'el sistema funciona' puede ser suficiente para el consultor y insuficiente para el cliente que esperaba también documentación detallada y protocolo de mantenimiento. Con la rúbrica compartida, ambas partes tienen el mismo mapa de qué constituye un proyecto completo, y la discusión en la entrega se basa en evidencia verificable (¿el benchmark tiene los 200 casos acordados? ¿el protocolo de mantenimiento está firmado?) en lugar de percepciones subjetivas.",
+                "concepto_reforzado": "Función preventiva de los criterios de evaluación compartidos en la gestión de expectativas del cliente"
+              }
+            ],
+            "practica": {
+              "tipo": "caso_real",
+              "contexto": "Tienes 48 horas antes de presentar un proyecto de clasificación de emails de soporte al cliente. Aplicas la rúbrica y obtienes estas puntuaciones: caso de uso 9, benchmark 8, métricas 8, técnicas 9, robustez 4, documentación 7, costes 8, mantenimiento 3, transferencia 7, seguridad 5. Total: 68/100.",
+              "instruccion": "Analiza los resultados de la rúbrica e identifica: (1) qué criterios bloquean la entrega, (2) cuáles son las acciones concretas de las próximas 48 horas, priorizadas por impacto en la puntuación total, y (3) cuál sería la puntuación proyectada después de las acciones.",
+              "input_malo": "El proyecto tiene 68/100 que es una D. Necesito mejorar varias cosas antes de entregar. Voy a trabajar en todo lo que esté por debajo de 7 durante las próximas 48 horas.",
+              "pista": "Identifica primero qué criterios están por debajo de 5 — esos bloquean la entrega independientemente del total. Luego calcula cuántos puntos puede ganar cada acción. Robustez (4→7) = +3 pts. Mantenimiento (3→7) = +4 pts. Seguridad (5→7) = +2 pts. Prioriza por puntos ganados vs. tiempo requerido.",
+              "solucion": "Análisis de la rúbrica:\n\nCriterios que bloquean la entrega (por debajo de 5):\n- Robustez (4/10): bloqueo — el sistema no ha sido probado con inputs en idiomas o formatos no esperados\n- Mantenimiento (3/10): bloqueo — el protocolo no está finalizado ni tiene responsable designado\n\nPlan de 48 horas (priorizado por impacto):\n\nHora 0-8: Mantenimiento (3→8, +5 pts)\n- Redactar protocolo de mantenimiento en 2 páginas: quién actualiza, cuándo, bajo qué condiciones\n- Identificar y designar responsable en el equipo del cliente\n- Enviar para firma antes del final del día\n\nHora 8-16: Robustez (4→7, +3 pts)\n- Probar el sistema con emails en inglés (el cliente recibe ~20% en inglés)\n- Probar con emails con adjuntos referenciados pero no enviados\n- Documentar los 3 casos con resultados degradados encontrados\n\nHora 16-24: Seguridad (5→7, +2 pts)\n- Probar los 2 vectores de prompt injection pendientes\n- Documentar resultados y añadir filtro para el caso más crítico encontrado\n\nPuntuación proyectada: 68 + 5 + 3 + 2 = 78/100 (C — Bien)\nCondición de bloqueo resuelta: ningún criterio por debajo de 5",
+              "criterios_de_exito": [
+                "Identifica correctamente los dos criterios que bloquean la entrega (robustez y mantenimiento, ambos por debajo de 5) como prioritarios independientemente del total",
+                "El plan de 48 horas prioriza por impacto en puntos con acciones concretas y estimación de tiempo, no por facilidad o preferencia personal",
+                "Calcula la puntuación proyectada y verifica que ningún criterio quedará por debajo de 5 después de las acciones"
+              ]
+            },
+            "conexion": {
+              "siguiente_concepto": "Preparación para la certificación del módulo",
+              "por_que_importa_despues": "Has completado la autoevaluación del proyecto. El siguiente paso es preparar la certificación del módulo — el examen que valida que dominas los conceptos de M4 con la profundidad requerida para aplicarlos profesionalmente."
+            }
+          }
+        },
+        {
+          "id": "m4-b9-l11",
+          "titulo": "Preparación para certificación",
+          "bloque": 9,
+          "tipo": "leccion",
+          "duracion_min": 25,
+          "xp": 65,
+          "repeticion_espaciada": {
+            "repasar_dia_3": true,
+            "repasar_dia_7": true,
+            "repasar_dia_14": true,
+            "repasar_dia_30": true
+          },
+          "contenido": {
+            "teoria": {
+              "explicacion": "La certificación de M4 evalúa la capacidad de aplicar prompt engineering en contextos profesionales reales — no la memorización de definiciones ni la reproducción de ejemplos del módulo, sino la transferencia de conceptos a situaciones nuevas con razonamiento documentado.\n\n---\n\nQué evalúa el examen: el examen de certificación tiene tres secciones con pesos diferenciados. La primera sección (40% del puntaje) evalúa comprensión conceptual: conoces los principios, puedes explicar el por qué detrás de cada técnica, y puedes predecir qué sucederá si se aplica incorrectamente. La segunda sección (35%) evalúa aplicación práctica: dado un caso de uso real, puedes diseñar el sistema de prompts apropiado, elegir las técnicas correctas, y documentar las decisiones. La tercera sección (25%) evalúa evaluación crítica: puedes analizar un sistema de prompts existente, identificar sus debilidades, y proponer mejoras concretas con justificación.\n\n---\n\nCómo prepararse en 48 horas: la preparación efectiva en 48 horas no es leer el módulo completo de nuevo — es consolidar los conceptos fundamentales y practicar la transferencia. El primer bloque de 16 horas debe estar enfocado en los 10 conceptos que siempre aparecen en el examen. El segundo bloque de 16 horas debe estar en práctica de casos nuevos — no los ejercicios del módulo sino casos similares que requieren los mismos conceptos aplicados en un contexto diferente. El tercer bloque de 16 horas es revisión de errores: identifica en qué tipos de preguntas tienes menor confianza y dedica ese bloque específicamente a esos puntos.\n\n---\n\nLos 10 conceptos que siempre aparecen en el examen:\n\n1. Chain of Thought (CoT): qué es, cuándo produce mejoras medibles, y cuáles son sus límites — no mejora tareas que no requieren razonamiento secuencial.\n\n2. Few-shot prompting: cuántos ejemplos son necesarios, cómo se elige la distribución de ejemplos, y por qué los ejemplos de baja calidad pueden degradar el rendimiento.\n\n3. XML tags y estructura del prompt: qué ventajas concretas producen para Claude específicamente, y qué tipos de tareas se benefician más.\n\n4. System prompt vs. user prompt: cuál es la diferencia funcional, qué información va en cada uno, y cómo afecta a la coherencia de las respuestas.\n\n5. Temperatura y parámetros del modelo: qué controla cada parámetro, cómo se eligen según el tipo de tarea, y qué sucede con valores extremos.\n\n6. Benchmark y evaluación: cómo se construye un benchmark representativo, qué métricas son apropiadas para cada tipo de tarea, y cuál es la diferencia entre accuracy, F1, y BLEU.\n\n7. Prompt injection: qué es, cuáles son los vectores más comunes, y qué estrategias de mitigación existen.\n\n8. Role prompting: cuándo añade valor, cuáles son sus límites, y cómo afecta a la consistencia del comportamiento del modelo.\n\n9. Pipeline de prompts: cuándo dividir una tarea en múltiples prompts, cómo pasar contexto entre etapas, y cuáles son los trade-offs de complejidad.\n\n10. Selección de modelo: cómo decidir entre Haiku, Sonnet y Opus para un caso de uso específico con criterios de coste-rendimiento documentados.\n\n---\n\nFormato del examen: 20 preguntas de opción múltiple con explicación requerida (5 de la sección 1), 2 casos prácticos con diseño de sistema (sección 2), y 1 análisis crítico de un sistema de prompts proporcionado (sección 3). Tiempo: 2 horas. Puntuación mínima para certificar: 75/100.",
+              "analogia": "Prepararse para la certificación de M4 en 48 horas es como la afinación final antes de un concierto importante: no empiezas a aprender las piezas — ya las conoces. Lo que haces es identificar los pasajes donde tu ejecución es más débil, practicarlos de forma aislada con atención plena, y luego tocar la pieza completa en condiciones similares al concierto para verificar que la integración funciona. La preparación de 48 horas no añade conocimiento nuevo — consolida y conecta el que ya tienes.",
+              "ejemplo_malo": "Para prepararme para el examen voy a releer todas las lecciones del módulo de principio a fin y hacer los ejercicios de práctica otra vez. Si repaso todo el contenido dos veces estaré listo.",
+              "ejemplo_bueno": "Plan de preparación en 48 horas:\n\nBloque 1 (horas 0-16) — Consolidación de los 10 conceptos clave:\n- Para cada uno de los 10 conceptos: escribir la definición en mis propias palabras, un ejemplo de aplicación correcta, y un ejemplo de error frecuente. Sin mirar las lecciones. Verificar después.\n\nBloque 2 (horas 16-32) — Práctica de transferencia:\n- Diseñar un sistema de prompts completo para un caso nuevo (sistema de análisis de contratos para una firma de abogados, sector que no apareció en el módulo). Documentar decisiones con justificación.\n\nBloque 3 (horas 32-48) — Revisión de puntos débiles:\n- Revisar los conceptos donde cometí errores en el bloque 1 (probablemente: benchmark representativo, diferencias F1 vs accuracy, y criterios de selección de modelo). Hacer 3 preguntas adicionales de práctica específicamente en esos conceptos.",
+              "por_que_importa": "La certificación de M4 es la validación formal de que puedes aplicar prompt engineering con criterio profesional — no solo seguir tutoriales sino diseñar, evaluar, y mejorar sistemas en contextos que no has visto antes. En el mercado europeo de 2026, donde la demanda de consultores con conocimiento demostrable en IA supera la oferta, una certificación con un proceso de evaluación riguroso es un diferenciador concreto frente a candidatos con solo experiencia autodidacta.",
+              "tip_profesional": "En el examen, responde primero las preguntas de mayor confianza en cada sección para garantizar esos puntos. Luego dedica el tiempo restante a las preguntas dudosas. En la sección de casos prácticos, dedica los primeros 5 minutos a estructurar el sistema completo antes de escribir los prompts — un sistema bien estructurado con prompts imperfectos puntúa mejor que prompts detallados sin estructura coherente."
+            },
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la distribución por secciones del examen de certificación de M4 y qué evalúa cada sección?",
+                "opciones": [
+                  "Tres secciones iguales (33% cada una): conocimiento teórico, aplicación técnica, y proyecto completo de diseño de sistema",
+                  "Tres secciones con pesos diferenciados: comprensión conceptual (40%), aplicación práctica (35%), y evaluación crítica (25%) — la primera evalúa principios y razonamiento, la segunda el diseño de sistemas nuevos, la tercera el análisis de sistemas existentes",
+                  "Dos secciones principales: teoría (60%) con 30 preguntas de opción múltiple, y práctica (40%) con un proyecto de desarrollo de sistema de prompts entregado en una semana",
+                  "Cuatro secciones: fundamentos (20%), técnicas avanzadas (25%), casos de uso (30%), y proyecto final (25%), con tiempo ilimitado para la sección de proyecto"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La distribución 40-35-25 refleja la estructura de competencias de un prompt engineer profesional: el peso mayor en comprensión conceptual (40%) porque sin entender el por qué de las técnicas, la aplicación es frágil y dependiente del contexto visto en el módulo. La aplicación práctica (35%) evalúa exactamente lo que el mercado laboral valora: ¿puedes diseñar un sistema nuevo, no solo reproducir los ejemplos del curso? La evaluación crítica (25%) mide la madurez profesional: ¿puedes identificar qué está mal en un sistema que no diseñaste tú?",
+                "concepto_reforzado": "Estructura y pesos del examen de certificación como guía de preparación priorizada"
+              },
+              {
+                "pregunta": "¿Cuál es la estrategia de preparación en 48 horas más efectiva según la lección y por qué NO es releer todo el módulo?",
+                "opciones": [
+                  "La estrategia más efectiva es releer el módulo completo en orden cronológico porque permite activar todos los recuerdos en la secuencia de aprendizaje original, que es la más eficiente para la recuperación en el examen",
+                  "La estrategia efectiva es consolidar los 10 conceptos clave (bloque 1), practicar transferencia con casos nuevos (bloque 2), y revisar puntos débiles identificados (bloque 3) — releer el módulo completo no es efectivo porque el examen evalúa transferencia a situaciones nuevas, no reproducción del contenido visto",
+                  "La estrategia más efectiva es hacer todos los ejercicios de práctica del módulo de nuevo, tomando nota de los errores, y luego releer las lecciones correspondientes a los errores identificados",
+                  "La estrategia más efectiva en 48 horas es enfocarse exclusivamente en los casos prácticos del examen (sección 2 con 35% del puntaje) porque son los que tienen mayor impacto en la nota final y requieren más tiempo de preparación"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Releer el módulo activa el reconocimiento — 'sí, esto lo vi' — pero el examen evalúa recuperación y transferencia: ¿puedes generar la respuesta correcta sin el texto frente a ti, en un contexto que no aparece en el módulo? La diferencia entre reconocimiento y recuperación es bien documentada en la ciencia del aprendizaje. La práctica de transferencia (diseñar un sistema para un caso nuevo) es la forma de preparación que más se correlaciona con el rendimiento en el examen, porque simula exactamente la condición de evaluación: un problema nuevo con los mismos conceptos.",
+                "concepto_reforzado": "Diferencia entre reconocimiento y recuperación como base de una preparación efectiva para el examen"
+              },
+              {
+                "pregunta": "¿Por qué los 10 conceptos del examen incluyen los límites de cada técnica además de su definición y aplicación correcta?",
+                "opciones": [
+                  "Porque el AI Act europeo exige que los consultores de IA documenten formalmente las limitaciones de cada técnica que aplican en proyectos con clientes corporativos",
+                  "Porque conocer los límites de una técnica es evidencia de comprensión profunda y no solo superficial — alguien que solo sabe cuándo aplicar CoT no puede predecir en qué casos CoT no añade valor y podría aumentar el coste sin mejorar los resultados",
+                  "Porque el examen incluye una sección específica sobre errores frecuentes que requiere identificar cuándo las técnicas producen resultados contraproducentes en casos de uso reales",
+                  "Porque los límites de cada técnica son los conceptos más difíciles de memorizar y el examen los incluye para diferenciar a los candidatos de alto rendimiento del resto"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los límites de una técnica son la frontera entre el uso correcto y el uso ritual. Un prompt engineer que aplica CoT en todas las tareas 'porque mejora los resultados' sin saber que no mejora tareas que no requieren razonamiento secuencial (y que puede añadir coste sin valor en esos casos) está usando la técnica como receta, no como herramienta. La comprensión de los límites es lo que permite la selección correcta de técnicas para cada caso específico. Es también lo que el examen evalúa en la sección de evaluación crítica: ¿puedes identificar cuándo un sistema aplica técnicas incorrectamente?",
+                "concepto_reforzado": "Comprensión de los límites de las técnicas como indicador de profundidad de aprendizaje"
+              },
+              {
+                "pregunta": "¿Cuál es la puntuación mínima para certificar en el examen de M4 y qué representa esa puntuación en la escala ECTS?",
+                "opciones": [
+                  "Puntuación mínima de 60/100, que corresponde a D (Aprobado) en escala ECTS — el umbral más bajo para acreditar competencia básica en el área",
+                  "Puntuación mínima de 75/100, que corresponde a C (Bien) en escala ECTS — un resultado que indica competencia sólida y que el candidato puede aplicar los conceptos en contextos profesionales reales",
+                  "Puntuación mínima de 80/100 (Notable en escala ECTS), con la condición adicional de obtener al menos 70% en cada sección del examen",
+                  "Puntuación mínima de 70/100 (Bien en escala ECTS), equivalente al umbral de entrega profesional de la rúbrica de autoevaluación del proyecto"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El umbral de 75/100 (C en ECTS) no es arbitrario: está calibrado para garantizar que los candidatos certificados pueden trabajar en contextos profesionales reales con supervisión mínima. Un candidato con 75+ ha demostrado que comprende los principios conceptuales (sección 1), puede diseñar sistemas nuevos (sección 2), y puede evaluar sistemas existentes (sección 3). Por debajo de 75, el patrón de errores indica típicamente que el candidato puede reproducir ejemplos vistos pero no generalizar a situaciones nuevas — que es exactamente la competencia que se evalúa en el examen y la que se requiere en el mercado laboral.",
+                "concepto_reforzado": "Umbral de certificación y su relación con competencias profesionales verificables"
+              },
+              {
+                "pregunta": "En el examen de certificación, ¿qué estrategia de respuesta recomienda la lección para la sección de casos prácticos?",
+                "opciones": [
+                  "Empezar por el caso práctico más simple para ganar confianza antes de abordar el más complejo, dividiendo el tiempo equitativamente entre ambos",
+                  "Dedicar los primeros 5 minutos a estructurar el sistema completo antes de escribir los prompts — un sistema bien estructurado con prompts imperfectos puntúa mejor que prompts detallados sin estructura coherente",
+                  "Escribir los prompts completos primero y luego añadir la documentación de decisiones al final del tiempo disponible, ya que los prompts son el componente de mayor peso en la evaluación",
+                  "Responder primero la sección de evaluación crítica para dejar el mayor tiempo disponible para los casos prácticos que requieren diseño original"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La recomendación de estructurar antes de escribir refleja un principio de diseño de sistemas: la arquitectura determina la calidad más que los detalles de implementación. En los casos prácticos del examen, la estructura del sistema (qué hace el system prompt, qué hacen los templates de input, cómo se encadenan las etapas del pipeline) es evaluada como evidencia de comprensión conceptual. Los prompts detallados sin estructura coherente demuestran conocimiento de técnicas aisladas pero no la capacidad de integrarlas en un sistema. Cinco minutos de diseño estructural previo producen un sistema coherente que puede evaluarse holísticamente; sin esa fase de diseño, el tiempo se gasta en escribir prompts que no forman un conjunto coherente.",
+                "concepto_reforzado": "Estrategia de respuesta en exámenes de diseño: estructura antes que detalles de implementación"
+              }
+            ],
+            "practica": {
+              "tipo": "caso_real",
+              "contexto": "Tienes 48 horas antes del examen de certificación. Aplicas el test de recuperación del Bloque 1 y obtienes estos resultados: CoT (9/10), few-shot (8/10), XML tags (9/10), system vs user prompt (9/10), temperatura (6/10), benchmark y métricas (5/10), prompt injection (7/10), role prompting (8/10), pipeline de prompts (7/10), selección de modelo (5/10).",
+              "instruccion": "Basándote en los resultados del test de recuperación, diseña el plan específico para los bloques 2 y 3 de tu preparación. Identifica qué conceptos trabajar en el bloque de práctica de transferencia y qué conceptos revisar en el bloque de puntos débiles. Incluye una pregunta de práctica que te harías para cada concepto con puntuación ≤6.",
+              "input_malo": "Tengo dos conceptos por debajo de 7: temperatura y selección de modelo. Voy a releer esas lecciones en el bloque 3 para mejorar en esos puntos.",
+              "pista": "Los conceptos con puntuación ≤6 (temperatura: 6, benchmark y métricas: 5, selección de modelo: 5) son los prioritarios para el bloque 3. El bloque 2 de práctica de transferencia debe incluir un caso nuevo que obligue a aplicar los conceptos más débiles en contexto. Una pregunta de práctica útil no es '¿qué es la temperatura?' sino '¿qué temperatura elegirías para un sistema de clasificación de contratos legales y por qué?'",
+              "solucion": "Plan de preparación — bloques 2 y 3:\n\nBloque 2 (práctica de transferencia, 16 horas):\nCaso nuevo: sistema de análisis de informes de sostenibilidad ESG para una auditora en Frankfurt. El caso requiere aplicar los conceptos débiles en contexto: selección del modelo (¿Haiku, Sonnet u Opus para análisis de documentos legales largos?), diseño del benchmark (¿cómo estratificar los informes ESG por sector, año, y estándar de reporte?), y parámetros de temperatura (¿qué temperatura para extracción de datos vs. generación de resumen ejecutivo?).\n\nBloque 3 (revisión de puntos débiles, 16 horas):\n\nConcepto: Temperatura (6/10)\nPregunta de práctica: Un sistema extrae fechas y cantidades numéricas de contratos. Otro sistema genera resúmenes ejecutivos de informes. ¿Qué temperatura usarías para cada uno y por qué? ¿Qué pasa si usas temperatura 1.0 en el sistema de extracción?\n\nConcepto: Benchmark y métricas (5/10)\nPregunta de práctica: Tienes un sistema de clasificación de emails en 5 categorías con distribución desigual (40% categoría A, 5% categoría E). ¿Por qué accuracy puede ser engañosa? ¿Qué métrica usarías y cómo la calcularías?\n\nConcepto: Selección de modelo (5/10)\nPregunta de práctica: Tienes un pipeline de 3 etapas: extracción de entidades, razonamiento sobre relaciones entre entidades, y generación de informe. ¿Usarías el mismo modelo para las 3 etapas? Justifica con criterios de coste-rendimiento.",
+              "criterios_de_exito": [
+                "Identifica correctamente los tres conceptos prioritarios para el bloque 3 (temperatura ≤6, benchmark ≤6, selección de modelo ≤6) en lugar de los dos más obvios",
+                "El caso de práctica del bloque 2 está diseñado específicamente para aplicar los conceptos débiles en contexto nuevo, no para practicar los conceptos ya consolidados",
+                "Las preguntas de práctica para el bloque 3 son de transferencia y aplicación (¿qué elegirías y por qué?) no de definición o reconocimiento (¿qué es la temperatura?)"
+              ]
+            },
+            "conexion": {
+              "siguiente_concepto": "Recapitulación de M4: los principios del prompt engineering profesional",
+              "por_que_importa_despues": "Has completado todas las lecciones de contenido del módulo. La última lección es una recapitulación integradora que consolida los 5 principios fundamentales que subyacen a todo lo que has aprendido en M4, y establece la conexión con M5: Claude Dominio Completo."
+            }
+          }
+        },
+        {
+          "id": "m4-b9-l12",
+          "titulo": "Recapitulación M4: los 5 principios del prompt engineering profesional",
+          "bloque": 9,
+          "tipo": "recap",
+          "duracion_min": 20,
+          "xp": 100,
+          "contenido": {
+            "teoria": {
+              "explicacion": "Has completado M4: Prompt Engineering. Este es el momento de consolidar no los detalles de cada técnica, sino los principios que los unifican — los cinco principios que, si los interiorizas, te permiten razonar correctamente sobre cualquier problema de prompt engineering que encuentres en tu carrera, incluyendo los que aún no existen.\n\n---\n\nPrincipio 1 — El modelo hace lo que le dices, no lo que quieres decir. La precisión del lenguaje no es perfeccionismo — es la diferencia entre un sistema que funciona y uno que produce outputs que el usuario no esperaba. Cada palabra del prompt es una instrucción de comportamiento. Las instrucciones ambiguas producen comportamientos inconsistentes. La iteración de prompts es fundamentalmente un proceso de reducir la distancia entre lo que dices y lo que quieres decir.\n\n---\n\nPrincipio 2 — El contexto determina la calidad más que las técnicas. Few-shot, CoT, XML tags — son multiplicadores de un contexto bien definido. Sin contexto claro (¿quién es el modelo en esta tarea? ¿para quién produce el output? ¿qué nivel de detalle es apropiado? ¿cuál es el criterio de éxito?), las técnicas añaden sofisticación sin mejorar la utilidad. El contexto es el cimiento; las técnicas son el acabado.\n\n---\n\nPrincipio 3 — Lo que no mides no mejora. Los sistemas de prompts sin benchmark son sistemas que mejoran por intuición. La intuición tiene su lugar en el diseño inicial, pero la iteración sin medición converge hacia el sesgo de confirmación: los cambios que hacemos son los que pensamos que mejorarán el output, que no siempre son los que realmente lo mejoran. El benchmark convierte la iteración de prompts en ingeniería: hipótesis, medición, conclusión.\n\n---\n\nPrincipio 4 — El sistema técnico es la mitad del proyecto. La otra mitad es proceso: el caso de uso validado, el benchmark representativo, el protocolo de mantenimiento, la transferencia de conocimiento, el plan de adopción con los usuarios finales. Los proyectos de IA no fallan por prompts incorrectos — fallan por casos de uso sin problema real, por scope creep sin governance, por sistemas entregados sin mantenimiento. Las lecciones del Bloque 9 documentan exactamente estos patrones con casos europeos reales.\n\n---\n\nPrincipio 5 — Tu criterio profesional es el activo, no los prompts. Los prompts que escribiste hoy estarán desactualizados cuando los modelos evolucionen. El criterio para evaluar un caso de uso, para diseñar un benchmark representativo, para identificar los riesgos de un proyecto antes de comprometerse con el cliente — ese criterio se transfiere a cualquier herramienta, cualquier modelo, cualquier sector. M4 te dio las técnicas; el objetivo era darte el criterio.\n\n---\n\nConexión con M5: Claude Dominio Completo. M5 lleva estos cinco principios a su máxima expresión para Claude específicamente: la arquitectura interna de los modelos de Anthropic, cómo funciona el contexto a nivel de tokens, cómo diseñar sistemas multi-turn que mantienen coherencia, cómo aprovechar las capacidades especiales de Claude que no están en otros modelos, y cómo construir aplicaciones completas sobre la API de Claude. Si M4 es el mapa, M5 es el conocimiento del terreno.",
+              "por_que_importa": "Tener los cinco principios como marco mental te permite analizar cualquier problema de prompt engineering — incluso en tecnologías que aún no existen — porque los principios son sobre el razonamiento, no sobre las herramientas. Cuando aparezca un nuevo modelo, una nueva técnica, o un nuevo caso de uso, la pregunta no es '¿cómo aplico esto?' sino '¿cómo evalúo si tiene un problema real, cómo mido si funciona, y cómo aseguro que el proceso alrededor del sistema técnico está bien diseñado?'",
+              "tip_profesional": "Antes de comprometerte con cualquier proyecto de prompt engineering, verifica mentalmente los cinco principios: ¿el cliente entiende que el sistema hace lo que le dices, no lo que quiere decir? ¿El contexto del sistema está bien definido? ¿Hay un plan de benchmark? ¿El proceso alrededor del sistema está diseñado? ¿Estás usando tu criterio o siguiendo una receta? Si alguno de los cinco falla, ahí está el riesgo del proyecto."
+            },
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la implicación práctica del Principio 1 ('el modelo hace lo que le dices, no lo que quieres decir') para el proceso de iteración de prompts?",
+                "opciones": [
+                  "Que los modelos de lenguaje interpretan las instrucciones de forma literal y no pueden inferir la intención del usuario, lo que requiere prompts extremadamente detallados para cualquier tarea",
+                  "Que la iteración de prompts es fundamentalmente un proceso de reducir la distancia entre lo que dices y lo que quieres decir — los outputs inesperados son información sobre la distancia entre la instrucción y la intención, no sobre la limitación del modelo",
+                  "Que la precisión del lenguaje en los prompts es menos importante que la selección correcta de técnicas como CoT o few-shot, que compensan las ambigüedades del lenguaje natural",
+                  "Que los mejores prompts son siempre los más cortos y directos, porque las instrucciones largas aumentan la probabilidad de ambigüedad y contradicción interna"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El Principio 1 reencuadra los errores del modelo como información diagnóstica. Cuando un sistema produce un output incorrecto o inesperado, la primera pregunta no es '¿cómo mejoro el modelo?' sino '¿qué instrucción del prompt permitía este output?' Esa perspectiva convierte cada error en una oportunidad de especificación: el output incorrecto revela exactamente qué aspecto de la instrucción era ambiguo o incompleto. La iteración efectiva de prompts es siempre un proceso de especificación progresiva, no de adición de técnicas.",
+                "concepto_reforzado": "Principio 1: iteración de prompts como reducción de distancia entre instrucción e intención"
+              },
+              {
+                "pregunta": "¿Cómo describe el Principio 2 la relación entre contexto y técnicas de prompting?",
+                "opciones": [
+                  "El contexto y las técnicas son igualmente importantes y deben desarrollarse en paralelo — un sistema sin contexto claro y sin técnicas avanzadas tiene el mismo rendimiento que uno con contexto sólido pero sin técnicas",
+                  "El contexto es el cimiento y las técnicas son el acabado — few-shot, CoT, y XML tags son multiplicadores de un contexto bien definido, pero sin contexto claro añaden sofisticación sin mejorar la utilidad",
+                  "Las técnicas son más importantes que el contexto porque son transferibles a cualquier caso de uso, mientras que el contexto es específico a cada aplicación y no puede generalizarse",
+                  "El contexto es solo relevante para tareas complejas — para tareas simples de extracción o clasificación, las técnicas avanzadas producen mejoras independientemente de si el contexto está bien definido"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La metáfora del cimiento y el acabado captura una jerarquía de dependencia: no puedes tener un buen acabado sobre un cimiento deficiente, pero un cimiento sólido sin acabado sigue siendo funcional. Un system prompt que define claramente el rol del modelo, la audiencia del output, el nivel de detalle apropiado, y el criterio de éxito produce resultados útiles incluso con técnicas básicas. El mismo system prompt con few-shot y CoT añadidos produce resultados excelentes. Pero un prompt con CoT elaborado y ejemplos sofisticados sobre un contexto mal definido produce outputs elaborados que no sirven al caso de uso.",
+                "concepto_reforzado": "Principio 2: el contexto como base que las técnicas amplifican pero no pueden sustituir"
+              },
+              {
+                "pregunta": "Según el Principio 5, ¿cuál es el activo profesional más valioso que desarrollaste en M4 y por qué supera el valor de los prompts específicos que creaste?",
+                "opciones": [
+                  "El portafolio de prompts documentados, porque los prompts de alta calidad son activos reutilizables que se pueden aplicar directamente a casos de uso similares sin necesidad de rediseño",
+                  "El criterio para evaluar casos de uso, diseñar benchmarks, identificar riesgos, y estructurar proyectos — porque ese criterio se transfiere a cualquier herramienta, modelo, y sector, mientras que los prompts específicos quedarán desactualizados cuando los modelos evolucionen",
+                  "Las técnicas específicas de prompt engineering (CoT, few-shot, XML tags), porque son estándares de la industria que seguirán siendo relevantes independientemente de cómo evolucione la tecnología",
+                  "El conocimiento del AI Act y los estándares de entrega profesional europeos, porque la regulación crea barreras de entrada que protegen a los consultores certificados frente a competidores no especializados"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El Principio 5 articula algo contraintuitivo: el producto del aprendizaje de un módulo de técnicas no son las técnicas — son el criterio para saber cuándo, por qué, y cómo aplicarlas. Los prompts específicos son instancias de ese criterio aplicado a un problema concreto en un momento concreto. Cuando el modelo evoluciona, las instancias cambian pero el criterio se mantiene. Un prompt engineer con criterio sólido y sin prompts específicos puede reconstruir sus sistemas para cualquier modelo nuevo. Uno con prompts específicos y sin criterio solo puede aplicarlos en el contexto exacto para el que fueron diseñados.",
+                "concepto_reforzado": "Principio 5: el criterio profesional como activo transferible frente a técnicas específicas perecederas"
+              }
+            ],
+            "conexion": {
+              "siguiente_concepto": "M5: Claude Dominio Completo",
+              "por_que_importa_despues": "M5 lleva los cinco principios de M4 a su máxima expresión para Claude: arquitectura interna, gestión de contexto a nivel de tokens, sistemas multi-turn, capacidades únicas de Claude, y construcción de aplicaciones completas sobre la API. Si M4 te dio el mapa del prompt engineering profesional, M5 te da el conocimiento profundo del terreno específico en el que trabajarás."
+            }
+          }
         }
       ]
     }
