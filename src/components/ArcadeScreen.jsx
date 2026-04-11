@@ -377,6 +377,388 @@ function VerdaderoFalsoGame({ onSalir, onXpGanado }) {
   )
 }
 
+/* ─── Flashcards del juego 6 ─── */
+const FLASHCARDS_SPEED = [
+  { termino: "LLM",         definicion: "Modelo de lenguaje entrenado con grandes volúmenes de texto para generar texto" },
+  { termino: "Prompt",      definicion: "Instrucción o contexto que guía la respuesta de un modelo de IA" },
+  { termino: "Fine-tuning", definicion: "Reentrenar un modelo base con datos específicos de un dominio" },
+  { termino: "RAG",         definicion: "Combinar búsqueda de documentos con generación de texto del LLM" },
+  { termino: "Token",       definicion: "Unidad mínima de texto que procesa un modelo de lenguaje" },
+  { termino: "Temperature", definicion: "Parámetro que controla la creatividad/aleatoriedad del output" },
+  { termino: "Zero-shot",   definicion: "Pedir al modelo una tarea sin dar ejemplos previos" },
+  { termino: "EU AI Act",   definicion: "Regulación europea que clasifica sistemas de IA por nivel de riesgo" },
+]
+
+const XP_POR_SABIA   = 2
+const XP_BONUS_SPEED = 15
+const TIEMPO_TOTAL_SPEED = 180 // 3 minutos
+
+/* ─── Componente del juego Speed Cards ─── */
+function SpeedCardsGame({ onSalir, onXpGanado }) {
+  const [indice,    setIndice]    = useState(0)
+  const [flipped,   setFlipped]   = useState(false)
+  const [tiempo,    setTiempo]    = useState(TIEMPO_TOTAL_SPEED)
+  const [fase,      setFase]      = useState("jugando") // "jugando" | "resultado"
+  const [resultados, setResultados] = useState([])      // booleans: true = "lo sabía"
+  const resultadosRef = useRef([])
+  const xpFiredRef    = useRef(false)
+  const timerRef      = useRef(null)
+
+  /* ── sync ref + state juntos ── */
+  function actualizarResultados(r) {
+    resultadosRef.current = r
+    setResultados(r)
+  }
+
+  function finalizarJuego(res) {
+    clearInterval(timerRef.current)
+    if (!xpFiredRef.current) {
+      xpFiredRef.current = true
+      const sabias = res.filter(Boolean).length
+      onXpGanado(sabias * XP_POR_SABIA + XP_BONUS_SPEED)
+    }
+    setFase("resultado")
+  }
+
+  /* ── Timer total ── */
+  useEffect(() => {
+    if (fase !== "jugando") return
+    timerRef.current = setInterval(() => {
+      setTiempo((t) => {
+        if (t <= 1) {
+          finalizarJuego(resultadosRef.current)
+          return 0
+        }
+        return t - 1
+      })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fase])
+
+  function responder(sabia) {
+    const nuevos = [...resultadosRef.current, sabia]
+    actualizarResultados(nuevos)
+    if (indice === FLASHCARDS_SPEED.length - 1) {
+      finalizarJuego(nuevos)
+    } else {
+      setFlipped(false)
+      setTimeout(() => setIndice((i) => i + 1), 160)
+    }
+  }
+
+  function reiniciar() {
+    xpFiredRef.current = false
+    actualizarResultados([])
+    setIndice(0)
+    setFlipped(false)
+    setTiempo(TIEMPO_TOTAL_SPEED)
+    setFase("jugando")
+  }
+
+  const card       = FLASHCARDS_SPEED[Math.min(indice, FLASHCARDS_SPEED.length - 1)]
+  const sabiasCount = resultados.filter(Boolean).length
+  const mins = Math.floor(tiempo / 60)
+  const secs = tiempo % 60
+  const tiempoStr  = `${mins}:${String(secs).padStart(2, "0")}`
+  const colorTiempo = tiempo > 60 ? "#00D4AA" : tiempo > 30 ? "#F59E0B" : "#EF4444"
+
+  /* ── Pantalla de resultado ── */
+  if (fase === "resultado") {
+    const xpTotal  = sabiasCount * XP_POR_SABIA + XP_BONUS_SPEED
+    const perfecta = sabiasCount === FLASHCARDS_SPEED.length
+
+    return (
+      <>
+        {perfecta && <Confetti />}
+        <motion.div
+          className="w-full max-w-lg mx-auto px-4 pb-8 pt-6 flex flex-col items-center gap-5"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4 }}
+        >
+          <div style={{ fontSize: 64 }}>
+            {sabiasCount === FLASHCARDS_SPEED.length ? "🏆" : sabiasCount >= 5 ? "👍" : "💪"}
+          </div>
+
+          <h2
+            className="text-2xl font-extrabold text-center"
+            style={{ fontFamily: "'Outfit', sans-serif", color: "var(--color-accent-primary)" }}
+          >
+            {sabiasCount === FLASHCARDS_SPEED.length
+              ? "¡Las sabías todas!"
+              : sabiasCount >= 5
+              ? "¡Buen repaso!"
+              : "¡Sigue practicando!"}
+          </h2>
+
+          {/* Stats */}
+          <div
+            className="w-full rounded-2xl p-5"
+            style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}
+          >
+            <div className="flex justify-around text-center">
+              <div>
+                <p className="text-3xl font-extrabold" style={{ color: "#34D399", fontFamily: "'Outfit', sans-serif" }}>
+                  {sabiasCount}
+                </p>
+                <p className="text-xs mt-1" style={{ color: "var(--color-text-secondary)" }}>Lo sabía</p>
+              </div>
+              <div style={{ width: 1, background: "var(--color-border)" }} />
+              <div>
+                <p className="text-3xl font-extrabold" style={{ color: "#EF4444", fontFamily: "'Outfit', sans-serif" }}>
+                  {resultados.length - sabiasCount}
+                </p>
+                <p className="text-xs mt-1" style={{ color: "var(--color-text-secondary)" }}>A repasar</p>
+              </div>
+              <div style={{ width: 1, background: "var(--color-border)" }} />
+              <div>
+                <p className="text-3xl font-extrabold" style={{ color: "#F59E0B", fontFamily: "'Outfit', sans-serif" }}>
+                  {resultados.length}
+                </p>
+                <p className="text-xs mt-1" style={{ color: "var(--color-text-secondary)" }}>Completadas</p>
+              </div>
+            </div>
+          </div>
+
+          {/* XP ganado */}
+          <motion.div
+            className="flex items-center gap-2 px-5 py-3 rounded-xl"
+            style={{ background: "rgba(245,158,11,0.15)", border: "1px solid rgba(245,158,11,0.35)" }}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            <span style={{ fontSize: 22 }}>⭐</span>
+            <span className="font-bold text-lg" style={{ color: "#F59E0B", fontFamily: "'Outfit', sans-serif" }}>
+              +{xpTotal} XP ganados
+            </span>
+          </motion.div>
+
+          <div className="w-full text-xs text-center" style={{ color: "var(--color-text-secondary)" }}>
+            {sabiasCount} × {XP_POR_SABIA} XP + {XP_BONUS_SPEED} XP por completar
+          </div>
+
+          <div className="w-full flex flex-col gap-2">
+            <button
+              onClick={reiniciar}
+              className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95"
+              style={{ background: "var(--color-accent-primary)", color: "#fff", fontFamily: "'Outfit', sans-serif" }}
+            >
+              Jugar de nuevo
+            </button>
+            <button
+              onClick={onSalir}
+              className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-105 active:scale-95"
+              style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)", fontFamily: "'Outfit', sans-serif" }}
+            >
+              Volver al Arcade
+            </button>
+          </div>
+        </motion.div>
+      </>
+    )
+  }
+
+  /* ── Pantalla de juego ── */
+  return (
+    <div className="w-full max-w-lg mx-auto px-4 pb-8">
+      {/* Header */}
+      <div className="pt-5 pb-4 flex items-center justify-between">
+        <button
+          onClick={onSalir}
+          className="text-sm px-3 py-1.5 rounded-lg transition-all hover:brightness-110 active:scale-95"
+          style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)" }}
+        >
+          ← Salir
+        </button>
+        <span
+          className="text-base font-extrabold"
+          style={{ fontFamily: "'Outfit', sans-serif", color: "var(--color-accent-primary)" }}
+        >
+          🃏 Speed Cards
+        </span>
+        {/* Timer total */}
+        <motion.span
+          className="text-sm font-bold px-3 py-1.5 rounded-lg"
+          style={{
+            background: `${colorTiempo}22`,
+            color: colorTiempo,
+            border: `1px solid ${colorTiempo}55`,
+            fontFamily: "'Outfit', sans-serif",
+            minWidth: 68,
+            textAlign: "center",
+          }}
+          animate={{ scale: tiempo <= 10 ? [1, 1.12, 1] : 1 }}
+          transition={{ duration: 0.4, repeat: tiempo <= 10 ? Infinity : 0 }}
+        >
+          ⏱ {tiempoStr}
+        </motion.span>
+      </div>
+
+      {/* Barra de progreso */}
+      <div className="h-1.5 rounded-full overflow-hidden mb-4" style={{ background: "var(--color-border)" }}>
+        <motion.div
+          className="h-full rounded-full"
+          style={{ background: "var(--color-accent-primary)" }}
+          animate={{ width: `${(indice / FLASHCARDS_SPEED.length) * 100}%` }}
+          transition={{ duration: 0.3 }}
+        />
+      </div>
+
+      {/* Contador y pista */}
+      <div className="flex justify-between items-center mb-4 px-1">
+        <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
+          Card {indice + 1} de {FLASHCARDS_SPEED.length}
+        </span>
+        {!flipped && (
+          <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
+            Toca para ver la definición
+          </span>
+        )}
+      </div>
+
+      {/* ── Flashcard con flip 3D ── */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={indice}
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -40 }}
+          transition={{ duration: 0.22 }}
+        >
+          <div
+            style={{ perspective: "1200px", minHeight: 210 }}
+            onClick={() => !flipped && setFlipped(true)}
+          >
+            <motion.div
+              animate={{ rotateY: flipped ? 180 : 0 }}
+              transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                transformStyle: "preserve-3d",
+                position: "relative",
+                minHeight: 210,
+                cursor: flipped ? "default" : "pointer",
+              }}
+              className="rounded-2xl"
+            >
+              {/* Cara frontal — Término */}
+              <div
+                style={{
+                  backfaceVisibility: "hidden",
+                  WebkitBackfaceVisibility: "hidden",
+                  background: "var(--color-bg-card)",
+                  border: "1px solid var(--color-border)",
+                  minHeight: 210,
+                }}
+                className="rounded-2xl p-6 flex flex-col items-center justify-center gap-3"
+              >
+                <span
+                  className="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full"
+                  style={{ background: "rgba(0,212,170,0.12)", color: "var(--color-accent-primary)" }}
+                >
+                  Término
+                </span>
+                <p
+                  className="text-3xl font-extrabold text-center"
+                  style={{ fontFamily: "'Outfit', sans-serif", color: "var(--color-text-primary)" }}
+                >
+                  {card.termino}
+                </p>
+                <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+                  Toca para revelar
+                </p>
+              </div>
+
+              {/* Cara trasera — Definición */}
+              <div
+                style={{
+                  backfaceVisibility: "hidden",
+                  WebkitBackfaceVisibility: "hidden",
+                  transform: "rotateY(180deg)",
+                  position: "absolute",
+                  top: 0, left: 0, right: 0, bottom: 0,
+                  background: "linear-gradient(135deg, rgba(0,212,170,0.12) 0%, rgba(0,212,170,0.04) 100%)",
+                  border: "1px solid rgba(0,212,170,0.38)",
+                  minHeight: 210,
+                }}
+                className="rounded-2xl p-6 flex flex-col items-center justify-center gap-3"
+              >
+                <span
+                  className="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full"
+                  style={{ background: "rgba(0,212,170,0.18)", color: "var(--color-accent-primary)" }}
+                >
+                  Definición
+                </span>
+                <p
+                  className="text-center text-base font-semibold leading-snug"
+                  style={{ fontFamily: "'Outfit', sans-serif", color: "var(--color-text-primary)" }}
+                >
+                  {card.definicion}
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Botones — visibles sólo tras voltear */}
+      <AnimatePresence>
+        {flipped && (
+          <motion.div
+            className="grid grid-cols-2 gap-3 mt-5"
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.25 }}
+          >
+            <button
+              onClick={() => responder(false)}
+              className="py-4 rounded-2xl font-semibold text-sm transition-all active:scale-95"
+              style={{
+                background: "rgba(239,68,68,0.15)",
+                border: "2px solid rgba(239,68,68,0.5)",
+                color: "#EF4444",
+                fontFamily: "'Outfit', sans-serif",
+              }}
+            >
+              ✗ Repasar
+            </button>
+            <button
+              onClick={() => responder(true)}
+              className="py-4 rounded-2xl font-semibold text-sm transition-all active:scale-95"
+              style={{
+                background: "rgba(52,211,153,0.15)",
+                border: "2px solid rgba(52,211,153,0.5)",
+                color: "#34D399",
+                fontFamily: "'Outfit', sans-serif",
+              }}
+            >
+              ✓ Lo sabía +2
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Marcador */}
+      <div className="flex justify-center gap-3 mt-5">
+        <span
+          className="text-xs font-semibold px-3 py-1.5 rounded-full"
+          style={{ background: "rgba(52,211,153,0.1)", color: "#34D399", border: "1px solid rgba(52,211,153,0.25)" }}
+        >
+          ✓ {sabiasCount} sabía
+        </span>
+        <span
+          className="text-xs font-semibold px-3 py-1.5 rounded-full"
+          style={{ background: "rgba(239,68,68,0.1)", color: "#EF4444", border: "1px solid rgba(239,68,68,0.25)" }}
+        >
+          ✗ {resultados.length - sabiasCount} repasar
+        </span>
+      </div>
+    </div>
+  )
+}
+
 /* ─── Grid de juegos ─── */
 const juegos = [
   { nombre: "Verdadero o Falso", emoji: "⚡" },
@@ -403,6 +785,7 @@ export default function ArcadeScreen() {
 
   function manejarJugar(indice) {
     if (indice === 0) setJuegoActivo("verdadero-falso")
+    if (indice === 5) setJuegoActivo("speed-cards")
     // Los demás juegos se añadirán después
   }
 
@@ -421,6 +804,15 @@ export default function ArcadeScreen() {
   if (juegoActivo === "verdadero-falso") {
     return (
       <VerdaderoFalsoGame
+        onSalir={() => setJuegoActivo(null)}
+        onXpGanado={manejarXp}
+      />
+    )
+  }
+
+  if (juegoActivo === "speed-cards") {
+    return (
+      <SpeedCardsGame
         onSalir={() => setJuegoActivo(null)}
         onXpGanado={manejarXp}
       />
@@ -492,14 +884,14 @@ export default function ArcadeScreen() {
               onClick={() => manejarJugar(i)}
               className="w-full text-sm font-semibold py-1.5 rounded-xl transition-all duration-200 hover:brightness-110 active:scale-95"
               style={{
-                background: i === 0 ? "var(--color-accent-primary)" : "var(--color-border)",
-                color: i === 0 ? "#fff" : "var(--color-text-secondary)",
+                background: (i === 0 || i === 5) ? "var(--color-accent-primary)" : "var(--color-border)",
+                color: (i === 0 || i === 5) ? "#fff" : "var(--color-text-secondary)",
                 fontFamily: "'Outfit', sans-serif",
-                cursor: i === 0 ? "pointer" : "not-allowed",
-                opacity: i === 0 ? 1 : 0.5,
+                cursor: (i === 0 || i === 5) ? "pointer" : "not-allowed",
+                opacity: (i === 0 || i === 5) ? 1 : 0.5,
               }}
             >
-              {i === 0 ? "Jugar" : "Pronto"}
+              {(i === 0 || i === 5) ? "Jugar" : "Pronto"}
             </button>
           </motion.div>
         ))}
