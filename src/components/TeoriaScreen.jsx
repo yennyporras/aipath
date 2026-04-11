@@ -44,12 +44,18 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
     setPagina(0)
   }, [leccion.id])
 
-  const paginas = useMemo(() => buildPages(t.explicacion), [t.explicacion])
-  const total = paginas.length
-  const esUltima = pagina === total - 1
+  const paginas      = useMemo(() => buildPages(t.explicacion), [t.explicacion])
+  const numConceptos = paginas.length
+  const tieneAnalogia = !!t.analogia
+
+  // Total de pasos: segmentos de explicación + 1 si hay analogía
+  const totalPaginas      = numConceptos + (tieneAnalogia ? 1 : 0)
+  const esSegmentoAnalogia = tieneAnalogia && pagina === numConceptos
+  const esUltimoConcepto   = pagina === numConceptos - 1
+  const esUltima           = pagina === totalPaginas - 1
 
   function siguiente() {
-    if (pagina < total - 1) {
+    if (pagina < totalPaginas - 1) {
       playSound("click")
       setPagina(p => p + 1)
     }
@@ -95,21 +101,27 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
         </div>
 
         {/* Indicador de progreso de lectura */}
-        {total > 1 && (
+        {totalPaginas > 1 && (
           <div className="flex flex-col gap-1.5">
-            <span className="text-xs font-bold" style={{ color: "#06B6D4" }}>
-              Concepto {pagina + 1} de {total}
+            <span className="text-xs font-bold"
+              style={{ color: esSegmentoAnalogia ? "#F59E0B" : "#06B6D4" }}>
+              {esSegmentoAnalogia
+                ? "💡 Analogía"
+                : `Concepto ${pagina + 1} de ${numConceptos}`}
             </span>
             <div className="w-full h-1 rounded-full" style={{ background: "rgba(255,255,255,0.06)" }}>
               <div
                 className="h-1 rounded-full transition-all duration-500"
-                style={{ width: `${((pagina + 1) / total) * 100}%`, background: "#06B6D4" }}
+                style={{
+                  width: `${((pagina + 1) / totalPaginas) * 100}%`,
+                  background: esSegmentoAnalogia ? "#F59E0B" : "#06B6D4"
+                }}
               />
             </div>
           </div>
         )}
 
-        {/* Explicación — página actual animada */}
+        {/* Contenido principal — animado al cambiar de página */}
         <AnimatePresence mode="wait">
           <motion.div
             key={pagina}
@@ -119,24 +131,9 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col gap-3"
           >
-            {paginas[pagina].map((parrafo, i) => (
-              <p key={i} className="text-sm leading-relaxed"
-                style={{ color: "var(--color-text-secondary)", lineHeight: "1.8" }}>
-                {parrafo}
-              </p>
-            ))}
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Contenido extra: solo en la última página */}
-        {esUltima && (
-          <>
-            {/* Analogía — card amber separada */}
-            {t.analogia && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
+            {esSegmentoAnalogia ? (
+              /* Segmento de analogía: solo la card ámbar, sin scroll adicional */
+              <div
                 className="rounded-xl p-4"
                 style={{
                   background: "#13131E",
@@ -153,9 +150,22 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
                 <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
                   {t.analogia}
                 </p>
-              </motion.div>
+              </div>
+            ) : (
+              /* Segmentos de explicación */
+              paginas[pagina].map((parrafo, i) => (
+                <p key={i} className="text-sm leading-relaxed"
+                  style={{ color: "var(--color-text-secondary)", lineHeight: "1.8" }}>
+                  {parrafo}
+                </p>
+              ))
             )}
+          </motion.div>
+        </AnimatePresence>
 
+        {/* Extras: solo en el último segmento de explicación */}
+        {esUltimoConcepto && (
+          <>
             {/* Ejemplo malo vs bueno */}
             {t.ejemplo_malo && t.ejemplo_bueno && (
               <div className="flex flex-col gap-2">
