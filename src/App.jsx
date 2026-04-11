@@ -23,6 +23,7 @@ import ExplorarScreen from "./components/ExplorarScreen"
 import PerfilScreen from "./components/PerfilScreen"
 import BottomNav from "./components/BottomNav"
 import PomodoroTimer from "./components/PomodoroTimer"
+import WelcomeScreen from "./components/WelcomeScreen"
 
 // Módulos con contenido disponible — import estático (Vite los bundlea)
 import m4Data from "./content/m4-completo.json"
@@ -579,7 +580,19 @@ export default function App() {
     const p = cargarProgreso()
     setProgreso(p)
     prevXpRef.current = p.xpTotal || 0
-    setPantalla("academy")
+    setPantalla("welcome")
+  }
+
+  function handleWelcomeSelect(tab) {
+    if (tab === "academy") {
+      handleVolverAcademy()
+    } else {
+      setModuloActivo(null)
+      setModuloData(null)
+      setBloqueActual(null)
+      setLeccionActual(null)
+      setPantalla(tab)
+    }
   }
 
   function handleLogout() {
@@ -860,6 +873,18 @@ export default function App() {
     </>
   )
 
+  // ── BIENVENIDA — aparece una vez tras el login ──
+  if (pantalla === "welcome") return (
+    <>
+      <CustomCursor />
+      <WelcomeScreen
+        nombre={getSession()?.nombre || getSession()?.email?.split("@")[0]}
+        rachaDiaria={progreso.rachaDiaria}
+        onSelect={handleWelcomeSelect}
+      />
+    </>
+  )
+
   // ── TABS PRINCIPALES (academy, arcade, explorar, perfil) — sin sidebar ──
   if (["academy", "arcade", "explorar", "perfil"].includes(pantalla)) {
     return (
@@ -872,7 +897,13 @@ export default function App() {
         </AnimatePresence>
         {/* Header superior */}
         <div className="w-full max-w-4xl flex justify-between items-center mb-8 animate-reveal">
-          <AIPathLogo size="sm" />
+          <button
+            onClick={handleVolverAcademy}
+            style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+            aria-label="Ir a inicio"
+          >
+            <AIPathLogo size="sm" />
+          </button>
           <div className="flex items-center gap-3">
             {installButton}
             {/* Pomodoro timer — tabs principales */}

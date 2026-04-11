@@ -540,10 +540,18 @@ function ShareModal({ concepto, onClose }) {
 // ── Componente principal ────────────────────────────────────────────────────
 export default function ExplorarScreen({ progreso = {} }) {
   const concepto = useMemo(() => CONCEPTOS[getSeedDelDia()], [])
-  const herramienta = useMemo(() => {
+
+  // Herramienta destacada según el concepto del día
+  const herramientaDelDia = useMemo(() => {
     const hId = CATEGORIA_HERRAMIENTA[concepto.categoria] ?? "claude"
     return HERRAMIENTAS.find((h) => h.id === hId) ?? HERRAMIENTAS[0]
   }, [concepto])
+
+  // Carrusel: herramienta del día primero, luego el resto
+  const herramientasCarrusel = useMemo(() => {
+    const resto = HERRAMIENTAS.filter(h => h.id !== herramientaDelDia.id)
+    return [herramientaDelDia, ...resto]
+  }, [herramientaDelDia])
 
   const [modalAbierto, setModalAbierto] = useState(false)
 
@@ -632,7 +640,7 @@ export default function ExplorarScreen({ progreso = {} }) {
           </div>
         </motion.section>
 
-        {/* ── SECCIÓN 2: Herramienta IA del día ───────────────────────────── */}
+        {/* ── SECCIÓN 2: Herramientas IA — carrusel ───────────────────────── */}
         <motion.section
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -644,101 +652,103 @@ export default function ExplorarScreen({ progreso = {} }) {
               className="text-lg font-bold"
               style={{ fontFamily: "'Outfit', sans-serif", color: "#06B6D4" }}
             >
-              Herramienta IA del día
+              Herramientas IA
             </h2>
             <span
               className="text-xs px-2 py-0.5 rounded-full font-semibold ml-1"
               style={{ background: "rgba(6,182,212,0.15)", color: "#06B6D4" }}
             >
-              según el concepto
+              desliza →
             </span>
           </div>
 
+          {/* Carrusel horizontal con scroll snap */}
           <div
-            className="rounded-2xl p-5 border"
-            style={{
-              background: "rgba(255,255,255,0.04)",
-              borderColor: "rgba(255,255,255,0.1)",
-            }}
+            className="carousel-h flex gap-3 overflow-x-auto pb-2"
+            style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch" }}
           >
-            {/* Cabecera herramienta */}
-            <div className="flex items-start justify-between gap-3 mb-4">
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0"
-                  style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)" }}
+            {herramientasCarrusel.map((h, i) => {
+              const esDelDia = h.id === herramientaDelDia.id
+              return (
+                <motion.div
+                  key={h.id}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.15 + i * 0.06 }}
+                  className="rounded-2xl p-4 border shrink-0 flex flex-col"
+                  style={{
+                    scrollSnapAlign: "start",
+                    width: "260px",
+                    background: esDelDia ? "rgba(6,182,212,0.07)" : "rgba(255,255,255,0.04)",
+                    borderColor: esDelDia ? "rgba(6,182,212,0.35)" : "rgba(255,255,255,0.08)",
+                  }}
                 >
-                  {herramienta.icono}
-                </div>
-                <div>
-                  <h3
-                    className="text-lg font-extrabold leading-tight"
-                    style={{ fontFamily: "'Outfit', sans-serif", color: "#fff" }}
-                  >
-                    {herramienta.nombre}
-                  </h3>
-                  <p
-                    className="text-xs mt-0.5"
-                    style={{ color: "rgba(255,255,255,0.5)" }}
-                  >
-                    {herramienta.tagline}
+                  {/* Badge "del día" */}
+                  {esDelDia && (
+                    <span
+                      className="self-start text-[10px] font-bold px-2 py-0.5 rounded-full mb-3"
+                      style={{ background: "rgba(6,182,212,0.2)", color: "#06B6D4" }}
+                    >
+                      ✦ Del día
+                    </span>
+                  )}
+
+                  {/* Cabecera */}
+                  <div className="flex items-center gap-3 mb-3">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0"
+                      style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)" }}
+                    >
+                      {h.icono}
+                    </div>
+                    <div className="min-w-0">
+                      <h3
+                        className="text-sm font-extrabold leading-tight truncate"
+                        style={{ fontFamily: "'Outfit', sans-serif", color: "#fff" }}
+                      >
+                        {h.nombre}
+                      </h3>
+                      <div className="flex items-center gap-1 mt-0.5">
+                        <span className="text-xs" style={{ color: "#F59E0B" }}>
+                          {renderEstrellas(h.estrellas)}
+                        </span>
+                        <span className="text-xs font-bold" style={{ color: "#F59E0B" }}>
+                          {h.estrellas.toFixed(1)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Tagline */}
+                  <p className="text-xs leading-relaxed mb-3 flex-1" style={{ color: "rgba(255,255,255,0.5)" }}>
+                    {h.tagline}
                   </p>
-                </div>
-              </div>
-              {/* Estrellas */}
-              <div className="shrink-0 text-right">
-                <div className="text-base" style={{ color: "#F59E0B", letterSpacing: 1 }}>
-                  {renderEstrellas(herramienta.estrellas)}
-                </div>
-                <p className="text-xs font-bold" style={{ color: "#F59E0B" }}>
-                  {herramienta.estrellas.toFixed(1)}
-                </p>
-              </div>
-            </div>
 
-            {/* Caso de uso */}
-            <div
-              className="rounded-xl p-3 mb-3 text-sm"
-              style={{ background: "rgba(6,182,212,0.08)", borderLeft: "3px solid #06B6D4" }}
-            >
-              <span className="font-semibold" style={{ color: "#06B6D4" }}>
-                🎯 Caso de uso —{" "}
-              </span>
-              <span style={{ color: "var(--color-text-secondary)" }}>
-                {herramienta.caso_uso}
-              </span>
-            </div>
+                  {/* Caso de uso */}
+                  <p className="text-xs leading-relaxed mb-4" style={{ color: "var(--color-text-secondary)" }}>
+                    {h.caso_uso}
+                  </p>
 
-            {/* Por qué importa */}
-            <div
-              className="rounded-xl p-3 mb-5 text-sm"
-              style={{ background: "rgba(0,212,170,0.08)", borderLeft: "3px solid #00D4AA" }}
-            >
-              <span className="font-semibold" style={{ color: "#00D4AA" }}>
-                🚀 Por qué la necesitas —{" "}
-              </span>
-              <span style={{ color: "var(--color-text-secondary)" }}>
-                {herramienta.por_que_importa}
-              </span>
-            </div>
-
-            <a
-              href={herramienta.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-sm font-semibold transition-all active:scale-95"
-              style={{
-                background: "rgba(255,255,255,0.07)",
-                color: "#fff",
-                border: "1px solid rgba(255,255,255,0.12)",
-              }}
-            >
-              Explorar {herramienta.nombre} →
-            </a>
+                  <a
+                    href={h.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-1 w-full py-2 rounded-xl text-xs font-semibold transition-all active:scale-95 mt-auto"
+                    style={{
+                      background: "rgba(255,255,255,0.07)",
+                      color: "#fff",
+                      border: "1px solid rgba(255,255,255,0.12)",
+                    }}
+                  >
+                    Explorar →
+                  </a>
+                </motion.div>
+              )
+            })}
           </div>
         </motion.section>
 
-        {/* ── SECCIÓN 3: Noticias IA ───────────────────────────────────────── */}
+        {/* ── SECCIÓN 3: Noticias IA — carrusel ───────────────────────────── */}
         <motion.section
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -756,26 +766,32 @@ export default function ExplorarScreen({ progreso = {} }) {
               className="text-xs px-2 py-0.5 rounded-full"
               style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.4)" }}
             >
-              Actualizado semanalmente
+              desliza →
             </span>
           </div>
 
-          <div className="space-y-3">
+          {/* Carrusel horizontal con scroll snap */}
+          <div
+            className="carousel-h flex gap-3 overflow-x-auto pb-2"
+            style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch" }}
+          >
             {NOTICIAS.map((noticia, i) => {
               const esNueva = horasDesde(noticia.fecha) < 48
               return (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: -10 }}
+                  initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.25 + i * 0.07 }}
-                  className="rounded-2xl p-4 border"
+                  transition={{ delay: 0.25 + i * 0.08 }}
+                  className="rounded-2xl p-4 border shrink-0 flex flex-col"
                   style={{
+                    scrollSnapAlign: "start",
+                    width: "280px",
                     background: "rgba(255,255,255,0.04)",
                     borderColor: "rgba(255,255,255,0.08)",
                   }}
                 >
-                  <div className="flex items-start justify-between gap-2 mb-1.5">
+                  <div className="flex items-start justify-between gap-2 mb-2">
                     <h4
                       className="text-sm font-bold leading-snug"
                       style={{ color: "#fff", fontFamily: "'Outfit', sans-serif" }}
@@ -784,7 +800,7 @@ export default function ExplorarScreen({ progreso = {} }) {
                     </h4>
                     {esNueva && (
                       <span
-                        className="shrink-0 text-xs px-2 py-0.5 rounded-full font-bold"
+                        className="shrink-0 text-[10px] px-2 py-0.5 rounded-full font-bold"
                         style={{ background: "#EF4444", color: "#fff" }}
                       >
                         NUEVO
@@ -792,13 +808,13 @@ export default function ExplorarScreen({ progreso = {} }) {
                     )}
                   </div>
                   <p
-                    className="text-xs leading-relaxed mb-2"
+                    className="text-xs leading-relaxed mb-3 flex-1"
                     style={{ color: "var(--color-text-secondary)" }}
                   >
                     {noticia.resumen}
                   </p>
                   <div
-                    className="flex items-center gap-2 text-xs"
+                    className="flex items-center gap-2 text-xs mt-auto"
                     style={{ color: "rgba(255,255,255,0.35)" }}
                   >
                     <span>{noticia.fuente}</span>
