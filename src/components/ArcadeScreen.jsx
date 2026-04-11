@@ -759,6 +759,397 @@ function SpeedCardsGame({ onSalir, onXpGanado }) {
   )
 }
 
+/* ─── Datos del juego 5 — Batalla de Conceptos ─── */
+const PARES_BATALLA = [
+  { concepto: "Overfitting",      opciones: ["Modelo memoriza datos de entrenamiento",         "Modelo generaliza bien a datos nuevos"],      correcta: 0 },
+  { concepto: "Zero-shot",        opciones: ["El modelo necesita 100 ejemplos",                 "El modelo resuelve sin ejemplos previos"],     correcta: 1 },
+  { concepto: "Embedding",        opciones: ["Representación numérica de texto",                "Técnica para comprimir imágenes"],             correcta: 0 },
+  { concepto: "RLHF",             opciones: ["Entrenar con feedback humano",                    "Red neuronal de alta frecuencia"],             correcta: 0 },
+  { concepto: "Hallucination",    opciones: ["El modelo genera info falsa con confianza",       "El modelo rechaza responder preguntas"],       correcta: 0 },
+  { concepto: "Context window",   opciones: ["Interfaz gráfica del modelo",                    "Texto máximo que procesa el modelo"],          correcta: 1 },
+  { concepto: "Chain of thought", opciones: ["Cadena de modelos en serie",                     "Prompts que piden razonamiento paso a paso"],  correcta: 1 },
+  { concepto: "Transformer",      opciones: ["Arquitectura base de LLMs modernos",              "Técnica de compresión de datos"],              correcta: 0 },
+]
+
+const TIEMPO_BATALLA    = 6
+const XP_POR_BATALLA    = 2
+const XP_BONUS_BATALLA  = 20
+
+/* ─── Componente del juego Batalla de Conceptos ─── */
+function BatallaConceptosGame({ onSalir, onXpGanado }) {
+  const [indice,    setIndice]    = useState(0)
+  const [tiempo,    setTiempo]    = useState(TIEMPO_BATALLA)
+  const [seleccion, setSeleccion] = useState(null)   // índice elegido | null
+  const [correctas, setCorrectas] = useState(0)
+  const [fase,      setFase]      = useState("jugando") // "jugando" | "feedback" | "vs" | "resultado"
+  const [resultados, setResultados] = useState([])
+  const timerRef = useRef(null)
+
+  const par    = PARES_BATALLA[indice]
+  const esUltima = indice === PARES_BATALLA.length - 1
+
+  /* ── Timer por ronda ── */
+  useEffect(() => {
+    if (fase !== "jugando") return
+    setTiempo(TIEMPO_BATALLA)
+    timerRef.current = setInterval(() => {
+      setTiempo((t) => {
+        if (t <= 1) {
+          clearInterval(timerRef.current)
+          procesarRespuesta(null)
+          return 0
+        }
+        return t - 1
+      })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [indice, fase])
+
+  function procesarRespuesta(idx) {
+    clearInterval(timerRef.current)
+    const esCorrecto = idx === par.correcta
+    setSeleccion(idx)
+    const nuevasCorrectas = esCorrecto ? correctas + 1 : correctas
+    if (esCorrecto) setCorrectas(nuevasCorrectas)
+    setResultados((r) => [...r, esCorrecto])
+    setFase("feedback")
+
+    setTimeout(() => {
+      if (esUltima) {
+        const xp = nuevasCorrectas * XP_POR_BATALLA + XP_BONUS_BATALLA
+        onXpGanado(xp)
+        setFase("resultado")
+      } else {
+        // Animación VS entre rondas
+        setFase("vs")
+        setTimeout(() => {
+          setIndice((i) => i + 1)
+          setSeleccion(null)
+          setFase("jugando")
+        }, 700)
+      }
+    }, 1100)
+  }
+
+  /* ── Color del timer ── */
+  const pctTiempo  = tiempo / TIEMPO_BATALLA
+  const colorTimer = pctTiempo > 0.5 ? "#00D4AA" : pctTiempo > 0.25 ? "#F59E0B" : "#EF4444"
+
+  /* ── Estado visual de cada opción ── */
+  function estadoOpcion(idx) {
+    if (fase === "jugando") return "idle"
+    if (seleccion === null) return idx === par.correcta ? "correcta" : "idle"
+    if (idx === seleccion && idx === par.correcta)  return "correcta"
+    if (idx === seleccion && idx !== par.correcta)  return "incorrecta"
+    if (idx === par.correcta)                       return "correcta"
+    return "idle"
+  }
+
+  function colorOpcion(estado) {
+    if (estado === "correcta")   return { bg: "rgba(52,211,153,0.22)", border: "#34D399", color: "#34D399" }
+    if (estado === "incorrecta") return { bg: "rgba(239,68,68,0.22)",  border: "#EF4444", color: "#EF4444" }
+    return { bg: "var(--color-bg-card)", border: "var(--color-border)", color: "var(--color-text-primary)" }
+  }
+
+  /* ── Pantalla VS (transición entre rondas) ── */
+  if (fase === "vs") {
+    return (
+      <div className="w-full max-w-lg mx-auto px-4 flex items-center justify-center" style={{ minHeight: 320 }}>
+        <motion.div
+          key="vs-flash"
+          initial={{ scale: 0.4, opacity: 0 }}
+          animate={{ scale: 1.15, opacity: 1 }}
+          exit={{ scale: 1.6, opacity: 0 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center select-none"
+        >
+          <span
+            className="font-extrabold"
+            style={{ fontSize: 96, fontFamily: "'Outfit', sans-serif", color: "var(--color-accent-primary)", lineHeight: 1 }}
+          >
+            VS
+          </span>
+          <p className="text-sm mt-2" style={{ color: "var(--color-text-secondary)" }}>
+            Ronda {indice + 2} de {PARES_BATALLA.length}
+          </p>
+        </motion.div>
+      </div>
+    )
+  }
+
+  /* ── Pantalla de resultado final ── */
+  if (fase === "resultado") {
+    const total    = resultados.filter(Boolean).length
+    const pct      = (total / PARES_BATALLA.length) * 100
+    const confetti = total >= 6
+    const xpTotal  = total * XP_POR_BATALLA + XP_BONUS_BATALLA
+
+    return (
+      <>
+        {confetti && <Confetti />}
+        <motion.div
+          className="w-full max-w-lg mx-auto px-4 pb-8 pt-6 flex flex-col items-center gap-5"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4 }}
+        >
+          <div style={{ fontSize: 64 }}>
+            {total >= 7 ? "🏆" : total >= 5 ? "👍" : "💪"}
+          </div>
+          <h2
+            className="text-2xl font-extrabold text-center"
+            style={{ fontFamily: "'Outfit', sans-serif", color: "var(--color-accent-primary)" }}
+          >
+            {total >= 7 ? "¡Dominas los conceptos!" : total >= 5 ? "¡Buen combate!" : "¡Sigue entrenando!"}
+          </h2>
+
+          {/* Puntuación */}
+          <div
+            className="w-full rounded-2xl p-5 text-center"
+            style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}
+          >
+            <p className="text-5xl font-extrabold" style={{ color: "var(--color-text-primary)", fontFamily: "'Outfit', sans-serif" }}>
+              {total}<span className="text-2xl" style={{ color: "var(--color-text-secondary)" }}>/{PARES_BATALLA.length}</span>
+            </p>
+            <p className="text-sm mt-1" style={{ color: "var(--color-text-secondary)" }}>definiciones correctas</p>
+            <div className="mt-3 h-3 rounded-full overflow-hidden" style={{ background: "var(--color-border)" }}>
+              <motion.div
+                className="h-full rounded-full"
+                style={{ background: "var(--color-accent-primary)" }}
+                initial={{ width: 0 }}
+                animate={{ width: `${pct}%` }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              />
+            </div>
+          </div>
+
+          {/* XP ganado */}
+          <motion.div
+            className="flex items-center gap-2 px-5 py-3 rounded-xl"
+            style={{ background: "rgba(245,158,11,0.15)", border: "1px solid rgba(245,158,11,0.35)" }}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            <span style={{ fontSize: 22 }}>⭐</span>
+            <span className="font-bold text-lg" style={{ color: "#F59E0B", fontFamily: "'Outfit', sans-serif" }}>
+              +{xpTotal} XP ganados
+            </span>
+          </motion.div>
+          <div className="text-xs text-center" style={{ color: "var(--color-text-secondary)" }}>
+            {total} correctas × {XP_POR_BATALLA} XP + {XP_BONUS_BATALLA} XP por completar
+          </div>
+
+          {/* Botones */}
+          <div className="w-full flex flex-col gap-2">
+            <button
+              onClick={() => { setIndice(0); setCorrectas(0); setResultados([]); setSeleccion(null); setFase("jugando") }}
+              className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95"
+              style={{ background: "var(--color-accent-primary)", color: "#fff", fontFamily: "'Outfit', sans-serif" }}
+            >
+              Jugar de nuevo
+            </button>
+            <button
+              onClick={onSalir}
+              className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-105 active:scale-95"
+              style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)", fontFamily: "'Outfit', sans-serif" }}
+            >
+              Volver al Arcade
+            </button>
+          </div>
+        </motion.div>
+      </>
+    )
+  }
+
+  /* ── Pantalla de juego ── */
+  return (
+    <div className="w-full max-w-lg mx-auto px-4 pb-8">
+      {/* Header */}
+      <div className="pt-5 pb-4 flex items-center justify-between">
+        <button
+          onClick={onSalir}
+          className="text-sm px-3 py-1.5 rounded-lg transition-all hover:brightness-110 active:scale-95"
+          style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)" }}
+        >
+          ← Salir
+        </button>
+        <span
+          className="text-base font-extrabold"
+          style={{ fontFamily: "'Outfit', sans-serif", color: "var(--color-accent-primary)" }}
+        >
+          ⚔️ Batalla de Conceptos
+        </span>
+        <span
+          className="text-sm font-bold px-3 py-1.5 rounded-lg"
+          style={{ background: "rgba(245,158,11,0.15)", color: "#F59E0B" }}
+        >
+          {indice + 1}/{PARES_BATALLA.length}
+        </span>
+      </div>
+
+      {/* Barra de progreso */}
+      <div className="h-1.5 rounded-full overflow-hidden mb-5" style={{ background: "var(--color-border)" }}>
+        <motion.div
+          className="h-full rounded-full"
+          style={{ background: "var(--color-accent-primary)" }}
+          animate={{ width: `${(indice / PARES_BATALLA.length) * 100}%` }}
+          transition={{ duration: 0.3 }}
+        />
+      </div>
+
+      {/* Timer circular */}
+      <div className="flex justify-center mb-5">
+        <div className="relative flex items-center justify-center" style={{ width: 68, height: 68 }}>
+          <svg width="68" height="68" style={{ transform: "rotate(-90deg)" }}>
+            <circle cx="34" cy="34" r="28" fill="none" stroke="var(--color-border)" strokeWidth="5" />
+            <motion.circle
+              cx="34" cy="34" r="28" fill="none"
+              stroke={colorTimer}
+              strokeWidth="5"
+              strokeLinecap="round"
+              strokeDasharray={`${2 * Math.PI * 28}`}
+              animate={{ strokeDashoffset: `${2 * Math.PI * 28 * (1 - tiempo / TIEMPO_BATALLA)}` }}
+              transition={{ duration: 0.5, ease: "linear" }}
+            />
+          </svg>
+          <span
+            className="absolute text-xl font-extrabold"
+            style={{ fontFamily: "'Outfit', sans-serif", color: colorTimer }}
+          >
+            {tiempo}
+          </span>
+        </div>
+      </div>
+
+      {/* Card del concepto */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={indice}
+          className="rounded-2xl p-6 mb-4 text-center"
+          style={{
+            background: "linear-gradient(135deg, rgba(0,212,170,0.12) 0%, rgba(0,212,170,0.04) 100%)",
+            border: "1px solid rgba(0,212,170,0.35)",
+            minHeight: 110,
+          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+        >
+          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "var(--color-accent-primary)" }}>
+            Concepto
+          </p>
+          <p
+            className="text-2xl font-extrabold"
+            style={{ fontFamily: "'Outfit', sans-serif", color: "var(--color-text-primary)" }}
+          >
+            {par.concepto}
+          </p>
+          <p className="text-xs mt-2" style={{ color: "var(--color-text-secondary)" }}>
+            ¿Cuál es la definición correcta?
+          </p>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Separador VS */}
+      <div className="flex items-center gap-3 mb-4 px-2">
+        <div className="flex-1 h-px" style={{ background: "var(--color-border)" }} />
+        <span
+          className="text-sm font-extrabold px-3 py-1 rounded-full"
+          style={{ background: "rgba(239,68,68,0.15)", color: "#EF4444", border: "1px solid rgba(239,68,68,0.35)", fontFamily: "'Outfit', sans-serif" }}
+        >
+          VS
+        </span>
+        <div className="flex-1 h-px" style={{ background: "var(--color-border)" }} />
+      </div>
+
+      {/* Opciones */}
+      <div className="flex flex-col gap-3">
+        {par.opciones.map((opcion, idx) => {
+          const estado = estadoOpcion(idx)
+          const { bg, border, color } = colorOpcion(estado)
+          return (
+            <motion.button
+              key={idx}
+              onClick={() => fase === "jugando" && procesarRespuesta(idx)}
+              disabled={fase !== "jugando"}
+              className="w-full py-5 px-5 rounded-2xl text-left font-semibold text-sm transition-all active:scale-95"
+              style={{
+                background: bg,
+                border: `2px solid ${border}`,
+                color,
+                fontFamily: "'Outfit', sans-serif",
+                cursor: fase === "jugando" ? "pointer" : "default",
+                lineHeight: 1.4,
+              }}
+              whileTap={fase === "jugando" ? { scale: 0.97 } : {}}
+            >
+              <span
+                className="inline-block w-6 h-6 rounded-full text-xs font-extrabold text-center mr-3 flex-shrink-0"
+                style={{
+                  background: estado === "correcta" ? "#34D399" : estado === "incorrecta" ? "#EF4444" : "var(--color-border)",
+                  color: estado !== "idle" ? "#fff" : "var(--color-text-secondary)",
+                  lineHeight: "24px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {String.fromCharCode(65 + idx)}
+              </span>
+              {opcion}
+            </motion.button>
+          )
+        })}
+      </div>
+
+      {/* Feedback */}
+      <AnimatePresence>
+        {fase === "feedback" && (
+          <motion.div
+            className="flex items-center justify-center gap-2 mt-4 py-2 rounded-xl"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            style={{
+              background: (seleccion === null || seleccion !== par.correcta)
+                ? "rgba(239,68,68,0.15)"
+                : "rgba(52,211,153,0.15)",
+              border: `1px solid ${(seleccion === null || seleccion !== par.correcta) ? "#EF4444" : "#34D399"}`,
+            }}
+          >
+            <span style={{ fontSize: 18 }}>
+              {seleccion === null ? "⏱️" : seleccion === par.correcta ? "✓" : "✗"}
+            </span>
+            <span
+              className="font-semibold text-sm"
+              style={{ color: (seleccion === null || seleccion !== par.correcta) ? "#EF4444" : "#34D399" }}
+            >
+              {seleccion === null
+                ? "¡Tiempo agotado!"
+                : seleccion === par.correcta
+                ? `¡Correcto! +${XP_POR_BATALLA} XP`
+                : `Incorrecto — era la opción ${String.fromCharCode(65 + par.correcta)}`}
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Marcador */}
+      <div className="flex justify-center mt-4">
+        <span
+          className="text-sm font-semibold px-4 py-1.5 rounded-full"
+          style={{ background: "rgba(0,212,170,0.12)", color: "var(--color-accent-primary)", border: "1px solid rgba(0,212,170,0.25)" }}
+        >
+          ✓ {correctas} correctas
+        </span>
+      </div>
+    </div>
+  )
+}
+
 /* ─── Grid de juegos ─── */
 const juegos = [
   { nombre: "Verdadero o Falso", emoji: "⚡" },
@@ -785,8 +1176,8 @@ export default function ArcadeScreen() {
 
   function manejarJugar(indice) {
     if (indice === 0) setJuegoActivo("verdadero-falso")
+    if (indice === 4) setJuegoActivo("batalla-conceptos")
     if (indice === 5) setJuegoActivo("speed-cards")
-    // Los demás juegos se añadirán después
   }
 
   function manejarXp(xp) {
@@ -804,6 +1195,15 @@ export default function ArcadeScreen() {
   if (juegoActivo === "verdadero-falso") {
     return (
       <VerdaderoFalsoGame
+        onSalir={() => setJuegoActivo(null)}
+        onXpGanado={manejarXp}
+      />
+    )
+  }
+
+  if (juegoActivo === "batalla-conceptos") {
+    return (
+      <BatallaConceptosGame
         onSalir={() => setJuegoActivo(null)}
         onXpGanado={manejarXp}
       />
@@ -884,14 +1284,14 @@ export default function ArcadeScreen() {
               onClick={() => manejarJugar(i)}
               className="w-full text-sm font-semibold py-1.5 rounded-xl transition-all duration-200 hover:brightness-110 active:scale-95"
               style={{
-                background: (i === 0 || i === 5) ? "var(--color-accent-primary)" : "var(--color-border)",
-                color: (i === 0 || i === 5) ? "#fff" : "var(--color-text-secondary)",
+                background: (i === 0 || i === 4 || i === 5) ? "var(--color-accent-primary)" : "var(--color-border)",
+                color: (i === 0 || i === 4 || i === 5) ? "#fff" : "var(--color-text-secondary)",
                 fontFamily: "'Outfit', sans-serif",
-                cursor: (i === 0 || i === 5) ? "pointer" : "not-allowed",
-                opacity: (i === 0 || i === 5) ? 1 : 0.5,
+                cursor: (i === 0 || i === 4 || i === 5) ? "pointer" : "not-allowed",
+                opacity: (i === 0 || i === 4 || i === 5) ? 1 : 0.5,
               }}
             >
-              {(i === 0 || i === 5) ? "Jugar" : "Pronto"}
+              {(i === 0 || i === 4 || i === 5) ? "Jugar" : "Pronto"}
             </button>
           </motion.div>
         ))}
