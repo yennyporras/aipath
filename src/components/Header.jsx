@@ -1,6 +1,7 @@
 import AIPathLogo from "./AIPathLogo"
+import PomodoroTimer from "./PomodoroTimer"
 
-export default function Header({ rachaDiaria, rachaActual, installButton, onVolverAInicio }) {
+export default function Header({ rachaDiaria, rachaActual, installButton, onVolverAInicio, onPomodoroXp, onPomodoroBadge }) {
   return (
     <header className="w-full max-w-lg lg:max-w-none mx-auto flex justify-between items-center mb-5 animate-reveal"
       style={{ borderBottom: "1px solid var(--color-border)", paddingBottom: "12px" }}>
@@ -14,6 +15,8 @@ export default function Header({ rachaDiaria, rachaActual, installButton, onVolv
       </button>
       <div className="flex items-center gap-2">
         {installButton && <div className="hidden lg:block">{installButton}</div>}
+        {/* Timer Pomodoro */}
+        <PomodoroTimer onXpGanado={onPomodoroXp} onBadgeDesbloqueado={onPomodoroBadge} />
         <div className={`surface flex items-center gap-2 px-3 py-1.5 rounded-full ${rachaActual >= 3 ? "glow-streak" : ""}`}>
           <span className="text-sm">{rachaActual >= 3 ? "🔥" : "⚡"}</span>
           <span className="text-xs font-medium" style={{ color: "var(--color-text-secondary)" }}>

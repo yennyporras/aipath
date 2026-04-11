@@ -22,6 +22,7 @@ import ArcadeScreen from "./components/ArcadeScreen"
 import ExplorarScreen from "./components/ExplorarScreen"
 import PerfilScreen from "./components/PerfilScreen"
 import BottomNav from "./components/BottomNav"
+import PomodoroTimer from "./components/PomodoroTimer"
 
 // Módulos con contenido disponible — import estático (Vite los bundlea)
 import m4Data from "./content/m4-completo.json"
@@ -802,6 +803,24 @@ export default function App() {
     setProgreso(nuevoProgreso)
   }
 
+  // ── Callbacks del sistema Pomodoro ──────────────────────────────────
+  function handlePomodoroXp(xp) {
+    if (!xp || xp <= 0) return
+    const nuevoProgreso = { ...progreso, xpTotal: (progreso.xpTotal || 0) + xp }
+    guardarProgreso(nuevoProgreso)
+    setProgreso(nuevoProgreso)
+  }
+
+  function handlePomodoroBadge(badge) {
+    if (!badge) return
+    const nuevoProgreso = { ...progreso }
+    if (!nuevoProgreso.badges.includes(badge)) {
+      nuevoProgreso.badges = [...nuevoProgreso.badges, badge]
+      guardarProgreso(nuevoProgreso)
+      setProgreso(nuevoProgreso)
+    }
+  }
+
   function handleCertAprobada() {
     const nuevoProgreso = { ...progreso }
     if (!nuevoProgreso.certificacionAprobada) {
@@ -856,6 +875,8 @@ export default function App() {
           <AIPathLogo size="sm" />
           <div className="flex items-center gap-3">
             {installButton}
+            {/* Pomodoro timer — tabs principales */}
+            <PomodoroTimer onXpGanado={handlePomodoroXp} onBadgeDesbloqueado={handlePomodoroBadge} />
             <div className="surface flex items-center gap-2 px-3 py-1.5 rounded-full">
               <span className="text-sm">⚡</span>
               <span className="text-xs font-medium" style={{ color: "var(--color-text-secondary)" }}>
@@ -920,7 +941,7 @@ export default function App() {
         {/* Header mobile */}
         {pantalla !== "intro" && (
           <div className="w-full max-w-2xl lg:hidden">
-            <Header rachaDiaria={progreso.rachaDiaria} rachaActual={rachaActual} installButton={installButton} onVolverAInicio={handleVolverAcademy} />
+            <Header rachaDiaria={progreso.rachaDiaria} rachaActual={rachaActual} installButton={installButton} onVolverAInicio={handleVolverAcademy} onPomodoroXp={handlePomodoroXp} onPomodoroBadge={handlePomodoroBadge} />
             <XPBar xp={(progreso.xpTotal || 0) + xpSesion} rachaActual={rachaActual} />
           </div>
         )}
@@ -940,6 +961,8 @@ export default function App() {
                 {progreso.rachaDiaria} día{progreso.rachaDiaria !== 1 ? "s" : ""}
               </span>
             </div>
+            {/* Pomodoro timer — desktop módulo */}
+            <PomodoroTimer onXpGanado={handlePomodoroXp} onBadgeDesbloqueado={handlePomodoroBadge} />
             {installButton}
           </div>
         </div>
