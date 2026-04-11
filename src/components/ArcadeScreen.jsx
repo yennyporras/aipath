@@ -144,6 +144,30 @@ function guardarXpProgreso(xp) {
   } catch {}
 }
 
+/* ─── Stats de arcade por día ─── */
+const ARCADE_STATS_KEY = 'aipath_arcade_stats'
+const ARCADE_XP_DIARIO_KEY = 'aipath_actividad_diaria'
+
+function cargarArcadeStats() {
+  try {
+    const raw = localStorage.getItem(ARCADE_STATS_KEY)
+    const data = raw ? JSON.parse(raw) : null
+    const hoy = getTodayStr()
+    if (!data || data.fecha !== hoy) return { fecha: hoy, xpTotal: 0, juegos: {} }
+    return data
+  } catch { return { fecha: getTodayStr(), xpTotal: 0, juegos: {} } }
+}
+
+function registrarXpDiario(xp) {
+  try {
+    const raw = localStorage.getItem(ARCADE_XP_DIARIO_KEY)
+    const data = raw ? JSON.parse(raw) : {}
+    const hoy = getTodayStr()
+    data[hoy] = (data[hoy] || 0) + xp
+    localStorage.setItem(ARCADE_XP_DIARIO_KEY, JSON.stringify(data))
+  } catch {}
+}
+
 /* ─── Secuencias hardcodeadas para Ordena los Pasos ─── */
 const SECUENCIAS_ORDEN = [
   { titulo: "Entrenar un modelo de IA", pasos: ["Datos", "Preprocesar", "Entrenar", "Evaluar"] },
@@ -2598,6 +2622,15 @@ function StreakDefenderGame({ onSalir, onXpGanado, racha, onSalvado, onRoto }) {
 }
 
 /* ─── Grid de juegos ─── */
+const JUEGO_IDS = [
+  "verdadero-falso",
+  "conexion-rapida",
+  "completa-concepto",
+  "ordena-pasos",
+  "batalla-conceptos",
+  "speed-cards",
+]
+
 const juegos = [
   { nombre: "Verdadero o Falso", emoji: "⚡" },
   { nombre: "Conexión Rápida",   emoji: "🔗" },
@@ -2619,19 +2652,19 @@ const cardVariants = {
 /* ─── Pantalla principal Arcade ─── */
 export default function ArcadeScreen() {
   const [juegoActivo, setJuegoActivo] = useState(null)
-  const [xpAcumulado, setXpAcumulado] = useState(0)
+  const [arcadeStats, setArcadeStats] = useState(() => cargarArcadeStats())
+  const [xpAcumulado, setXpAcumulado] = useState(() => cargarArcadeStats().xpTotal || 0)
   const [dailyState, setDailyState] = useState(() => cargarDailyState())
   const [rachaActual, setRachaActual] = useState(() => cargarProgreso().rachaDiaria || 0)
   const [estudióHoy, setEstudióHoy] = useState(() => estudióHoyCheck())
   const [countdown, setCountdown] = useState(() => segundosHastaMedianoche())
 
-  // Countdown hasta medianoche (solo si daily completado hoy)
+  // Countdown hasta medianoche — siempre activo
   const dailyCompletadoHoy = dailyState?.fecha === getTodayStr() && dailyState?.completado
   useEffect(() => {
-    if (!dailyCompletadoHoy) return
     const interval = setInterval(() => setCountdown(segundosHastaMedianoche()), 1000)
     return () => clearInterval(interval)
-  }, [dailyCompletadoHoy])
+  }, [])
 
   function manejarJugar(indice) {
     if (indice === 0) setJuegoActivo("verdadero-falso")
@@ -2645,6 +2678,24 @@ export default function ArcadeScreen() {
   function manejarXp(xp) {
     setXpAcumulado((prev) => prev + xp)
     guardarXpProgreso(xp)
+    registrarXpDiario(xp)
+    // Registrar stats por juego (usamos juegoActivo del closure)
+    const gameId = juegoActivo
+    if (gameId) {
+      setArcadeStats(prev => {
+        const actual = prev.juegos[gameId] || { veces: 0, record: 0 }
+        const nuevo = {
+          ...prev,
+          xpTotal: prev.xpTotal + xp,
+          juegos: {
+            ...prev.juegos,
+            [gameId]: { veces: actual.veces + 1, record: Math.max(actual.record, xp) }
+          }
+        }
+        try { localStorage.setItem(ARCADE_STATS_KEY, JSON.stringify(nuevo)) } catch {}
+        return nuevo
+      })
+    }
   }
 
   function manejarDailyCompletado(score) {
@@ -2811,6 +2862,14 @@ export default function ArcadeScreen() {
         <p className="text-sm mt-1" style={{ color: "var(--color-text-secondary)" }}>
           Pon a prueba lo que sabes
         </p>
+        {xpAcumulado > 0 && (
+          <div
+            className="inline-flex items-center gap-1.5 mt-2 px-3 py-1 rounded-full text-sm font-bold"
+            style={{ background: "rgba(245,158,11,0.15)", color: "#F59E0B", border: "1px solid rgba(245,158,11,0.3)" }}
+          >
+            ⚡ {xpAcumulado} XP ganados hoy
+          </div>
+        )}
       </motion.div>
 
       {/* Grid 2×3 */}
@@ -2849,6 +2908,18 @@ export default function ArcadeScreen() {
 
             {/* XP */}
             <p className="text-xs font-bold" style={{ color: "#F59E0B" }}>+15 XP</p>
+
+            {/* Stats del día */}
+            {(arcadeStats.juegos[JUEGO_IDS[i]]?.veces > 0) && (
+              <div className="flex items-center justify-between" style={{ fontSize: 10 }}>
+                <span style={{ color: "var(--color-text-muted)" }}>
+                  {arcadeStats.juegos[JUEGO_IDS[i]].veces}× hoy
+                </span>
+                <span style={{ color: "#F59E0B", fontWeight: 700 }}>
+                  récord {arcadeStats.juegos[JUEGO_IDS[i]].record} XP
+                </span>
+              </div>
+            )}
 
             {/* Botón Jugar */}
             <button
@@ -2896,8 +2967,14 @@ export default function ArcadeScreen() {
 
         {dailyCompletadoHoy ? (
           <>
-            <p className="text-sm mt-1" style={{ color: "var(--color-text-secondary)" }}>
-              ✅ Completado hoy · {dailyState.score}/10 correctas
+            <div className="flex items-center gap-2 mt-1">
+              <span style={{ fontSize: 18 }}>✅</span>
+              <p className="text-sm font-semibold" style={{ color: "#34D399" }}>
+                Completado ✓ Vuelve mañana
+              </p>
+            </div>
+            <p className="text-xs mt-0.5" style={{ color: "var(--color-text-muted)" }}>
+              {dailyState.score}/10 correctas
             </p>
             <div className="mt-3 flex items-center justify-between">
               <p className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
@@ -2920,9 +2997,14 @@ export default function ArcadeScreen() {
           </>
         ) : (
           <>
-            <p className="text-sm mt-1" style={{ color: "var(--color-text-secondary)" }}>
-              Nuevo reto cada día a medianoche · 10 preguntas
-            </p>
+            <div className="flex items-center justify-between mt-1">
+              <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+                10 preguntas · reto nuevo en
+              </p>
+              <span className="text-sm font-bold" style={{ color: "#F59E0B", fontFamily: "'Outfit', sans-serif" }}>
+                {formatearConteo(countdown)}
+              </span>
+            </div>
             <button
               onClick={() => setJuegoActivo("daily-challenge")}
               className="mt-3 w-full text-sm font-semibold py-2 rounded-xl transition-all duration-200 hover:brightness-110 active:scale-95"
@@ -2940,22 +3022,20 @@ export default function ArcadeScreen() {
         )}
       </motion.div>
 
-      {/* Streak Defender — solo si hay racha activa */}
-      {rachaActual > 0 && (
+      {/* Streak Defender — solo si hay racha activa Y no estudió hoy */}
+      {rachaActual > 0 && !estudióHoy && (
         <motion.div
           className="mt-3 rounded-2xl p-5"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.56, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           style={{
-            background: estudióHoy
-              ? "linear-gradient(135deg, rgba(249,115,22,0.07) 0%, rgba(249,115,22,0.03) 100%)"
-              : "linear-gradient(135deg, rgba(249,115,22,0.14) 0%, rgba(249,115,22,0.06) 100%)",
-            border: estudióHoy ? "1px solid rgba(249,115,22,0.2)" : "1px solid rgba(249,115,22,0.35)",
+            background: "linear-gradient(135deg, rgba(249,115,22,0.14) 0%, rgba(249,115,22,0.06) 100%)",
+            border: "1px solid rgba(249,115,22,0.35)",
           }}
         >
           <div className="flex items-center gap-2 mb-1">
-            <span style={{ fontSize: 22 }}>{estudióHoy ? "✅" : "🔥"}</span>
+            <span style={{ fontSize: 22 }}>🔥</span>
             <span className="text-base font-extrabold" style={{ fontFamily: "'Outfit', sans-serif", color: "#F97316" }}>
               Streak Defender
             </span>
@@ -2963,31 +3043,22 @@ export default function ArcadeScreen() {
               {rachaActual} 🔥
             </span>
           </div>
-
-          {estudióHoy ? (
-            <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
-              Tu racha está segura hoy. ¡Vuelve mañana!
-            </p>
-          ) : (
-            <>
-              <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
-                ¡Salva tu racha de {rachaActual} días en 2 minutos!
-              </p>
-              <button
-                onClick={() => setJuegoActivo("streak-defender")}
-                className="mt-3 w-full text-sm font-semibold py-2 rounded-xl transition-all duration-200 hover:brightness-110 active:scale-95"
-                style={{
-                  background: "rgba(249,115,22,0.22)",
-                  color: "#F97316",
-                  border: "1px solid rgba(249,115,22,0.45)",
-                  fontFamily: "'Outfit', sans-serif",
-                  cursor: "pointer",
-                }}
-              >
-                Defender racha · +{XP_STREAK} XP
-              </button>
-            </>
-          )}
+          <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+            ¡Salva tu racha de {rachaActual} días en 2 minutos!
+          </p>
+          <button
+            onClick={() => setJuegoActivo("streak-defender")}
+            className="mt-3 w-full text-sm font-semibold py-2 rounded-xl transition-all duration-200 hover:brightness-110 active:scale-95"
+            style={{
+              background: "rgba(249,115,22,0.22)",
+              color: "#F97316",
+              border: "1px solid rgba(249,115,22,0.45)",
+              fontFamily: "'Outfit', sans-serif",
+              cursor: "pointer",
+            }}
+          >
+            Defender racha · +{XP_STREAK} XP
+          </button>
         </motion.div>
       )}
 

@@ -27,16 +27,12 @@ function getProgresoUsuario(email) {
 }
 
 function buildRanking(sessionEmail) {
-  // 1. Usuarios registrados reales en localStorage
   let realUsers = []
   try {
     realUsers = JSON.parse(localStorage.getItem(USERS_KEY) || "[]")
   } catch { realUsers = [] }
 
-  // Emails demo fijos para no duplicar
   const demoEmails = new Set(DEMO_RANKING.map(u => u.email))
-
-  // Paola también es un usuario especial hardcodeado — obtener su progreso real
   const specialEmails = ["paola@estratek.com.co", "equipo@estratek.com.co"]
   const specialUsers = specialEmails.map(email => {
     const { xp, racha } = getProgresoUsuario(email)
@@ -44,7 +40,6 @@ function buildRanking(sessionEmail) {
     return { email, nombre, xp, racha }
   })
 
-  // Usuarios registrados reales (sin los que ya están en demo o special)
   const extraUsers = realUsers
     .filter(u => !demoEmails.has(u.email) && !specialEmails.includes(u.email))
     .map(u => {
@@ -53,41 +48,63 @@ function buildRanking(sessionEmail) {
       return { email: u.email, nombre, xp, racha }
     })
 
-  // Combinar: demos fijos + especiales + reales
-  const todos = [
-    ...DEMO_RANKING,
-    ...specialUsers,
-    ...extraUsers,
-  ]
+  const todos = [...DEMO_RANKING, ...specialUsers, ...extraUsers]
 
-  // Asegurar que el usuario actual esté (aunque tenga 0 XP)
   const yaEsta = todos.some(u => u.email === sessionEmail)
   if (!yaEsta && sessionEmail) {
     const { xp, racha } = getProgresoUsuario(sessionEmail)
     todos.push({ email: sessionEmail, nombre: sessionEmail.split("@")[0], xp, racha })
   }
 
-  // Ordenar descendente por XP
   return todos.sort((a, b) => b.xp - a.xp)
 }
 
 const MEDAL = ["🥇", "🥈", "🥉"]
 
+/* ─── Badges conocidos ─── */
+const BADGES_CONOCIDOS = [
+  { id: "daily_master", emoji: "☀️", nombre: "Daily Master" },
+  { id: "M1 Master",    emoji: "🧠", nombre: "M1 Master"    },
+  { id: "M4 Master",    emoji: "🎯", nombre: "M4 Master"    },
+  { id: "racha_7",      emoji: "🔥", nombre: "Racha 7 días" },
+  { id: "racha_30",     emoji: "⚡", nombre: "Racha 30 días" },
+  { id: "first_lesson", emoji: "🌱", nombre: "1ª Lección"   },
+]
+
+/* ─── Actividad últimos 7 días ─── */
+function getUltimos7Dias() {
+  let actividad = {}
+  try {
+    const raw = localStorage.getItem("aipath_actividad_diaria")
+    actividad = raw ? JSON.parse(raw) : {}
+  } catch {}
+
+  const dias = []
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date()
+    d.setDate(d.getDate() - i)
+    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`
+    const label = d.toLocaleDateString("es", { weekday: "short" }).slice(0, 2)
+    dias.push({ key, xp: actividad[key] || 0, label, esHoy: i === 0 })
+  }
+  return dias
+}
+
 export default function PerfilScreen({ session, progreso, onLogout }) {
   const xpTotal    = progreso?.xpTotal || 0
-  const nivel      = Math.floor(xpTotal / 300) + 1
   const racha      = progreso?.rachaDiaria || 1
   const completadas = (progreso?.leccionesCompletadas || []).length
+  const badgesGanados = progreso?.badges || []
 
   const inicial = session?.nombre?.[0]?.toUpperCase() || session?.email?.[0]?.toUpperCase() || "U"
   const emailActual = session?.email || ""
 
   const [ranking, setRanking] = useState([])
   const [loadingRanking, setLoadingRanking] = useState(true)
+  const [dias7, setDias7] = useState(() => getUltimos7Dias())
 
   useEffect(() => {
     setLoadingRanking(true)
-    // Pequeño delay para mostrar skeleton y no bloquear el render inicial
     const id = setTimeout(() => {
       setRanking(buildRanking(emailActual))
       setLoadingRanking(false)
@@ -95,9 +112,17 @@ export default function PerfilScreen({ session, progreso, onLogout }) {
     return () => clearTimeout(id)
   }, [emailActual, xpTotal])
 
+  // Refrescar gráfica cuando el componente está visible
+  useEffect(() => {
+    setDias7(getUltimos7Dias())
+  }, [xpTotal])
+
   const top10 = ranking.slice(0, 10)
   const posActual = ranking.findIndex(u => u.email === emailActual)
   const enTop10 = posActual >= 0 && posActual < 10
+
+  // XP máximo de los 7 días para escalar barras
+  const maxXp7 = Math.max(...dias7.map(d => d.xp), 1)
 
   return (
     <div className="w-full max-w-md mx-auto px-4 py-6">
@@ -107,10 +132,17 @@ export default function PerfilScreen({ session, progreso, onLogout }) {
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       >
         {/* Avatar */}
-        <div className="flex flex-col items-center mb-8">
+        <div className="flex flex-col items-center mb-6">
           <div
-            className="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-extrabold mb-3"
-            style={{ background: "var(--color-accent-primary)", color: "#ffffff" }}
+            className="rounded-full flex items-center justify-center text-2xl font-extrabold mb-3"
+            style={{
+              width: 64,
+              height: 64,
+              background: "var(--color-accent-primary)",
+              color: "#ffffff",
+              border: "2px solid #06B6D4",
+              boxShadow: "0 0 0 4px rgba(6,182,212,0.15)",
+            }}
           >
             {inicial}
           </div>
@@ -130,48 +162,125 @@ export default function PerfilScreen({ session, progreso, onLogout }) {
           )}
         </div>
 
-        {/* Stats */}
-        <div
-          className="rounded-2xl p-5 grid grid-cols-3 gap-4 text-center mb-6"
-          style={{ background: "var(--color-bg-surface)", border: "1px solid var(--color-border)" }}
-        >
-          <div>
-            <p className="text-xl font-extrabold" style={{ fontFamily: "'Outfit', sans-serif", color: "#06B6D4" }}>
-              {nivel}
-            </p>
-            <p className="text-xs mt-0.5" style={{ color: "var(--color-text-muted)" }}>Nivel</p>
-          </div>
-          <div>
+        {/* Stats 2×2 */}
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          {/* XP Total */}
+          <div
+            className="rounded-2xl p-4 text-center"
+            style={{ background: "var(--color-bg-surface)", border: "1px solid var(--color-border)" }}
+          >
             <p className="text-xl font-extrabold" style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}>
               {xpTotal.toLocaleString()}
             </p>
-            <p className="text-xs mt-0.5" style={{ color: "var(--color-text-muted)" }}>XP total</p>
+            <p className="text-xs mt-0.5" style={{ color: "var(--color-text-muted)" }}>XP Total</p>
           </div>
-          <div>
-            <p className="text-xl font-extrabold" style={{ fontFamily: "'Outfit', sans-serif", color: "#F97316" }}>
-              {racha}
+
+          {/* Lecciones completadas */}
+          <div
+            className="rounded-2xl p-4 text-center"
+            style={{ background: "var(--color-bg-surface)", border: "1px solid var(--color-border)" }}
+          >
+            <p className="text-xl font-extrabold" style={{ fontFamily: "'Outfit', sans-serif", color: "#06B6D4" }}>
+              {completadas}
             </p>
-            <p className="text-xs mt-0.5" style={{ color: "var(--color-text-muted)" }}>Racha</p>
+            <p className="text-xs mt-0.5" style={{ color: "var(--color-text-muted)" }}>Lecciones</p>
+          </div>
+
+          {/* Racha */}
+          <div
+            className="rounded-2xl p-4 text-center"
+            style={{ background: "var(--color-bg-surface)", border: "1px solid var(--color-border)" }}
+          >
+            <p className="text-xl font-extrabold" style={{ fontFamily: "'Outfit', sans-serif", color: "#F97316" }}>
+              {racha}🔥
+            </p>
+            <p className="text-xs mt-0.5" style={{ color: "var(--color-text-muted)" }}>Racha días</p>
+          </div>
+
+          {/* Posición ranking */}
+          <div
+            className="rounded-2xl p-4 text-center"
+            style={{ background: "var(--color-bg-surface)", border: "1px solid var(--color-border)" }}
+          >
+            {loadingRanking ? (
+              <div className="skeleton rounded-lg h-7 mx-auto w-12" />
+            ) : (
+              <p className="text-xl font-extrabold" style={{ fontFamily: "'Outfit', sans-serif", color: "#34D399" }}>
+                #{posActual >= 0 ? posActual + 1 : "—"}
+              </p>
+            )}
+            <p className="text-xs mt-0.5" style={{ color: "var(--color-text-muted)" }}>Ranking</p>
           </div>
         </div>
 
-        {/* Lecciones completadas */}
+        {/* Gráfica actividad 7 días */}
         <div
-          className="rounded-2xl p-4 flex items-center justify-between mb-6"
+          className="rounded-2xl p-5 mb-6"
           style={{ background: "var(--color-bg-surface)", border: "1px solid var(--color-border)" }}
         >
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">📚</span>
-            <div>
-              <p className="text-sm font-semibold text-white">Lecciones completadas</p>
-              <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>
-                {completadas === 0 ? "Completa tu primera lección →" : "Sigue avanzando"}
-              </p>
-            </div>
-          </div>
-          <p className="text-2xl font-extrabold" style={{ fontFamily: "'Outfit', sans-serif", color: completadas === 0 ? "var(--color-text-muted)" : "#06B6D4" }}>
-            {completadas}
+          <p className="text-xs font-bold uppercase tracking-wider mb-4" style={{ color: "var(--color-text-muted)" }}>
+            Actividad últimos 7 días
           </p>
+          <div className="flex items-end justify-between gap-1.5" style={{ height: 56 }}>
+            {dias7.map(dia => (
+              <div key={dia.key} className="flex-1 flex flex-col items-center gap-1">
+                <div
+                  className="w-full rounded-t-sm transition-all duration-500"
+                  style={{
+                    height: dia.xp > 0 ? Math.max(6, Math.round((dia.xp / maxXp7) * 48)) : 4,
+                    background: dia.esHoy
+                      ? "#06B6D4"
+                      : dia.xp > 0
+                      ? "rgba(6,182,212,0.45)"
+                      : "var(--color-border)",
+                    borderRadius: "3px 3px 0 0",
+                  }}
+                />
+                <span
+                  className="text-[9px] font-semibold capitalize"
+                  style={{ color: dia.esHoy ? "#06B6D4" : "var(--color-text-muted)" }}
+                >
+                  {dia.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Badges 3×2 */}
+        <div
+          className="rounded-2xl p-5 mb-6"
+          style={{ background: "var(--color-bg-surface)", border: "1px solid var(--color-border)" }}
+        >
+          <p className="text-xs font-bold uppercase tracking-wider mb-4" style={{ color: "var(--color-text-muted)" }}>
+            Badges
+          </p>
+          <div className="grid grid-cols-3 gap-3">
+            {BADGES_CONOCIDOS.map(badge => {
+              const ganado = badgesGanados.includes(badge.id)
+              return (
+                <div
+                  key={badge.id}
+                  className="flex flex-col items-center gap-1 rounded-xl p-3"
+                  style={{
+                    background: ganado ? "rgba(6,182,212,0.1)" : "var(--color-bg-elevated)",
+                    border: ganado ? "1px solid rgba(6,182,212,0.3)" : "1px solid var(--color-border)",
+                    opacity: ganado ? 1 : 0.45,
+                  }}
+                >
+                  <span style={{ fontSize: 22, filter: ganado ? "none" : "grayscale(1)" }}>
+                    {badge.emoji}
+                  </span>
+                  <span
+                    className="text-[10px] font-semibold text-center leading-tight"
+                    style={{ color: ganado ? "#06B6D4" : "var(--color-text-muted)" }}
+                  >
+                    {badge.nombre}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
         </div>
 
         {/* ── RANKING GLOBAL ── */}
@@ -218,13 +327,11 @@ export default function PerfilScreen({ session, progreso, onLogout }) {
                           : "1px solid transparent",
                       }}
                     >
-                      {/* Posición / medalla */}
                       <span className="w-6 text-center text-sm font-bold shrink-0"
                         style={{ color: idx < 3 ? undefined : "var(--color-text-muted)" }}>
                         {idx < 3 ? MEDAL[idx] : `#${idx + 1}`}
                       </span>
 
-                      {/* Nombre */}
                       <span
                         className="flex-1 text-sm font-semibold truncate"
                         style={{ color: esActual ? "#06B6D4" : "var(--color-text-primary)" }}
@@ -238,12 +345,10 @@ export default function PerfilScreen({ session, progreso, onLogout }) {
                         )}
                       </span>
 
-                      {/* Racha */}
                       <span className="text-xs shrink-0" style={{ color: "#F97316" }}>
                         🔥 {usuario.racha}d
                       </span>
 
-                      {/* XP */}
                       <span
                         className="text-sm font-extrabold shrink-0 w-16 text-right"
                         style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}
@@ -295,7 +400,7 @@ export default function PerfilScreen({ session, progreso, onLogout }) {
               )}
             </>
           )}
-        </div> {/* fin ranking container */}
+        </div>
 
         {/* Cerrar sesión */}
         <motion.button
