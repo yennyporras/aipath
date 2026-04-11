@@ -80,7 +80,7 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="mb-4">
-          <p className="font-display text-[11px] font-bold uppercase tracking-[0.3em]"
+          <p className="font-display text-xs font-bold uppercase tracking-[0.25em]"
             style={{ color: "var(--color-text-muted)" }}>
             Academia de IA · Nivel Mundial
           </p>
@@ -153,7 +153,7 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
               <p className="text-2xl font-extrabold" style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}>
                 {val}
               </p>
-              <p className="text-[10px] uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>{label}</p>
+              <p className="text-xs uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>{label}</p>
             </motion.div>
           ))}
         </div>
@@ -174,11 +174,11 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
             >
               <div className="h-px flex-1" style={{ background: `${info.color}30` }} />
               <div className="text-center shrink-0">
-                <span className="font-display text-[10px] font-bold uppercase tracking-[0.2em]"
+                <span className="font-display text-xs font-bold uppercase tracking-[0.15em]"
                   style={{ color: info.color, fontFamily: "'Outfit', sans-serif" }}>
                   {info.label}
                 </span>
-                <span className="text-[10px] ml-2" style={{ color: "var(--color-text-muted)" }}>
+                <span className="text-xs ml-2" style={{ color: "var(--color-text-muted)" }}>
                   · {info.sub}
                 </span>
               </div>
@@ -223,7 +223,7 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
                         {disponible ? modulo.icono : "🔒"}
                       </div>
                       <div className="flex flex-col items-end gap-1">
-                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded"
+                        <span className="text-[11px] font-bold px-1.5 py-0.5 rounded"
                           style={{
                             background: `${NIVEL_COLORS[modulo.nivel] || "#06B6D4"}18`,
                             color: NIVEL_COLORS[modulo.nivel] || "#06B6D4"
@@ -231,7 +231,7 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
                           {modulo.nivel?.toUpperCase()}
                         </span>
                         {!disponible && (
-                          <span className="text-[9px]" style={{ color: "var(--color-text-muted)" }}>
+                          <span className="text-[11px]" style={{ color: "var(--color-text-muted)" }}>
                             Próximamente
                           </span>
                         )}
@@ -244,7 +244,7 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
                         style={{ color: disponible ? "var(--color-text-primary)" : "var(--color-text-muted)", fontFamily: "'Outfit', sans-serif" }}>
                         M{modulo.numero} — {modulo.titulo}
                       </p>
-                      <p className="text-[11px] mt-1 leading-relaxed line-clamp-2"
+                      <p className="text-xs mt-1 leading-relaxed line-clamp-2"
                         style={{ color: "var(--color-text-muted)" }}>
                         {modulo.descripcion}
                       </p>
@@ -253,11 +253,11 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
                     {/* Footer */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>
+                        <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>
                           {modulo.lecciones_total} lecciones
                         </span>
-                        <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>·</span>
-                        <span style={{ fontSize: "10px", color: "#F59E0B" }}>
+                        <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>·</span>
+                        <span style={{ fontSize: "12px", color: "#F59E0B" }}>
                           {modulo.xp_total?.toLocaleString()} XP
                         </span>
                       </div>

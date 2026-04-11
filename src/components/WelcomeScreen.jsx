@@ -128,7 +128,8 @@ export default function WelcomeScreen({ nombre, rachaDiaria, onSelect }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.18 + i * 0.07 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               className="rounded-2xl p-5 text-left transition-colors"
               style={{
                 background: "rgba(255,255,255,0.05)",

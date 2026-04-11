@@ -15,7 +15,7 @@ function LeccionProgressBar({ paso }) {
             className="w-full h-1 rounded-full transition-all duration-400"
             style={{ background: i <= paso ? "#06B6D4" : "rgba(255,255,255,0.08)" }}
           />
-          <span className="text-[9px] mt-0.5 font-medium"
+          <span className="text-[10px] mt-0.5 font-medium"
             style={{ color: i === paso ? "#06B6D4" : "rgba(255,255,255,0.2)" }}>
             {nombre}
           </span>

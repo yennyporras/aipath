@@ -38,6 +38,7 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
+  font-size: 16px;
   background-color: var(--color-bg-base);
   background-image: linear-gradient(rgba(6,182,212,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(6,182,212,0.025) 1px, transparent 1px);
   background-size: 48px 48px;
@@ -210,6 +211,19 @@ body::after {
 .border-gradient.active::before { opacity: 1; }
 
 code, .code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 6px; padding: 2px 6px; }
+
+/* ── Touch targets mínimos ── */
+.touch-target { min-height: 44px; display: flex; align-items: center; }
+.btn-touch    { min-height: 44px; }
+.btn-lg       { min-height: 52px; }
+
+/* ── Hover desktop scale ── */
+@media (hover: hover) and (pointer: fine) {
+  .hover-scale:hover { transform: scale(1.02); }
+}
+
+/* ── Tamaño mínimo de texto ── */
+.text-meta { font-size: 12px; }
 
 @media (min-width: 1024px) {
   html { overflow: hidden; }

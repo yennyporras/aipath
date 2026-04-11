@@ -13,7 +13,7 @@ export default function BlockLessons({ bloque, todasLecciones, progreso, onSelec
   return (
     <div className="w-full max-w-lg mx-auto relative z-10">
       <button onClick={onVolver}
-        className="text-xs font-medium mb-5 flex items-center gap-1.5 animate-reveal transition-colors"
+        className="text-xs font-medium mb-4 flex items-center gap-1.5 animate-reveal transition-colors min-h-[44px] -mx-2 px-2"
         style={{ color: "var(--color-text-muted)" }}
         onMouseEnter={e => e.target.style.color = "var(--color-text-secondary)"}
         onMouseLeave={e => e.target.style.color = "var(--color-text-muted)"}>
@@ -35,7 +35,7 @@ export default function BlockLessons({ bloque, todasLecciones, progreso, onSelec
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-3 mb-3" style={{ fontSize: "11px", color: "var(--color-text-muted)" }}>
+        <div className="flex items-center gap-3 mb-3" style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>
           <span>{done}/{lecciones.length} completadas</span>
           <span>·</span>
           <span>{xpTotal} XP</span>
@@ -76,13 +76,13 @@ export default function BlockLessons({ bloque, todasLecciones, progreso, onSelec
                   {leccion.titulo}
                 </p>
                 <div className="flex items-center gap-2 mt-0.5">
-                  <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>{leccion.duracion_min} min</span>
-                  <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>·</span>
-                  <span style={{ fontSize: "10px", color: desbloqueada ? "var(--color-accent-blue)" : "var(--color-text-muted)" }}>{leccion.xp} XP</span>
+                  <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>{leccion.duracion_min} min</span>
+                  <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>·</span>
+                  <span style={{ fontSize: "12px", color: desbloqueada ? "var(--color-accent-blue)" : "var(--color-text-muted)" }}>{leccion.xp} XP</span>
                   {leccion.tipo !== "leccion" && (
                     <>
-                      <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>·</span>
-                      <span style={{ fontSize: "10px", color: "#0891B2" }}>
+                      <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>·</span>
+                      <span style={{ fontSize: "12px", color: "#0891B2" }}>
                         {leccion.tipo === "practica" ? "Lab" : "Eval"}
                       </span>
                     </>

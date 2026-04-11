@@ -49,7 +49,7 @@ function LeccionProgressBar({ paso }) {
             className="w-full h-1 rounded-full transition-all duration-400"
             style={{ background: i <= paso ? "#06B6D4" : "rgba(255,255,255,0.08)" }}
           />
-          <span className="text-[9px] mt-0.5 font-medium"
+          <span className="text-[10px] mt-0.5 font-medium"
             style={{ color: i === paso ? "#06B6D4" : "rgba(255,255,255,0.2)" }}>
             {nombre}
           </span>
@@ -101,7 +101,7 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
     >
       <button onClick={() => { playSound("click"); onVolver() }}
-        className="text-xs mb-3 flex items-center gap-1 transition-colors"
+        className="text-xs mb-2 flex items-center gap-1 transition-colors min-h-[44px] -mx-2 px-2"
         style={{ color: "var(--color-text-muted)" }}
         onMouseEnter={e => e.currentTarget.style.color = "var(--color-text-secondary)"}
         onMouseLeave={e => e.currentTarget.style.color = "var(--color-text-muted)"}

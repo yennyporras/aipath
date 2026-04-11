@@ -79,7 +79,7 @@ export default function BottomNav({ activo, onChange }) {
             <span
               className="font-medium"
               style={{
-                fontSize: "10px",
+                fontSize: "12px",
                 color: isActivo ? "#06B6D4" : "var(--color-text-muted, #6B7280)",
               }}
             >

@@ -83,9 +83,16 @@ export default function PerfilScreen({ session, progreso, onLogout }) {
   const emailActual = session?.email || ""
 
   const [ranking, setRanking] = useState([])
+  const [loadingRanking, setLoadingRanking] = useState(true)
 
   useEffect(() => {
-    setRanking(buildRanking(emailActual))
+    setLoadingRanking(true)
+    // Pequeño delay para mostrar skeleton y no bloquear el render inicial
+    const id = setTimeout(() => {
+      setRanking(buildRanking(emailActual))
+      setLoadingRanking(false)
+    }, 300)
+    return () => clearTimeout(id)
   }, [emailActual, xpTotal])
 
   const top10 = ranking.slice(0, 10)
@@ -157,10 +164,12 @@ export default function PerfilScreen({ session, progreso, onLogout }) {
             <span className="text-2xl">📚</span>
             <div>
               <p className="text-sm font-semibold text-white">Lecciones completadas</p>
-              <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>Sigue avanzando</p>
+              <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>
+                {completadas === 0 ? "Completa tu primera lección →" : "Sigue avanzando"}
+              </p>
             </div>
           </div>
-          <p className="text-2xl font-extrabold" style={{ fontFamily: "'Outfit', sans-serif", color: "#06B6D4" }}>
+          <p className="text-2xl font-extrabold" style={{ fontFamily: "'Outfit', sans-serif", color: completadas === 0 ? "var(--color-text-muted)" : "#06B6D4" }}>
             {completadas}
           </p>
         </div>
@@ -177,101 +186,116 @@ export default function PerfilScreen({ session, progreso, onLogout }) {
             </h3>
           </div>
 
-          <div className="flex flex-col gap-1.5">
-            {top10.map((usuario, idx) => {
-              const esActual = usuario.email === emailActual
-              return (
-                <motion.div
-                  key={usuario.email}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.04 }}
-                  className="flex items-center gap-3 rounded-xl px-3 py-2.5"
-                  style={{
-                    background: esActual
-                      ? "rgba(6,182,212,0.12)"
-                      : "var(--color-bg-elevated)",
-                    border: esActual
-                      ? "1px solid rgba(6,182,212,0.4)"
-                      : "1px solid transparent",
-                  }}
-                >
-                  {/* Posición / medalla */}
-                  <span className="w-6 text-center text-sm font-bold shrink-0"
-                    style={{ color: idx < 3 ? undefined : "var(--color-text-muted)" }}>
-                    {idx < 3 ? MEDAL[idx] : `#${idx + 1}`}
-                  </span>
+          {/* Skeleton loader mientras carga */}
+          {loadingRanking && (
+            <div className="flex flex-col gap-1.5">
+              {Array.from({ length: 5 }, (_, i) => (
+                <div key={i} className="skeleton rounded-xl h-10"
+                  style={{ animationDelay: `${i * 80}ms` }} />
+              ))}
+            </div>
+          )}
 
-                  {/* Nombre */}
-                  <span
-                    className="flex-1 text-sm font-semibold truncate"
-                    style={{ color: esActual ? "#06B6D4" : "var(--color-text-primary)" }}
+          {/* Lista del ranking */}
+          {!loadingRanking && (
+            <>
+              <div className="flex flex-col gap-1.5">
+                {top10.map((usuario, idx) => {
+                  const esActual = usuario.email === emailActual
+                  return (
+                    <motion.div
+                      key={usuario.email}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.04 }}
+                      className="flex items-center gap-3 rounded-xl px-3 py-2.5"
+                      style={{
+                        background: esActual
+                          ? "rgba(6,182,212,0.12)"
+                          : "var(--color-bg-elevated)",
+                        border: esActual
+                          ? "1px solid rgba(6,182,212,0.4)"
+                          : "1px solid transparent",
+                      }}
+                    >
+                      {/* Posición / medalla */}
+                      <span className="w-6 text-center text-sm font-bold shrink-0"
+                        style={{ color: idx < 3 ? undefined : "var(--color-text-muted)" }}>
+                        {idx < 3 ? MEDAL[idx] : `#${idx + 1}`}
+                      </span>
+
+                      {/* Nombre */}
+                      <span
+                        className="flex-1 text-sm font-semibold truncate"
+                        style={{ color: esActual ? "#06B6D4" : "var(--color-text-primary)" }}
+                      >
+                        {usuario.nombre}
+                        {esActual && (
+                          <span className="ml-1.5 text-xs font-bold px-1.5 py-0.5 rounded"
+                            style={{ background: "rgba(6,182,212,0.2)", color: "#06B6D4" }}>
+                            tú
+                          </span>
+                        )}
+                      </span>
+
+                      {/* Racha */}
+                      <span className="text-xs shrink-0" style={{ color: "#F97316" }}>
+                        🔥 {usuario.racha}d
+                      </span>
+
+                      {/* XP */}
+                      <span
+                        className="text-sm font-extrabold shrink-0 w-16 text-right"
+                        style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}
+                      >
+                        {usuario.xp.toLocaleString()}
+                      </span>
+                    </motion.div>
+                  )
+                })}
+              </div>
+
+              {/* Usuario actual fuera del top 10 */}
+              {!enTop10 && posActual >= 0 && (
+                <>
+                  <div className="my-3 flex items-center gap-2">
+                    <div className="flex-1 h-px" style={{ background: "var(--color-border)" }} />
+                    <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>tu posición</span>
+                    <div className="flex-1 h-px" style={{ background: "var(--color-border)" }} />
+                  </div>
+                  <div
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5"
+                    style={{
+                      background: "rgba(6,182,212,0.12)",
+                      border: "1px solid rgba(6,182,212,0.4)",
+                    }}
                   >
-                    {usuario.nombre}
-                    {esActual && (
-                      <span className="ml-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded"
+                    <span className="w-6 text-center text-sm font-bold shrink-0"
+                      style={{ color: "var(--color-text-muted)" }}>
+                      #{posActual + 1}
+                    </span>
+                    <span className="flex-1 text-sm font-semibold truncate" style={{ color: "#06B6D4" }}>
+                      {ranking[posActual]?.nombre}
+                      <span className="ml-1.5 text-xs font-bold px-1.5 py-0.5 rounded"
                         style={{ background: "rgba(6,182,212,0.2)", color: "#06B6D4" }}>
                         tú
                       </span>
-                    )}
-                  </span>
-
-                  {/* Racha */}
-                  <span className="text-xs shrink-0" style={{ color: "#F97316" }}>
-                    🔥 {usuario.racha}d
-                  </span>
-
-                  {/* XP */}
-                  <span
-                    className="text-sm font-extrabold shrink-0 w-16 text-right"
-                    style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}
-                  >
-                    {usuario.xp.toLocaleString()}
-                  </span>
-                </motion.div>
-              )
-            })}
-          </div>
-
-          {/* Usuario actual fuera del top 10 */}
-          {!enTop10 && posActual >= 0 && (
-            <>
-              <div className="my-3 flex items-center gap-2">
-                <div className="flex-1 h-px" style={{ background: "var(--color-border)" }} />
-                <span className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>tu posición</span>
-                <div className="flex-1 h-px" style={{ background: "var(--color-border)" }} />
-              </div>
-              <div
-                className="flex items-center gap-3 rounded-xl px-3 py-2.5"
-                style={{
-                  background: "rgba(6,182,212,0.12)",
-                  border: "1px solid rgba(6,182,212,0.4)",
-                }}
-              >
-                <span className="w-6 text-center text-sm font-bold shrink-0"
-                  style={{ color: "var(--color-text-muted)" }}>
-                  #{posActual + 1}
-                </span>
-                <span className="flex-1 text-sm font-semibold truncate" style={{ color: "#06B6D4" }}>
-                  {ranking[posActual]?.nombre}
-                  <span className="ml-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded"
-                    style={{ background: "rgba(6,182,212,0.2)", color: "#06B6D4" }}>
-                    tú
-                  </span>
-                </span>
-                <span className="text-xs shrink-0" style={{ color: "#F97316" }}>
-                  🔥 {ranking[posActual]?.racha}d
-                </span>
-                <span
-                  className="text-sm font-extrabold shrink-0 w-16 text-right"
-                  style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}
-                >
-                  {ranking[posActual]?.xp.toLocaleString()}
-                </span>
-              </div>
+                    </span>
+                    <span className="text-xs shrink-0" style={{ color: "#F97316" }}>
+                      🔥 {ranking[posActual]?.racha}d
+                    </span>
+                    <span
+                      className="text-sm font-extrabold shrink-0 w-16 text-right"
+                      style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}
+                    >
+                      {ranking[posActual]?.xp.toLocaleString()}
+                    </span>
+                  </div>
+                </>
+              )}
             </>
           )}
-        </div>
+        </div> {/* fin ranking container */}
 
         {/* Cerrar sesión */}
         <motion.button

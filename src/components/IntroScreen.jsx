@@ -45,7 +45,7 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
       {onVolverAcademy && (
         <button
           onClick={onVolverAcademy}
-          className="lg:hidden text-xs mb-5 flex items-center gap-1 transition-colors animate-reveal"
+          className="lg:hidden text-xs mb-4 flex items-center gap-1 transition-colors animate-reveal min-h-[44px] -mx-2 px-2"
           style={{ color: "var(--color-text-muted)" }}
           onMouseEnter={e => e.currentTarget.style.color = "var(--color-text-secondary)"}
           onMouseLeave={e => e.currentTarget.style.color = "var(--color-text-muted)"}
@@ -120,9 +120,9 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
                   {bloque.nombre}
                 </p>
                 <div className="flex items-center gap-2 mt-1">
-                  <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>{ll.length} lecciones</span>
-                  <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>·</span>
-                  <span style={{ fontSize: "10px", color: "#F59E0B" }}>{xpTotal} XP</span>
+                  <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>{ll.length} lecciones</span>
+                  <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>·</span>
+                  <span style={{ fontSize: "12px", color: "#F59E0B" }}>{xpTotal} XP</span>
                 </div>
                 {unlocked && (
                   <div className="progress-bar mt-2.5">
@@ -169,17 +169,17 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
               Boss Battle: M1 Master
             </p>
             <div className="flex items-center gap-2 mt-1">
-              <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>20 preguntas · 45 min</span>
-              <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>·</span>
-              <span style={{ fontSize: "10px", color: "#F59E0B" }}>500 XP</span>
+              <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>20 preguntas · 45 min</span>
+              <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>·</span>
+              <span style={{ fontSize: "12px", color: "#F59E0B" }}>500 XP</span>
             </div>
             {!todosBloquesCompletos && (
-              <p style={{ fontSize: "10px", color: "var(--color-text-muted)", marginTop: "4px" }}>
+              <p style={{ fontSize: "12px", color: "var(--color-text-muted)", marginTop: "4px" }}>
                 Completa todos los bloques para desbloquear
               </p>
             )}
             {bossBattleAprobado && (
-              <p style={{ fontSize: "10px", color: "#06B6D4", marginTop: "4px" }}>✓ Superado</p>
+              <p style={{ fontSize: "12px", color: "#06B6D4", marginTop: "4px" }}>✓ Superado</p>
             )}
           </div>
           <span style={{ fontSize: "11px", color: bossBattleAprobado ? "#06B6D4" : "#F59E0B" }}>
@@ -211,9 +211,9 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
               Proyecto Final
             </p>
             <div className="flex items-center gap-2 mt-1">
-              <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>5 fases · 10h</span>
-              <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>·</span>
-              <span style={{ fontSize: "10px", color: "#F59E0B" }}>500 XP</span>
+              <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>5 fases · 10h</span>
+              <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>·</span>
+              <span style={{ fontSize: "12px", color: "#F59E0B" }}>500 XP</span>
             </div>
             {todosBloquesCompletos && (
               <div className="progress-bar mt-2.5">
@@ -250,12 +250,12 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
               Certificación M4
             </p>
             <div className="flex items-center gap-2 mt-1">
-              <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>60 preguntas · 90 min</span>
-              <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>·</span>
-              <span style={{ fontSize: "10px", color: "#F59E0B" }}>1000 XP</span>
+              <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>60 preguntas · 90 min</span>
+              <span style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>·</span>
+              <span style={{ fontSize: "12px", color: "#F59E0B" }}>1000 XP</span>
             </div>
             {certAprobada && (
-              <p style={{ fontSize: "10px", color: "#F59E0B", marginTop: "4px" }}>
+              <p style={{ fontSize: "12px", color: "#F59E0B", marginTop: "4px" }}>
                 ✓ Certificada
               </p>
             )}
