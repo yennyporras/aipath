@@ -656,6 +656,7 @@ function SpeedCardsGame({ onSalir, onXpGanado, onJugarOtro }) {
             >
               Jugar de nuevo
             </button>
+            <BotonCompartir texto={`Dominé ${sabiasCount}/${resultados.length} flashcards de IA en AIPath 🃏\nEl conocimiento de IA es el nuevo inglés.\naipath-beta.vercel.app #AIPath`} />
             <button
               onClick={() => onJugarOtro("verdadero-falso")}
               className="w-full rounded-xl p-3 text-left transition-all active:scale-95"
@@ -1056,6 +1057,7 @@ function BatallaConceptosGame({ onSalir, onXpGanado, onJugarOtro }) {
             >
               Jugar de nuevo
             </button>
+            <BotonCompartir texto={`${total}/${preguntas.length} en Batalla de Conceptos de AIPath ⚔️\n¿Sabes más de IA que yo?\naipath-beta.vercel.app #AIPath #IA`} />
             <button
               onClick={() => onJugarOtro("completa-concepto")}
               className="w-full rounded-xl p-3 text-left transition-all active:scale-95"
@@ -1415,6 +1417,7 @@ function CompletaConceptoGame({ onSalir, onXpGanado, onJugarOtro }) {
             >
               Jugar de nuevo
             </button>
+            <BotonCompartir texto={`${total}/${preguntas.length} completando conceptos de IA en AIPath ✏️\naipath-beta.vercel.app #AIPath`} />
             <button
               onClick={() => onJugarOtro("batalla-conceptos")}
               className="w-full rounded-xl p-3 text-left transition-all active:scale-95"
@@ -1748,6 +1751,7 @@ function ConexionRapidaGame({ onSalir, onXpGanado, onJugarOtro }) {
           >
             Jugar de nuevo
           </button>
+          <BotonCompartir texto={`Conecté ${totalCorrectosRef.current}/${maxCorrectos} pares de conceptos IA 🔗\naipath-beta.vercel.app #AIPath`} />
           <button
             onClick={() => onJugarOtro("ordena-pasos")}
             className="w-full rounded-xl p-3 text-left transition-all active:scale-95"
@@ -2025,6 +2029,7 @@ function OrdenaPasosGame({ onSalir, onXpGanado, onJugarOtro }) {
           >
             Jugar de nuevo
           </button>
+          <BotonCompartir texto={`${correctasRef.current}/${SECUENCIAS_ORDEN.length} secuencias ordenadas correctamente 📋\naipath-beta.vercel.app #AIPath`} />
           <button
             onClick={() => onJugarOtro("speed-cards")}
             className="w-full rounded-xl p-3 text-left transition-all active:scale-95"
