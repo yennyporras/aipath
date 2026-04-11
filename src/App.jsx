@@ -15,6 +15,7 @@ import ProyectoScreen from "./components/ProyectoScreen"
 import CertificacionScreen from "./components/CertificacionScreen"
 import InstallBanner from "./components/InstallBanner"
 import ReportButton from "./components/ReportButton"
+import PrivacyScreen from "./components/PrivacyScreen"
 import { usePWAInstall } from "./hooks/usePWAInstall"
 
 // Módulos con contenido disponible — import estático (Vite los bundlea)
@@ -248,8 +249,11 @@ function Sidebar({ progreso, moduloData, bloqueActual, leccionActual, onNavBloqu
 
 // ── App ──────────────────────────────────────────────────────────────
 export default function App() {
-  // Pantallas: login | academy | intro | lessons | teoria | quiz | practica | results | proyecto | certificacion
-  const [pantalla, setPantalla] = useState(() => getSession() ? "academy" : "login")
+  // Pantallas: login | academy | intro | lessons | teoria | quiz | practica | results | proyecto | certificacion | privacy
+  const [pantalla, setPantalla] = useState(() => {
+    if (window.location.pathname === "/privacy") return "privacy"
+    return getSession() ? "academy" : "login"
+  })
   const [moduloActivo, setModuloActivo] = useState(null)   // objeto del academy-index
   const [moduloData, setModuloData] = useState(null)       // JSON del módulo cargado
   const [bloqueActual, setBloqueActual] = useState(null)
@@ -455,6 +459,17 @@ export default function App() {
   const installButton = isInstallable && !isInstalled && !installDismissed
     ? <InstallBanner onInstall={promptInstall} onDismiss={handleDismissInstall} isMobile={false} />
     : null
+
+  // ── PRIVACY — accesible sin login ──
+  if (pantalla === "privacy") return (
+    <>
+      <CustomCursor />
+      <PrivacyScreen onVolver={() => {
+        history.pushState(null, "", "/")
+        setPantalla(getSession() ? "academy" : "login")
+      }} />
+    </>
+  )
 
   // ── LOGIN ──
   if (pantalla === "login") return (

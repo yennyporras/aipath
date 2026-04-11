@@ -12,6 +12,7 @@ const USUARIOS_DEMO = [
 const USERS_KEY      = "aipath_users"
 const SESSION_KEY    = "aipath_session"
 const RATE_LIMIT_KEY = "aipath_login_rl"
+const CONSENT_KEY    = "aipath_gdpr_consent"
 const MAX_INTENTOS   = 3
 const BLOQUEO_MS     = 60_000  // 60 segundos
 
@@ -118,13 +119,16 @@ function ParticlesCanvas() {
 }
 
 export default function LoginScreen({ onLogin }) {
-  const [tab, setTab]         = useState("login")
-  const [email, setEmail]     = useState("")
-  const [password, setPass]   = useState("")
-  const [showPass, setShow]   = useState(false)
-  const [error, setError]     = useState("")
-  const [loading, setLoading] = useState(false)
-  const [segsBloqueo, setSegs] = useState(0)
+  const [tab, setTab]           = useState("login")
+  const [email, setEmail]       = useState("")
+  const [password, setPass]     = useState("")
+  const [showPass, setShow]     = useState(false)
+  const [error, setError]       = useState("")
+  const [loading, setLoading]   = useState(false)
+  const [segsBloqueo, setSegs]  = useState(0)
+  const [consentimiento, setConsentimiento] = useState(
+    () => localStorage.getItem(CONSENT_KEY) === "1"
+  )
 
   // Countdown cuando hay bloqueo activo
   useEffect(() => {
@@ -282,13 +286,42 @@ export default function LoginScreen({ onLogin }) {
               </motion.p>
             )}
 
+            {/* Checkbox de consentimiento GDPR */}
+            <label className="flex items-start gap-2.5 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={consentimiento}
+                onChange={e => {
+                  const v = e.target.checked
+                  setConsentimiento(v)
+                  if (v) localStorage.setItem(CONSENT_KEY, "1")
+                  else localStorage.removeItem(CONSENT_KEY)
+                }}
+                className="mt-0.5 shrink-0 w-3.5 h-3.5 rounded"
+                style={{ accentColor: ACCENT }}
+              />
+              <span className="text-xs leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
+                Acepto el tratamiento de mis datos según la{" "}
+                <a
+                  href="/privacy"
+                  className="underline transition-colors"
+                  style={{ color: ACCENT }}
+                  onMouseEnter={e => e.currentTarget.style.opacity = "0.75"}
+                  onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+                >
+                  política de privacidad
+                </a>
+                {" "}de AIPath
+              </span>
+            </label>
+
             <motion.button
               type="submit"
-              disabled={loading || (tab === "login" && segsBloqueo > 0)}
+              disabled={loading || (tab === "login" && segsBloqueo > 0) || !consentimiento}
               className="btn-primary btn-primary-pulse w-full py-3.5 text-sm mt-1"
-              style={{ opacity: (loading || (tab === "login" && segsBloqueo > 0)) ? 0.5 : 1 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => playSound("click")}
+              style={{ opacity: (loading || (tab === "login" && segsBloqueo > 0) || !consentimiento) ? 0.4 : 1 }}
+              whileTap={consentimiento ? { scale: 0.97 } : {}}
+              onClick={() => consentimiento && playSound("click")}
             >
               {loading
                 ? "Verificando..."
