@@ -6,6 +6,8 @@ import {
   getBatallaQuestions,
   getCompletaConceptoQuestions,
   getConexionRapidaQuestions,
+  getDailyQuestions,
+  getProgressiveQuestions,
 } from "../arcade/questionBank"
 
 const TIEMPO_POR_PREGUNTA = 8
@@ -52,6 +54,56 @@ function shuffleArr(arr) {
     ;[a[i], a[j]] = [a[j], a[i]]
   }
   return a
+}
+
+/* ─── Utilidades Daily Challenge y Streak Defender ─── */
+function getTodayStr() {
+  const d = new Date()
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
+function cargarDailyState() {
+  try {
+    const raw = localStorage.getItem('aipath_daily_challenge')
+    return raw ? JSON.parse(raw) : null
+  } catch { return null }
+}
+
+function cargarProgreso() {
+  try {
+    const raw = localStorage.getItem('aipath_progreso_v2')
+    return raw ? JSON.parse(raw) : {}
+  } catch { return {} }
+}
+
+function estudióHoyCheck() {
+  const p = cargarProgreso()
+  if (!p.ultimaSesion) return false
+  return p.ultimaSesion === new Date().toDateString()
+}
+
+function segundosHastaMedianoche() {
+  const ahora = new Date()
+  const medianoche = new Date(ahora)
+  medianoche.setHours(24, 0, 0, 0)
+  return Math.floor((medianoche - ahora) / 1000)
+}
+
+function formatearConteo(segs) {
+  const h = Math.floor(segs / 3600)
+  const m = Math.floor((segs % 3600) / 60)
+  const s = segs % 60
+  if (h > 0) return `${h}h ${String(m).padStart(2, '0')}m`
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+}
+
+function guardarXpProgreso(xp) {
+  try {
+    const raw = localStorage.getItem('aipath_progreso_v2')
+    const progreso = raw ? JSON.parse(raw) : {}
+    progreso.xpTotal = (progreso.xpTotal || 0) + xp
+    localStorage.setItem('aipath_progreso_v2', JSON.stringify(progreso))
+  } catch {}
 }
 
 /* ─── Secuencias hardcodeadas para Ordena los Pasos ─── */
@@ -2056,6 +2108,409 @@ function OrdenaPasosGame({ onSalir, onXpGanado }) {
   )
 }
 
+/* ─── Daily Challenge Game ─── */
+const XP_DAILY = 50
+const TIEMPO_DAILY = 15
+
+function DailyChallengeGame({ onSalir, onXpGanado, onCompletado }) {
+  const [preguntas] = useState(() => getDailyQuestions(10))
+  const [indice, setIndice] = useState(0)
+  const [tiempo, setTiempo] = useState(TIEMPO_DAILY)
+  const [seleccion, setSeleccion] = useState(null)
+  const [correctas, setCorrectas] = useState(0)
+  const [fase, setFase] = useState("jugando") // "jugando" | "feedback" | "resultado"
+  const [resultados, setResultados] = useState([])
+  const timerRef = useRef(null)
+
+  const pregunta = preguntas[indice]
+  const esUltima = indice === preguntas.length - 1
+
+  useEffect(() => {
+    if (fase !== "jugando") return
+    setTiempo(TIEMPO_DAILY)
+    timerRef.current = setInterval(() => {
+      setTiempo((t) => {
+        if (t <= 1) {
+          clearInterval(timerRef.current)
+          procesarRespuesta(-1) // tiempo agotado = fallo
+          return 0
+        }
+        return t - 1
+      })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [indice, fase])
+
+  function procesarRespuesta(idx) {
+    clearInterval(timerRef.current)
+    const esCorrecto = idx === pregunta.correcta_index
+    setSeleccion(idx)
+    if (esCorrecto) setCorrectas((c) => c + 1)
+    setResultados((r) => [...r, esCorrecto])
+    setFase("feedback")
+
+    setTimeout(() => {
+      if (esUltima) {
+        const total = esCorrecto ? correctas + 1 : correctas
+        onXpGanado(XP_DAILY)
+        onCompletado(total)
+        setFase("resultado")
+      } else {
+        setIndice((i) => i + 1)
+        setSeleccion(null)
+        setFase("jugando")
+      }
+    }, 1400)
+  }
+
+  const pctTiempo = tiempo / TIEMPO_DAILY
+  const colorTimer = pctTiempo > 0.5 ? "#F59E0B" : pctTiempo > 0.25 ? "#F97316" : "#EF4444"
+
+  /* ── Pantalla de resultado ── */
+  if (fase === "resultado") {
+    const totalCorrectas = resultados.filter(Boolean).length
+    const pct = (totalCorrectas / preguntas.length) * 100
+    return (
+      <>
+        {totalCorrectas >= 7 && <Confetti />}
+        <motion.div
+          className="w-full max-w-lg mx-auto px-4 pb-8 pt-6 flex flex-col items-center gap-5"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4 }}
+        >
+          <div style={{ fontSize: 64 }}>
+            {totalCorrectas >= 8 ? "🏆" : totalCorrectas >= 5 ? "⭐" : "💪"}
+          </div>
+          <h2 className="text-2xl font-extrabold text-center"
+            style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}
+          >
+            {totalCorrectas >= 8 ? "¡Daily Completado!" : totalCorrectas >= 5 ? "¡Buen trabajo!" : "¡Mañana lo rompes!"}
+          </h2>
+          <div className="w-full rounded-2xl p-5 text-center"
+            style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}
+          >
+            <p className="text-5xl font-extrabold" style={{ color: "var(--color-text-primary)", fontFamily: "'Outfit', sans-serif" }}>
+              {totalCorrectas}<span className="text-2xl" style={{ color: "var(--color-text-secondary)" }}>/{preguntas.length}</span>
+            </p>
+            <p className="text-sm mt-1" style={{ color: "var(--color-text-secondary)" }}>respuestas correctas</p>
+            <div className="mt-3 h-3 rounded-full overflow-hidden" style={{ background: "var(--color-border)" }}>
+              <motion.div className="h-full rounded-full" style={{ background: "#F59E0B" }}
+                initial={{ width: 0 }} animate={{ width: `${pct}%` }} transition={{ duration: 0.8, ease: "easeOut" }}
+              />
+            </div>
+          </div>
+          <motion.div className="flex items-center gap-2 px-5 py-3 rounded-xl"
+            style={{ background: "rgba(245,158,11,0.15)", border: "1px solid rgba(245,158,11,0.35)" }}
+            initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.3 }}
+          >
+            <span style={{ fontSize: 22 }}>⭐</span>
+            <span className="font-bold text-lg" style={{ color: "#F59E0B", fontFamily: "'Outfit', sans-serif" }}>
+              +{XP_DAILY} XP ganados
+            </span>
+          </motion.div>
+          <button
+            onClick={onSalir}
+            className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95"
+            style={{ background: "rgba(245,158,11,0.22)", color: "#F59E0B", border: "1px solid rgba(245,158,11,0.45)", fontFamily: "'Outfit', sans-serif" }}
+          >
+            Volver al Arcade
+          </button>
+        </motion.div>
+      </>
+    )
+  }
+
+  /* ── Pantalla de juego ── */
+  return (
+    <div className="w-full max-w-lg mx-auto px-4 pb-8 pt-4">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
+        <button onClick={onSalir}
+          className="text-sm px-3 py-1.5 rounded-lg"
+          style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)", fontFamily: "'Outfit', sans-serif" }}
+        >
+          ← Salir
+        </button>
+        <div className="flex items-center gap-2">
+          <span style={{ fontSize: 18 }}>☀️</span>
+          <span className="font-bold text-sm" style={{ color: "#F59E0B", fontFamily: "'Outfit', sans-serif" }}>Daily Challenge</span>
+        </div>
+        <span className="text-sm font-semibold" style={{ color: "var(--color-text-secondary)" }}>{indice + 1}/10</span>
+      </div>
+
+      {/* Barra de tiempo por pregunta */}
+      <div className="h-2 rounded-full overflow-hidden mb-4" style={{ background: "var(--color-border)" }}>
+        <motion.div
+          className="h-full rounded-full"
+          style={{ background: colorTimer }}
+          animate={{ width: `${pctTiempo * 100}%` }}
+          transition={{ duration: 0.4 }}
+        />
+      </div>
+
+      {/* Pregunta */}
+      <AnimatePresence mode="wait">
+        <motion.div key={indice}
+          initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}
+          transition={{ duration: 0.3 }}
+          className="rounded-2xl p-5 mb-4"
+          style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}
+        >
+          <p className="text-xs font-semibold mb-1 uppercase tracking-wide" style={{ color: "#F59E0B" }}>
+            {pregunta.concepto_reforzado}
+          </p>
+          <p className="text-base font-semibold leading-snug"
+            style={{ color: "var(--color-text-primary)", fontFamily: "'Outfit', sans-serif" }}
+          >
+            {pregunta.pregunta}
+          </p>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Opciones */}
+      <div className="flex flex-col gap-2">
+        {pregunta.opciones.map((op, i) => {
+          let bg = "var(--color-bg-card)"
+          let border = "1px solid var(--color-border)"
+          let textColor = "var(--color-text-primary)"
+          if (fase === "feedback") {
+            if (i === pregunta.correcta_index) {
+              bg = "rgba(0,212,170,0.18)"; border = "1px solid #00D4AA"; textColor = "#00D4AA"
+            } else if (i === seleccion) {
+              bg = "rgba(239,68,68,0.18)"; border = "1px solid #EF4444"; textColor = "#EF4444"
+            }
+          }
+          return (
+            <button
+              key={i}
+              onClick={() => fase === "jugando" && procesarRespuesta(i)}
+              disabled={fase !== "jugando"}
+              className="w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover:brightness-110"
+              style={{ background: bg, border, color: textColor, fontFamily: "'Outfit', sans-serif", cursor: fase === "jugando" ? "pointer" : "default" }}
+            >
+              <span className="font-bold mr-2">{String.fromCharCode(65 + i)}.</span>{op}
+            </button>
+          )
+        })}
+      </div>
+
+      <p className="text-center mt-3 text-xs" style={{ color: "var(--color-text-secondary)" }}>{tiempo}s</p>
+    </div>
+  )
+}
+
+/* ─── Streak Defender Game ─── */
+const XP_STREAK = 20
+const TIEMPO_STREAK_TOTAL = 120 // 2 minutos
+
+function StreakDefenderGame({ onSalir, onXpGanado, racha, onSalvado, onRoto }) {
+  const [preguntas] = useState(() => getProgressiveQuestions(racha, 5))
+  const [indice, setIndice] = useState(0)
+  const [tiempoTotal, setTiempoTotal] = useState(TIEMPO_STREAK_TOTAL)
+  const [seleccion, setSeleccion] = useState(null)
+  const [correctas, setCorrectas] = useState(0)
+  const [fase, setFase] = useState("jugando") // "jugando" | "feedback" | "salvado" | "roto"
+  const timerRef = useRef(null)
+  const faseRef = useRef("jugando")
+  faseRef.current = fase
+
+  /* ── Timer global de 2 minutos ── */
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      setTiempoTotal((t) => {
+        if (t <= 1) {
+          clearInterval(timerRef.current)
+          if (faseRef.current !== "salvado") {
+            setFase("roto")
+            onRoto()
+          }
+          return 0
+        }
+        return t - 1
+      })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  function procesarRespuesta(idx) {
+    if (fase !== "jugando") return
+    const esCorrecto = idx === preguntas[indice].correcta_index
+    setSeleccion(idx)
+    if (esCorrecto) setCorrectas((c) => c + 1)
+    setFase("feedback")
+
+    setTimeout(() => {
+      if (indice >= preguntas.length - 1) {
+        clearInterval(timerRef.current)
+        setFase("salvado")
+        onXpGanado(XP_STREAK)
+        onSalvado()
+      } else {
+        setIndice((i) => i + 1)
+        setSeleccion(null)
+        setFase("jugando")
+      }
+    }, 900)
+  }
+
+  const pctTiempo = tiempoTotal / TIEMPO_STREAK_TOTAL
+  const colorTimer = pctTiempo > 0.5 ? "#F97316" : pctTiempo > 0.25 ? "#F59E0B" : "#EF4444"
+
+  /* ── Racha salvada ── */
+  if (fase === "salvado") {
+    return (
+      <>
+        <Confetti />
+        <motion.div
+          className="w-full max-w-lg mx-auto px-4 pb-8 pt-10 flex flex-col items-center gap-5"
+          initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4 }}
+        >
+          <div style={{ fontSize: 72 }}>🔥</div>
+          <h2 className="text-3xl font-extrabold text-center"
+            style={{ fontFamily: "'Outfit', sans-serif", color: "#F97316" }}
+          >
+            ¡RACHA SALVADA!
+          </h2>
+          <p className="text-center text-sm" style={{ color: "var(--color-text-secondary)" }}>
+            Respondiste {correctas} de 5 preguntas.<br />
+            Tu racha de {racha} días sigue viva. 💪
+          </p>
+          <motion.div
+            className="flex items-center gap-2 px-5 py-3 rounded-xl"
+            style={{ background: "rgba(249,115,22,0.15)", border: "1px solid rgba(249,115,22,0.35)" }}
+            initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.3 }}
+          >
+            <span style={{ fontSize: 22 }}>⭐</span>
+            <span className="font-bold text-lg" style={{ color: "#F97316", fontFamily: "'Outfit', sans-serif" }}>
+              +{XP_STREAK} XP ganados
+            </span>
+          </motion.div>
+          <button
+            onClick={onSalir}
+            className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95"
+            style={{ background: "rgba(249,115,22,0.22)", color: "#F97316", border: "1px solid rgba(249,115,22,0.45)", fontFamily: "'Outfit', sans-serif" }}
+          >
+            Volver al Arcade
+          </button>
+        </motion.div>
+      </>
+    )
+  }
+
+  /* ── Racha rota ── */
+  if (fase === "roto") {
+    return (
+      <motion.div
+        className="w-full max-w-lg mx-auto px-4 pb-8 pt-10 flex flex-col items-center gap-5"
+        initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4 }}
+      >
+        <div style={{ fontSize: 72 }}>💔</div>
+        <h2 className="text-3xl font-extrabold text-center"
+          style={{ fontFamily: "'Outfit', sans-serif", color: "#EF4444" }}
+        >
+          Racha rota
+        </h2>
+        <p className="text-center text-sm" style={{ color: "var(--color-text-secondary)" }}>
+          Se acabó el tiempo. Tu racha de {racha} días se ha roto.<br />
+          Mañana empiezas de nuevo. ¡Tú puedes!
+        </p>
+        <button
+          onClick={onSalir}
+          className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95"
+          style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)", fontFamily: "'Outfit', sans-serif" }}
+        >
+          Volver al Arcade
+        </button>
+      </motion.div>
+    )
+  }
+
+  /* ── Juego ── */
+  const pregunta = preguntas[indice]
+
+  return (
+    <div className="w-full max-w-lg mx-auto px-4 pb-8 pt-4">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-3">
+        <button onClick={onSalir}
+          className="text-sm px-3 py-1.5 rounded-lg"
+          style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)", fontFamily: "'Outfit', sans-serif" }}
+        >
+          ← Salir
+        </button>
+        <div className="flex items-center gap-2">
+          <span style={{ fontSize: 18 }}>🔥</span>
+          <span className="font-bold text-sm" style={{ color: "#F97316", fontFamily: "'Outfit', sans-serif" }}>Defender Racha</span>
+        </div>
+        <span className="text-sm font-bold" style={{ color: colorTimer }}>{formatearConteo(tiempoTotal)}</span>
+      </div>
+
+      {/* Barra de tiempo total */}
+      <div className="h-3 rounded-full overflow-hidden mb-4" style={{ background: "var(--color-border)" }}>
+        <motion.div className="h-full rounded-full"
+          style={{ background: colorTimer }}
+          animate={{ width: `${pctTiempo * 100}%` }}
+          transition={{ duration: 0.5 }}
+        />
+      </div>
+
+      {/* Progreso */}
+      <p className="text-xs text-center mb-4" style={{ color: "var(--color-text-secondary)" }}>
+        Pregunta {indice + 1} de 5 · Racha actual: {racha} 🔥
+      </p>
+
+      {/* Pregunta */}
+      <AnimatePresence mode="wait">
+        <motion.div key={indice}
+          initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}
+          transition={{ duration: 0.25 }}
+          className="rounded-2xl p-5 mb-4"
+          style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}
+        >
+          <p className="text-xs font-semibold mb-1 uppercase tracking-wide" style={{ color: "#F97316" }}>
+            {pregunta.concepto_reforzado}
+          </p>
+          <p className="text-base font-semibold leading-snug"
+            style={{ color: "var(--color-text-primary)", fontFamily: "'Outfit', sans-serif" }}
+          >
+            {pregunta.pregunta}
+          </p>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Opciones */}
+      <div className="flex flex-col gap-2">
+        {pregunta.opciones.map((op, i) => {
+          let bg = "var(--color-bg-card)"
+          let border = "1px solid var(--color-border)"
+          let textColor = "var(--color-text-primary)"
+          if (fase === "feedback") {
+            if (i === pregunta.correcta_index) {
+              bg = "rgba(0,212,170,0.18)"; border = "1px solid #00D4AA"; textColor = "#00D4AA"
+            } else if (i === seleccion) {
+              bg = "rgba(239,68,68,0.18)"; border = "1px solid #EF4444"; textColor = "#EF4444"
+            }
+          }
+          return (
+            <button
+              key={i}
+              onClick={() => procesarRespuesta(i)}
+              disabled={fase !== "jugando"}
+              className="w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover:brightness-110"
+              style={{ background: bg, border, color: textColor, fontFamily: "'Outfit', sans-serif", cursor: fase === "jugando" ? "pointer" : "default" }}
+            >
+              <span className="font-bold mr-2">{String.fromCharCode(65 + i)}.</span>{op}
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 /* ─── Grid de juegos ─── */
 const juegos = [
   { nombre: "Verdadero o Falso", emoji: "⚡" },
@@ -2077,8 +2532,20 @@ const cardVariants = {
 
 /* ─── Pantalla principal Arcade ─── */
 export default function ArcadeScreen() {
-  const [juegoActivo, setJuegoActivo] = useState(null) // null | "verdadero-falso"
+  const [juegoActivo, setJuegoActivo] = useState(null)
   const [xpAcumulado, setXpAcumulado] = useState(0)
+  const [dailyState, setDailyState] = useState(() => cargarDailyState())
+  const [rachaActual, setRachaActual] = useState(() => cargarProgreso().rachaDiaria || 0)
+  const [estudióHoy, setEstudióHoy] = useState(() => estudióHoyCheck())
+  const [countdown, setCountdown] = useState(() => segundosHastaMedianoche())
+
+  // Countdown hasta medianoche (solo si daily completado hoy)
+  const dailyCompletadoHoy = dailyState?.fecha === getTodayStr() && dailyState?.completado
+  useEffect(() => {
+    if (!dailyCompletadoHoy) return
+    const interval = setInterval(() => setCountdown(segundosHastaMedianoche()), 1000)
+    return () => clearInterval(interval)
+  }, [dailyCompletadoHoy])
 
   function manejarJugar(indice) {
     if (indice === 0) setJuegoActivo("verdadero-falso")
@@ -2091,13 +2558,66 @@ export default function ArcadeScreen() {
 
   function manejarXp(xp) {
     setXpAcumulado((prev) => prev + xp)
-    // Guardar XP en localStorage
+    guardarXpProgreso(xp)
+  }
+
+  function manejarDailyCompletado(score) {
+    const hoy = getTodayStr()
+    const prev = cargarDailyState()
+    // Calcular streak de daily challenge
+    const ayer = (() => {
+      const d = new Date(); d.setDate(d.getDate() - 1)
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+    })()
+    let nuevoStreak = 1
+    if (prev?.fecha === ayer) nuevoStreak = (prev.streakDays || 0) + 1
+    else if (prev?.fecha === hoy) nuevoStreak = prev.streakDays || 1
+
+    const newState = { fecha: hoy, completado: true, score, streakDays: nuevoStreak }
+    // Badge "Daily Master" si 7 días seguidos
+    if (nuevoStreak >= 7) {
+      try {
+        const raw = localStorage.getItem('aipath_progreso_v2')
+        const p = raw ? JSON.parse(raw) : {}
+        const badges = p.badges || []
+        if (!badges.includes('daily_master')) {
+          p.badges = [...badges, 'daily_master']
+          localStorage.setItem('aipath_progreso_v2', JSON.stringify(p))
+        }
+      } catch {}
+    }
+    localStorage.setItem('aipath_daily_challenge', JSON.stringify(newState))
+    setDailyState(newState)
+    // Marcar sesión de hoy en progreso
     try {
-      const raw = localStorage.getItem("aipath_progreso_v2")
-      const progreso = raw ? JSON.parse(raw) : {}
-      progreso.xpTotal = (progreso.xpTotal || 0) + xp
-      localStorage.setItem("aipath_progreso_v2", JSON.stringify(progreso))
-    } catch (_) {}
+      const raw = localStorage.getItem('aipath_progreso_v2')
+      const p = raw ? JSON.parse(raw) : {}
+      p.ultimaSesion = new Date().toDateString()
+      localStorage.setItem('aipath_progreso_v2', JSON.stringify(p))
+    } catch {}
+    setEstudióHoy(true)
+  }
+
+  function manejarStreakSalvado() {
+    try {
+      const raw = localStorage.getItem('aipath_progreso_v2')
+      const p = raw ? JSON.parse(raw) : {}
+      p.ultimaSesion = new Date().toDateString()
+      localStorage.setItem('aipath_progreso_v2', JSON.stringify(p))
+    } catch {}
+    setEstudióHoy(true)
+  }
+
+  function manejarStreakRoto() {
+    try {
+      const raw = localStorage.getItem('aipath_progreso_v2')
+      const p = raw ? JSON.parse(raw) : {}
+      p.rachaDiaria = 1
+      p.ultimaSesion = new Date().toDateString()
+      localStorage.setItem('aipath_progreso_v2', JSON.stringify(p))
+    } catch {}
+    setRachaActual(1)
+    setEstudióHoy(true)
   }
 
   /* ── Juego activo ── */
@@ -2151,6 +2671,28 @@ export default function ArcadeScreen() {
       <OrdenaPasosGame
         onSalir={() => setJuegoActivo(null)}
         onXpGanado={manejarXp}
+      />
+    )
+  }
+
+  if (juegoActivo === "daily-challenge") {
+    return (
+      <DailyChallengeGame
+        onSalir={() => setJuegoActivo(null)}
+        onXpGanado={manejarXp}
+        onCompletado={manejarDailyCompletado}
+      />
+    )
+  }
+
+  if (juegoActivo === "streak-defender") {
+    return (
+      <StreakDefenderGame
+        onSalir={() => setJuegoActivo(null)}
+        onXpGanado={manejarXp}
+        racha={rachaActual}
+        onSalvado={manejarStreakSalvado}
+        onRoto={manejarStreakRoto}
       />
     )
   }
@@ -2243,66 +2785,118 @@ export default function ArcadeScreen() {
           border: "1px solid rgba(245,158,11,0.35)",
         }}
       >
-        <div className="flex items-center gap-2 mb-1">
-          <span style={{ fontSize: 22 }}>☀️</span>
-          <span
-            className="text-base font-extrabold"
-            style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}
-          >
-            Daily Challenge
-          </span>
+        <div className="flex items-center justify-between mb-1">
+          <div className="flex items-center gap-2">
+            <span style={{ fontSize: 22 }}>☀️</span>
+            <span className="text-base font-extrabold" style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}>
+              Daily Challenge
+            </span>
+          </div>
+          {dailyState?.streakDays > 0 && (
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full"
+              style={{ background: "rgba(245,158,11,0.2)", color: "#F59E0B", border: "1px solid rgba(245,158,11,0.4)" }}
+            >
+              🔥 {dailyState.streakDays} días
+            </span>
+          )}
         </div>
-        <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
-          Nuevo reto cada día a medianoche
-        </p>
-        <button
-          className="mt-3 w-full text-sm font-semibold py-2 rounded-xl transition-all duration-200 hover:brightness-110 active:scale-95"
-          style={{
-            background: "rgba(245,158,11,0.22)",
-            color: "#F59E0B",
-            border: "1px solid rgba(245,158,11,0.45)",
-            fontFamily: "'Outfit', sans-serif",
-          }}
-        >
-          Aceptar reto · +30 XP
-        </button>
+
+        {dailyCompletadoHoy ? (
+          <>
+            <p className="text-sm mt-1" style={{ color: "var(--color-text-secondary)" }}>
+              ✅ Completado hoy · {dailyState.score}/10 correctas
+            </p>
+            <div className="mt-3 flex items-center justify-between">
+              <p className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
+                Próximo reto en
+              </p>
+              <span className="text-sm font-bold" style={{ color: "#F59E0B", fontFamily: "'Outfit', sans-serif" }}>
+                {formatearConteo(countdown)}
+              </span>
+            </div>
+            <div className="mt-2 h-1.5 rounded-full overflow-hidden" style={{ background: "var(--color-border)" }}>
+              <div
+                className="h-full rounded-full"
+                style={{
+                  width: `${((86400 - countdown) / 86400) * 100}%`,
+                  background: "#F59E0B",
+                  transition: "width 1s linear",
+                }}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <p className="text-sm mt-1" style={{ color: "var(--color-text-secondary)" }}>
+              Nuevo reto cada día a medianoche · 10 preguntas
+            </p>
+            <button
+              onClick={() => setJuegoActivo("daily-challenge")}
+              className="mt-3 w-full text-sm font-semibold py-2 rounded-xl transition-all duration-200 hover:brightness-110 active:scale-95"
+              style={{
+                background: "rgba(245,158,11,0.22)",
+                color: "#F59E0B",
+                border: "1px solid rgba(245,158,11,0.45)",
+                fontFamily: "'Outfit', sans-serif",
+                cursor: "pointer",
+              }}
+            >
+              Aceptar reto · +{XP_DAILY} XP
+            </button>
+          </>
+        )}
       </motion.div>
 
-      {/* Streak Defender */}
-      <motion.div
-        className="mt-3 rounded-2xl p-5"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.56, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          background: "linear-gradient(135deg, rgba(249,115,22,0.14) 0%, rgba(249,115,22,0.06) 100%)",
-          border: "1px solid rgba(249,115,22,0.35)",
-        }}
-      >
-        <div className="flex items-center gap-2 mb-1">
-          <span style={{ fontSize: 22 }}>🔥</span>
-          <span
-            className="text-base font-extrabold"
-            style={{ fontFamily: "'Outfit', sans-serif", color: "#F97316" }}
-          >
-            Streak Defender
-          </span>
-        </div>
-        <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
-          Salva tu racha en 2 minutos
-        </p>
-        <button
-          className="mt-3 w-full text-sm font-semibold py-2 rounded-xl transition-all duration-200 hover:brightness-110 active:scale-95"
+      {/* Streak Defender — solo si hay racha activa */}
+      {rachaActual > 0 && (
+        <motion.div
+          className="mt-3 rounded-2xl p-5"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.56, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           style={{
-            background: "rgba(249,115,22,0.22)",
-            color: "#F97316",
-            border: "1px solid rgba(249,115,22,0.45)",
-            fontFamily: "'Outfit', sans-serif",
+            background: estudióHoy
+              ? "linear-gradient(135deg, rgba(249,115,22,0.07) 0%, rgba(249,115,22,0.03) 100%)"
+              : "linear-gradient(135deg, rgba(249,115,22,0.14) 0%, rgba(249,115,22,0.06) 100%)",
+            border: estudióHoy ? "1px solid rgba(249,115,22,0.2)" : "1px solid rgba(249,115,22,0.35)",
           }}
         >
-          Defender racha · +10 XP
-        </button>
-      </motion.div>
+          <div className="flex items-center gap-2 mb-1">
+            <span style={{ fontSize: 22 }}>{estudióHoy ? "✅" : "🔥"}</span>
+            <span className="text-base font-extrabold" style={{ fontFamily: "'Outfit', sans-serif", color: "#F97316" }}>
+              Streak Defender
+            </span>
+            <span className="text-xs font-bold ml-auto" style={{ color: "#F97316" }}>
+              {rachaActual} 🔥
+            </span>
+          </div>
+
+          {estudióHoy ? (
+            <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+              Tu racha está segura hoy. ¡Vuelve mañana!
+            </p>
+          ) : (
+            <>
+              <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+                ¡Salva tu racha de {rachaActual} días en 2 minutos!
+              </p>
+              <button
+                onClick={() => setJuegoActivo("streak-defender")}
+                className="mt-3 w-full text-sm font-semibold py-2 rounded-xl transition-all duration-200 hover:brightness-110 active:scale-95"
+                style={{
+                  background: "rgba(249,115,22,0.22)",
+                  color: "#F97316",
+                  border: "1px solid rgba(249,115,22,0.45)",
+                  fontFamily: "'Outfit', sans-serif",
+                  cursor: "pointer",
+                }}
+              >
+                Defender racha · +{XP_STREAK} XP
+              </button>
+            </>
+          )}
+        </motion.div>
+      )}
 
     </div>
   )
