@@ -18,9 +18,10 @@ const TIPS = [
 
 function getSaludo() {
   const hora = new Date().getHours()
-  if (hora >= 5 && hora < 12) return "Buenos días"
+  if (hora >= 6  && hora < 12) return "Buenos días"
   if (hora >= 12 && hora < 19) return "Buenas tardes"
-  return "Buenas noches"
+  if (hora >= 19)               return "Buenas noches"
+  return "Hola, noctámbulo/a"   // 0-6h
 }
 
 function getTipDelDia() {
@@ -35,28 +36,28 @@ const OPCIONES = [
     id: "estudiar",
     icon: "📚",
     titulo: "Estudiar",
-    desc: "Continuar donde lo dejaste",
+    desc: "Continúa donde lo dejaste",
     tab: "academy",
   },
   {
     id: "jugar",
     icon: "🎮",
     titulo: "Jugar",
-    desc: "Minijuegos y retos rápidos",
+    desc: "Pon a prueba lo que sabes",
     tab: "arcade",
   },
   {
     id: "practicar",
     icon: "⚡",
     titulo: "Practicar",
-    desc: "Daily Challenge de hoy",
+    desc: "Reto diario de hoy",
     tab: "arcade",
   },
   {
     id: "explorar",
     icon: "🧭",
     titulo: "Explorar",
-    desc: "Noticias y herramientas IA",
+    desc: "Conceptos y noticias IA",
     tab: "explorar",
   },
 ]
@@ -94,23 +95,29 @@ export default function WelcomeScreen({ nombre, rachaDiaria, onSelect }) {
           </p>
         </motion.div>
 
-        {/* Racha — solo si > 0 */}
-        {rachaDiaria > 0 && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="flex items-center justify-center gap-2 mb-6"
-          >
-            <span className="text-xl">{rachaDiaria >= 3 ? "🔥" : "⚡"}</span>
-            <span
-              className="text-sm font-semibold"
-              style={{ color: rachaDiaria >= 3 ? "#F97316" : "var(--color-text-secondary)" }}
-            >
-              Racha de {rachaDiaria} {rachaDiaria === 1 ? "día" : "días"}
-            </span>
-          </motion.div>
-        )}
+        {/* Racha */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+          className="flex items-center justify-center gap-2 mb-6"
+        >
+          {rachaDiaria > 0 ? (
+            <>
+              <span className="text-xl">🔥</span>
+              <span className="text-sm font-semibold" style={{ color: "#F97316" }}>
+                {rachaDiaria} {rachaDiaria === 1 ? "día" : "días"} seguidos
+              </span>
+            </>
+          ) : (
+            <>
+              <span className="text-xl">✨</span>
+              <span className="text-sm font-semibold" style={{ color: "var(--color-text-secondary)" }}>
+                ¡Hoy empieza tu racha!
+              </span>
+            </>
+          )}
+        </motion.div>
 
         {/* Cards 2×2 */}
         <div className="grid grid-cols-2 gap-3 mb-6">

@@ -118,6 +118,18 @@ function ParticlesCanvas() {
   )
 }
 
+// Calcula fortaleza de contraseña (0-4)
+function calcStrength(pwd) {
+  if (!pwd) return 0
+  let score = 0
+  if (pwd.length >= 8) score++
+  if (pwd.length >= 12) score++
+  if (/[A-Z]/.test(pwd)) score++
+  if (/[0-9]/.test(pwd)) score++
+  if (/[^A-Za-z0-9]/.test(pwd)) score++
+  return Math.min(score, 4)
+}
+
 export default function LoginScreen({ onLogin }) {
   const [tab, setTab]           = useState("login")
   const [email, setEmail]       = useState("")
@@ -129,6 +141,8 @@ export default function LoginScreen({ onLogin }) {
   const [consentimiento, setConsentimiento] = useState(
     () => localStorage.getItem(CONSENT_KEY) === "1"
   )
+
+  const strength = calcStrength(password)
 
   // Countdown cuando hay bloqueo activo
   useEffect(() => {
@@ -176,7 +190,7 @@ export default function LoginScreen({ onLogin }) {
           setError(`Demasiados intentos fallidos. Acceso bloqueado por ${restante} segundos.`)
         } else {
           const restantes = MAX_INTENTOS - rl.intentos
-          setError(`Credenciales incorrectas. Te quedan ${restantes} intento${restantes === 1 ? "" : "s"}.`)
+          setError(`Contraseña incorrecta, inténtalo de nuevo. Te ${restantes === 1 ? "queda" : "quedan"} ${restantes} intento${restantes === 1 ? "" : "s"}.`)
         }
       }
     }, 600)
@@ -186,7 +200,7 @@ export default function LoginScreen({ onLogin }) {
     e.preventDefault()
     initAudio()
     setError("")
-    if (password.length < 6) { setError("La contraseña debe tener al menos 6 caracteres."); return }
+    if (password.length < 8) { setError("La contraseña debe tener al menos 8 caracteres."); return }
     if (USUARIOS_DEMO.find(u => u.email === email)) { setError("Ese email ya está registrado."); return }
     const users = getUsers()
     if (users.find(u => u.email === email)) { setError("Ese email ya está registrado."); return }
@@ -261,7 +275,7 @@ export default function LoginScreen({ onLogin }) {
               <div className="relative">
                 <input type={showPass ? "text" : "password"} required value={password}
                   onChange={e => setPass(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder="Mínimo 8 caracteres"
                   className="w-full rounded-xl text-sm pl-4 pr-10 py-3 outline-none transition-all"
                   style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)", color: "var(--color-text-primary)" }}
                   onFocus={e => e.target.style.borderColor = "rgba(6,182,212,0.6)"}
@@ -273,6 +287,28 @@ export default function LoginScreen({ onLogin }) {
                   {showPass ? "◉" : "○"}
                 </button>
               </div>
+
+              {/* Indicador de fortaleza — solo en registro con texto */}
+              {tab === "register" && password.length > 0 && (() => {
+                const labels = ["", "Débil", "Débil", "Media", "Fuerte"]
+                const colors = ["", "#EF4444", "#EF4444", "#F59E0B", "#22C55E"]
+                const label = labels[strength]
+                const color = colors[strength]
+                const pct   = (strength / 4) * 100
+                return (
+                  <div className="mt-1.5">
+                    <div className="h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.1)" }}>
+                      <div
+                        className="h-full rounded-full transition-all duration-300"
+                        style={{ width: `${pct}%`, background: color }}
+                      />
+                    </div>
+                    <p className="text-xs mt-1 font-medium" style={{ color }}>
+                      {label}
+                    </p>
+                  </div>
+                )
+              })()}
             </div>
 
             {error && (
@@ -300,7 +336,7 @@ export default function LoginScreen({ onLogin }) {
                 className="mt-0.5 shrink-0 w-3.5 h-3.5 rounded"
                 style={{ accentColor: ACCENT }}
               />
-              <span className="text-xs leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
+              <span className="text-sm leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
                 Acepto el tratamiento de mis datos según la{" "}
                 <a
                   href="/privacy"
