@@ -6600,6 +6600,242 @@
           }
         }
       ]
+    },
+    {
+      "id": "b9",
+      "nombre": "Proyecto Final: Construye tu Portafolio",
+      "descripcion": "Diseña, ejecuta y presenta un proyecto real de prompt engineering que demuestre tu dominio del módulo. Este bloque te guía desde la selección del caso de uso hasta la entrega profesional con estándares europeos.",
+      "icon": "🏆",
+      "lecciones": [
+        {
+          "id": "m4-b9-l0",
+          "titulo": "El proyecto que demuestra que sabes",
+          "bloque": 9,
+          "tipo": "bienvenida",
+          "duracion_min": 10,
+          "xp": 30,
+          "contenido": {
+            "teoria": {
+              "explicacion": "Llegaste hasta aquí. Completaste 8 bloques de técnicas, frameworks y estrategias de prompt engineering. Pero en el mercado laboral europeo — y global — las certificaciones sin evidencia práctica tienen un valor limitado. El recruiter de Booking.com en Ámsterdam, el director de innovación de Santander en Madrid, o el lead de IA de AstraZeneca en Cambridge no preguntan «¿sabes prompt engineering?» — preguntan «¿qué construiste?». Este bloque es tu respuesta. El proyecto de M4 no es un ejercicio académico. Es el primer artefacto real de tu portafolio de IA: la diferencia entre decir «estudié prompt engineering» y mostrar un sistema funcional con métricas reales, documentación profesional y resultados verificables.\n\n---\n\nEn las próximas lecciones seleccionarás un caso de uso real de tu industria o la industria donde quieres trabajar. Diseñarás el sistema de prompts, lo evaluarás con rigor y presentarás los resultados con estándares europeos de IA responsable — GDPR, EU AI Act, transparencia algorítmica. El resultado será un proyecto documentado que podrás mostrar en LinkedIn, en entrevistas, o como base para tu primera propuesta de consultoría. Antes de continuar, reflexiona: ¿qué problema real, en tu contexto actual o futuro, podría resolverse mejor con un sistema de prompts bien diseñado? Ese problema es tu proyecto.",
+              "analogia": "Piensa en este bloque como el trabajo final de un máster europeo: no es un examen teórico, es una demostración de competencia real. Los comités de selección de las mejores empresas tech de Europa no quieren ver notas — quieren ver lo que construiste.",
+              "reflexion": "Antes de la próxima lección, anota en un documento o cuaderno: (1) Tu industria objetivo o actual. (2) Un proceso que hoy se hace manualmente y que podría automatizarse o mejorarse con IA. (3) Quién se beneficiaría de esa mejora y cómo medirías el éxito. Esta reflexión será la semilla de tu proyecto."
+            },
+            "verificacion": [],
+            "practica": null,
+            "conexion": {
+              "siguiente_concepto": "Criterios de un buen proyecto de prompts",
+              "por_que_importa_despues": "Ahora que tienes claridad sobre el propósito del bloque, la siguiente lección te da los criterios objetivos que separan un proyecto profesional de un ejercicio escolar — los mismos que usan los evaluadores en programas de IA empresarial en Europa."
+            }
+          }
+        },
+        {
+          "id": "m4-b9-l1",
+          "titulo": "Qué hace un buen proyecto de prompts",
+          "bloque": 9,
+          "tipo": "leccion",
+          "duracion_min": 20,
+          "xp": 55,
+          "repeticion_espaciada": {
+            "repasar_dia_3": true,
+            "repasar_dia_7": true,
+            "repasar_dia_14": true,
+            "repasar_dia_30": true
+          },
+          "contenido": {
+            "teoria": {
+              "explicacion": "No todos los proyectos de prompt engineering son iguales. Un proyecto que impresiona a un evaluador europeo — ya sea un panel de certificación, un cliente de consultoría o un comité de contratación — cumple criterios específicos que van mucho más allá de «el prompt funciona». En el mercado europeo, la excelencia técnica sin responsabilidad documentada es insuficiente. El EU AI Act (vigente desde agosto de 2024) y el GDPR han elevado el estándar mínimo para cualquier sistema de IA en producción. Un proyecto profesional debe demostrar no solo que funciona, sino que funciona de forma verificable, transparente y dentro de los límites legales.\n\nLos seis criterios de un proyecto de prompts de calidad europea son los siguientes.\n\nPrimero: problema real y bien definido. El proyecto parte de un problema de negocio concreto, no de una técnica que se quiere demostrar. La diferencia: «quiero usar few-shot» es técnica; «el equipo legal de una firma de Madrid tarda 4 horas en clasificar contratos y quiero reducirlo a 20 minutos» es un problema real con impacto medible.\n\nSegundo: métricas de éxito cuantitativas definidas antes de empezar. Un proyecto profesional establece KPIs antes de construir — accuracy objetivo, tiempo de procesamiento, tasa de alucinaciones aceptable, ahorro en horas-persona. Sin métricas previas, cualquier resultado puede presentarse como éxito.\n\nTercero: dataset de evaluación representativo. El proyecto incluye al menos 20-30 casos de prueba que cubren escenarios típicos, edge cases y casos adversariales. Esto diferencia un prototipo de un sistema evaluado con rigor.\n\nCuarto: documentación de decisiones de diseño. Cada técnica usada tiene justificación explícita. No «usé few-shot porque lo aprendí en B2», sino «usé few-shot porque el dominio legal requiere consistencia de formato y los ejemplos anclan el estilo esperado con precisión».\n\nQuinto: consideraciones de seguridad y compliance. El proyecto identifica qué datos se procesan, si hay PII (información personal identificable), qué restricciones impone el GDPR, y qué instrucciones en el system prompt previenen outputs inapropiados o fuera de alcance.\n\nSexto: presentación orientada al valor de negocio. Los resultados se comunican en términos de impacto — horas ahorradas, coste reducido, calidad mejorada — no en términos técnicos para una audiencia no técnica.\n\nLa diferencia entre un consultant freelance y un equipo in-house en Europa es el énfasis relativo entre estos criterios. El freelance europeo — consultores independientes en Londres, Barcelona o Berlín — prioriza la documentación clara y la presentación del valor de negocio, porque necesita convencer a clientes nuevos en cada proyecto sin historial previo con ellos. El equipo in-house de una empresa — un banco holandés, una aseguradora alemana o un retailer francés — prioriza el compliance formal y las métricas auditables, porque necesita pasar los procesos internos de governance de IA para que el proyecto llegue a producción.",
+              "analogia": "Un buen proyecto de prompts es como un informe de auditoría de una Big Four europea: no basta con que las conclusiones sean correctas. La metodología debe ser transparente, reproducible y defensible ante terceros. En Europa, la trazabilidad no es opcional — es el estándar.",
+              "ejemplo_malo": "Hice un prompt para clasificar emails de soporte. Funciona bien, lo probé con 5 emails y todos salieron correctos.",
+              "ejemplo_bueno": "Diseñé un sistema de clasificación de tickets de soporte en 5 categorías para una empresa SaaS B2B. Dataset: 80 tickets reales anonimizados (60 típicos, 15 edge cases, 5 adversariales). Accuracy: 94% vs. objetivo del 90%. Técnicas: XML tags para estructura + few-shot con 3 ejemplos por categoría. Sin procesamiento de PII — los tickets se anonimizaban antes del prompt. Documentación: decisiones de diseño, casos de fallo, limitaciones conocidas y recomendaciones de mejora.",
+              "por_que_importa": "En el mercado europeo, la IA sin documentación es cada vez más un riesgo legal, no solo técnico. El EU AI Act exige trazabilidad para sistemas de IA de alto riesgo. Construir el hábito de proyectos bien documentados desde el principio es una ventaja competitiva duradera — y puede ser la diferencia entre ganar o perder un contrato de consultoría.",
+              "tip_profesional": "Para proyectos en contextos europeos que procesan datos de usuarios, revisa siempre si el sistema cae bajo el Artículo 22 del GDPR (decisiones automatizadas con impacto significativo en personas). Si la respuesta es sí, necesitas un mecanismo de revisión humana documentado — y eso debe ser parte explícita del entregable del proyecto."
+            },
+            "verificacion": [
+              {
+                "pregunta": "¿Cuál es la diferencia fundamental entre un proyecto de prompts profesional y un ejercicio escolar según los criterios europeos?",
+                "opciones": [
+                  "El proyecto profesional usa técnicas más avanzadas y modelos más caros",
+                  "El proyecto profesional parte de un problema de negocio real con métricas de éxito definidas antes de empezar, dataset de evaluación representativo y documentación de decisiones de diseño",
+                  "El proyecto profesional siempre está en inglés para audiencias internacionales",
+                  "El proyecto profesional tiene más de 100 casos de entrenamiento"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La distinción no está en la sofisticación técnica sino en la orientación al problema y el rigor de la evaluación. Un ejercicio escolar puede usar técnicas idénticas pero parte de la técnica, no del problema real. Un proyecto profesional define el problema, las métricas de éxito y el dataset de evaluación antes de escribir el primer prompt — esto es lo que permite afirmar que el sistema funciona con evidencia verificable, no con impresiones subjetivas.",
+                "concepto_reforzado": "Criterios de calidad de proyectos profesionales de prompts"
+              },
+              {
+                "pregunta": "¿Por qué el EU AI Act y el GDPR son relevantes para un proyecto de prompts en Europa, incluso si es un proyecto de un profesional independiente?",
+                "opciones": [
+                  "Solo son relevantes para grandes corporaciones con más de 250 empleados",
+                  "Porque establecen obligaciones de transparencia, documentación y limitaciones sobre decisiones automatizadas que aplican a cualquier sistema de IA que procese datos de ciudadanos europeos, independientemente del tamaño del operador",
+                  "Son solo recomendaciones voluntarias, no obligaciones legales vinculantes",
+                  "Solo aplican a sistemas de IA desarrollados por empresas con sede en la UE"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El GDPR aplica al procesamiento de datos personales de residentes en la UE independientemente del tamaño del operador — un freelance en Madrid que procesa datos de clientes europeos tiene las mismas obligaciones básicas que un banco alemán. El EU AI Act añade requisitos de transparencia y documentación para sistemas de IA de alto riesgo. Conocer estos marcos y aplicarlos en proyectos de portafolio es parte del diferencial competitivo de un prompt engineer profesional en el mercado europeo.",
+                "concepto_reforzado": "Marco regulatorio europeo de IA: GDPR y EU AI Act"
+              },
+              {
+                "pregunta": "Un consultant freelance europeo y un equipo in-house de una empresa grande enfatizan diferentes criterios del proyecto. ¿Cuál describe mejor la diferencia?",
+                "opciones": [
+                  "El freelance prioriza el coste y el equipo in-house prioriza la velocidad de entrega",
+                  "El freelance prioriza documentación clara y presentación del valor de negocio (para convencer clientes nuevos), mientras el equipo in-house prioriza compliance formal y métricas auditables (para pasar los procesos internos de governance de IA)",
+                  "No hay diferencia real — los criterios son idénticos para ambos perfiles",
+                  "El equipo in-house no necesita documentar sus proyectos porque son de uso interno"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los incentivos difieren por contexto y audiencia. Un freelance en Barcelona o Londres necesita convencer a un cliente nuevo en cada proyecto — la documentación clara y la presentación del ROI en términos de negocio son su herramienta de venta más potente. Un equipo in-house en un banco holandés o aseguradora alemana opera dentro de procesos de governance corporativa que requieren compliance documentado, audit trails y métricas auditables para que los comités de aprobación de IA den luz verde al proyecto.",
+                "concepto_reforzado": "Perfiles profesionales de prompt engineering en el mercado europeo"
+              },
+              {
+                "pregunta": "¿Qué significa que un dataset de evaluación sea 'representativo' en el contexto de un proyecto de prompts profesional?",
+                "opciones": [
+                  "Que tiene al menos 1,000 ejemplos generados automáticamente",
+                  "Que cubre escenarios típicos, edge cases y casos adversariales en proporciones que reflejan la distribución real del problema, permitiendo una evaluación honesta del rendimiento del sistema",
+                  "Que todos los ejemplos provienen de la misma fuente de datos verificada",
+                  "Que fue validado por un experto externo en machine learning"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Un dataset representativo no es sinónimo de grande — es sinónimo de diverso y balanceado. Debe cubrir los escenarios que verá el sistema en producción: los casos típicos (mayoría), los edge cases que el sistema podría manejar mal, y los casos adversariales diseñados para exponer límites del sistema. Evaluar solo con casos fáciles produce métricas optimistas que no predicen el rendimiento real y pueden llevar a decisiones de producción erróneas.",
+                "concepto_reforzado": "Diseño de datasets de evaluación representativos"
+              },
+              {
+                "pregunta": "¿Por qué definir las métricas de éxito ANTES de construir el sistema es un criterio de proyecto profesional, no una formalidad?",
+                "opciones": [
+                  "Es solo un requisito burocrático de los programas de certificación europeos",
+                  "Porque sin métricas previas el sesgo de confirmación entra en juego — evalúas el sistema con los casos donde funciona bien y minimizas los fallos, haciendo imposible saber si el sistema realmente resuelve el problema",
+                  "Porque los clientes europeos siempre exigen documentos de especificación formales antes del contrato",
+                  "Para cumplir con los artículos específicos del EU AI Act sobre sistemas de alto riesgo"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Definir accuracy objetivo del 90% antes de construir te fuerza a evaluar honestamente si lo alcanzas — y si no, a diagnosticar por qué. Sin métricas previas, cualquier resultado puede justificarse como éxito. Además, las métricas predefinidas son la base para argumentar el valor del proyecto ante un cliente o equipo directivo: «mejoré el sistema» no convence; «pasé de 72% a 94% de accuracy en clasificación de contratos, reduciendo revisiones manuales en 3 horas diarias» sí convence.",
+                "concepto_reforzado": "Métricas de éxito predefinidas y evaluación objetiva"
+              }
+            ],
+            "practica": {
+              "tipo": "caso_real",
+              "contexto": "Eres prompt engineer freelance en Madrid. Un despacho de abogados con 15 profesionales quiere automatizar la clasificación de consultas entrantes de clientes en 4 categorías: laboral, mercantil, civil, penal. Reciben aproximadamente 50 consultas por día por email.",
+              "instruccion": "Define los criterios de proyecto para este caso. Escribe: (1) el problema de negocio en una oración con el estado actual y el objetivo, (2) dos métricas de éxito cuantitativas con valores objetivo específicos, (3) cómo estructurarías el dataset de evaluación indicando tipos y tamaños, (4) la consideración de GDPR más relevante para este caso.",
+              "input_malo": "Accuracy buena y que clasifique bien los emails del despacho.",
+              "pista": "Para las métricas: piensa en accuracy mínima aceptable y en tiempo de procesamiento por email. Para el dataset: ¿cuántos casos de cada tipo? Para GDPR: los emails de clientes contienen nombres, datos personales y posiblemente información sensible — ¿qué implica eso según el GDPR?",
+              "solucion": "Problema: Reducir el tiempo de clasificación manual de consultas de 2 horas/día a menos de 15 minutos con accuracy ≥92%. Métricas: (1) Accuracy de clasificación ≥92% en dataset de evaluación balanceado; (2) Tiempo de procesamiento por email <5 segundos. Dataset: 80 consultas reales anonimizadas — 20 por categoría (laboral, mercantil, civil, penal), más 10 edge cases ambiguos entre categorías y 5 casos adversariales. GDPR: los emails contienen PII de clientes — anonimizar nombre y datos de identificación antes del prompt, o establecer un acuerdo de procesamiento de datos con Anthropic como encargado del tratamiento; no retener datos en contexto más allá de lo necesario.",
+              "criterios_de_exito": [
+                "El problema define el estado actual, el objetivo y el impacto esperado en una oración",
+                "Las métricas son cuantitativas con valores objetivo específicos y predefinidos",
+                "El dataset incluye edge cases y adversariales, no solo los 4 tipos de casos fáciles",
+                "Se identifica el riesgo GDPR de procesar PII de clientes y se propone una mitigación concreta"
+              ]
+            },
+            "conexion": {
+              "siguiente_concepto": "Cómo elegir tu caso de uso de proyecto",
+              "por_que_importa_despues": "Ya sabes qué hace un proyecto excelente según los estándares europeos. La siguiente lección te da el framework de tres pasos para elegir el caso de uso correcto para TI — uno alcanzable en el tiempo disponible, relevante para tus objetivos profesionales, y que demuestra las técnicas más valiosas del módulo."
+            }
+          }
+        },
+        {
+          "id": "m4-b9-l2",
+          "titulo": "Elegir tu caso de uso",
+          "bloque": 9,
+          "tipo": "leccion",
+          "duracion_min": 22,
+          "xp": 55,
+          "repeticion_espaciada": {
+            "repasar_dia_3": true,
+            "repasar_dia_7": true,
+            "repasar_dia_14": true,
+            "repasar_dia_30": true
+          },
+          "contenido": {
+            "teoria": {
+              "explicacion": "Elegir el caso de uso correcto para tu proyecto es la decisión más importante de este bloque. Un caso mal elegido — demasiado ambicioso, irrelevante para tu mercado objetivo, o imposible de evaluar con los recursos disponibles — produce un proyecto que frustra y no abre puertas. Un caso bien elegido produce un artefacto de portafolio que habla por ti en el mercado europeo durante años.\n\nEl framework de selección tiene tres pasos que se aplican en orden secuencial:\n\nPaso 1 — Filtro de factibilidad. El caso de uso debe poder construirse y evaluarse completamente en el tiempo disponible (10-15 horas para este módulo). Las señales de un caso factible: el problema puede describirse en una oración, la evaluación puede hacerse con 30-50 casos de prueba propios, y las salidas del sistema pueden evaluarse con criterios claros como correcto/incorrecto, escala 1-5, o cumple/no cumple criterios definidos. Las señales de un caso NO factible: requiere integración con APIs externas sin acceso, necesita datos confidenciales que no tienes disponibles, o la evaluación del output requiere expertise externo que no posees.\n\nPaso 2 — Filtro de relevancia profesional. El caso debe alinearse con la industria o rol donde quieres trabajar, o donde ya trabajas. Un proyecto de clasificación de contratos legales tiene mucho más valor para alguien que quiere trabajar en legal tech que para alguien orientado a marketing digital. En Europa, la especialización sectorial tiene alta demanda y valoración: legal tech en España y Portugal, fintech en los Países Bajos y Suecia, healthtech en el Reino Unido y Alemania, logística y supply chain en Alemania y Bélgica.\n\nPaso 3 — Filtro de demostración técnica. El caso debe permitir aplicar al menos 3 técnicas del módulo de forma visible y justificada. No cualquier caso sirve — necesitas uno donde la elección de técnicas específicas sea la diferencia entre un resultado bueno y uno excelente. Si el caso puede resolverse con un prompt de dos líneas, no es suficientemente complejo para un proyecto de portafolio.\n\nTres ejemplos por sector europeo que pasan los tres filtros:\n\nLegal tech — Madrid. Sistema de extracción de cláusulas de riesgo en contratos de arrendamiento según la Ley de Arrendamientos Urbanos española (datos públicos: BOE y contratos tipo disponibles en portales legales). Técnicas naturales: XML tags para estructura del contrato, few-shot con ejemplos de cláusulas abusivas reales, instrucción de citar el párrafo exacto de cada cláusula identificada. Evaluable: abogados o estudiantes de derecho pueden verificar si las cláusulas identificadas son correctas.\n\nFintech — Ámsterdam. Generador de explicaciones de decisiones de crédito para clientes retail cumpliendo el derecho de explicación del GDPR Art. 22, en holandés e inglés. Técnicas naturales: role prompting como experto en regulación financiera europea, restricciones de tono (claro, no técnico, sin jerga financiera), format output como carta formal bilingüe. Evaluable: el equipo de compliance verifica si las explicaciones cumplen los requisitos del Art. 22 GDPR y las guías del supervisor financiero AFM.\n\nHealthtech — Londres. Sistema de triage de síntomas para mensajes de pacientes en un portal de salud del NHS, con escalado automático a urgencias cuando se detectan señales de riesgo crítico. Técnicas naturales: clasificación con Chain-of-Thought para justificar el nivel de urgencia asignado, restricciones estrictas de no diagnosticar ni prescribir, few-shot con casos reales anonimizados proporcionados por médicos. Evaluable: médicos de medicina general verifican si el nivel de urgencia asignado es clínicamente apropiado.",
+              "analogia": "Elegir el caso de uso es como seleccionar la tesis de un máster europeo: ni tan amplia que sea imposible de hacer bien en el tiempo disponible, ni tan estrecha que no demuestre competencia real. El sweet spot es un problema específico y real que permite demostrar múltiples habilidades de forma natural y que un evaluador externo pueda verificar.",
+              "ejemplo_malo": "Voy a construir un asistente general de IA para empresas que responda cualquier tipo de pregunta de negocio.",
+              "ejemplo_bueno": "Construiré un sistema de clasificación de emails de soporte en 5 categorías para una empresa SaaS B2B de 50 empleados en Barcelona. Dataset: 60 emails reales anonimizados (40 típicos + 15 edge cases + 5 adversariales). Técnicas: XML tags para estructura + few-shot con 3 ejemplos por categoría + restricción de confidencialidad para no retener datos. KPIs predefinidos: accuracy ≥90%, procesamiento <3 segundos por email. Scope explícito: solo clasificar y priorizar — no responder al cliente.",
+              "por_que_importa": "En el mercado europeo de consultoría de IA, los proyectos de portafolio son la moneda de credibilidad para un profesional sin historial de proyectos publicados. Un proyecto bien scoped y ejecutado con rigor vale más que diez proyectos ambiciosos a medias. El mercado paga por evidencia de que puedes entregar resultados verificables en un contexto de negocio real.",
+              "tip_profesional": "Si no tienes acceso a datos reales de tu industria objetivo, usa datasets públicos europeos de alta calidad: el portal de datos abiertos de la UE (data.europa.eu), los registros empresariales de Companies House en el Reino Unido, o los datos del Catastro y BOE en España. Un proyecto con datos públicos reales y verificables es infinitamente más creíble que uno con datos inventados — y cualquier evaluador puede verificar la fuente."
+            },
+            "verificacion": [
+              {
+                "pregunta": "¿Cuáles son los tres pasos del framework de selección de caso de uso para el proyecto de M4, y por qué se aplican en ese orden?",
+                "opciones": [
+                  "Elegir el modelo, definir el prompt principal, evaluar los resultados iniciales",
+                  "Filtro de factibilidad, filtro de relevancia profesional y filtro de demostración técnica — en ese orden porque la factibilidad descarta casos imposibles antes de invertir tiempo en evaluarlos",
+                  "Investigar el mercado, identificar al cliente objetivo y calcular el ROI esperado",
+                  "Seleccionar las técnicas del módulo, buscar datos de entrenamiento y documentar el diseño del sistema"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "El orden secuencial importa por eficiencia: primero factibilidad (¿puedo hacerlo con los recursos y tiempo disponibles?), luego relevancia profesional (¿me abre puertas donde quiero trabajar?), finalmente demostración técnica (¿me permite aplicar técnicas de forma visible y justificada?). Empezar por la relevancia sin verificar la factibilidad es el error más común — lleva a proyectos ambiciosos que no se completan porque los datos o accesos necesarios no están disponibles.",
+                "concepto_reforzado": "Framework de selección de caso de uso en tres pasos"
+              },
+              {
+                "pregunta": "¿Por qué el ejemplo de fintech en Ámsterdam (explicaciones de crédito bajo GDPR Art. 22) es un caso de uso de alta calidad para el mercado europeo?",
+                "opciones": [
+                  "Porque el mercado financiero holandés paga los salarios más altos para prompt engineers en Europa",
+                  "Porque combina un problema de negocio real con obligación legal verificable, técnicas del módulo que son naturales y necesarias, y un output evaluable por un experto de negocio — tres condiciones simultáneas de un caso excelente",
+                  "Porque es el único ejemplo que requiere trabajar en dos idiomas simultáneamente",
+                  "Porque Ámsterdam concentra más empresas fintech que cualquier otra ciudad de Europa continental"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La calidad de un caso de uso se mide por tres condiciones simultáneas: (1) ¿El problema es real y verificable externamente? Sí — el Art. 22 GDPR es una obligación legal con criterios específicos. (2) ¿Las técnicas del módulo son necesarias, no decorativas? Sí — el role prompting y las restricciones de tono son esenciales para cumplir el tono regulatorio. (3) ¿Alguien externo puede evaluar objetivamente el output? Sí — el equipo de compliance sabe si una explicación cumple los estándares. Los tres sí simultáneos definen un caso excelente.",
+                "concepto_reforzado": "Criterios de calidad de casos de uso europeos"
+              },
+              {
+                "pregunta": "¿Cuál es la señal principal de que un caso de uso NO pasa el filtro de factibilidad?",
+                "opciones": [
+                  "Que el problema sea demasiado sencillo de resolver con un prompt básico de una sola técnica",
+                  "Que requiera datos confidenciales sin acceso disponible, integración con APIs externas sin contrato, o que la evaluación del output necesite expertos externos que no se pueden consultar",
+                  "Que el caso de uso sea de una industria diferente al background académico del estudiante",
+                  "Que no permita usar todas las técnicas del módulo de forma simultánea en el mismo proyecto"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "La infactibilidad no es sinónimo de falta de ambición — es falta de los recursos mínimos necesarios para completar y evaluar el proyecto. Si necesitas datos que están bajo NDA, APIs que requieren contrato empresarial, o expertos externos para validar los outputs y no tienes acceso a ellos, el proyecto no puede completarse honestamente. El filtro de factibilidad salva tiempo valioso — es mejor descartar un caso en 5 minutos que descubrirlo después de 10 horas de trabajo invertido.",
+                "concepto_reforzado": "Filtro de factibilidad para selección de caso de uso"
+              },
+              {
+                "pregunta": "¿Por qué el caso de healthtech en Londres (triage de síntomas) es un ejemplo de alta demostración técnica para un proyecto de portafolio?",
+                "opciones": [
+                  "Porque el NHS es el mayor contratante de prompt engineers del sector público europeo",
+                  "Porque requiere Chain-of-Thought para justificar urgencia (seguridad clínica), restricciones estrictas para no diagnosticar (regulación médica), y few-shot con casos reales — tres técnicas del módulo que son necesarias para que el sistema funcione correctamente, no decorativas",
+                  "Porque los datos de salud son los más fáciles de anonimizar correctamente según el GDPR",
+                  "Porque es el único tipo de caso que puede evaluarse automáticamente sin intervención humana experta"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Un caso de alta demostración técnica es aquel donde las técnicas específicas son necesarias para resolver el problema correctamente, no opcionales. Sin CoT, el sistema no puede justificar su clasificación de urgencia — lo que es un requisito de seguridad clínica. Sin las restricciones de no diagnosticar, el sistema podría violar la regulación médica del Reino Unido. Sin few-shot, la consistencia del formato de respuesta se degrada. Cada técnica resuelve un problema real del caso, lo que hace el proyecto técnicamente convincente y defensible ante cualquier evaluador.",
+                "concepto_reforzado": "Demostración técnica visible y justificada en proyectos"
+              },
+              {
+                "pregunta": "¿Qué recomienda la lección para estudiantes que no tienen acceso a datos reales de su industria objetivo para el proyecto?",
+                "opciones": [
+                  "Inventar datos realistas ya que el proceso de construcción del prompt es lo más importante para el aprendizaje",
+                  "Usar datasets públicos europeos de alta calidad como data.europa.eu, Companies House del Reino Unido o el BOE y Catastro en España — datos públicos reales y verificables son más valiosos que datos inventados para un portafolio creíble",
+                  "Usar datos de otra industria más accesible y adaptar superficialmente el contexto en el prompt",
+                  "Esperar hasta conseguir un trabajo en la industria objetivo antes de comenzar el proyecto de portafolio"
+                ],
+                "correcta": 1,
+                "explicacion_profunda": "Los datos inventados en un portafolio son equivalentes a añadir proyectos ficticios en un CV — se detectan y dañan la credibilidad. Los datos públicos europeos son reales, verificables por cualquier evaluador, y a menudo de alta calidad. Un proyecto de extracción de información del BOE o de registros empresariales de Companies House tiene credibilidad inmediata y además demuestra conocimiento del ecosistema de datos del mercado europeo donde el profesional quiere trabajar.",
+                "concepto_reforzado": "Fuentes de datos públicos europeos para proyectos de portafolio"
+              }
+            ],
+            "practica": {
+              "tipo": "caso_real",
+              "contexto": "Tienes 15 horas disponibles para completar el proyecto de M4. Tu objetivo profesional es trabajar como consultor de IA para empresas del sector legal en España o Portugal. Tienes acceso a documentos legales públicos (BOE, Diario Oficial) pero no a documentos confidenciales de despachos reales.",
+              "instruccion": "Aplica los tres filtros del framework para evaluar los dos casos siguientes y elige el mejor para tu situación. Caso A: Sistema de resumen ejecutivo de nuevas regulaciones del BOE para equipos legales de empresas. Caso B: Chatbot completo de consultoría legal que responda preguntas generales de ciudadanos sobre sus derechos.",
+              "input_malo": "El Caso B porque es más ambicioso y demuestra más habilidades técnicas avanzadas.",
+              "pista": "Aplica los tres filtros en orden: ¿cuál pasa el filtro de factibilidad con 15 horas y solo datos del BOE disponibles? ¿cuál es más relevante para el sector legal empresarial español? ¿cuál te permite demostrar más técnicas del módulo de forma visible y justificada?",
+              "solucion": "Caso A pasa los tres filtros: (1) Factibilidad: los datos están disponibles y son públicos (BOE), el output es evaluable con criterios claros (resumen correcto vs. incorrecto, completo vs. incompleto), completable en 10-12 horas. (2) Relevancia: directamente alineado con el sector legal empresarial objetivo. (3) Demostración técnica: permite aplicar XML tags para estructura del BOE, summarization con restricciones de longitud y tono ejecutivo, y clasificación por área del derecho. El Caso B falla en factibilidad: un chatbot completo requiere diseño de conversación complejo, y la evaluación de respuestas de consultoría legal requiere abogados expertos que las validen — acceso no disponible. Elección justificada: Caso A.",
+              "criterios_de_exito": [
+                "Aplica los tres filtros explícitamente y en orden, sin elegir por intuición de ambición",
+                "Identifica correctamente que el Caso B falla en factibilidad por la evaluación que requiere expertos externos sin acceso disponible",
+                "Propone al menos dos técnicas específicas del módulo que son naturales para el Caso A y explica brevemente por qué"
+              ]
+            },
+            "conexion": {
+              "siguiente_concepto": "Diseño del system prompt para tu proyecto",
+              "por_que_importa_despues": "Ya elegiste tu caso de uso pasando los tres filtros. La siguiente lección te lleva al diseño concreto: cómo estructurar el system prompt principal, qué técnicas combinar para tu caso específico, y cómo crear la primera versión evaluable del sistema con estándares profesionales."
+            }
+          }
+        }
+      ]
     }
   ],
   "proyecto_final": {
