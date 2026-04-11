@@ -248,6 +248,7 @@ export default function App() {
   const [leccionActual, setLeccionActual] = useState(null)
 
   const [preguntaActual, setPreguntaActual] = useState(0)
+  const [preguntasQuiz, setPreguntasQuiz] = useState([])
   const [xpSesion, setXpSesion] = useState(0)
   const [respondidas, setRespondidas] = useState(0)
   const [correctas, setCorrectas] = useState(0)
@@ -288,6 +289,15 @@ export default function App() {
   function handleDismissInstall() {
     setInstallDismissed(true)
     localStorage.setItem(INSTALL_DISMISSED_KEY, "1")
+  }
+
+  function shuffleArray(arr) {
+    const a = [...arr]
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[a[i], a[j]] = [a[j], a[i]]
+    }
+    return a
   }
 
   function handleLogin() { setPantalla("academy") }
@@ -335,11 +345,11 @@ export default function App() {
   }
 
   function handleTeoriaOk() {
-    // Si la lección no tiene preguntas (contenido pendiente), salta al quiz
     const tieneQuiz = leccionActual?.contenido?.verificacion?.length > 0
     if (!tieneQuiz) {
       setPantalla(leccionActual?.contenido?.practica?.contexto ? "practica" : "results")
     } else {
+      setPreguntasQuiz(shuffleArray(leccionActual.contenido.verificacion))
       setPantalla("quiz")
     }
   }
@@ -386,6 +396,7 @@ export default function App() {
 
   function handleReintentar() {
     setPreguntaActual(0); setXpSesion(0); setRespondidas(0); setCorrectas(0); setRachaActual(0)
+    setPreguntasQuiz(shuffleArray(leccionActual.contenido.verificacion))
     setPantalla("quiz")
   }
 
@@ -422,7 +433,7 @@ export default function App() {
     setProgreso(nuevoProgreso)
   }
 
-  const preguntas = leccionActual?.contenido?.verificacion || []
+  const preguntas = preguntasQuiz.length > 0 ? preguntasQuiz : (leccionActual?.contenido?.verificacion || [])
   const todas = moduloData ? moduloData.bloques.flatMap(b => b.lecciones) : []
   const hayNextLesson = leccionActual && todas.length > 0
     ? todas.findIndex(l => l.id === leccionActual.id) < todas.length - 1

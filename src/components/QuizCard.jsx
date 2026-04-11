@@ -1,8 +1,18 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { playSound } from "../utils/sounds"
 
 const PRAISE = ["¡Exacto!", "¡Correcto!", "¡Bien pensado!", "¡Perfecto!", "¡Excelente!", "¡Así se hace!", "¡Genial!"]
+
+function shuffleOpciones(pregunta) {
+  const opciones = [...pregunta.opciones]
+  const correctaTexto = opciones[pregunta.correcta]
+  for (let i = opciones.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[opciones[i], opciones[j]] = [opciones[j], opciones[i]]
+  }
+  return { opciones, correcta: opciones.indexOf(correctaTexto) }
+}
 
 // Confetti de partículas pequeñas al acertar
 function MiniConfetti() {
@@ -37,11 +47,14 @@ function MiniConfetti() {
 }
 
 export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, rachaActual }) {
+  // Shuffle opciones al montar (key en App.jsx garantiza remount por pregunta)
+  const [shuffled] = useState(() => shuffleOpciones(pregunta))
+
   const [sel, setSel]           = useState(null)
   const [showXP, setShowXP]     = useState(false)
   const [showConfetti, setConf] = useState(false)
   const answered = sel !== null
-  const correct  = sel === pregunta.correcta
+  const correct  = sel === shuffled.correcta
 
   const prevIndice = useRef(indice)
   useEffect(() => {
@@ -56,7 +69,7 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
   function pick(i) {
     if (answered) return
     setSel(i)
-    const isCorrect = i === pregunta.correcta
+    const isCorrect = i === shuffled.correcta
     onAnswer(isCorrect)
     if (isCorrect) {
       playSound("correct")
@@ -141,13 +154,13 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
             </motion.h2>
 
             <div className="flex flex-col gap-2.5">
-              {pregunta.opciones.map((opt, i) => {
+              {shuffled.opciones.map((opt, i) => {
                 let borderC = "var(--color-border)", bgC = "transparent"
                 let textC = "var(--color-text-secondary)"
                 let labelBg = "rgba(255,255,255,0.04)", labelC = "var(--color-text-muted)"
 
                 if (answered) {
-                  if (i === pregunta.correcta) {
+                  if (i === shuffled.correcta) {
                     borderC = "rgba(16,185,129,0.5)"; bgC = "rgba(16,185,129,0.06)"
                     textC = "#6EE7B7"; labelBg = "rgba(16,185,129,0.15)"; labelC = "#6EE7B7"
                   } else if (i === sel) {
