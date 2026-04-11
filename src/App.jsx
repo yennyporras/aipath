@@ -14,6 +14,7 @@ import LoginScreen from "./components/LoginScreen"
 import ProyectoScreen from "./components/ProyectoScreen"
 import CertificacionScreen from "./components/CertificacionScreen"
 import InstallBanner from "./components/InstallBanner"
+import ReportButton from "./components/ReportButton"
 import { usePWAInstall } from "./hooks/usePWAInstall"
 
 // Módulos con contenido disponible — import estático (Vite los bundlea)
@@ -23,12 +24,23 @@ import m1Data from "./content/m1/index.json"
 const MODULO_DATA = { m4: m4Data, m1: m1Data }
 
 const STORAGE_KEY = "aipath_progreso_v2"
+const STORAGE_KEY_PREFIX = "aipath_progreso_"
 const SESSION_KEY = "aipath_session"
 const INSTALL_DISMISSED_KEY = "aipath_install_dismissed"
 
+function getSession() {
+  try { return JSON.parse(localStorage.getItem(SESSION_KEY)) } catch { return null }
+}
+
+function getProgresoKey() {
+  const email = getSession()?.email
+  if (!email) return STORAGE_KEY
+  return `${STORAGE_KEY_PREFIX}${email.replace(/[@.]/g, "_")}`
+}
+
 function cargarProgreso() {
   try {
-    const guardado = localStorage.getItem(STORAGE_KEY)
+    const guardado = localStorage.getItem(getProgresoKey())
     if (!guardado) return {
       xpTotal: 0, rachaDiaria: 1, badges: [],
       leccionesCompletadas: [], ultimaSesion: null,
@@ -45,7 +57,7 @@ function cargarProgreso() {
 }
 
 function guardarProgreso(datos) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(datos))
+  localStorage.setItem(getProgresoKey(), JSON.stringify(datos))
 }
 
 function calcularRachaDiaria(progreso) {
@@ -56,10 +68,6 @@ function calcularRachaDiaria(progreso) {
   ayer.setDate(ayer.getDate() - 1)
   if (progreso.ultimaSesion === ayer.toDateString()) return { rachaDiaria: progreso.rachaDiaria + 1, rachaRota: false }
   return { rachaDiaria: 1, rachaRota: progreso.rachaDiaria > 1 }
-}
-
-function getSession() {
-  try { return JSON.parse(localStorage.getItem(SESSION_KEY)) } catch { return null }
 }
 
 // ── Cursor personalizado (solo desktop con hover) ────────────────────
@@ -300,7 +308,12 @@ export default function App() {
     return a
   }
 
-  function handleLogin() { setPantalla("academy") }
+  function handleLogin() {
+    const p = cargarProgreso()
+    setProgreso(p)
+    prevXpRef.current = p.xpTotal || 0
+    setPantalla("academy")
+  }
 
   // Seleccionar módulo desde AcademyScreen
   function handleSelectModulo(mod) {
@@ -644,6 +657,10 @@ export default function App() {
               onVolver={() => setPantalla("intro")}
             />
           </div>
+        )}
+
+        {leccionActual && ["teoria", "quiz", "practica", "results"].includes(pantalla) && (
+          <ReportButton leccionId={leccionActual.id} />
         )}
       </main>
 

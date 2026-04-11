@@ -4,10 +4,10 @@ import AIPathLogo from "./AIPathLogo"
 import { initAudio, playSound } from "../utils/sounds"
 
 const USUARIOS_DEMO = [
-  { email: "demo@aipath.app",  password: import.meta.env.VITE_PASS_DEMO  || "demo1234",   nombre: "Demo User",  rol: "estudiante" },
-  { email: "admin@aipath.app", password: import.meta.env.VITE_PASS_ADMIN || "admin1234",  nombre: "Admin",      rol: "admin" },
-  { email: "paola@aipath.app", password: import.meta.env.VITE_PASS_PAOLA || "paola1234",  nombre: "Paola",      rol: "admin" },
-  { email: "ai@aipath.app",    password: import.meta.env.VITE_PASS_AI    || "aipath2026", nombre: "AI Learner", rol: "estudiante" },
+  { email: "paola@estratek.com.co",  password: import.meta.env.VITE_PASS_PAOLA  || "paola1234",   nombre: "Paola",      rol: "admin" },
+  { email: "demo@estratek.com.co",   password: import.meta.env.VITE_PASS_DEMO   || "demo1234",    nombre: "Demo User",  rol: "estudiante" },
+  { email: "admin@estratek.com.co",  password: import.meta.env.VITE_PASS_ADMIN  || "admin1234",   nombre: "Admin",      rol: "admin" },
+  { email: "equipo@estratek.com.co", password: import.meta.env.VITE_PASS_EQUIPO || "estratek2026", nombre: "Equipo",    rol: "estudiante" },
 ]
 const USERS_KEY      = "aipath_users"
 const SESSION_KEY    = "aipath_session"
