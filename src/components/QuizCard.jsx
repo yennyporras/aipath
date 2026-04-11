@@ -12,8 +12,8 @@ function LeccionProgressBar({ paso }) {
       {pasos.map((nombre, i) => (
         <div key={i} className="flex flex-col items-center flex-1">
           <div
-            className="w-full h-1 rounded-full transition-all duration-400"
-            style={{ background: i <= paso ? "#06B6D4" : "rgba(255,255,255,0.08)" }}
+            className="w-full rounded-full transition-all duration-400"
+            style={{ height: "6px", background: i <= paso ? "#06B6D4" : "rgba(255,255,255,0.08)" }}
           />
           <span className="text-[10px] mt-0.5 font-medium"
             style={{ color: i === paso ? "#06B6D4" : "rgba(255,255,255,0.2)" }}>
@@ -71,9 +71,10 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
   // Shuffle opciones al montar (key en App.jsx garantiza remount por pregunta)
   const [shuffled] = useState(() => shuffleOpciones(pregunta))
 
-  const [sel, setSel]           = useState(null)
-  const [showXP, setShowXP]     = useState(false)
-  const [showConfetti, setConf] = useState(false)
+  const [sel, setSel]             = useState(null)
+  const [hoveredIdx, setHovered]  = useState(null)
+  const [showXP, setShowXP]       = useState(false)
+  const [showConfetti, setConf]   = useState(false)
   const answered = sel !== null
   const correct  = sel === shuffled.correcta
 
@@ -182,14 +183,40 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
                 let borderC = "var(--color-border)", bgC = "transparent"
                 let textC = "var(--color-text-secondary)"
                 let labelBg = "rgba(255,255,255,0.04)", labelC = "var(--color-text-muted)"
+                let trailingIcon = null
+
+                if (!answered && hoveredIdx === i) {
+                  // Hover pre-respuesta: resalte cyan
+                  borderC = "#06B6D4"
+                  bgC = "rgba(6,182,212,0.1)"
+                  labelBg = "rgba(6,182,212,0.2)"; labelC = "#06B6D4"
+                }
 
                 if (answered) {
                   if (i === shuffled.correcta) {
                     borderC = "rgba(16,185,129,0.5)"; bgC = "rgba(16,185,129,0.06)"
                     textC = "#6EE7B7"; labelBg = "rgba(16,185,129,0.15)"; labelC = "#6EE7B7"
+                    trailingIcon = (
+                      <motion.span
+                        className="shrink-0 ml-auto font-bold"
+                        style={{ color: "#10B981", fontSize: "16px" }}
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                      >✓</motion.span>
+                    )
                   } else if (i === sel) {
                     borderC = "rgba(239,68,68,0.5)"; bgC = "rgba(239,68,68,0.06)"
                     textC = "#FCA5A5"; labelBg = "rgba(239,68,68,0.15)"; labelC = "#FCA5A5"
+                    trailingIcon = (
+                      <motion.span
+                        className="shrink-0 ml-auto font-bold"
+                        style={{ color: "#EF4444", fontSize: "16px" }}
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                      >✗</motion.span>
+                    )
                   } else {
                     borderC = "rgba(255,255,255,0.03)"; textC = "var(--color-text-muted)"
                     labelBg = "rgba(255,255,255,0.02)"; labelC = "rgba(255,255,255,0.15)"
@@ -201,6 +228,8 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
                     key={i}
                     onClick={() => pick(i)}
                     disabled={answered}
+                    onMouseEnter={() => !answered && setHovered(i)}
+                    onMouseLeave={() => setHovered(null)}
                     className="option-btn w-full text-left px-4 py-3.5 flex items-start gap-3"
                     style={{ borderColor: borderC, background: bgC }}
                     initial={{ opacity: 0, x: 20 }}
@@ -213,7 +242,8 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
                       style={{ background: labelBg, color: labelC }}>
                       {labels[i]}
                     </span>
-                    <span className="text-sm leading-relaxed pt-0.5" style={{ color: textC }}>{opt}</span>
+                    <span className="text-sm leading-relaxed pt-0.5 flex-1" style={{ color: textC }}>{opt}</span>
+                    {trailingIcon}
                   </motion.button>
                 )
               })}
@@ -223,31 +253,31 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
             <AnimatePresence>
               {answered && (
                 <motion.div
-                  initial={{ opacity: 0, y: -8, height: 0 }}
-                  animate={{ opacity: 1, y: 0, height: "auto" }}
+                  initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  className="mt-5 p-4 rounded-xl overflow-hidden"
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  className="mt-5 p-5 rounded-xl overflow-hidden"
                   style={{
-                    background: correct ? "rgba(16,185,129,0.06)" : "rgba(245,158,11,0.06)",
-                    border: `1px solid ${correct ? "rgba(16,185,129,0.15)" : "rgba(245,158,11,0.15)"}`,
+                    background: correct ? "rgba(16,185,129,0.08)" : "rgba(245,158,11,0.08)",
+                    border: `1.5px solid ${correct ? "rgba(16,185,129,0.3)" : "rgba(245,158,11,0.3)"}`,
                   }}
                 >
-                  <div className="flex items-center gap-2 mb-2">
+                  <div className="flex items-center gap-2 mb-2.5">
                     <motion.span
-                      className="text-base"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                      style={{ fontSize: "20px" }}
+                      initial={{ scale: 0, rotate: -20 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 12, delay: 0.05 }}
                     >
                       {correct ? "✅" : "💡"}
                     </motion.span>
-                    <p className="font-display text-sm font-bold"
-                      style={{ color: correct ? "#6EE7B7" : "#FBBF24", fontFamily: "'Outfit', sans-serif" }}>
+                    <p className="font-bold text-base"
+                      style={{ color: correct ? "#34D399" : "#FCD34D", fontFamily: "'Outfit', sans-serif" }}>
                       {correct ? PRAISE[(indice || 0) % PRAISE.length] : "Casi — recuerda esto:"}
                     </p>
                   </div>
-                  <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)", lineHeight: "1.75" }}>
                     {pregunta.explicacion_profunda}
                   </p>
                 </motion.div>

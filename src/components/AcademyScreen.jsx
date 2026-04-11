@@ -70,6 +70,22 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
     visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } }
   }
 
+  // Calcular módulo a continuar
+  const nextModulo = (() => {
+    const available = modulos.filter(m => m.estado === "disponible")
+    const started = available.find(m => {
+      const done = completadas.filter(id => id.startsWith(m.id + "-")).length
+      return done > 0 && done < m.lecciones_total
+    })
+    if (started) {
+      const done = completadas.filter(id => id.startsWith(started.id + "-")).length
+      return { modulo: started, pct: Math.round((done / started.lecciones_total) * 100), done }
+    }
+    const notStarted = available.find(m => completadas.filter(id => id.startsWith(m.id + "-")).length === 0)
+    if (notStarted) return { modulo: notStarted, pct: 0, done: 0 }
+    return null
+  })()
+
   return (
     <div className="w-full max-w-4xl mx-auto px-2 relative z-10">
       {/* Header */}
@@ -159,6 +175,56 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
         </div>
       </motion.div>
 
+      {/* Card "Continúa aquí" */}
+      {nextModulo && (
+        <motion.div
+          className="max-w-lg mx-auto mb-6"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <motion.button
+            onClick={() => { playSound("unlock"); onSelectModulo(nextModulo.modulo) }}
+            whileHover={{ scale: 1.015, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full text-left p-4 rounded-2xl transition-colors"
+            style={{
+              background: "rgba(6,182,212,0.07)",
+              border: "1.5px solid rgba(6,182,212,0.4)",
+            }}
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">{nextModulo.modulo.icono}</span>
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.15em]" style={{ color: "#06B6D4" }}>
+                    Continúa aquí →
+                  </p>
+                  <p className="text-sm font-bold mt-0.5" style={{ color: "var(--color-text-primary)", fontFamily: "'Outfit', sans-serif" }}>
+                    M{nextModulo.modulo.numero} — {nextModulo.modulo.titulo}
+                  </p>
+                </div>
+              </div>
+              <span className="text-xl font-extrabold" style={{ color: "#06B6D4", fontFamily: "'Outfit', sans-serif" }}>
+                {nextModulo.pct}%
+              </span>
+            </div>
+            <div className="w-full rounded-full overflow-hidden" style={{ height: "6px", background: "rgba(255,255,255,0.08)" }}>
+              <motion.div
+                className="h-full rounded-full"
+                style={{ background: "#06B6D4" }}
+                initial={{ width: 0 }}
+                animate={{ width: `${nextModulo.pct || 2}%` }}
+                transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              />
+            </div>
+            <p className="text-xs mt-2" style={{ color: "var(--color-text-muted)" }}>
+              {nextModulo.done} de {nextModulo.modulo.lecciones_total} lecciones completadas
+            </p>
+          </motion.button>
+        </motion.div>
+      )}
+
       {/* Módulos por fase */}
       {fases.map((faseKey, fi) => {
         const info = FASE_INFO[faseKey]
@@ -232,7 +298,7 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
                         </span>
                         {!disponible && (
                           <span className="text-[11px]" style={{ color: "var(--color-text-muted)" }}>
-                            Próximamente
+                            Fase {modulo.fase} — Próximamente
                           </span>
                         )}
                       </div>
@@ -266,10 +332,23 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
                       )}
                     </div>
 
-                    {/* Progress */}
+                    {/* Progress con porcentaje */}
                     {disponible && (
-                      <div className="progress-bar">
-                        <div className="progress-bar-fill" style={{ width: `${pct}%` }} />
+                      <div className="flex flex-col gap-1">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>
+                            {doneCount} / {modulo.lecciones_total}
+                          </span>
+                          <span className="text-[10px] font-bold" style={{ color: pct > 0 ? "#06B6D4" : "var(--color-text-muted)" }}>
+                            {Math.round(pct)}%
+                          </span>
+                        </div>
+                        <div className="w-full rounded-full overflow-hidden" style={{ height: "6px", background: "rgba(255,255,255,0.07)" }}>
+                          <div
+                            className="h-full rounded-full transition-all duration-700"
+                            style={{ width: `${pct}%`, background: "#06B6D4" }}
+                          />
+                        </div>
                       </div>
                     )}
                   </motion.button>

@@ -46,8 +46,8 @@ function LeccionProgressBar({ paso }) {
       {pasos.map((nombre, i) => (
         <div key={i} className="flex flex-col items-center flex-1">
           <div
-            className="w-full h-1 rounded-full transition-all duration-400"
-            style={{ background: i <= paso ? "#06B6D4" : "rgba(255,255,255,0.08)" }}
+            className="w-full rounded-full transition-all duration-400"
+            style={{ height: "6px", background: i <= paso ? "#06B6D4" : "rgba(255,255,255,0.08)" }}
           />
           <span className="text-[10px] mt-0.5 font-medium"
             style={{ color: i === paso ? "#06B6D4" : "rgba(255,255,255,0.2)" }}>
@@ -124,23 +124,46 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
           </h2>
         </div>
 
-        {/* Indicador de progreso de lectura */}
+        {/* Indicador de progreso con puntos navegables */}
         {totalPaginas > 1 && (
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-2">
             <span className="text-xs font-bold"
               style={{ color: esSegmentoAnalogia ? "#F59E0B" : "#06B6D4" }}>
               {esSegmentoAnalogia
                 ? "💡 Analogía"
                 : `Concepto ${pagina + 1} de ${numConceptos}`}
             </span>
-            <div className="w-full h-1 rounded-full" style={{ background: "rgba(255,255,255,0.06)" }}>
-              <div
-                className="h-1 rounded-full transition-all duration-500"
-                style={{
-                  width: `${((pagina + 1) / totalPaginas) * 100}%`,
-                  background: esSegmentoAnalogia ? "#F59E0B" : "#06B6D4"
-                }}
-              />
+            <div className="flex items-center gap-2">
+              {Array.from({ length: totalPaginas }, (_, i) => {
+                const isAnalogiaPoint = tieneAnalogia && i === numConceptos
+                const isActive = i === pagina
+                const isPast   = i < pagina
+                return (
+                  <motion.button
+                    key={i}
+                    onClick={() => { playSound("click"); setPagina(i) }}
+                    whileHover={{ scale: 1.3 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="transition-all duration-300 rounded-full"
+                    style={{
+                      width:  isActive ? "20px" : "8px",
+                      height: "8px",
+                      background: isActive
+                        ? (isAnalogiaPoint ? "#F59E0B" : "#06B6D4")
+                        : isPast
+                          ? "transparent"
+                          : "rgba(255,255,255,0.15)",
+                      border: isActive
+                        ? "none"
+                        : isPast
+                          ? `1.5px solid ${isAnalogiaPoint ? "#F59E0B" : "#06B6D4"}`
+                          : "1.5px solid rgba(255,255,255,0.2)",
+                      flexShrink: 0,
+                    }}
+                    aria-label={`Ir al ${isAnalogiaPoint ? "analogía" : `concepto ${i + 1}`}`}
+                  />
+                )
+              })}
             </div>
           </div>
         )}
@@ -156,20 +179,18 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
             className="flex flex-col gap-3"
           >
             {esSegmentoAnalogia ? (
-              /* Segmento de analogía: solo la card ámbar, sin scroll adicional */
+              /* Segmento de analogía: card ámbar mejorada */
               <div
                 className="rounded-xl p-4"
                 style={{
-                  background: "#13131E",
-                  borderTop: "1px solid rgba(245,158,11,0.2)",
-                  borderRight: "1px solid rgba(245,158,11,0.2)",
-                  borderBottom: "1px solid rgba(245,158,11,0.2)",
-                  borderLeft: "3px solid #F59E0B",
+                  background: "rgba(245,158,11,0.05)",
+                  border: "2px solid rgba(245,158,11,0.55)",
                 }}
               >
-                <p className="text-xs font-bold mb-1.5 tracking-wide uppercase flex items-center gap-1.5"
-                  style={{ color: "#F59E0B" }}>
-                  💡 Analogía
+                <p className="font-bold mb-2 tracking-wide uppercase flex items-center gap-2"
+                  style={{ color: "#F59E0B", fontSize: "11px" }}>
+                  <span style={{ fontSize: "24px", lineHeight: 1 }}>💡</span>
+                  <span>ANALOGÍA</span>
                 </p>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
                   {t.analogia}
