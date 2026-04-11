@@ -10,7 +10,7 @@ import {
   getProgressiveQuestions,
 } from "../arcade/questionBank"
 
-const TIEMPO_POR_PREGUNTA = 8
+const TIEMPO_POR_PREGUNTA = 20
 const XP_POR_CORRECTA = 1
 const XP_BONUS_COMPLETAR = 15
 
@@ -445,7 +445,7 @@ function VerdaderoFalsoGame({ onSalir, onXpGanado }) {
 
 const XP_POR_SABIA   = 2
 const XP_BONUS_SPEED = 15
-const TIEMPO_TOTAL_SPEED = 180 // 3 minutos
+const TIEMPO_TOTAL_SPEED = 300 // 5 minutos
 
 /* ─── Componente del juego Speed Cards ─── */
 function SpeedCardsGame({ onSalir, onXpGanado }) {
@@ -814,7 +814,7 @@ function SpeedCardsGame({ onSalir, onXpGanado }) {
   )
 }
 
-const TIEMPO_BATALLA    = 6
+const TIEMPO_BATALLA    = 20
 const XP_POR_BATALLA    = 2
 const XP_BONUS_BATALLA  = 20
 
@@ -1195,7 +1195,7 @@ function BatallaConceptosGame({ onSalir, onXpGanado }) {
 }
 
 /* ─── Datos del juego 3 — Completa el Concepto ─── */
-const TIEMPO_CONCEPTO   = 10
+const TIEMPO_CONCEPTO   = 25
 const XP_POR_CONCEPTO   = 2
 const XP_BONUS_CONCEPTO = 20
 
@@ -1530,7 +1530,7 @@ function CompletaConceptoGame({ onSalir, onXpGanado }) {
 /* ─── Componente del juego Conexión Rápida ─── */
 function ConexionRapidaGame({ onSalir, onXpGanado }) {
   const RONDAS = 8
-  const TIEMPO_RONDA = 30
+  const TIEMPO_RONDA = 45
 
   function crearEstadoJuego() {
     const pares = getConexionRapidaQuestions(RONDAS * 4)
@@ -1825,7 +1825,7 @@ function ConexionRapidaGame({ onSalir, onXpGanado }) {
 
 /* ─── Componente del juego Ordena los Pasos ─── */
 function OrdenaPasosGame({ onSalir, onXpGanado }) {
-  const TIEMPO_RONDA = 20
+  const TIEMPO_RONDA = 35
 
   const [ronda, setRonda] = useState(0)
   const [tiempo, setTiempo] = useState(TIEMPO_RONDA)
@@ -2110,7 +2110,7 @@ function OrdenaPasosGame({ onSalir, onXpGanado }) {
 
 /* ─── Daily Challenge Game ─── */
 const XP_DAILY = 50
-const TIEMPO_DAILY = 15
+const TIEMPO_DAILY = 30
 
 function DailyChallengeGame({ onSalir, onXpGanado, onCompletado }) {
   const [preguntas] = useState(() => getDailyQuestions(10))
@@ -2303,7 +2303,7 @@ function DailyChallengeGame({ onSalir, onXpGanado, onCompletado }) {
 
 /* ─── Streak Defender Game ─── */
 const XP_STREAK = 20
-const TIEMPO_STREAK_TOTAL = 120 // 2 minutos
+const TIEMPO_STREAK_TOTAL = 180 // 3 minutos
 
 function StreakDefenderGame({ onSalir, onXpGanado, racha, onSalvado, onRoto }) {
   const [preguntas] = useState(() => getProgressiveQuestions(racha, 5))

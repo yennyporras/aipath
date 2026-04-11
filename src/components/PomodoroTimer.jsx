@@ -87,7 +87,7 @@ function formatTiempo(seg) {
 // ═══════════════════════════════════════════════════════════════════════
 // MICROJUEGO: Verdadero/Falso simplificado (5 preguntas rápidas)
 // ═══════════════════════════════════════════════════════════════════════
-const TIEMPO_PREGUNTA = 8
+const TIEMPO_PREGUNTA = 20
 
 function MicrojuegoVerdaderoFalso({ onTerminar, erroresHistoricos, intentosHistoricos }) {
   // Dificultad adaptativa: si tasa de error > 40%, usar preguntas progresivas
