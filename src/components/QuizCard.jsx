@@ -4,6 +4,27 @@ import { playSound } from "../utils/sounds"
 
 const PRAISE = ["¡Exacto!", "¡Correcto!", "¡Bien pensado!", "¡Perfecto!", "¡Excelente!", "¡Así se hace!", "¡Genial!"]
 
+// Barra de progreso de lección: 4 pasos
+function LeccionProgressBar({ paso }) {
+  const pasos = ["Teoría", "Quiz", "Práctica", "Resultado"]
+  return (
+    <div className="flex items-center gap-0.5 mb-4 w-full">
+      {pasos.map((nombre, i) => (
+        <div key={i} className="flex flex-col items-center flex-1">
+          <div
+            className="w-full h-1 rounded-full transition-all duration-400"
+            style={{ background: i <= paso ? "#06B6D4" : "rgba(255,255,255,0.08)" }}
+          />
+          <span className="text-[9px] mt-0.5 font-medium"
+            style={{ color: i === paso ? "#06B6D4" : "rgba(255,255,255,0.2)" }}>
+            {nombre}
+          </span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function shuffleOpciones(pregunta) {
   const opciones = [...pregunta.opciones]
   const correctaTexto = opciones[pregunta.correcta]
@@ -87,6 +108,9 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
 
   return (
     <div className="w-full max-w-lg mx-auto relative">
+      {/* Barra de progreso lección */}
+      <LeccionProgressBar paso={1} />
+
       {/* XP flotante */}
       <AnimatePresence>
         {showXP && (
