@@ -554,9 +554,41 @@ export default function ExplorarScreen({ progreso = {} }) {
   }, [herramientaDelDia])
 
   const [modalAbierto, setModalAbierto] = useState(false)
+  const [toastVisible, setToastVisible] = useState(false)
+
+  // Abre URL externa siempre en nueva pestaña y muestra toast de aviso
+  const abrirEnNuevaPestana = useCallback((url) => {
+    setToastVisible(true)
+    setTimeout(() => setToastVisible(false), 2800)
+    window.open(url, "_blank", "noopener,noreferrer")
+  }, [])
 
   return (
     <>
+      {/* Toast: aviso de nueva pestaña */}
+      <AnimatePresence>
+        {toastVisible && (
+          <motion.div
+            key="toast-nueva-pestana"
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+            transition={{ duration: 0.25 }}
+            className="fixed bottom-24 left-1/2 z-50 px-4 py-2.5 rounded-xl text-xs font-semibold shadow-lg"
+            style={{
+              transform: "translateX(-50%)",
+              background: "rgba(15,15,26,0.95)",
+              border: "1px solid rgba(6,182,212,0.4)",
+              color: "#06B6D4",
+              whiteSpace: "nowrap",
+              backdropFilter: "blur(8px)",
+            }}
+          >
+            🔗 Abriendo en nueva pestaña para no perder tu progreso
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Modal de compartir */}
       {modalAbierto && (
         <ShareModal concepto={concepto} onClose={() => setModalAbierto(false)} />
@@ -729,10 +761,8 @@ export default function ExplorarScreen({ progreso = {} }) {
                     {h.caso_uso}
                   </p>
 
-                  <a
-                    href={h.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    onClick={() => abrirEnNuevaPestana(h.url)}
                     className="flex items-center justify-center gap-1 w-full py-2 rounded-xl text-xs font-semibold transition-all active:scale-95 mt-auto"
                     style={{
                       background: "rgba(255,255,255,0.07)",
@@ -741,7 +771,7 @@ export default function ExplorarScreen({ progreso = {} }) {
                     }}
                   >
                     Explorar →
-                  </a>
+                  </button>
                 </motion.div>
               )
             })}
