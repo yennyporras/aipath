@@ -495,7 +495,7 @@ export default function App() {
         {/* Header mobile */}
         {pantalla !== "intro" && (
           <div className="w-full max-w-2xl lg:hidden">
-            <Header rachaDiaria={progreso.rachaDiaria} rachaActual={rachaActual} installButton={installButton} />
+            <Header rachaDiaria={progreso.rachaDiaria} rachaActual={rachaActual} installButton={installButton} onVolverAInicio={handleVolverAcademy} />
             <XPBar xp={(progreso.xpTotal || 0) + xpSesion} rachaActual={rachaActual} />
           </div>
         )}
