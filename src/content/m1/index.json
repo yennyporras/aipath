@@ -8001,94 +8001,98 @@
         },
         {
           "id": "m1-b9-l5",
-          "titulo": "Regulación de IA en LATAM 2026",
+          "titulo": "Regulación global de IA: estado 2026",
           "bloque": 9,
           "tipo": "leccion",
           "duracion_min": 20,
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "La regulación de la inteligencia artificial en 2026 es un panorama fragmentado donde cada jurisdicción mayor ha tomado un camino diferente. Un AI Engineer que construye sistemas con alcance global debe navegar simultáneamente múltiples marcos regulatorios que a veces se alinean, a veces se contradicen y siempre evolucionan.\n\nEuropa lidera con el enfoque más comprehensivo: el EU AI Act, en vigor desde 2024, es el primer reglamento integral de IA del mundo con obligaciones vinculantes por categoría de riesgo, multas ejecutables y supervisión institucional a través de la Oficina Europea de Inteligencia Artificial. El GDPR sigue siendo la regulación de referencia para cualquier sistema que procese datos personales, creando una capa adicional de obligaciones sobre el EU AI Act. La combinación EU AI Act más GDPR es el marco más exigente del mundo para sistemas de IA en producción.\n\nEstados Unidos ha adoptado un enfoque radicalmente diferente: sectorial y voluntario en lugar de horizontal y obligatorio. La Executive Order de Biden sobre IA segura (octubre 2023) estableció directrices para agencias federales pero no creó obligaciones vinculantes para el sector privado. El NIST AI Risk Management Framework (publicado en 2023, actualizado en 2024) es el estándar de referencia para organizaciones que quieran demostrar gobernanza responsable de IA, pero su adopción es voluntaria. A nivel estatal, California (SB-1047, aunque vetado en 2024) y Colorado han impulsado regulaciones propias, creando un patchwork normativo sub-federal. En 2026, EEUU no tiene una regulación federal horizontal de IA comparable al EU AI Act.\n\nChina ha implementado regulaciones específicas por aplicación: la regulación de algoritmos de recomendación (2022), la regulación de deepfakes y síntesis de contenido (2022) y la regulación de servicios de IA generativa (2023) crean un marco detallado pero enfocado en control de contenido y supervisión del Partido. Las empresas internacionales que operen servicios de IA en China deben obtener aprobación regulatoria de la Cyberspace Administration of China (CAC), lo que en la práctica limita severamente el acceso de modelos de IA occidentales al mercado chino.\n\nEl Reino Unido post-Brexit ha elegido un enfoque pro-innovación: en lugar de nueva legislación, el gobierno publicó en 2023 un marco voluntario basado en principios que cada regulador sectorial (FCA para finanzas, CMA para competencia, ICO para datos) aplica dentro de su dominio. Este enfoque más flexible ha atraído inversión en IA pero también críticas sobre la ausencia de protecciones formales para ciudadanos.\n\nA nivel internacional, la ISO 42001 (publicada en 2023) establece los requisitos de un Sistema de Gestión de IA, análogamente a cómo ISO 27001 estructura la gestión de seguridad de la información. El estándar IEEE 7000 series aborda ética en sistemas autónomos y el recientemente publicado IEEE P2863 define métricas de fairness. Para sistemas que deben cumplir múltiples marcos regulatorios, la estrategia más eficiente es construir sobre el requisito más exigente (EU AI Act más GDPR) y luego verificar la alineación con los otros marcos, ya que el cumplimiento europeo generalmente satisface o supera las exigencias de otras jurisdicciones.",
+              "analogia": "Imagina que construyes un coche que debe circular en Europa, EEUU, China y Reino Unido. Europa exige airbags frontales y laterales, cinturones de tres puntos y sistemas de frenos ABS obligatorios. EEUU tiene regulaciones sectoriales según el tipo de vehículo. China tiene requisitos adicionales de software y conectividad. Si diseñas el coche cumpliendo el estándar más exigente (Europa), normalmente cumples automáticamente con los demás. La misma lógica aplica a sistemas de IA: diseña para el regulador más exigente y ajusta para los demás.",
+              "ejemplo_malo": "Desarrollar un sistema de scoring crediticio cumpliendo únicamente la regulación del país de origen de la empresa, sin analizar qué marcos adicionales se aplican cuando el sistema se despliega para usuarios en otros países, resultando en incumplimiento regulatorio descubierto post-lanzamiento.",
+              "ejemplo_bueno": "Al diseñar un sistema de IA para mercado global, crear una matriz de cumplimiento regulatorio que identifique los marcos aplicables por geografía y tipo de sistema, y construir sobre los requisitos del EU AI Act como baseline sabiendo que su cumplimiento facilita el alineamiento con marcos menos exigentes.",
+              "por_que_importa": "En 2026 es habitual que los productos de IA operen en múltiples jurisdicciones desde el primer día. Como AI Engineer, entender las diferencias entre marcos regulatorios te permite diseñar sistemas que sean globalmente desplegables sin costosas modificaciones post-lanzamiento, y te hace valioso para cualquier empresa con ambición de expansión internacional.",
+              "tip_profesional": "Mantén un archivo regulatorio actualizado para cada proyecto: una tabla que liste las jurisdicciones donde operará el sistema, la categoría de riesgo en cada marco regulatorio, las obligaciones específicas por jurisdicción y el estado de cumplimiento. Actualízalo en cada sprint. Es 30 minutos por semana que puede evitar meses de trabajo de remediation o multas."
             },
             "verificacion": [
               {
-                "pregunta": "¿Qué país de LATAM tiene la regulación de IA más avanzada al inicio de 2026 y qué enfoque adoptó?",
+                "pregunta": "¿Cuál es la diferencia fundamental en el enfoque regulatorio de IA entre la Unión Europea y los Estados Unidos en 2026?",
                 "opciones": [
-                  "Brasil, con la Ley 14.874/2024 que regula el uso de IA con enfoque basado en riesgos similar al EU AI Act",
-                  "México, con la Ley Federal de Inteligencia Artificial aprobada en 2023",
-                  "Colombia, con el Decreto 1494/2023 que prohibió la IA en decisiones judiciales",
-                  "Argentina, con la Estrategia Nacional de IA que tiene fuerza de ley desde 2022"
+                  "Europa adoptó un reglamento horizontal vinculante con obligaciones por categoría de riesgo; EEUU tiene un enfoque sectorial y voluntario sin regulación federal horizontal de IA",
+                  "EEUU prohíbe más aplicaciones de IA que Europa, mientras que Europa es más permisiva para favorecer la innovación",
+                  "Europa aplica solo el GDPR para regular la IA; EEUU tiene una ley federal específica de IA más detallada",
+                  "Ambas jurisdicciones han adoptado el mismo marco basado en el estándar ISO 42001 con implementaciones locales menores"
                 ],
                 "correcta": 0,
-                "explicacion_profunda": "Brasil lidera la regulación de IA en LATAM. La Ley 14.874/2024 de IA (aprobada por el Senado en diciembre 2024, sancionada por el presidente Lula) adoptó un enfoque basado en riesgos inspirado en el EU AI Act: clasifica sistemas de IA según impacto potencial, establece requisitos de transparencia y no discriminación, y crea una Autoridad Nacional de IA. Brasil tiene ventaja regulatoria porque ya contaba con la LGPD (Lei Geral de Proteção de Dados de 2020, equivalente al GDPR), lo que facilitó extender ese marco a IA. México tiene iniciativas legislativas pero sin ley aprobada al inicio de 2026. Colombia publicó guías y lineamientos no vinculantes. Argentina tiene su Estrategia Nacional de IA pero sin fuerza legal vinculante. Para desarrolladores de IA en LATAM, Brasil es el único mercado con regulación vinculante específica de IA, similar a operar en Europa con el EU AI Act.",
-                "concepto_reforzado": "Estado de la regulación de IA en LATAM: Brasil como líder regional"
+                "explicacion_profunda": "El EU AI Act es el primer reglamento horizontal de IA del mundo: se aplica a todos los sectores, tiene fuerza de ley directamente ejecutable en todos los estados miembros y establece obligaciones concretas con multas específicas. EEUU, en contraste, no tiene legislación federal comparable en 2026. El NIST AI Risk Management Framework es una guía voluntaria. La Executive Order sobre IA segura aplica a agencias federales pero no al sector privado. Las regulaciones sectoriales existentes (EEOC para empleo, CFPB para crédito, FDA para dispositivos médicos) se aplican a IA cuando afectan sus dominios, pero sin la estructura unificada del EU AI Act. Este diferencial regulatorio tiene consecuencias prácticas: empresas tecnológicas americanas con presencia en Europa deben cumplir el EU AI Act; empresas europeas que vendan en EEUU enfrentan un paisaje normativo más fragmentado pero generalmente menos exigente.",
+                "concepto_reforzado": "Diferencia EU AI Act vs regulación EEUU: horizontal vinculante vs sectorial voluntario"
               },
               {
-                "pregunta": "Colombia publicó en 2023 los 'Lineamientos de IA' del MinTIC. ¿Qué tipo de instrumento son y qué implicación legal tienen para una startup colombiana?",
+                "pregunta": "¿Qué es la ISO 42001 y cuál es su relevancia práctica para un AI Engineer en 2026?",
                 "opciones": [
-                  "Son guías de política pública no vinculantes: recomendaciones sin fuerza de ley, pero que señalan hacia dónde irá la regulación futura",
-                  "Son normas técnicas obligatorias equivalentes a una ley aprobada por el Congreso",
-                  "Son requisitos de certificación obligatoria para exportar software de IA a otros países",
-                  "Son contratos de adhesión que las startups deben firmar para acceder a financiación pública"
+                  "Es el estándar internacional de Sistema de Gestión de IA, análogo a ISO 27001 para seguridad, que proporciona un marco certificable para la gobernanza responsable de IA en organizaciones",
+                  "Es el estándar de la UE que reemplaza al EU AI Act para empresas que prefieren certificación voluntaria en lugar de cumplimiento regulatorio obligatorio",
+                  "Es el protocolo técnico que define cómo deben comunicarse los sistemas de IA entre sí para garantizar interoperabilidad internacional",
+                  "Es la regulación de la ONU sobre IA que todos los países miembros deben incorporar a su legislación nacional antes de 2027"
                 ],
                 "correcta": 0,
-                "explicacion_profunda": "Los Lineamientos de Política de Inteligencia Artificial del MinTIC de Colombia (2023) son documentos de política pública que establecen principios, recomendaciones y buenas prácticas. No tienen fuerza de ley porque no fueron aprobados como ley por el Congreso ni como decreto con fuerza ejecutiva. Para una startup colombiana, esto significa que técnicamente no son obligatorios — pero son señales importantes del marco regulatorio que vendrá. Ignorarlos completamente sería imprudente por tres razones: (1) establecen las expectativas del gobierno para licitaciones y contratos públicos, (2) los principios que articulan (transparencia, no discriminación, privacidad) probablemente serán la base de legislación futura, y (3) construir conforme a estos lineamientos desde el inicio es más barato que rediseñar cuando la ley llegue. El modelo LATAM actual es: guías voluntarias hoy → ley obligatoria en 2-5 años, siguiendo el camino de la LGPD brasileña.",
-                "concepto_reforzado": "Lineamientos no vinculantes de IA en Colombia y su relevancia práctica"
+                "explicacion_profunda": "La ISO/IEC 42001:2023 especifica los requisitos para establecer, implementar, mantener y mejorar continuamente un Sistema de Gestión de Inteligencia Artificial (SGAI) dentro de una organización. Como ISO 27001 establece cómo gestionar la seguridad de la información de forma sistemática, ISO 42001 hace lo mismo para la IA: define políticas, responsabilidades, procesos de evaluación de riesgos, controles y mecanismos de mejora continua. La certificación ISO 42001 es voluntaria pero tiene valor práctico: facilita demostrar due diligence de gobernanza de IA ante clientes empresariales, simplifica parte de la documentación exigida por el EU AI Act, y es reconocida en procesos de auditoría regulatoria en Europa y otras jurisdicciones. Para un AI Engineer, entender ISO 42001 ayuda a estructurar la documentación técnica del sistema de forma que sea reconocida globalmente.",
+                "concepto_reforzado": "ISO 42001: estándar de gestión de IA y su relación con cumplimiento regulatorio"
               },
               {
-                "pregunta": "¿Por qué es una ventaja competitiva para una empresa LATAM conocer la regulación de IA global (EU AI Act, Executive Order de EE.UU.) aunque opere localmente?",
+                "pregunta": "¿Por qué el diseñar un sistema de IA cumpliendo el EU AI Act más GDPR es la estrategia más eficiente para sistemas con alcance global?",
                 "opciones": [
-                  "Porque las regulaciones LATAM futuras se basarán en esos marcos, y adaptarse ahora evita costos de rediseño; además abre mercados internacionales",
-                  "Porque el EU AI Act aplica directamente en Colombia y México aunque no sean miembros de la UE",
-                  "Porque EE.UU. y Europa exigen certificación de cumplimiento para cualquier API de IA importada",
-                  "Porque los inversores internacionales solo financian startups que ya tienen certificación de compliance regulatorio"
+                  "Porque la combinación EU AI Act más GDPR es el marco más exigente del mundo, y su cumplimiento generalmente satisface o supera los requisitos de otras jurisdicciones como EEUU, Reino Unido o estándares ISO",
+                  "Porque el EU AI Act tiene un tratado de reconocimiento mutuo con todos los países del G20 que exime de otras regulaciones locales",
+                  "Porque las multas del EU AI Act son las más altas del mundo y pagar una sola sanción exime de responsabilidad en otras jurisdicciones",
+                  "Porque la Unión Europea ha presionado a otros países para que adopten el EU AI Act como estándar global obligatorio antes de 2027"
                 ],
                 "correcta": 0,
-                "explicacion_profunda": "El conocimiento de regulaciones internacionales da ventaja competitiva en LATAM por múltiples razones: (1) Convergencia regulatoria: las leyes de IA en LATAM se inspirarán en el EU AI Act y marcos similares, como la LGPD brasileña se inspiró en el GDPR. Cumplir hoy con estándares europeos es anticipar la regulación local de 2027-2030. (2) Acceso a mercados: una startup que puede demostrar compliance con EU AI Act puede vender en Europa y a multinacionales que operan en LATAM con estándares globales. (3) Diferenciación: en un mercado donde la mayoría ignora la regulación, el compliance se convierte en argumento de venta para clientes corporativos que tienen exposición internacional. (4) Fundraising: fondos de venture capital con presencia global evalúan el riesgo regulatorio de sus inversiones. Una startup que entiende y gestiona compliance reduce ese riesgo percibido. El EU AI Act no aplica directamente en Colombia, pero su influencia es inevitable.",
-                "concepto_reforzado": "Ventaja competitiva del compliance regulatorio internacional para startups LATAM"
+                "explicacion_profunda": "El principio de diseño para el regulador más exigente es una estrategia de cumplimiento eficiente cuando un sistema opera en múltiples jurisdicciones. El EU AI Act requiere: evaluación de conformidad, documentación técnica exhaustiva, sistema de gestión de riesgos, logging de actividad, supervisión humana y transparencia. El GDPR añade: minimización de datos, base legal para procesamiento, derechos de los interesados y privacidad por diseño. Juntos, estos marcos cubren las dimensiones que otros reguladores también exigen, aunque con menos detalle: el NIST AI RMF americano es conceptualmente compatible con el EU AI Act y menos específico. La regulación china de IA generativa comparte principios de transparencia y registro. ISO 42001 es un subconjunto de lo que ya exige el EU AI Act. El único caso donde esta estrategia no es suficiente es China, que tiene requisitos específicos de contenido y arquitectura de software que no se derivan de cumplir el EU AI Act.",
+                "concepto_reforzado": "Estrategia de cumplimiento global: diseñar para el marco más exigente"
               },
               {
-                "pregunta": "¿Cuál es el principal desafío de los países LATAM para regular la IA comparado con Europa?",
+                "pregunta": "¿Qué enfoque regulatorio adoptó el Reino Unido para la IA después del Brexit?",
                 "opciones": [
-                  "Menor capacidad institucional y técnica en agencias reguladoras, lo que dificulta supervisar sistemas complejos de IA",
-                  "Las constituciones latinoamericanas prohíben regular tecnología emergente sin precedente judicial",
-                  "LATAM tiene más empresas de IA que Europa, lo que hace imposible supervisarlas todas",
-                  "Los idiomas español y portugués no tienen terminología técnica para regular IA correctamente"
+                  "Un marco voluntario basado en principios donde cada regulador sectorial existente aplica la supervisión de IA dentro de su dominio, sin nueva legislación horizontal",
+                  "Adopción directa del EU AI Act como parte de los acuerdos de equivalencia regulatoria post-Brexit para mantener acceso al mercado único europeo",
+                  "Una prohibición temporal de desplegar sistemas de IA de alto riesgo hasta que se apruebe legislación nacional propia en 2027",
+                  "El mismo enfoque de EEUU: regulación federal sectorial con el NIST AI RMF como referencia obligatoria para empresas que operen en el país"
                 ],
                 "correcta": 0,
-                "explicacion_profunda": "El principal desafío de la regulación de IA en LATAM es la brecha de capacidad institucional. Europa construyó el EU AI Act sobre décadas de regulación tecnológica (GDPR, directivas de e-commerce), tiene agencias de protección de datos robustas en cada país miembro, y puede contratar expertos técnicos para las autoridades supervisoras. En LATAM, muchas agencias reguladoras tienen presupuestos limitados, alta rotación de personal técnico calificado, y poca experiencia previa regulando sistemas de software complejos. Esto crea el riesgo de 'regulatory capture' (donde las mismas empresas que deben ser reguladas terminan diseñando las reglas) y de leyes que se aprueban pero no se aplican por falta de capacidad de supervisión. Adicionalmente, LATAM enfrenta el dilema de innovación vs protección: regular demasiado puede ahuyentar inversión en IA, regular poco puede permitir daños significativos. Brasil es la excepción relativa con la ANPD (Autoridad Nacional de Protección de Datos) como precedente institucional.",
-                "concepto_reforzado": "Brecha de capacidad institucional en regulación de IA en LATAM"
+                "explicacion_profunda": "El gobierno del Reino Unido publicó en 2023 su white paper 'A pro-innovation approach to AI regulation' estableciendo un enfoque diferente tanto al europeo como al americano. En lugar de crear nueva legislación horizontal, el gobierno optó por empoderar a los reguladores sectoriales existentes para que apliquen principios de IA responsable dentro de sus dominios: la FCA supervisa IA en servicios financieros, el ICO en materia de datos, la CMA en competencia, la MHRA en dispositivos médicos. Los cinco principios guía (seguridad, transparencia, equidad, accountability e impugnabilidad) son voluntarios a nivel general pero pueden hacerse obligatorios por cada regulador en su sector. Este enfoque ha sido criticado por crear incertidumbre regulatoria y gaps de supervisión, pero defendido como más favorable a la innovación. En 2026, el gobierno revisó este enfoque y hay proyectos de legislación más formal en tramitación.",
+                "concepto_reforzado": "Enfoque regulatorio UK post-Brexit: pro-innovación y sectorial"
               },
               {
-                "pregunta": "Una empresa chilena usa reconocimiento facial para control de acceso de empleados. ¿Bajo qué marcos legales latinoamericanos podría estar sujeta esta práctica en 2026?",
+                "pregunta": "¿Cuáles son los requisitos específicos de la regulación china de IA generativa (2023) que una empresa global debe conocer si quiere operar en ese mercado?",
                 "opciones": [
-                  "La Ley 21.096 (reforma constitucional de protección de datos en Chile) y la Ley 19.628 de protección de datos privados, que regulan el tratamiento de datos biométricos",
-                  "Solo el EU AI Act si exporta sus servicios a Europa, sin regulación local aplicable",
-                  "El Código Penal chileno artículo 161-B que prohíbe cualquier sistema de identificación automatizada",
-                  "Sin marco regulatorio aplicable porque Chile no tiene ley de protección de datos vigente en 2026"
+                  "Registro obligatorio de servicios ante la Cyberspace Administration of China, marcado de contenido generado por IA, y restricciones de contenido alineadas con los valores del gobierno",
+                  "Adopción del estándar ISO 42001 con certificación por organismo chino reconocido por el gobierno",
+                  "Prohibición de usar modelos de IA entrenados fuera de China para servicios dirigidos a usuarios chinos",
+                  "Publicación obligatoria del código fuente y los pesos del modelo en repositorios accesibles al gobierno"
                 ],
                 "correcta": 0,
-                "explicacion_profunda": "Chile tiene regulación de datos personales que aplica al reconocimiento facial. La Ley 21.096 (2018) incorporó la protección de datos a la Constitución chilena como derecho fundamental. La Ley 19.628 sobre protección de la vida privada regula el tratamiento de datos personales, y los datos biométricos como huellas dactilares o patrones faciales son categorizados como datos sensibles que requieren consentimiento explícito del titular. Adicionalmente, Chile aprobó en 2024 una nueva Ley de Protección de Datos Personales (que moderniza la 19.628) que fortalece los derechos de los titulares incluyendo datos biométricos. Para el control de acceso de empleados con reconocimiento facial, se requiere: base legal clara (contrato laboral o consentimiento explícito), finalidad específica y proporcional, medidas de seguridad adecuadas, y posibilidad de optar por alternativas de identificación. El uso desproporcionado podría constituir vulneración de derechos fundamentales.",
-                "concepto_reforzado": "Marco legal chileno para datos biométricos y reconocimiento facial"
+                "explicacion_profunda": "Las 'Provisional Measures for the Management of Generative Artificial Intelligence Services' de la Cyberspace Administration of China (en vigor desde agosto 2023) establecen para servicios de IA generativa dirigidos al público chino: registro obligatorio del servicio ante la CAC antes del lanzamiento, obligación de marcar el contenido generado por IA con métodos técnicos identificables, responsabilidad del proveedor por el contenido generado (no exoneración por ser IA), evaluación de seguridad obligatoria para servicios con gran base de usuarios, y cumplimiento de regulaciones sobre contenido que incluyen restricciones sobre información que contradiga 'los valores socialistas fundamentales' o desafíe la autoridad del Partido Comunista. Estas restricciones de contenido son incompatibles con los principios de libertad de expresión que rigen en Europa y EEUU, por lo que en la práctica la mayoría de proveedores de modelos de IA occidentales no operan directamente en el mercado chino de consumo.",
+                "concepto_reforzado": "Regulación china de IA generativa: requisitos de registro y contenido"
               }
             ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Tu empresa desarrolla un asistente de IA para análisis financiero personal. Tienen usuarios en España, el Reino Unido y están considerando expandir a EEUU. El equipo ejecutivo pide un análisis de qué regulaciones aplican y cuáles son las obligaciones más críticas antes de cada lanzamiento.",
+              "instruccion": "Para cada una de las tres geografías (UE/España, Reino Unido, EEUU), identifica el marco regulatorio aplicable, la categoría de riesgo del sistema bajo ese marco, y las dos obligaciones técnicas más críticas que el equipo de ingeniería debe implementar.",
+              "input_malo": "El sistema es un asistente conversacional que da información financiera, pero no toma decisiones automáticas vinculantes sobre el dinero del usuario. Por lo tanto es de bajo riesgo en todas las jurisdicciones y solo necesita cumplir el GDPR para los datos personales.",
+              "pista": "Un asistente de análisis financiero personal que da recomendaciones sobre inversiones o gestión de dinero probablemente califica como sistema de alto riesgo en Europa (categoría servicios esenciales privados en Anexo III). Verifica si el servicio de crédito o inversión está en el ámbito del EU AI Act.",
+              "solucion": "UE/España: EU AI Act + GDPR. Si el sistema incluye recomendaciones de inversión o crédito, cae en Anexo III (servicios esenciales privados) como alto riesgo. Obligaciones técnicas: (1) Documentación técnica completa del modelo incluyendo evaluación de fairness por grupos demográficos. (2) Sistema de logging que registre cada recomendación para auditoría. Si es chatbot sin recomendaciones financieras vinculantes: riesgo limitado, obligación de indicar que es IA. Reino Unido: marco voluntario, pero la FCA supervisa servicios de asesoramiento financiero. Obligaciones: (1) Cumplir las Consumer Duty rules de la FCA sobre fair treatment of customers también para servicios con IA. (2) Registrar el sistema ante la FCA si da asesoramiento financiero regulado. EEUU: la SEC y FINRA tienen regulaciones sobre algoritmos de asesoramiento de inversión (robo-advisors). Obligaciones: (1) Registro como investment advisor si el sistema supera umbrales de activos gestionados o usuarios. (2) Cumplir Regulation Best Interest (Reg BI) para recomendaciones de inversión. Estrategia recomendada: construir cumpliendo el EU AI Act más GDPR como baseline y verificar alineamiento con FCA y SEC.",
+              "criterios_de_exito": [
+                "Identifica correctamente el marco regulatorio primario para cada una de las tres geografías",
+                "Distingue entre el caso de alto riesgo (con recomendaciones financieras) y riesgo limitado (solo información) en la UE",
+                "Menciona al menos un regulador sectorial específico para cada geografía además del marco de IA general"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "Responsabilidad legal en sistemas de IA",
+              "por_que_importa_despues": "Conocer los marcos regulatorios te dice qué debes cumplir. La responsabilidad legal te dice qué pasa cuando algo falla: quién responde, cómo se determinan los daños y cómo te proteges como developer. Es la cara práctica de la regulación que afecta directamente a tu carrera."
             }
           }
         },
