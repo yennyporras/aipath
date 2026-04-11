@@ -1,19 +1,11 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { useState, useEffect, useRef } from "react"
-
-/* ─── Afirmaciones del juego 1 ─── */
-const AFIRMACIONES = [
-  { texto: "GPT-4 es un modelo de lenguaje grande", respuesta: true },
-  { texto: "El prompt engineering es una habilidad profesional", respuesta: true },
-  { texto: "GDPR es una regulación europea de datos", respuesta: true },
-  { texto: "Fine-tuning adapta un modelo a tareas específicas", respuesta: true },
-  { texto: "Los tokens son unidades de texto que procesan los LLMs", respuesta: true },
-  { texto: "Los LLMs entienden el texto igual que los humanos", respuesta: false },
-  { texto: "Más parámetros siempre significa mejor rendimiento", respuesta: false },
-  { texto: "El zero-shot requiere ejemplos en el prompt", respuesta: false },
-  { texto: "Claude fue creado por OpenAI", respuesta: false },
-  { texto: "El overfitting mejora la generalización del modelo", respuesta: false },
-]
+import {
+  getTrueFalseQuestions,
+  getFlashcardQuestions,
+  getBatallaQuestions,
+  getCompletaConceptoQuestions,
+} from "../arcade/questionBank"
 
 const TIEMPO_POR_PREGUNTA = 8
 const XP_POR_CORRECTA = 1
@@ -53,6 +45,7 @@ function Confetti() {
 
 /* ─── Componente del juego Verdadero o Falso ─── */
 function VerdaderoFalsoGame({ onSalir, onXpGanado }) {
+  const [preguntas] = useState(() => getTrueFalseQuestions(10))
   const [indice, setIndice] = useState(0)
   const [tiempo, setTiempo] = useState(TIEMPO_POR_PREGUNTA)
   const [seleccion, setSeleccion] = useState(null) // true | false | null
@@ -61,8 +54,8 @@ function VerdaderoFalsoGame({ onSalir, onXpGanado }) {
   const [resultados, setResultados] = useState([]) // array de booleans
   const timerRef = useRef(null)
 
-  const pregunta = AFIRMACIONES[indice]
-  const esUltima = indice === AFIRMACIONES.length - 1
+  const pregunta = preguntas[indice]
+  const esUltima = indice === preguntas.length - 1
 
   /* ── Timer ── */
   useEffect(() => {
@@ -114,7 +107,7 @@ function VerdaderoFalsoGame({ onSalir, onXpGanado }) {
   /* ── Pantalla de resultado final ── */
   if (fase === "resultado") {
     const totalCorrectas = resultados.filter(Boolean).length
-    const pct = (totalCorrectas / AFIRMACIONES.length) * 100
+    const pct = (totalCorrectas / preguntas.length) * 100
     const ganarConfetti = totalCorrectas >= 8
     const xpTotal = totalCorrectas * XP_POR_CORRECTA + XP_BONUS_COMPLETAR
 
@@ -145,7 +138,7 @@ function VerdaderoFalsoGame({ onSalir, onXpGanado }) {
             style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}
           >
             <p className="text-5xl font-extrabold" style={{ color: "var(--color-text-primary)", fontFamily: "'Outfit', sans-serif" }}>
-              {totalCorrectas}<span className="text-2xl" style={{ color: "var(--color-text-secondary)" }}>/{AFIRMACIONES.length}</span>
+              {totalCorrectas}<span className="text-2xl" style={{ color: "var(--color-text-secondary)" }}>/{preguntas.length}</span>
             </p>
             <p className="text-sm mt-1" style={{ color: "var(--color-text-secondary)" }}>respuestas correctas</p>
 
@@ -248,7 +241,7 @@ function VerdaderoFalsoGame({ onSalir, onXpGanado }) {
           className="text-sm font-bold px-3 py-1.5 rounded-lg"
           style={{ background: "rgba(245,158,11,0.15)", color: "#F59E0B" }}
         >
-          {indice + 1}/{AFIRMACIONES.length}
+          {indice + 1}/{preguntas.length}
         </span>
       </div>
 
@@ -257,7 +250,7 @@ function VerdaderoFalsoGame({ onSalir, onXpGanado }) {
         <motion.div
           className="h-full rounded-full"
           style={{ background: "var(--color-accent-primary)" }}
-          animate={{ width: `${((indice) / AFIRMACIONES.length) * 100}%` }}
+          animate={{ width: `${((indice) / preguntas.length) * 100}%` }}
           transition={{ duration: 0.3 }}
         />
       </div>
@@ -377,24 +370,13 @@ function VerdaderoFalsoGame({ onSalir, onXpGanado }) {
   )
 }
 
-/* ─── Flashcards del juego 6 ─── */
-const FLASHCARDS_SPEED = [
-  { termino: "LLM",         definicion: "Modelo de lenguaje entrenado con grandes volúmenes de texto para generar texto" },
-  { termino: "Prompt",      definicion: "Instrucción o contexto que guía la respuesta de un modelo de IA" },
-  { termino: "Fine-tuning", definicion: "Reentrenar un modelo base con datos específicos de un dominio" },
-  { termino: "RAG",         definicion: "Combinar búsqueda de documentos con generación de texto del LLM" },
-  { termino: "Token",       definicion: "Unidad mínima de texto que procesa un modelo de lenguaje" },
-  { termino: "Temperature", definicion: "Parámetro que controla la creatividad/aleatoriedad del output" },
-  { termino: "Zero-shot",   definicion: "Pedir al modelo una tarea sin dar ejemplos previos" },
-  { termino: "EU AI Act",   definicion: "Regulación europea que clasifica sistemas de IA por nivel de riesgo" },
-]
-
 const XP_POR_SABIA   = 2
 const XP_BONUS_SPEED = 15
 const TIEMPO_TOTAL_SPEED = 180 // 3 minutos
 
 /* ─── Componente del juego Speed Cards ─── */
 function SpeedCardsGame({ onSalir, onXpGanado }) {
+  const [preguntas] = useState(() => getFlashcardQuestions(10))
   const [indice,    setIndice]    = useState(0)
   const [flipped,   setFlipped]   = useState(false)
   const [tiempo,    setTiempo]    = useState(TIEMPO_TOTAL_SPEED)
@@ -439,7 +421,7 @@ function SpeedCardsGame({ onSalir, onXpGanado }) {
   function responder(sabia) {
     const nuevos = [...resultadosRef.current, sabia]
     actualizarResultados(nuevos)
-    if (indice === FLASHCARDS_SPEED.length - 1) {
+    if (indice === preguntas.length - 1) {
       finalizarJuego(nuevos)
     } else {
       setFlipped(false)
@@ -456,7 +438,7 @@ function SpeedCardsGame({ onSalir, onXpGanado }) {
     setFase("jugando")
   }
 
-  const card       = FLASHCARDS_SPEED[Math.min(indice, FLASHCARDS_SPEED.length - 1)]
+  const card       = preguntas[Math.min(indice, preguntas.length - 1)]
   const sabiasCount = resultados.filter(Boolean).length
   const mins = Math.floor(tiempo / 60)
   const secs = tiempo % 60
@@ -466,7 +448,7 @@ function SpeedCardsGame({ onSalir, onXpGanado }) {
   /* ── Pantalla de resultado ── */
   if (fase === "resultado") {
     const xpTotal  = sabiasCount * XP_POR_SABIA + XP_BONUS_SPEED
-    const perfecta = sabiasCount === FLASHCARDS_SPEED.length
+    const perfecta = sabiasCount === preguntas.length
 
     return (
       <>
@@ -478,14 +460,14 @@ function SpeedCardsGame({ onSalir, onXpGanado }) {
           transition={{ duration: 0.4 }}
         >
           <div style={{ fontSize: 64 }}>
-            {sabiasCount === FLASHCARDS_SPEED.length ? "🏆" : sabiasCount >= 5 ? "👍" : "💪"}
+            {sabiasCount === preguntas.length ? "🏆" : sabiasCount >= 5 ? "👍" : "💪"}
           </div>
 
           <h2
             className="text-2xl font-extrabold text-center"
             style={{ fontFamily: "'Outfit', sans-serif", color: "var(--color-accent-primary)" }}
           >
-            {sabiasCount === FLASHCARDS_SPEED.length
+            {sabiasCount === preguntas.length
               ? "¡Las sabías todas!"
               : sabiasCount >= 5
               ? "¡Buen repaso!"
@@ -601,7 +583,7 @@ function SpeedCardsGame({ onSalir, onXpGanado }) {
         <motion.div
           className="h-full rounded-full"
           style={{ background: "var(--color-accent-primary)" }}
-          animate={{ width: `${(indice / FLASHCARDS_SPEED.length) * 100}%` }}
+          animate={{ width: `${(indice / preguntas.length) * 100}%` }}
           transition={{ duration: 0.3 }}
         />
       </div>
@@ -609,7 +591,7 @@ function SpeedCardsGame({ onSalir, onXpGanado }) {
       {/* Contador y pista */}
       <div className="flex justify-between items-center mb-4 px-1">
         <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
-          Card {indice + 1} de {FLASHCARDS_SPEED.length}
+          Card {indice + 1} de {preguntas.length}
         </span>
         {!flipped && (
           <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
@@ -759,24 +741,13 @@ function SpeedCardsGame({ onSalir, onXpGanado }) {
   )
 }
 
-/* ─── Datos del juego 5 — Batalla de Conceptos ─── */
-const PARES_BATALLA = [
-  { concepto: "Overfitting",      opciones: ["Modelo memoriza datos de entrenamiento",         "Modelo generaliza bien a datos nuevos"],      correcta: 0 },
-  { concepto: "Zero-shot",        opciones: ["El modelo necesita 100 ejemplos",                 "El modelo resuelve sin ejemplos previos"],     correcta: 1 },
-  { concepto: "Embedding",        opciones: ["Representación numérica de texto",                "Técnica para comprimir imágenes"],             correcta: 0 },
-  { concepto: "RLHF",             opciones: ["Entrenar con feedback humano",                    "Red neuronal de alta frecuencia"],             correcta: 0 },
-  { concepto: "Hallucination",    opciones: ["El modelo genera info falsa con confianza",       "El modelo rechaza responder preguntas"],       correcta: 0 },
-  { concepto: "Context window",   opciones: ["Interfaz gráfica del modelo",                    "Texto máximo que procesa el modelo"],          correcta: 1 },
-  { concepto: "Chain of thought", opciones: ["Cadena de modelos en serie",                     "Prompts que piden razonamiento paso a paso"],  correcta: 1 },
-  { concepto: "Transformer",      opciones: ["Arquitectura base de LLMs modernos",              "Técnica de compresión de datos"],              correcta: 0 },
-]
-
 const TIEMPO_BATALLA    = 6
 const XP_POR_BATALLA    = 2
 const XP_BONUS_BATALLA  = 20
 
 /* ─── Componente del juego Batalla de Conceptos ─── */
 function BatallaConceptosGame({ onSalir, onXpGanado }) {
+  const [preguntas] = useState(() => getBatallaQuestions(10))
   const [indice,    setIndice]    = useState(0)
   const [tiempo,    setTiempo]    = useState(TIEMPO_BATALLA)
   const [seleccion, setSeleccion] = useState(null)   // índice elegido | null
@@ -785,8 +756,8 @@ function BatallaConceptosGame({ onSalir, onXpGanado }) {
   const [resultados, setResultados] = useState([])
   const timerRef = useRef(null)
 
-  const par    = PARES_BATALLA[indice]
-  const esUltima = indice === PARES_BATALLA.length - 1
+  const par    = preguntas[indice]
+  const esUltima = indice === preguntas.length - 1
 
   /* ── Timer por ronda ── */
   useEffect(() => {
@@ -871,7 +842,7 @@ function BatallaConceptosGame({ onSalir, onXpGanado }) {
             VS
           </span>
           <p className="text-sm mt-2" style={{ color: "var(--color-text-secondary)" }}>
-            Ronda {indice + 2} de {PARES_BATALLA.length}
+            Ronda {indice + 2} de {preguntas.length}
           </p>
         </motion.div>
       </div>
@@ -881,7 +852,7 @@ function BatallaConceptosGame({ onSalir, onXpGanado }) {
   /* ── Pantalla de resultado final ── */
   if (fase === "resultado") {
     const total    = resultados.filter(Boolean).length
-    const pct      = (total / PARES_BATALLA.length) * 100
+    const pct      = (total / preguntas.length) * 100
     const confetti = total >= 6
     const xpTotal  = total * XP_POR_BATALLA + XP_BONUS_BATALLA
 
@@ -910,7 +881,7 @@ function BatallaConceptosGame({ onSalir, onXpGanado }) {
             style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}
           >
             <p className="text-5xl font-extrabold" style={{ color: "var(--color-text-primary)", fontFamily: "'Outfit', sans-serif" }}>
-              {total}<span className="text-2xl" style={{ color: "var(--color-text-secondary)" }}>/{PARES_BATALLA.length}</span>
+              {total}<span className="text-2xl" style={{ color: "var(--color-text-secondary)" }}>/{preguntas.length}</span>
             </p>
             <p className="text-sm mt-1" style={{ color: "var(--color-text-secondary)" }}>definiciones correctas</p>
             <div className="mt-3 h-3 rounded-full overflow-hidden" style={{ background: "var(--color-border)" }}>
@@ -985,7 +956,7 @@ function BatallaConceptosGame({ onSalir, onXpGanado }) {
           className="text-sm font-bold px-3 py-1.5 rounded-lg"
           style={{ background: "rgba(245,158,11,0.15)", color: "#F59E0B" }}
         >
-          {indice + 1}/{PARES_BATALLA.length}
+          {indice + 1}/{preguntas.length}
         </span>
       </div>
 
@@ -994,7 +965,7 @@ function BatallaConceptosGame({ onSalir, onXpGanado }) {
         <motion.div
           className="h-full rounded-full"
           style={{ background: "var(--color-accent-primary)" }}
-          animate={{ width: `${(indice / PARES_BATALLA.length) * 100}%` }}
+          animate={{ width: `${(indice / preguntas.length) * 100}%` }}
           transition={{ duration: 0.3 }}
         />
       </div>
@@ -1151,55 +1122,13 @@ function BatallaConceptosGame({ onSalir, onXpGanado }) {
 }
 
 /* ─── Datos del juego 3 — Completa el Concepto ─── */
-const FRASES_CONCEPTO = [
-  {
-    partes: ["El ", "___", " es la unidad mínima de texto que procesa un LLM"],
-    correcta: "token",
-    opciones: ["token", "párrafo", "byte", "carácter"],
-  },
-  {
-    partes: ["Un prompt de ", "___", " incluye ejemplos antes de la pregunta"],
-    correcta: "few-shot",
-    opciones: ["few-shot", "zero-shot", "fine-tuning", "RAG"],
-  },
-  {
-    partes: ["El EU AI Act clasifica los sistemas de IA por nivel de ", "___"],
-    correcta: "riesgo",
-    opciones: ["riesgo", "coste", "velocidad", "precisión"],
-  },
-  {
-    partes: ["El ", "___", " permite al modelo acceder a información externa actualizada"],
-    correcta: "RAG",
-    opciones: ["RAG", "RLHF", "fine-tuning", "embedding"],
-  },
-  {
-    partes: ["La ", "___", " controla qué tan creativo o predecible es el output del modelo"],
-    correcta: "temperature",
-    opciones: ["temperature", "topP", "frecuencia", "longitud"],
-  },
-  {
-    partes: ["Claude fue creado por ", "___"],
-    correcta: "Anthropic",
-    opciones: ["Anthropic", "OpenAI", "Google", "Meta"],
-  },
-  {
-    partes: ["El ", "___", " es cuando el modelo aprende de feedback humano sobre sus respuestas"],
-    correcta: "RLHF",
-    opciones: ["RLHF", "RAG", "fine-tuning", "prompting"],
-  },
-  {
-    partes: ["Un modelo ", "___", " puede procesar texto e imágenes simultáneamente"],
-    correcta: "multimodal",
-    opciones: ["multimodal", "generativo", "supervisado", "base"],
-  },
-]
-
 const TIEMPO_CONCEPTO   = 10
 const XP_POR_CONCEPTO   = 2
 const XP_BONUS_CONCEPTO = 20
 
 /* ─── Componente del juego Completa el Concepto ─── */
 function CompletaConceptoGame({ onSalir, onXpGanado }) {
+  const [preguntas] = useState(() => getCompletaConceptoQuestions(10))
   const [indice,    setIndice]    = useState(0)
   const [tiempo,    setTiempo]    = useState(TIEMPO_CONCEPTO)
   const [seleccion, setSeleccion] = useState(null) // string | null
@@ -1208,8 +1137,8 @@ function CompletaConceptoGame({ onSalir, onXpGanado }) {
   const [resultados, setResultados] = useState([])
   const timerRef = useRef(null)
 
-  const frase   = FRASES_CONCEPTO[indice]
-  const esUltima = indice === FRASES_CONCEPTO.length - 1
+  const frase   = preguntas[indice]
+  const esUltima = indice === preguntas.length - 1
 
   /* ── Timer ── */
   useEffect(() => {
@@ -1273,7 +1202,7 @@ function CompletaConceptoGame({ onSalir, onXpGanado }) {
   /* ── Resultado final ── */
   if (fase === "resultado") {
     const total   = resultados.filter(Boolean).length
-    const pct     = (total / FRASES_CONCEPTO.length) * 100
+    const pct     = (total / preguntas.length) * 100
     const confetti = total >= 6
     const xpTotal = total * XP_POR_CONCEPTO + XP_BONUS_CONCEPTO
 
@@ -1303,7 +1232,7 @@ function CompletaConceptoGame({ onSalir, onXpGanado }) {
             style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)" }}
           >
             <p className="text-5xl font-extrabold" style={{ color: "var(--color-text-primary)", fontFamily: "'Outfit', sans-serif" }}>
-              {total}<span className="text-2xl" style={{ color: "var(--color-text-secondary)" }}>/{FRASES_CONCEPTO.length}</span>
+              {total}<span className="text-2xl" style={{ color: "var(--color-text-secondary)" }}>/{preguntas.length}</span>
             </p>
             <p className="text-sm mt-1" style={{ color: "var(--color-text-secondary)" }}>frases completadas</p>
             <div className="mt-3 h-3 rounded-full overflow-hidden" style={{ background: "var(--color-border)" }}>
@@ -1378,7 +1307,7 @@ function CompletaConceptoGame({ onSalir, onXpGanado }) {
           className="text-sm font-bold px-3 py-1.5 rounded-lg"
           style={{ background: "rgba(245,158,11,0.15)", color: "#F59E0B" }}
         >
-          {indice + 1}/{FRASES_CONCEPTO.length}
+          {indice + 1}/{preguntas.length}
         </span>
       </div>
 
@@ -1387,7 +1316,7 @@ function CompletaConceptoGame({ onSalir, onXpGanado }) {
         <motion.div
           className="h-full rounded-full"
           style={{ background: "var(--color-accent-primary)" }}
-          animate={{ width: `${(indice / FRASES_CONCEPTO.length) * 100}%` }}
+          animate={{ width: `${(indice / preguntas.length) * 100}%` }}
           transition={{ duration: 0.3 }}
         />
       </div>
