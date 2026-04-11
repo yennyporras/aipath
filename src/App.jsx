@@ -891,7 +891,12 @@ export default function App() {
             <AcademyScreen progreso={progreso} onSelectModulo={handleSelectModulo} />
           )}
           {pantalla === "arcade" && <ArcadeScreen />}
-          {pantalla === "explorar" && <ExplorarScreen />}
+          {pantalla === "explorar" && (
+            <ExplorarScreen
+              progreso={progreso}
+              onSelectModulo={handleSelectModulo}
+            />
+          )}
           {pantalla === "perfil" && (
             <PerfilScreen
               session={getSession()}
