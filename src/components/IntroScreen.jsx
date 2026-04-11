@@ -20,6 +20,8 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
   const totalLecciones = todas.length
 
   const todosBloquesCompletos = bloques.every(b => b.lecciones.every(l => completadas.includes(l.id)))
+  const tieneBossBattle = !!modulo.boss_battle
+  const bossBattleAprobado = completadas.includes("m1-boss-battle")
 
   function bloqueDesbloqueado(bi) {
     if (bi === 0) return true
@@ -124,6 +126,56 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
           )
         })}
       </div>
+
+      {/* Boss Battle — M1 */}
+      {tieneBossBattle && totalLecciones > 0 && (
+        <button
+          onClick={() => todosBloquesCompletos && onSelectBlock({ id: "boss_battle" })}
+          disabled={!todosBloquesCompletos}
+          className={`animate-reveal w-full text-left flex items-center gap-4 p-4 mt-3 rounded-2xl transition-all ${
+            todosBloquesCompletos
+              ? "surface-interactive cursor-pointer"
+              : "opacity-40 cursor-not-allowed border border-white/4"
+          }`}
+          style={{
+            animationDelay: `${240 + bloques.length * 80}ms`,
+            ...(todosBloquesCompletos && !bossBattleAprobado
+              ? { border: "1px solid rgba(245,158,11,0.25)", boxShadow: "0 0 24px rgba(245,158,11,0.08)" }
+              : {}),
+            ...(bossBattleAprobado
+              ? { border: "1px solid rgba(6,182,212,0.25)" }
+              : {})
+          }}
+        >
+          <div
+            className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
+            style={{ background: bossBattleAprobado ? "rgba(6,182,212,0.15)" : "rgba(245,158,11,0.15)" }}
+          >
+            {!todosBloquesCompletos ? "🔒" : bossBattleAprobado ? "🏆" : "⚔️"}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="font-display text-sm font-bold" style={{ color: bossBattleAprobado ? "#06B6D4" : "#F59E0B" }}>
+              Boss Battle: M1 Master
+            </p>
+            <div className="flex items-center gap-2 mt-1">
+              <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>20 preguntas · 45 min</span>
+              <span style={{ fontSize: "10px", color: "var(--color-text-muted)" }}>·</span>
+              <span style={{ fontSize: "10px", color: "#F59E0B" }}>500 XP</span>
+            </div>
+            {!todosBloquesCompletos && (
+              <p style={{ fontSize: "10px", color: "var(--color-text-muted)", marginTop: "4px" }}>
+                Completa todos los bloques para desbloquear
+              </p>
+            )}
+            {bossBattleAprobado && (
+              <p style={{ fontSize: "10px", color: "#06B6D4", marginTop: "4px" }}>✓ Superado</p>
+            )}
+          </div>
+          <span style={{ fontSize: "11px", color: bossBattleAprobado ? "#06B6D4" : "#F59E0B" }}>
+            {bossBattleAprobado ? "✓" : todosBloquesCompletos ? "→" : ""}
+          </span>
+        </button>
+      )}
 
       {/* Proyecto Final — solo M4 */}
       {mostrarProyectoCert && totalLecciones > 0 && (

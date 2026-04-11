@@ -530,6 +530,7 @@ export default function App() {
   const [bloqueParaRating, setBloqueParaRating] = useState(null)
   const [showMilestone55, setShowMilestone55] = useState(false)
   const skipRatingRef = useRef(false)
+  const [isBossBattle, setIsBossBattle] = useState(false)
 
   const { isInstallable, isInstalled, promptInstall } = usePWAInstall()
   const isMobile = typeof window !== "undefined" && window.innerWidth < 1024
@@ -598,6 +599,21 @@ export default function App() {
   function handleSelectBlock(bloque) {
     if (bloque.id === "proyecto_final") { setPantalla("proyecto"); setBloqueActual(null); return }
     if (bloque.id === "certificacion_final") { setPantalla("certificacion"); setBloqueActual(null); return }
+    if (bloque.id === "boss_battle") {
+      const bb = moduloData.boss_battle
+      setIsBossBattle(true)
+      setLeccionActual(bb)
+      setPreguntasQuiz(shuffleArray(bb.preguntas))
+      setPreguntaActual(0)
+      setXpSesion(0)
+      setRespondidas(0)
+      setCorrectas(0)
+      setRachaActual(0)
+      setBloqueActual(null)
+      setPantalla("quiz")
+      return
+    }
+    setIsBossBattle(false)
     setBloqueActual(bloque)
     setPantalla("lessons")
   }
@@ -640,14 +656,27 @@ export default function App() {
   }
 
   function handleSiguiente() {
-    const preguntas = leccionActual.contenido.verificacion
+    const preguntas = preguntasQuiz.length > 0 ? preguntasQuiz : (leccionActual?.contenido?.verificacion || [])
     if (preguntaActual < preguntas.length - 1) {
       setPreguntaActual(prev => prev + 1)
     } else {
       const nuevoProgreso = { ...progreso }
-      nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + xpSesion
       nuevoProgreso.ultimaSesion = new Date().toDateString()
       const minAprobacion = Math.ceil(preguntas.length * 0.7)
+      if (isBossBattle) {
+        // Boss Battle: XP fijo de 500 si aprueba
+        if (correctas >= minAprobacion && !nuevoProgreso.leccionesCompletadas.includes(leccionActual.id)) {
+          nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + (moduloData.boss_battle.xp || 500)
+          nuevoProgreso.leccionesCompletadas = [...nuevoProgreso.leccionesCompletadas, leccionActual.id]
+          nuevoProgreso.badges = [...nuevoProgreso.badges, leccionActual.id]
+        }
+        setXpSesion(correctas >= minAprobacion ? (moduloData.boss_battle.xp || 500) : xpSesion)
+        guardarProgreso(nuevoProgreso)
+        setProgreso(nuevoProgreso)
+        setPantalla("results")
+        return
+      }
+      nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + xpSesion
       if (correctas >= minAprobacion) {
         if (!nuevoProgreso.leccionesCompletadas.includes(leccionActual.id)) {
           nuevoProgreso.leccionesCompletadas = [...nuevoProgreso.leccionesCompletadas, leccionActual.id]
@@ -677,14 +706,24 @@ export default function App() {
 
   function handleReintentar() {
     setPreguntaActual(0); setXpSesion(0); setRespondidas(0); setCorrectas(0); setRachaActual(0)
-    setPreguntasQuiz(shuffleArray(leccionActual.contenido.verificacion))
+    if (isBossBattle) {
+      setPreguntasQuiz(shuffleArray(moduloData.boss_battle.preguntas))
+    } else {
+      setPreguntasQuiz(shuffleArray(leccionActual.contenido.verificacion))
+    }
     setPantalla("quiz")
   }
 
   function handleVolver() {
     if (!moduloData) { setPantalla("academy"); return }
+    if (isBossBattle) {
+      setIsBossBattle(false)
+      setLeccionActual(null)
+      setPantalla("intro")
+      return
+    }
     const todas = moduloData.bloques.flatMap(b => b.lecciones)
-    const preguntas = leccionActual.contenido.verificacion
+    const preguntas = preguntasQuiz.length > 0 ? preguntasQuiz : (leccionActual?.contenido?.verificacion || [])
     const minAprobacion = Math.ceil(preguntas.length * 0.7)
 
     // Detectar fin de bloque F4: si aprobó y todas las lecciones con quiz del bloque están completas
@@ -935,7 +974,7 @@ export default function App() {
             {respondidas > preguntaActual && (
               <div className="flex justify-center mt-5 animate-slide-up">
                 <button onClick={handleSiguiente} className="btn-primary px-8 py-3.5 rounded-xl text-sm">
-                  {preguntaActual < preguntas.length - 1 ? "Siguiente pregunta →" : "Ver práctica ✨"}
+                  {preguntaActual < preguntas.length - 1 ? "Siguiente pregunta →" : (isBossBattle ? "Ver resultado ⚔️" : "Ver práctica ✨")}
                 </button>
               </div>
             )}
@@ -958,6 +997,8 @@ export default function App() {
               onRestart={handleReintentar}
               onVolver={handleVolver}
               hayNextLesson={hayNextLesson}
+              isBossBattle={isBossBattle}
+              nombreUsuario={getSession()?.nombre || "Estudiante"}
             />
           </div>
         )}

@@ -2,6 +2,157 @@ import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { playSound } from "../utils/sounds"
 
+// ── Tarjeta compartible Boss Battle ─────────────────────────────────
+const BOSS_TOPICS = ["Fundamentos IA", "Machine Learning", "LLMs & Transformers", "Ética y Regulación", "IA en Producción"]
+
+function getBossBadge(correctas) {
+  if (correctas >= 18) return { label: "M1 Master", color: "#F59E0B" }
+  if (correctas >= 15) return { label: "M1 Expert", color: "#06B6D4" }
+  if (correctas >= 14) return { label: "M1 Aprobado", color: "#10B981" }
+  return { label: "M1 — Sigue intentando", color: "#94A3B8" }
+}
+
+function BossBattleCard({ correctas, totalPreguntas, nombreUsuario, xp }) {
+  const [copiado, setCopiado] = useState(false)
+  const pct = totalPreguntas > 0 ? Math.round((correctas / totalPreguntas) * 100) : 0
+  const badge = getBossBadge(correctas)
+  const passed = correctas >= Math.ceil(totalPreguntas * 0.7)
+
+  async function compartir() {
+    const texto = `Acabo de completar el Boss Battle de Fundamentos de IA en AIPath con ${correctas}/${totalPreguntas}. ¿Te atreves? aipath-beta.vercel.app`
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "AIPath — Boss Battle M1",
+          text: texto,
+          url: "https://aipath-beta.vercel.app"
+        })
+      } catch { /* usuario canceló */ }
+    } else {
+      try {
+        await navigator.clipboard.writeText(texto)
+        setCopiado(true)
+        setTimeout(() => setCopiado(false), 3000)
+      } catch { /* sin permisos de clipboard */ }
+    }
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.7, duration: 0.4 }}
+      style={{
+        background: "#050508",
+        border: "1px solid #1E1E35",
+        borderRadius: 20,
+        padding: "28px 24px 24px",
+        marginTop: 20,
+        width: "100%"
+      }}
+    >
+      {/* Logo */}
+      <div style={{ textAlign: "center", marginBottom: 16 }}>
+        <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 900, fontSize: 20 }}>
+          <span style={{ color: "#06B6D4" }}>AI</span>
+          <span style={{ color: "#e2e8f0" }}>Path</span>
+        </span>
+      </div>
+
+      {/* Ícono estrella */}
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
+        <div style={{
+          width: 56, height: 56, borderRadius: "50%",
+          background: "rgba(245,158,11,0.15)",
+          border: "2px solid rgba(245,158,11,0.35)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 28
+        }}>
+          {passed ? "⭐" : "⚔️"}
+        </div>
+      </div>
+
+      {/* Badge */}
+      <div style={{ textAlign: "center", marginBottom: 8 }}>
+        <span style={{
+          fontSize: 11, fontWeight: 700,
+          color: badge.color,
+          background: `${badge.color}18`,
+          padding: "4px 12px", borderRadius: 99,
+          border: `1px solid ${badge.color}40`
+        }}>
+          {badge.label}
+        </span>
+      </div>
+
+      {/* Nombre */}
+      <p style={{ textAlign: "center", fontSize: 15, fontWeight: 700, color: "#e2e8f0", marginBottom: 2 }}>
+        {nombreUsuario}
+      </p>
+      <p style={{ textAlign: "center", fontSize: 11, color: "#64748B", marginBottom: 16 }}>
+        Boss Battle — Fundamentos de IA
+      </p>
+
+      {/* Puntuación */}
+      <div style={{
+        display: "flex", justifyContent: "center", gap: 24, marginBottom: 14,
+        background: "rgba(255,255,255,0.03)", borderRadius: 12, padding: "12px 0"
+      }}>
+        <div style={{ textAlign: "center" }}>
+          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 26, fontWeight: 900, color: "#06B6D4", lineHeight: 1 }}>
+            {correctas}/{totalPreguntas}
+          </p>
+          <p style={{ fontSize: 10, color: "#64748B", marginTop: 4 }}>respuestas</p>
+        </div>
+        <div style={{ width: 1, background: "#1E1E35" }} />
+        <div style={{ textAlign: "center" }}>
+          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 26, fontWeight: 900, color: "#F59E0B", lineHeight: 1 }}>
+            {pct}%
+          </p>
+          <p style={{ fontSize: 10, color: "#64748B", marginTop: 4 }}>precisión</p>
+        </div>
+        <div style={{ width: 1, background: "#1E1E35" }} />
+        <div style={{ textAlign: "center" }}>
+          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 26, fontWeight: 900, color: "#10B981", lineHeight: 1 }}>
+            +{passed ? xp : 0}
+          </p>
+          <p style={{ fontSize: 10, color: "#64748B", marginTop: 4 }}>XP</p>
+        </div>
+      </div>
+
+      {/* Topic pills */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "center", marginBottom: 16 }}>
+        {BOSS_TOPICS.map(t => (
+          <span key={t} style={{
+            fontSize: 10, fontWeight: 600,
+            color: "#94A3B8",
+            background: "rgba(255,255,255,0.05)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            padding: "3px 10px", borderRadius: 99
+          }}>
+            {t}
+          </span>
+        ))}
+      </div>
+
+      {/* URL */}
+      <p style={{ textAlign: "center", fontSize: 10, color: "#475569", marginBottom: 16 }}>
+        aipath-beta.vercel.app
+      </p>
+
+      {/* Botón compartir */}
+      <motion.button
+        onClick={compartir}
+        className="btn-primary w-full py-3 text-sm font-semibold"
+        whileTap={{ scale: 0.97 }}
+        style={{ borderRadius: 12 }}
+      >
+        {copiado ? "¡Copiado! Pégalo donde quieras 📋" : "Compartir logro"}
+      </motion.button>
+    </motion.div>
+  )
+}
+
 function getMessage(pct) {
   if (pct === 100) return { emoji: "🏆", text: "¡Puntuación perfecta! Dominas este concepto." }
   if (pct >= 85)  return { emoji: "🌟", text: "¡Excelente! Casi perfecto." }
@@ -68,7 +219,7 @@ function ConfettiRain() {
   )
 }
 
-export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, onRestart, onVolver, hayNextLesson }) {
+export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, onRestart, onVolver, hayNextLesson, isBossBattle = false, nombreUsuario = "Estudiante" }) {
   const pct    = totalPreguntas > 0 ? Math.round((correctas / totalPreguntas) * 100) : 100
   const passed = totalPreguntas === 0 || correctas >= Math.ceil(totalPreguntas * 0.7)
   const msg    = getMessage(pct)
@@ -216,10 +367,20 @@ export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, 
             className="btn-primary w-full px-5 py-3.5 text-sm font-semibold"
             whileTap={{ scale: 0.97 }}
           >
-            {passed && hayNextLesson ? "Siguiente lección →" : "Volver"}
+            {isBossBattle ? "Volver al módulo" : passed && hayNextLesson ? "Siguiente lección →" : "Volver"}
           </motion.button>
         </motion.div>
       </motion.div>
+
+      {/* Tarjeta compartible — solo Boss Battle */}
+      {isBossBattle && (
+        <BossBattleCard
+          correctas={correctas}
+          totalPreguntas={totalPreguntas}
+          nombreUsuario={nombreUsuario}
+          xp={xp}
+        />
+      )}
     </div>
   )
 }
