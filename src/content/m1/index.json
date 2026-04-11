@@ -7814,87 +7814,91 @@
           "xp": 50,
           "contenido": {
             "teoria": {
-              "explicacion": "PENDIENTE DE GENERAR",
-              "analogia": "",
-              "ejemplo_malo": "",
-              "ejemplo_bueno": "",
-              "por_que_importa": "",
-              "tip_profesional": ""
+              "explicacion": "Explainable AI (XAI) es el conjunto de técnicas y metodologías que permiten entender por qué un modelo de machine learning llega a una predicción determinada. En 2026, la explicabilidad ha pasado de ser una característica deseable a un requisito legal en Europa y una expectativa estándar en cualquier sistema de alto impacto.\n\nEl problema de la caja negra tiene consecuencias reales. En 2020, el gobierno holandés fue obligado por un tribunal a apagar el sistema SyRI, un algoritmo de detección de fraude en beneficios sociales, precisamente porque no podía explicar cómo tomaba sus decisiones. El tribunal consideró que la opacidad violaba los derechos fundamentales de los ciudadanos. Este caso estableció precedente europeo: la opacidad algorítmica no es aceptable en sistemas que afectan derechos.\n\nEl GDPR, en su Artículo 22, establece el derecho a no ser sujeto de decisiones completamente automatizadas con efectos significativos, y cuando esas decisiones sí ocurren, el derecho a obtener una explicación significativa de la lógica aplicada. Esto no es retórico: si tu sistema rechaza una solicitud de crédito, empleo o acceso a un servicio, el afectado tiene derecho legal a entender el razonamiento detrás de la decisión.\n\nLas dos técnicas de XAI más usadas en la industria son SHAP y LIME. SHAP (SHapley Additive exPlanations), basado en teoría de juegos cooperativos, calcula la contribución de cada feature a una predicción específica de forma matemáticamente consistente. Si un modelo de crédito rechaza una solicitud, SHAP muestra que el historial de pagos contribuyó -0.30 a la puntuación, el nivel de ingresos +0.10 y la antigüedad laboral +0.05. LIME (Local Interpretable Model-Agnostic Explanations) funciona diferente: construye perturbaciones aleatorias alrededor del punto de interés y ajusta un modelo lineal simple para aproximar el comportamiento del modelo complejo en ese entorno local.\n\nLa elección entre ambas depende del contexto. SHAP es más robusto matemáticamente y más adecuado para cumplimiento regulatorio porque sus explicaciones son consistentes globalmente. LIME es más rápido computacionalmente y más flexible. Para sistemas bajo EU AI Act de alto riesgo, SHAP es el estándar de facto en auditorías técnicas.\n\nMás allá de las técnicas, la explicabilidad tiene dimensiones organizacionales. Los modelos interpretables por diseño, como árboles de decisión o regresión logística, son preferibles en contextos de alto riesgo aunque sacrifiquen algo de performance. El principio rector es el mínimo de complejidad necesaria: no uses una red neuronal de 200 capas para predecir algo que un modelo lineal puede predecir casi igual de bien, especialmente si las decisiones afectan directamente a personas.",
+              "analogia": "Un médico que dice solo \"está enfermo, tome esta medicina\" sin explicar el diagnóstico viola la ética médica, independientemente de que su tasa de acierto sea del 95%. El paciente tiene derecho a entender la lógica para poder dar su consentimiento informado, buscar una segunda opinión o cuestionar la decisión. Los sistemas de IA que toman decisiones sobre personas deben cumplir el mismo estándar de transparencia.",
+              "ejemplo_malo": "Desplegar un modelo de deep learning para decisiones de crédito bancario porque tiene el mejor AUC, sin implementar ningún mecanismo de explicación, argumentando que el modelo es propiedad intelectual de la empresa y no puede ser auditado externamente por razones comerciales.",
+              "ejemplo_bueno": "Implementar SHAP en el pipeline de inferencia para generar automáticamente los tres principales factores de cada decisión negativa, almacenarlos en la base de datos del cliente y exponerlos vía API al sistema front-end para que el cliente rechazado reciba una explicación comprensible en lenguaje natural.",
+              "por_que_importa": "El GDPR Art. 22 y el EU AI Act exigen explicabilidad en sistemas de alto riesgo que operan en Europa. Implementar XAI desde el diseño del sistema, y no como un parche posterior, es significativamente más barato, más robusto técnicamente y es la diferencia entre un sistema que puede operar legalmente en la UE y uno que enfrenta riesgo regulatorio permanente.",
+              "tip_profesional": "Integra SHAP en tu pipeline de evaluación desde la primera iteración del modelo, no solo para el modelo final. Los valores SHAP durante el desarrollo revelan qué features está realmente usando el modelo, detectan proxies discriminatorios antes del despliegue y te dan el vocabulario técnico preciso para comunicar el comportamiento del modelo tanto a stakeholders no técnicos como a auditores regulatorios del EU AI Act."
             },
             "verificacion": [
               {
-                "pregunta": "¿Cuál es la diferencia principal entre 'interpretabilidad' y 'explicabilidad' en sistemas de IA?",
+                "pregunta": "¿Cuál es la diferencia técnica fundamental entre SHAP y LIME para explicar predicciones individuales?",
                 "opciones": [
-                  "Interpretabilidad es la capacidad intrínseca del modelo de ser comprendido; explicabilidad es la capacidad de generar explicaciones post-hoc para modelos de caja negra",
-                  "Interpretabilidad aplica solo a modelos lineales; explicabilidad aplica solo a redes neuronales profundas",
-                  "Son sinónimos exactos que describen la misma propiedad técnica del modelo",
-                  "Interpretabilidad mide la velocidad de inferencia; explicabilidad mide la precisión del modelo"
+                  "SHAP asigna contribuciones basadas en teoría de juegos de Shapley con garantías matemáticas de consistencia global; LIME aproxima el modelo localmente con un modelo lineal simple en el entorno de la predicción",
+                  "SHAP solo funciona con redes neuronales; LIME funciona con cualquier tipo de modelo",
+                  "SHAP explica modelos de clasificación; LIME explica modelos de regresión",
+                  "SHAP requiere acceso al código fuente del modelo; LIME solo requiere acceso a las predicciones"
                 ],
                 "correcta": 0,
-                "explicacion_profunda": "Interpretabilidad (o transparencia intrínseca) significa que el modelo mismo es comprensible por diseño: una regresión logística, un árbol de decisión pequeño o reglas IF-THEN son interpretables porque un humano puede leer el modelo y entender por qué predice lo que predice. Explicabilidad (XAI - Explainable AI) es diferente: aplica técnicas post-hoc para generar aproximaciones de por qué un modelo de caja negra —como una red neuronal profunda— tomó una decisión específica. Herramientas como LIME (Local Interpretable Model-agnostic Explanations) y SHAP (SHapley Additive exPlanations) generan explicaciones locales aproximadas sin modificar el modelo original. La distinción importa porque las explicaciones post-hoc son aproximaciones que pueden ser engañosas, mientras que los modelos interpretables garantizan comprensión real aunque suelen tener menor rendimiento predictivo.",
-                "concepto_reforzado": "Diferencia entre interpretabilidad intrínseca y explicabilidad post-hoc"
+                "explicacion_profunda": "SHAP (SHapley Additive exPlanations) está fundamentado en la teoría de valores de Shapley de economía cooperativa. Para cada predicción calcula la contribución marginal de cada feature promediada sobre todas las posibles combinaciones de features, garantizando tres propiedades matemáticas clave: eficiencia (las contribuciones suman la diferencia entre la predicción y la media del modelo), simetría (features con igual impacto reciben igual contribución) y monotonicidad (features más importantes reciben mayor atribución). LIME, en contraste, genera perturbaciones aleatorias alrededor del punto de interés, obtiene las predicciones del modelo para esas perturbaciones y ajusta un modelo lineal simple a esos resultados locales. LIME es más rápido pero menos consistente: explicaciones para puntos cercanos pueden contradecirse. Para cumplimiento regulatorio bajo EU AI Act, SHAP es el estándar preferido por su consistencia demostrable matemáticamente.",
+                "concepto_reforzado": "SHAP vs LIME: fundamentos técnicos y casos de uso regulatorios"
               },
               {
-                "pregunta": "SHAP (SHapley Additive exPlanations) asigna un valor a cada feature de una predicción. ¿De dónde viene matemáticamente este valor?",
+                "pregunta": "¿Qué establece específicamente el Artículo 22 del GDPR respecto a decisiones automatizadas?",
                 "opciones": [
-                  "De la teoría de juegos cooperativos de Shapley, que distribuye la contribución de cada jugador (feature) a la predicción total",
-                  "Del gradiente de la función de pérdida respecto a cada feature en el punto de predicción",
-                  "De la correlación de Pearson entre cada feature y la variable objetivo en el conjunto de entrenamiento",
-                  "Del coeficiente de importancia calculado durante el entrenamiento del modelo de random forest"
+                  "Las personas tienen derecho a no ser sujetas de decisiones basadas únicamente en procesamiento automatizado con efectos significativos, y cuando ocurran, a recibir explicación significativa de la lógica aplicada",
+                  "Todas las decisiones automatizadas están prohibidas cuando procesan datos personales de ciudadanos europeos",
+                  "Las empresas deben publicar el código fuente de sus modelos cuando estos afecten a ciudadanos de la UE",
+                  "Los modelos de IA que procesen datos personales deben tener accuracy mínimo del 95% para poder desplegarse"
                 ],
                 "correcta": 0,
-                "explicacion_profunda": "Los valores SHAP están fundamentados en la teoría de valores de Shapley de la teoría de juegos cooperativos (Lloyd Shapley, Premio Nobel de Economía 2012). La idea central: para cada combinación posible de features, calcula la diferencia en la predicción cuando un feature está presente vs ausente, ponderada por todas las posibles coaliciones de features. El resultado es la contribución marginal promedio de cada feature a la predicción específica. Esto le da a SHAP propiedades matemáticas deseables como eficiencia (los valores suman exactamente la diferencia entre la predicción y el valor base), simetría (features con igual contribución reciben igual valor), y nulidad (features que no aportan reciben cero). El gradiente (LIME) es una aproximación local diferente, más rápida pero menos fundamentada teóricamente.",
-                "concepto_reforzado": "Fundamento matemático de SHAP y valores de Shapley"
+                "explicacion_profunda": "El GDPR Art. 22 establece que los individuos tienen derecho a no ser sujetos de decisiones basadas únicamente en procesamiento automatizado, incluyendo profiling, que produzcan efectos legales o igualmente significativos. Las excepciones permitidas requieren: que la decisión sea necesaria para un contrato, autorizada por ley, o basada en consentimiento explícito. Crucialmente, incluso en esos casos el responsable debe implementar medidas que incluyan el derecho del interesado a obtener intervención humana, expresar su punto de vista, impugnar la decisión y recibir una explicación significativa de la lógica aplicada. En la práctica, si un sistema rechaza automáticamente una hipoteca, deniega un empleo o decide sobre una prestación social, el afectado tiene un derecho legal exigible a entender qué factores llevaron a esa decisión. Este artículo creó el concepto de algorithmic accountability en el derecho europeo.",
+                "concepto_reforzado": "GDPR Art. 22 y derecho legal a explicación algorítmica"
               },
               {
-                "pregunta": "Un banco usa un modelo de deep learning para aprobar créditos. Un cliente rechazado pregunta por qué. ¿Qué principio legal en Europa obliga al banco a responder, y qué tipo de explicación requiere?",
+                "pregunta": "¿Por qué el caso SyRI en los Países Bajos fue un hito regulatorio para la IA explicable en Europa?",
                 "opciones": [
-                  "El GDPR Art. 22 exige el derecho a no ser sujeto de decisiones totalmente automatizadas y el derecho a obtener explicación significativa de la lógica aplicada",
-                  "La Directiva de Servicios de Pago (PSD2) exige documentar todos los algoritmos de scoring crediticio en código abierto",
-                  "El EU AI Act exige que todos los modelos bancarios sean modelos lineales interpretables por definición",
-                  "El Acuerdo de Basilea III exige explicabilidad técnica solo para modelos con más de 1 millón de parámetros"
+                  "El tribunal ordenó apagar el sistema porque su opacidad algorítmica violaba derechos fundamentales, estableciendo precedente de que la inexplicabilidad es incompatible con el estado de derecho europeo",
+                  "El sistema fue prohibido porque su accuracy era inferior al 70%, demostrando que los modelos de IA deben superar umbrales mínimos de rendimiento",
+                  "El tribunal consideró que el sistema recopilaba más datos de los necesarios, violando el principio de minimización de datos del GDPR",
+                  "SyRI fue cancelado voluntariamente por el gobierno holandés antes de que el tribunal pudiera pronunciarse"
                 ],
                 "correcta": 0,
-                "explicacion_profunda": "El Artículo 22 del GDPR (Reglamento General de Protección de Datos) establece el derecho del individuo a no ser sujeto de decisiones basadas únicamente en procesamiento automatizado que le afecten significativamente, incluyendo decisiones de crédito, empleo y seguros. Cuando el responsable del tratamiento invoca una excepción (como necesidad contractual), debe proporcionar 'información significativa sobre la lógica aplicada'. Esto creó presión regulatoria para que los bancos europeos puedan generar explicaciones de sus modelos de scoring, aunque el GDPR no especifica un método técnico concreto. En práctica, muchos bancos europeos implementaron SHAP o LIME para generar explicaciones individualizadas. El EU AI Act (2024) refuerza esto clasificando los sistemas de scoring crediticio como 'alto riesgo' con requisitos adicionales de transparencia y auditoría.",
-                "concepto_reforzado": "GDPR Art. 22 y derecho a explicación en decisiones automatizadas"
+                "explicacion_profunda": "El sistema SyRI (System Risk Indication) era usado por el gobierno holandés para predecir fraude en beneficios sociales cruzando múltiples bases de datos gubernamentales. En febrero de 2020, el Tribunal de Distrito de La Haya ordenó su cese inmediato. La sentencia no fue sobre el accuracy del modelo ni sobre exceso de recopilación de datos, sino específicamente sobre la opacidad: los ciudadanos afectados no tenían manera de entender cómo el sistema llegaba a sus conclusiones, impugnar las decisiones ni verificar si eran correctas. El tribunal aplicó directamente el GDPR Art. 22 y el Convenio Europeo de Derechos Humanos (Art. 8). Esta fue la primera sentencia en Europa que ordenó el apagado de un sistema gubernamental de IA por falta de explicabilidad, y se convirtió en referencia directa para el desarrollo del EU AI Act.",
+                "concepto_reforzado": "Caso SyRI: precedente legal europeo de explicabilidad obligatoria"
               },
               {
-                "pregunta": "¿Por qué los modelos más interpretables suelen tener menor rendimiento predictivo que los modelos de caja negra? ¿Cómo se llama este trade-off?",
+                "pregunta": "¿Cuándo es preferible usar un modelo interpretable por diseño frente a un modelo de caja negra de mayor accuracy?",
                 "opciones": [
-                  "El accuracy-interpretability trade-off: modelos simples capturan menos patrones complejos no lineales que existen en datos reales",
-                  "El bias-variance trade-off: modelos interpretables tienen mayor varianza porque son más sensibles a ruido",
-                  "El precision-recall trade-off: modelos interpretables optimizan precisión sacrificando recall",
-                  "El train-test trade-off: modelos interpretables generalizan peor por usar menos parámetros"
+                  "Cuando las decisiones tienen efectos significativos sobre personas, cuando se opera bajo regulación que exige explicabilidad, o cuando el diferencial de performance no justifica la pérdida de interpretabilidad",
+                  "Solo cuando el modelo de caja negra tiene accuracy inferior al 80%, umbral por debajo del cual no se justifica la complejidad",
+                  "Únicamente en sistemas de salud y justicia; en finanzas y RRHH siempre se prioriza el accuracy sobre la explicabilidad",
+                  "Nunca, porque los modelos interpretables siempre tienen performance inferior y ese trade-off no se justifica en producción"
                 ],
                 "correcta": 0,
-                "explicacion_profunda": "El accuracy-interpretability trade-off es una tensión fundamental en machine learning. Los modelos interpretables como regresión logística o árboles de decisión poco profundos tienen restricciones estructurales: solo pueden capturar relaciones lineales o de baja complejidad. Los datos del mundo real frecuentemente tienen patrones altamente no lineales, interacciones entre cientos de variables, y dependencias que solo emergen con representaciones de alta dimensionalidad. Las redes neuronales profundas y los gradient boosting models pueden aprender estas complejidades porque tienen millones de parámetros libres, pero esa misma complejidad los hace incomprensibles. La solución no es siempre elegir un extremo: a veces la diferencia de accuracy es pequeña y la interpretabilidad vale la pérdida; en otras aplicaciones críticas (medicina, justicia), la interpretabilidad puede ser un requisito no negociable aunque cueste rendimiento.",
-                "concepto_reforzado": "Accuracy-interpretability trade-off en machine learning"
+                "explicacion_profunda": "El principio de mínima complejidad necesaria establece que un modelo más complejo solo se justifica si el beneficio de performance es sustancial y el contexto lo permite. En decisiones de alto impacto sobre personas, la diferencia entre 92% y 94% de accuracy raramente justifica la pérdida total de explicabilidad. Un modelo de regresión logística para crédito puede explicar exactamente cuánto contribuyó cada variable a la decisión, facilitar auditorías regulatorias, detectar bias con más facilidad y ser cuestionado judicialmente con argumentos técnicos precisos. Un modelo complejo puede tener ese 2% extra de accuracy pero crear riesgo legal ilimitado y dificultar enormemente la corrección cuando falla. La decisión no es solo técnica sino contextual: alto impacto en personas más entorno regulado equivale a preferir interpretabilidad. Bajo impacto o sistema interno de optimización puede priorizar performance.",
+                "concepto_reforzado": "Trade-off entre interpretabilidad y performance en sistemas de alto impacto"
               },
               {
-                "pregunta": "¿Qué es una 'explicación contrafactual' y por qué es particularmente útil para usuarios finales afectados por decisiones de IA?",
+                "pregunta": "¿Qué información mínima debe incluir la explicación de una decisión negativa de un sistema de IA de alto riesgo bajo el EU AI Act para ser legalmente válida?",
                 "opciones": [
-                  "Explica qué cambios mínimos en los inputs habrían resultado en una decisión diferente, dando al usuario una acción concreta",
-                  "Explica los factores que históricamente causaron el resultado en el conjunto de entrenamiento",
-                  "Muestra el peso de cada neurona en la capa de activación que produjo la predicción",
-                  "Compara la predicción del modelo con la de un experto humano para validar la coherencia"
+                  "Los factores principales que influyeron en la decisión en formato comprensible, y la existencia de un mecanismo de revisión humana disponible para el afectado",
+                  "El código fuente del modelo, los pesos de la red neuronal y el dataset completo de entrenamiento",
+                  "Solo una confirmación de que el sistema funcionó sin errores técnicos durante el procesamiento de la solicitud",
+                  "La precisión histórica del modelo expresada como porcentaje de aciertos en el dataset de validación"
                 ],
                 "correcta": 0,
-                "explicacion_profunda": "Las explicaciones contrafactuales responden a la pregunta: '¿qué habría tenido que ser diferente en tu caso para obtener un resultado distinto?' Por ejemplo, en lugar de decir 'tu crédito fue negado porque tu deuda es alta y tu historial es corto', una explicación contrafactual diría: 'si tu ratio deuda/ingreso fuera menor al 35% (actualmente 52%) Y tuvieras 12 meses más de historial crediticio, tu solicitud habría sido aprobada'. Esta forma de explicar es especialmente valiosa para usuarios finales porque: (1) es accionable — el usuario sabe exactamente qué cambiar, (2) no requiere comprensión técnica del modelo, (3) preserva la privacidad del modelo sin revelar su arquitectura completa. El GDPR Art. 22 y el EU AI Act implícitamente favorecen explicaciones contrafactuales porque son las más 'significativas' para el afectado.",
-                "concepto_reforzado": "Explicaciones contrafactuales y su utilidad para usuarios afectados"
+                "explicacion_profunda": "El EU AI Act (Art. 13 sobre Transparencia y Art. 14 sobre Supervisión Humana) exige que los sistemas de alto riesgo proporcionen explicaciones suficientemente comprensibles para que el usuario afectado entienda las razones de la decisión y pueda impugnarla si lo considera incorrecto. Esto no significa exponer código fuente ni pesos de modelos, sino comunicar en lenguaje accesible los factores determinantes. Por ejemplo: 'Su solicitud fue denegada principalmente porque la relación préstamo/propiedad del 95% supera el umbral establecido del 80% (peso: 58%), seguido de dos incidencias de pago en los últimos 24 meses (peso: 27%).' Adicionalmente, Art. 14 exige que exista un mecanismo para que una persona humana pueda revisar la decisión. Tanto la explicación comprensible como la vía de recurso humano son requisitos obligatorios y acumulativos, no alternativos.",
+                "concepto_reforzado": "Requisitos legales mínimos de transparencia bajo EU AI Act Arts. 13 y 14"
               }
             ],
             "practica": {
               "tipo": "caso_real",
-              "contexto": "",
-              "instruccion": "",
-              "input_malo": "",
-              "pista": "",
-              "solucion": "",
-              "criterios_de_exito": []
+              "contexto": "Eres AI Engineer en un banco con sede en Ámsterdam. El modelo de aprobación de hipotecas tiene AUC 0.91 pero el equipo legal acaba de informar que bajo GDPR Art. 22 y el EU AI Act deben implementar explicaciones comprensibles para cada decisión negativa antes de la entrada en vigor de la normativa en su categoría de riesgo.",
+              "instruccion": "Diseña la arquitectura de explicabilidad para el sistema. Especifica qué técnica de XAI implementarías, cómo la integrarías en el pipeline existente, qué información exacta se mostraría al cliente rechazado y cómo garantizarías que las explicaciones son legalmente suficientes.",
+              "input_malo": "Añadir al correo de rechazo el texto: 'Su solicitud fue procesada por nuestro sistema automatizado. El sistema evaluó su perfil crediticio y determinó que no cumple los requisitos actuales. Para más información contacte con atención al cliente.' Esta explicación cumple el requisito legal porque informa que hubo un proceso automatizado.",
+              "pista": "El GDPR exige una explicación significativa de la lógica aplicada, no solo confirmar que existió un proceso automatizado. Piensa en qué información necesitaría el cliente para entender concretamente por qué fue rechazado y poder mejorar su situación o impugnar la decisión si la considera incorrecta.",
+              "solucion": "Arquitectura completa: (1) Integrar SHAP TreeExplainer en el microservicio de inferencia (latencia adicional menor de 50ms). (2) Para cada predicción negativa, extraer los top-3 features con mayor contribución negativa y sus valores SHAP absolutos. (3) Crear un mapa de traducción feature técnica a lenguaje comprensible: 'loan_to_value_ratio' mapea a 'relación entre el importe solicitado y el valor de tasación de la propiedad'. (4) Generar automáticamente la carta: 'Su solicitud fue denegada principalmente por: (1) La relación préstamo/propiedad del 95% supera nuestro límite del 80% [contribución al rechazo: 58%]. (2) Dos incidencias de pago en los últimos 24 meses [contribución: 27%]. (3) Antigüedad laboral de 8 meses inferior al mínimo de 12 meses [contribución: 15%].' (5) Incluir siempre el derecho a revisión por un especialista humano en 15 días hábiles con canal de contacto directo. (6) Almacenar cada explicación con timestamp, versión del modelo y hash de la solicitud para auditorías regulatorias.",
+              "criterios_de_exito": [
+                "La explicación incluye los factores específicos que causaron el rechazo con su peso relativo cuantificado",
+                "El lenguaje de la explicación es comprensible para un cliente sin conocimientos técnicos de machine learning",
+                "Se incluye explícitamente el mecanismo de recurso humano con plazo y canal de contacto concretos"
+              ]
             },
             "conexion": {
-              "siguiente_concepto": "",
-              "por_que_importa_despues": ""
+              "siguiente_concepto": "EU AI Act para developers: lo que necesitas saber",
+              "por_que_importa_despues": "Entender XAI no es solo una habilidad técnica: es el prerrequisito para cumplir la regulación europea. El EU AI Act construye sobre estos mismos principios de transparencia y explicabilidad, añadiendo obligaciones concretas por categoría de riesgo, plazos legales y multas reales para quienes no cumplan."
             }
           }
         },
