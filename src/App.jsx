@@ -17,6 +17,7 @@ import InstallBanner from "./components/InstallBanner"
 import ReportButton from "./components/ReportButton"
 import PrivacyScreen from "./components/PrivacyScreen"
 import { usePWAInstall } from "./hooks/usePWAInstall"
+import { playSound } from "./utils/sounds"
 
 // Módulos con contenido disponible — import estático (Vite los bundlea)
 import m4Data from "./content/m4-completo.json"
@@ -141,6 +142,258 @@ function XPMilestoneOverlay({ xp, onDone }) {
           style={{ color: "var(--color-text-muted)" }}>
           Milestone alcanzado
         </p>
+      </motion.div>
+    </motion.div>
+  )
+}
+
+// ── Modal rating por bloque (F4) ─────────────────────────────────────
+function BlockRatingModal({ bloque, onSubmit }) {
+  const [rating, setRating] = useState(0)
+  const [hover, setHover] = useState(0)
+  const [comentario, setComentario] = useState("")
+  const active = hover || rating
+
+  return (
+    <motion.div
+      className="fixed inset-0 flex items-center justify-center z-50 p-5"
+      style={{ background: "rgba(0,0,0,0.85)" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="surface rounded-2xl p-8 w-full max-w-md"
+        style={{ border: "1px solid rgba(6,182,212,0.35)" }}
+        initial={{ scale: 0.85, opacity: 0, y: 30 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      >
+        <motion.div
+          className="text-5xl text-center mb-4"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.15, type: "spring", stiffness: 300, damping: 15 }}
+        >
+          {bloque?.icon || "📚"}
+        </motion.div>
+
+        <h2
+          className="font-display text-xl font-extrabold text-center mb-1"
+          style={{ fontFamily: "'Outfit', sans-serif", color: "#ffffff" }}
+        >
+          ¿Qué te pareció este bloque?
+        </h2>
+        <p className="text-sm text-center mb-6" style={{ color: "var(--color-text-muted)" }}>
+          {bloque?.nombre}
+        </p>
+
+        {/* Estrellas */}
+        <div className="flex justify-center gap-3 mb-6">
+          {[1, 2, 3, 4, 5].map(star => (
+            <motion.button
+              key={star}
+              onClick={() => setRating(star)}
+              onMouseEnter={() => setHover(star)}
+              onMouseLeave={() => setHover(0)}
+              whileTap={{ scale: 0.8 }}
+              whileHover={{ scale: 1.25 }}
+              className="text-4xl leading-none transition-all"
+              style={{
+                filter: active >= star ? "drop-shadow(0 0 10px #F59E0B)" : "none",
+                opacity: active >= star ? 1 : 0.25,
+              }}
+            >
+              ⭐
+            </motion.button>
+          ))}
+        </div>
+
+        {/* Comentario opcional */}
+        <div className="mb-6">
+          <textarea
+            value={comentario}
+            onChange={e => setComentario(e.target.value.slice(0, 150))}
+            placeholder="¿Qué mejorarías? (opcional)"
+            className="w-full rounded-xl px-4 py-3 text-sm resize-none"
+            style={{
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid var(--color-border)",
+              color: "var(--color-text-primary)",
+              outline: "none",
+              minHeight: "80px",
+            }}
+            maxLength={150}
+          />
+          <p className="text-right text-xs mt-1" style={{ color: "var(--color-text-muted)" }}>
+            {comentario.length}/150
+          </p>
+        </div>
+
+        <motion.button
+          onClick={() => rating > 0 && onSubmit(rating, comentario)}
+          className="btn-primary w-full py-3.5 text-sm font-semibold"
+          whileTap={{ scale: 0.97 }}
+          style={{ opacity: rating === 0 ? 0.45 : 1, cursor: rating === 0 ? "not-allowed" : "pointer" }}
+        >
+          Enviar y continuar →
+        </motion.button>
+
+        {rating === 0 && (
+          <p className="text-center text-xs mt-3" style={{ color: "var(--color-text-muted)" }}>
+            Selecciona al menos una estrella
+          </p>
+        )}
+      </motion.div>
+    </motion.div>
+  )
+}
+
+// ── Modal milestone lección 55 de M1 (A8) ────────────────────────────
+function Milestone55Modal({ onDone }) {
+  const [xpAnim, setXpAnim] = useState(0)
+  const soundFired = useRef(false)
+  const colors = ["#06B6D4", "#0891B2", "#F59E0B", "#10B981", "#F97316", "#F472B6", "#A78BFA"]
+
+  useEffect(() => {
+    if (!soundFired.current) {
+      soundFired.current = true
+      setTimeout(() => playSound("levelup"), 300)
+    }
+    const target = 200, steps = 40
+    let current = 0
+    const timer = setInterval(() => {
+      current += target / steps
+      if (current >= target) { current = target; clearInterval(timer) }
+      setXpAnim(Math.round(current))
+    }, 40)
+    return () => clearInterval(timer)
+  }, [])
+
+  return (
+    <motion.div
+      className="fixed inset-0 flex items-center justify-center z-50 p-5"
+      style={{ background: "rgba(0,0,0,0.92)" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      {/* Confetti épico */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {Array.from({ length: 60 }, (_, i) => (
+          <motion.div
+            key={i}
+            className="absolute"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: "-2%",
+              width: `${4 + Math.random() * 8}px`,
+              height: `${5 + Math.random() * 10}px`,
+              borderRadius: Math.random() > 0.5 ? "50%" : "2px",
+              background: colors[i % colors.length],
+            }}
+            initial={{ y: 0, opacity: 1, rotate: 0 }}
+            animate={{
+              y: "110vh",
+              opacity: [1, 1, 0],
+              rotate: Math.random() > 0.5 ? 540 : -540,
+              x: (Math.random() - 0.5) * 300,
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              delay: Math.random() * 1.5,
+              ease: "easeIn",
+            }}
+          />
+        ))}
+      </div>
+
+      <motion.div
+        className="surface rounded-2xl p-10 w-full max-w-sm text-center relative"
+        style={{ border: "1px solid rgba(6,182,212,0.5)", boxShadow: "0 0 80px rgba(6,182,212,0.3)" }}
+        initial={{ scale: 0.5, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 250, damping: 20 }}
+      >
+        <motion.div
+          className="text-7xl mb-4"
+          animate={{ rotate: [0, -15, 15, -10, 10, 0], scale: [1, 1.3, 1] }}
+          transition={{ duration: 1, delay: 0.3 }}
+        >
+          🏆
+        </motion.div>
+
+        <motion.h2
+          className="font-display text-3xl font-extrabold mb-2"
+          style={{ fontFamily: "'Outfit', sans-serif", color: "#06B6D4" }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          ¡Llevas la mitad de M1!
+        </motion.h2>
+
+        <motion.p
+          className="text-sm mb-6 leading-relaxed"
+          style={{ color: "var(--color-text-secondary)" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          55 lecciones completadas.<br />
+          <span className="font-bold" style={{ color: "#F59E0B" }}>
+            Estás en el top 5% de estudiantes de IA.
+          </span>
+        </motion.p>
+
+        {/* Badge especial */}
+        <motion.div
+          className="glass rounded-xl p-4 flex items-center gap-4 mb-6 text-left"
+          style={{ border: "1px solid rgba(245,158,11,0.3)" }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.7, type: "spring", stiffness: 300, damping: 20 }}
+        >
+          <div
+            className="w-14 h-14 rounded-xl flex items-center justify-center text-3xl shrink-0"
+            style={{ background: "linear-gradient(135deg, #F59E0B, #F97316)" }}
+          >
+            🌟
+          </div>
+          <div>
+            <p className="font-bold text-sm" style={{ color: "#F59E0B" }}>Mitad del camino</p>
+            <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>Badge desbloqueado</p>
+          </div>
+        </motion.div>
+
+        {/* XP Bonus */}
+        <motion.div
+          className="mb-6"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.85 }}
+        >
+          <span
+            className="font-display text-4xl font-extrabold"
+            style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}
+          >
+            +{xpAnim}
+          </span>
+          <span className="text-sm ml-2" style={{ color: "var(--color-text-muted)" }}>XP bonus</span>
+        </motion.div>
+
+        <motion.button
+          onClick={onDone}
+          className="btn-primary w-full py-3.5 text-sm font-semibold"
+          whileTap={{ scale: 0.97 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1 }}
+        >
+          Seguir conquistando 🚀
+        </motion.button>
       </motion.div>
     </motion.div>
   )
@@ -273,6 +526,10 @@ export default function App() {
   const [installDismissed, setInstallDismissed] = useState(
     () => localStorage.getItem(INSTALL_DISMISSED_KEY) === "1"
   )
+  const [showBlockRating, setShowBlockRating] = useState(false)
+  const [bloqueParaRating, setBloqueParaRating] = useState(null)
+  const [showMilestone55, setShowMilestone55] = useState(false)
+  const skipRatingRef = useRef(false)
 
   const { isInstallable, isInstalled, promptInstall } = usePWAInstall()
   const isMobile = typeof window !== "undefined" && window.innerWidth < 1024
@@ -398,6 +655,13 @@ export default function App() {
         if (!nuevoProgreso.badges.includes(leccionActual.id)) {
           nuevoProgreso.badges = [...nuevoProgreso.badges, leccionActual.id]
         }
+        // Milestone A8: lección 55 de M1
+        const prevM1 = (progreso.leccionesCompletadas || []).filter(id => id.startsWith('m1-')).length
+        const newM1 = nuevoProgreso.leccionesCompletadas.filter(id => id.startsWith('m1-')).length
+        if (newM1 >= 55 && prevM1 < 55) {
+          nuevoProgreso.xpTotal += 200
+          setTimeout(() => setShowMilestone55(true), 700)
+        }
       }
       guardarProgreso(nuevoProgreso)
       setProgreso(nuevoProgreso)
@@ -422,12 +686,46 @@ export default function App() {
     const todas = moduloData.bloques.flatMap(b => b.lecciones)
     const preguntas = leccionActual.contenido.verificacion
     const minAprobacion = Math.ceil(preguntas.length * 0.7)
+
+    // Detectar fin de bloque F4: si aprobó y todas las lecciones con quiz del bloque están completas
+    if (!skipRatingRef.current && correctas >= minAprobacion && bloqueActual) {
+      const quizzables = bloqueActual.lecciones.filter(l => (l.contenido?.verificacion?.length || 0) > 0)
+      const allDone = quizzables.length > 0 && quizzables.every(l => progreso.leccionesCompletadas.includes(l.id))
+      if (allDone) {
+        const existingRatings = JSON.parse(localStorage.getItem('aipath_block_ratings') || '[]')
+        if (!existingRatings.some(r => r.bloque_id === bloqueActual.id)) {
+          setBloqueParaRating(bloqueActual)
+          setShowBlockRating(true)
+          return
+        }
+      }
+    }
+    skipRatingRef.current = false
+
     if (correctas >= minAprobacion) {
       const idx = todas.findIndex(l => l.id === leccionActual.id)
       if (idx < todas.length - 1) { handleSelectLesson(todas[idx + 1]); return }
     }
     if (bloqueActual) { setPantalla("lessons"); setLeccionActual(null) }
     else { setPantalla("intro"); setLeccionActual(null) }
+  }
+
+  function handleRatingSubmit(rating, comentario) {
+    const RATINGS_KEY = 'aipath_block_ratings'
+    const ratings = JSON.parse(localStorage.getItem(RATINGS_KEY) || '[]')
+    ratings.push({
+      bloque_id: bloqueParaRating?.id,
+      bloque_nombre: bloqueParaRating?.nombre,
+      rating,
+      comentario,
+      timestamp: new Date().toISOString(),
+      usuario: getSession()?.email || 'unknown'
+    })
+    localStorage.setItem(RATINGS_KEY, JSON.stringify(ratings))
+    setShowBlockRating(false)
+    setBloqueParaRating(null)
+    skipRatingRef.current = true
+    handleVolver()
   }
 
   function handleFaseProyectoCompleta(fase) {
@@ -519,6 +817,16 @@ export default function App() {
       <AnimatePresence>
         {xpMilestone && (
           <XPMilestoneOverlay xp={xpMilestone} onDone={() => setXpMilestone(null)} />
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showBlockRating && bloqueParaRating && (
+          <BlockRatingModal bloque={bloqueParaRating} onSubmit={handleRatingSubmit} />
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showMilestone55 && (
+          <Milestone55Modal onDone={() => setShowMilestone55(false)} />
         )}
       </AnimatePresence>
       <Sidebar
