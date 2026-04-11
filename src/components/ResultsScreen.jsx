@@ -350,21 +350,22 @@ export default function ResultsScreen({ leccion, correctas, totalPreguntas, xp, 
 
         {/* Acciones */}
         <motion.div
-          className="flex flex-col gap-3"
+          className="flex flex-col gap-3 pb-6"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.35 }}
         >
           <button onClick={onRestart}
-            className="w-full px-5 py-3.5 rounded-xl text-sm font-semibold surface transition-all"
-            style={{ color: "var(--color-text-secondary)" }}
+            className="w-full px-5 rounded-xl text-sm font-semibold surface transition-all"
+            style={{ color: "var(--color-text-secondary)", minHeight: 48 }}
             onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.06)"}
             onMouseLeave={e => e.currentTarget.style.background = ""}>
             Intentar de nuevo
           </button>
           <motion.button
             onClick={() => { playSound("click"); onVolver() }}
-            className="btn-primary w-full px-5 py-3.5 text-sm font-semibold"
+            className="btn-primary w-full px-5 font-bold"
+            style={{ minHeight: 56, fontSize: 16 }}
             whileTap={{ scale: 0.97 }}
           >
             {isBossBattle ? "Volver al módulo" : passed && hayNextLesson ? "Siguiente lección →" : "Volver"}

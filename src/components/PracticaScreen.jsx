@@ -168,7 +168,8 @@ export default function PracticaScreen({ leccion, onSiguiente }) {
           )}
           <motion.button
             onClick={() => { playSound("click"); onSiguiente() }}
-            className="btn-primary w-full py-3.5 text-sm"
+            className="btn-primary w-full font-bold"
+            style={{ minHeight: 56, fontSize: 16, marginBottom: 8 }}
             whileTap={{ scale: 0.97 }}
           >
             Siguiente lección →

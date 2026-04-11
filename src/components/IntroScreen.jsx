@@ -1,3 +1,5 @@
+import { useState, useRef } from "react"
+
 const BLOCK_ICONS_BG = [
   "from-cyan-500/15 to-cyan-600/5",
   "from-sky-500/15 to-sky-600/5",
@@ -22,6 +24,15 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
   const todosBloquesCompletos = bloques.every(b => b.lecciones.every(l => completadas.includes(l.id)))
   const tieneBossBattle = !!modulo.boss_battle
   const bossBattleAprobado = completadas.includes("m1-boss-battle")
+
+  const [toastVisible, setToastVisible] = useState(false)
+  const toastTimerRef = useRef(null)
+
+  function mostrarToastBloqueado() {
+    setToastVisible(true)
+    clearTimeout(toastTimerRef.current)
+    toastTimerRef.current = setTimeout(() => setToastVisible(false), 3000)
+  }
 
   function bloqueDesbloqueado(bi) {
     if (bi === 0) return true
@@ -92,8 +103,8 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
           return (
             <button
               key={bloque.id}
-              onClick={() => unlocked && onSelectBlock(bloque)}
-              disabled={!unlocked}
+              onClick={() => { if (!unlocked) { mostrarToastBloqueado(); return } onSelectBlock(bloque) }}
+              disabled={false}
               className={`animate-reveal text-left h-[120px] lg:h-[130px] flex items-center gap-4 p-4 lg:p-5 ${
                 unlocked
                   ? "surface-interactive cursor-pointer"
@@ -263,6 +274,26 @@ export default function IntroScreen({ modulo, progreso, onSelectBlock, onVolverA
           <p style={{ fontSize: "12px", color: "var(--color-text-muted)", marginTop: "4px" }}>
             Eres Prompt Engineer Profesional AIPath
           </p>
+        </div>
+      )}
+
+      {/* Toast — bloque bloqueado */}
+      {toastVisible && (
+        <div
+          className="fixed left-1/2 z-50 px-5 py-3 rounded-2xl text-sm font-medium text-center"
+          style={{
+            bottom: 88,
+            transform: "translateX(-50%)",
+            background: "#1E1E35",
+            border: "1px solid rgba(6,182,212,0.25)",
+            color: "var(--color-text-primary)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+            maxWidth: 320,
+            width: "calc(100% - 48px)",
+            pointerEvents: "none",
+          }}
+        >
+          Completa el bloque anterior para desbloquear este contenido
         </div>
       )}
     </div>

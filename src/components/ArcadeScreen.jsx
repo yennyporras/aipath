@@ -46,6 +46,44 @@ function Confetti() {
   )
 }
 
+/* ─── Botón compartir resultado con Web Share API + fallback clipboard ─── */
+function BotonCompartir({ texto }) {
+  const [copiado, setCopiado] = useState(false)
+
+  async function compartir() {
+    if (navigator.share) {
+      try {
+        await navigator.share({ text: texto })
+      } catch (_) {
+        // usuario canceló, no hacer nada
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(texto)
+        setCopiado(true)
+        setTimeout(() => setCopiado(false), 2500)
+      } catch (_) {
+        prompt("Copia este texto:", texto)
+      }
+    }
+  }
+
+  return (
+    <button
+      onClick={compartir}
+      className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2"
+      style={{
+        background: "rgba(99,102,241,0.15)",
+        color: "#818CF8",
+        border: "1px solid rgba(99,102,241,0.35)",
+        fontFamily: "'Outfit', sans-serif",
+      }}
+    >
+      {copiado ? "¡Copiado! ✓" : "📤 Compartir resultado"}
+    </button>
+  )
+}
+
 /* ─── Utilidad de shuffle local para los juegos ─── */
 function shuffleArr(arr) {
   const a = [...arr]
@@ -117,7 +155,7 @@ const SECUENCIAS_ORDEN = [
 ]
 
 /* ─── Componente del juego Verdadero o Falso ─── */
-function VerdaderoFalsoGame({ onSalir, onXpGanado }) {
+function VerdaderoFalsoGame({ onSalir, onXpGanado, onJugarOtro }) {
   const [preguntas] = useState(() => getTrueFalseQuestions(10))
   const [indice, setIndice] = useState(0)
   const [tiempo, setTiempo] = useState(TIEMPO_POR_PREGUNTA)
@@ -249,6 +287,13 @@ function VerdaderoFalsoGame({ onSalir, onXpGanado }) {
           {/* Botones */}
           <div className="w-full flex flex-col gap-2">
             <button
+              onClick={onSalir}
+              className="w-full rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95"
+              style={{ background: "var(--color-accent-primary)", color: "#fff", fontFamily: "'Outfit', sans-serif", minHeight: 48, fontSize: 15 }}
+            >
+              Volver al Arcade
+            </button>
+            <button
               onClick={() => {
                 setIndice(0)
                 setCorrectas(0)
@@ -256,17 +301,19 @@ function VerdaderoFalsoGame({ onSalir, onXpGanado }) {
                 setSeleccion(null)
                 setFase("jugando")
               }}
-              className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95"
-              style={{ background: "var(--color-accent-primary)", color: "#fff", fontFamily: "'Outfit', sans-serif" }}
-            >
-              Jugar de nuevo
-            </button>
-            <button
-              onClick={onSalir}
               className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-105 active:scale-95"
               style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)", fontFamily: "'Outfit', sans-serif" }}
             >
-              Volver al Arcade
+              Jugar de nuevo
+            </button>
+            <BotonCompartir texto={`Acabo de hacer ${totalCorrectas}/${preguntas.length} en Verdadero o Falso de AIPath 🧠⚡\n¿Puedes superarme?\naipath-beta.vercel.app #AIPath #IA`} />
+            <button
+              onClick={() => onJugarOtro("conexion-rapida")}
+              className="w-full rounded-xl p-3 text-left transition-all active:scale-95"
+              style={{ background: "rgba(6,182,212,0.06)", border: "1px dashed rgba(6,182,212,0.25)" }}
+            >
+              <p style={{ fontSize: 10, color: "var(--color-text-muted)", fontFamily: "'Outfit', sans-serif" }}>¿Pruebas otro juego?</p>
+              <p style={{ fontSize: 13, fontWeight: 600, color: "#06B6D4", fontFamily: "'Outfit', sans-serif" }}>Conexión Rápida →</p>
             </button>
           </div>
         </motion.div>
@@ -448,7 +495,7 @@ const XP_BONUS_SPEED = 15
 const TIEMPO_TOTAL_SPEED = 300 // 5 minutos
 
 /* ─── Componente del juego Speed Cards ─── */
-function SpeedCardsGame({ onSalir, onXpGanado }) {
+function SpeedCardsGame({ onSalir, onXpGanado, onJugarOtro }) {
   const [preguntas] = useState(() => getFlashcardQuestions(10))
   const [indice,    setIndice]    = useState(0)
   const [flipped,   setFlipped]   = useState(false)
@@ -596,18 +643,26 @@ function SpeedCardsGame({ onSalir, onXpGanado }) {
 
           <div className="w-full flex flex-col gap-2">
             <button
+              onClick={onSalir}
+              className="w-full rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95"
+              style={{ background: "var(--color-accent-primary)", color: "#fff", fontFamily: "'Outfit', sans-serif", minHeight: 48, fontSize: 15 }}
+            >
+              Volver al Arcade
+            </button>
+            <button
               onClick={reiniciar}
-              className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95"
-              style={{ background: "var(--color-accent-primary)", color: "#fff", fontFamily: "'Outfit', sans-serif" }}
+              className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-105 active:scale-95"
+              style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)", fontFamily: "'Outfit', sans-serif" }}
             >
               Jugar de nuevo
             </button>
             <button
-              onClick={onSalir}
-              className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-105 active:scale-95"
-              style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)", fontFamily: "'Outfit', sans-serif" }}
+              onClick={() => onJugarOtro("verdadero-falso")}
+              className="w-full rounded-xl p-3 text-left transition-all active:scale-95"
+              style={{ background: "rgba(6,182,212,0.06)", border: "1px dashed rgba(6,182,212,0.25)" }}
             >
-              Volver al Arcade
+              <p style={{ fontSize: 10, color: "var(--color-text-muted)", fontFamily: "'Outfit', sans-serif" }}>¿Pruebas otro juego?</p>
+              <p style={{ fontSize: 13, fontWeight: 600, color: "#06B6D4", fontFamily: "'Outfit', sans-serif" }}>Verdadero o Falso →</p>
             </button>
           </div>
         </motion.div>
@@ -819,7 +874,7 @@ const XP_POR_BATALLA    = 2
 const XP_BONUS_BATALLA  = 20
 
 /* ─── Componente del juego Batalla de Conceptos ─── */
-function BatallaConceptosGame({ onSalir, onXpGanado }) {
+function BatallaConceptosGame({ onSalir, onXpGanado, onJugarOtro }) {
   const [preguntas] = useState(() => getBatallaQuestions(10))
   const [indice,    setIndice]    = useState(0)
   const [tiempo,    setTiempo]    = useState(TIEMPO_BATALLA)
@@ -988,18 +1043,26 @@ function BatallaConceptosGame({ onSalir, onXpGanado }) {
           {/* Botones */}
           <div className="w-full flex flex-col gap-2">
             <button
+              onClick={onSalir}
+              className="w-full rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95"
+              style={{ background: "var(--color-accent-primary)", color: "#fff", fontFamily: "'Outfit', sans-serif", minHeight: 48, fontSize: 15 }}
+            >
+              Volver al Arcade
+            </button>
+            <button
               onClick={() => { setIndice(0); setCorrectas(0); setResultados([]); setSeleccion(null); setFase("jugando") }}
-              className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95"
-              style={{ background: "var(--color-accent-primary)", color: "#fff", fontFamily: "'Outfit', sans-serif" }}
+              className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-105 active:scale-95"
+              style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)", fontFamily: "'Outfit', sans-serif" }}
             >
               Jugar de nuevo
             </button>
             <button
-              onClick={onSalir}
-              className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-105 active:scale-95"
-              style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)", fontFamily: "'Outfit', sans-serif" }}
+              onClick={() => onJugarOtro("completa-concepto")}
+              className="w-full rounded-xl p-3 text-left transition-all active:scale-95"
+              style={{ background: "rgba(6,182,212,0.06)", border: "1px dashed rgba(6,182,212,0.25)" }}
             >
-              Volver al Arcade
+              <p style={{ fontSize: 10, color: "var(--color-text-muted)", fontFamily: "'Outfit', sans-serif" }}>¿Pruebas otro juego?</p>
+              <p style={{ fontSize: 13, fontWeight: 600, color: "#06B6D4", fontFamily: "'Outfit', sans-serif" }}>Completa el Concepto →</p>
             </button>
           </div>
         </motion.div>
@@ -1200,7 +1263,7 @@ const XP_POR_CONCEPTO   = 2
 const XP_BONUS_CONCEPTO = 20
 
 /* ─── Componente del juego Completa el Concepto ─── */
-function CompletaConceptoGame({ onSalir, onXpGanado }) {
+function CompletaConceptoGame({ onSalir, onXpGanado, onJugarOtro }) {
   const [preguntas] = useState(() => getCompletaConceptoQuestions(10))
   const [indice,    setIndice]    = useState(0)
   const [tiempo,    setTiempo]    = useState(TIEMPO_CONCEPTO)
@@ -1339,18 +1402,26 @@ function CompletaConceptoGame({ onSalir, onXpGanado }) {
           {/* Botones */}
           <div className="w-full flex flex-col gap-2">
             <button
+              onClick={onSalir}
+              className="w-full rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95"
+              style={{ background: "var(--color-accent-primary)", color: "#fff", fontFamily: "'Outfit', sans-serif", minHeight: 48, fontSize: 15 }}
+            >
+              Volver al Arcade
+            </button>
+            <button
               onClick={() => { setIndice(0); setCorrectas(0); setResultados([]); setSeleccion(null); setFase("jugando") }}
-              className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95"
-              style={{ background: "var(--color-accent-primary)", color: "#fff", fontFamily: "'Outfit', sans-serif" }}
+              className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-105 active:scale-95"
+              style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)", fontFamily: "'Outfit', sans-serif" }}
             >
               Jugar de nuevo
             </button>
             <button
-              onClick={onSalir}
-              className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-105 active:scale-95"
-              style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)", fontFamily: "'Outfit', sans-serif" }}
+              onClick={() => onJugarOtro("batalla-conceptos")}
+              className="w-full rounded-xl p-3 text-left transition-all active:scale-95"
+              style={{ background: "rgba(6,182,212,0.06)", border: "1px dashed rgba(6,182,212,0.25)" }}
             >
-              Volver al Arcade
+              <p style={{ fontSize: 10, color: "var(--color-text-muted)", fontFamily: "'Outfit', sans-serif" }}>¿Pruebas otro juego?</p>
+              <p style={{ fontSize: 13, fontWeight: 600, color: "#06B6D4", fontFamily: "'Outfit', sans-serif" }}>Batalla de Conceptos →</p>
             </button>
           </div>
         </motion.div>
@@ -1528,7 +1599,7 @@ function CompletaConceptoGame({ onSalir, onXpGanado }) {
 }
 
 /* ─── Componente del juego Conexión Rápida ─── */
-function ConexionRapidaGame({ onSalir, onXpGanado }) {
+function ConexionRapidaGame({ onSalir, onXpGanado, onJugarOtro }) {
   const RONDAS = 8
   const TIEMPO_RONDA = 45
 
@@ -1662,28 +1733,28 @@ function ConexionRapidaGame({ onSalir, onXpGanado }) {
             +{xp} XP
           </p>
         </div>
-        <div className="flex gap-3 w-full">
+        <div className="flex flex-col gap-2 w-full">
           <button
             onClick={onSalir}
-            className="flex-1 py-3 rounded-xl text-sm font-semibold"
-            style={{
-              background: "var(--color-border)",
-              color: "var(--color-text-secondary)",
-              fontFamily: "'Outfit', sans-serif",
-            }}
+            className="w-full rounded-xl text-sm font-semibold transition-all hover:brightness-110 active:scale-95"
+            style={{ background: "var(--color-accent-primary)", color: "#fff", fontFamily: "'Outfit', sans-serif", minHeight: 48, fontSize: 15 }}
           >
-            Salir
+            Volver al Arcade
           </button>
           <button
             onClick={jugarDeNuevo}
-            className="flex-1 py-3 rounded-xl text-sm font-semibold"
-            style={{
-              background: "var(--color-accent-primary)",
-              color: "#fff",
-              fontFamily: "'Outfit', sans-serif",
-            }}
+            className="w-full py-3 rounded-xl text-sm font-semibold transition-all hover:brightness-105 active:scale-95"
+            style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)", fontFamily: "'Outfit', sans-serif" }}
           >
             Jugar de nuevo
+          </button>
+          <button
+            onClick={() => onJugarOtro("ordena-pasos")}
+            className="w-full rounded-xl p-3 text-left transition-all active:scale-95"
+            style={{ background: "rgba(6,182,212,0.06)", border: "1px dashed rgba(6,182,212,0.25)" }}
+          >
+            <p style={{ fontSize: 10, color: "var(--color-text-muted)", fontFamily: "'Outfit', sans-serif" }}>¿Pruebas otro juego?</p>
+            <p style={{ fontSize: 13, fontWeight: 600, color: "#06B6D4", fontFamily: "'Outfit', sans-serif" }}>Ordena los Pasos →</p>
           </button>
         </div>
       </div>
@@ -1824,7 +1895,7 @@ function ConexionRapidaGame({ onSalir, onXpGanado }) {
 }
 
 /* ─── Componente del juego Ordena los Pasos ─── */
-function OrdenaPasosGame({ onSalir, onXpGanado }) {
+function OrdenaPasosGame({ onSalir, onXpGanado, onJugarOtro }) {
   const TIEMPO_RONDA = 35
 
   const [ronda, setRonda] = useState(0)
@@ -1939,28 +2010,28 @@ function OrdenaPasosGame({ onSalir, onXpGanado }) {
             +{xp} XP
           </p>
         </div>
-        <div className="flex gap-3 w-full">
+        <div className="flex flex-col gap-2 w-full">
           <button
             onClick={onSalir}
-            className="flex-1 py-3 rounded-xl text-sm font-semibold"
-            style={{
-              background: "var(--color-border)",
-              color: "var(--color-text-secondary)",
-              fontFamily: "'Outfit', sans-serif",
-            }}
+            className="w-full rounded-xl text-sm font-semibold transition-all hover:brightness-110 active:scale-95"
+            style={{ background: "var(--color-accent-primary)", color: "#fff", fontFamily: "'Outfit', sans-serif", minHeight: 48, fontSize: 15 }}
           >
-            Salir
+            Volver al Arcade
           </button>
           <button
             onClick={jugarDeNuevo}
-            className="flex-1 py-3 rounded-xl text-sm font-semibold"
-            style={{
-              background: "var(--color-accent-primary)",
-              color: "#fff",
-              fontFamily: "'Outfit', sans-serif",
-            }}
+            className="w-full py-3 rounded-xl text-sm font-semibold transition-all hover:brightness-105 active:scale-95"
+            style={{ background: "var(--color-bg-card)", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)", fontFamily: "'Outfit', sans-serif" }}
           >
             Jugar de nuevo
+          </button>
+          <button
+            onClick={() => onJugarOtro("speed-cards")}
+            className="w-full rounded-xl p-3 text-left transition-all active:scale-95"
+            style={{ background: "rgba(6,182,212,0.06)", border: "1px dashed rgba(6,182,212,0.25)" }}
+          >
+            <p style={{ fontSize: 10, color: "var(--color-text-muted)", fontFamily: "'Outfit', sans-serif" }}>¿Pruebas otro juego?</p>
+            <p style={{ fontSize: 13, fontWeight: 600, color: "#06B6D4", fontFamily: "'Outfit', sans-serif" }}>Speed Cards →</p>
           </button>
         </div>
       </div>
@@ -2112,7 +2183,7 @@ function OrdenaPasosGame({ onSalir, onXpGanado }) {
 const XP_DAILY = 50
 const TIEMPO_DAILY = 30
 
-function DailyChallengeGame({ onSalir, onXpGanado, onCompletado }) {
+function DailyChallengeGame({ onSalir, onXpGanado, onCompletado, onJugarOtro }) {
   const [preguntas] = useState(() => getDailyQuestions(10))
   const [indice, setIndice] = useState(0)
   const [tiempo, setTiempo] = useState(TIEMPO_DAILY)
@@ -2210,13 +2281,23 @@ function DailyChallengeGame({ onSalir, onXpGanado, onCompletado }) {
               +{XP_DAILY} XP ganados
             </span>
           </motion.div>
-          <button
-            onClick={onSalir}
-            className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95"
-            style={{ background: "rgba(245,158,11,0.22)", color: "#F59E0B", border: "1px solid rgba(245,158,11,0.45)", fontFamily: "'Outfit', sans-serif" }}
-          >
-            Volver al Arcade
-          </button>
+          <div className="w-full flex flex-col gap-2">
+            <button
+              onClick={onSalir}
+              className="w-full rounded-xl font-semibold text-sm transition-all hover:brightness-110 active:scale-95"
+              style={{ background: "rgba(245,158,11,0.22)", color: "#F59E0B", border: "1px solid rgba(245,158,11,0.45)", fontFamily: "'Outfit', sans-serif", minHeight: 48, fontSize: 15 }}
+            >
+              Volver al Arcade
+            </button>
+            <button
+              onClick={() => onJugarOtro("verdadero-falso")}
+              className="w-full rounded-xl p-3 text-left transition-all active:scale-95"
+              style={{ background: "rgba(6,182,212,0.06)", border: "1px dashed rgba(6,182,212,0.25)" }}
+            >
+              <p style={{ fontSize: 10, color: "var(--color-text-muted)", fontFamily: "'Outfit', sans-serif" }}>¿Pruebas otro juego?</p>
+              <p style={{ fontSize: 13, fontWeight: 600, color: "#06B6D4", fontFamily: "'Outfit', sans-serif" }}>Verdadero o Falso →</p>
+            </button>
+          </div>
         </motion.div>
       </>
     )
@@ -2626,6 +2707,7 @@ export default function ArcadeScreen() {
       <VerdaderoFalsoGame
         onSalir={() => setJuegoActivo(null)}
         onXpGanado={manejarXp}
+        onJugarOtro={setJuegoActivo}
       />
     )
   }
@@ -2635,6 +2717,7 @@ export default function ArcadeScreen() {
       <CompletaConceptoGame
         onSalir={() => setJuegoActivo(null)}
         onXpGanado={manejarXp}
+        onJugarOtro={setJuegoActivo}
       />
     )
   }
@@ -2644,6 +2727,7 @@ export default function ArcadeScreen() {
       <BatallaConceptosGame
         onSalir={() => setJuegoActivo(null)}
         onXpGanado={manejarXp}
+        onJugarOtro={setJuegoActivo}
       />
     )
   }
@@ -2653,6 +2737,7 @@ export default function ArcadeScreen() {
       <SpeedCardsGame
         onSalir={() => setJuegoActivo(null)}
         onXpGanado={manejarXp}
+        onJugarOtro={setJuegoActivo}
       />
     )
   }
@@ -2662,6 +2747,7 @@ export default function ArcadeScreen() {
       <ConexionRapidaGame
         onSalir={() => setJuegoActivo(null)}
         onXpGanado={manejarXp}
+        onJugarOtro={setJuegoActivo}
       />
     )
   }
@@ -2671,6 +2757,7 @@ export default function ArcadeScreen() {
       <OrdenaPasosGame
         onSalir={() => setJuegoActivo(null)}
         onXpGanado={manejarXp}
+        onJugarOtro={setJuegoActivo}
       />
     )
   }
@@ -2681,6 +2768,7 @@ export default function ArcadeScreen() {
         onSalir={() => setJuegoActivo(null)}
         onXpGanado={manejarXp}
         onCompletado={manejarDailyCompletado}
+        onJugarOtro={setJuegoActivo}
       />
     )
   }
