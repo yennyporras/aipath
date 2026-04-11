@@ -4,13 +4,47 @@ import AIPathLogo from "./AIPathLogo"
 import { initAudio, playSound } from "../utils/sounds"
 
 const USUARIOS_DEMO = [
-  { email: "demo@aipath.app",  password: "demo1234",  nombre: "Demo User",  rol: "estudiante" },
-  { email: "admin@aipath.app", password: "admin1234", nombre: "Admin",      rol: "admin" },
-  { email: "paola@aipath.app", password: "paola1234", nombre: "Paola",      rol: "admin" },
-  { email: "ai@aipath.app",    password: "aipath2026",nombre: "AI Learner", rol: "estudiante" },
+  { email: "demo@aipath.app",  password: import.meta.env.VITE_PASS_DEMO  || "demo1234",   nombre: "Demo User",  rol: "estudiante" },
+  { email: "admin@aipath.app", password: import.meta.env.VITE_PASS_ADMIN || "admin1234",  nombre: "Admin",      rol: "admin" },
+  { email: "paola@aipath.app", password: import.meta.env.VITE_PASS_PAOLA || "paola1234",  nombre: "Paola",      rol: "admin" },
+  { email: "ai@aipath.app",    password: import.meta.env.VITE_PASS_AI    || "aipath2026", nombre: "AI Learner", rol: "estudiante" },
 ]
-const USERS_KEY   = "aipath_users"
-const SESSION_KEY = "aipath_session"
+const USERS_KEY      = "aipath_users"
+const SESSION_KEY    = "aipath_session"
+const RATE_LIMIT_KEY = "aipath_login_rl"
+const MAX_INTENTOS   = 3
+const BLOQUEO_MS     = 60_000  // 60 segundos
+
+function getRateLimit() {
+  try { return JSON.parse(localStorage.getItem(RATE_LIMIT_KEY) || "{}") } catch { return {} }
+}
+
+function isBloqueado() {
+  const rl = getRateLimit()
+  if (!rl.bloqueadoHasta) return false
+  return Date.now() < rl.bloqueadoHasta
+}
+
+function segundosRestantes() {
+  const rl = getRateLimit()
+  if (!rl.bloqueadoHasta) return 0
+  return Math.max(0, Math.ceil((rl.bloqueadoHasta - Date.now()) / 1000))
+}
+
+function registrarFallo() {
+  const rl = getRateLimit()
+  const intentos = (rl.intentos || 0) + 1
+  const nuevo = { intentos, ultimoFallo: Date.now() }
+  if (intentos >= MAX_INTENTOS) {
+    nuevo.bloqueadoHasta = Date.now() + BLOQUEO_MS
+  }
+  localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(nuevo))
+  return nuevo
+}
+
+function resetRateLimit() {
+  localStorage.removeItem(RATE_LIMIT_KEY)
+}
 
 function getUsers() {
   try { return JSON.parse(localStorage.getItem(USERS_KEY) || "[]") } catch { return [] }
@@ -90,10 +124,35 @@ export default function LoginScreen({ onLogin }) {
   const [showPass, setShow]   = useState(false)
   const [error, setError]     = useState("")
   const [loading, setLoading] = useState(false)
+  const [segsBloqueo, setSegs] = useState(0)
+
+  // Countdown cuando hay bloqueo activo
+  useEffect(() => {
+    if (segsBloqueo <= 0) return
+    const id = setInterval(() => {
+      const restante = segundosRestantes()
+      setSegs(restante)
+      if (restante <= 0) {
+        resetRateLimit()
+        setError("")
+      }
+    }, 1000)
+    return () => clearInterval(id)
+  }, [segsBloqueo])
 
   function handleLogin(e) {
     e.preventDefault()
     initAudio()
+
+    // Verificar bloqueo activo
+    if (isBloqueado()) {
+      const restante = segundosRestantes()
+      setSegs(restante)
+      setError(`Demasiados intentos fallidos. Espera ${restante} segundos para volver a intentarlo.`)
+      playSound("incorrect")
+      return
+    }
+
     setError("")
     setLoading(true)
     setTimeout(() => {
@@ -101,11 +160,20 @@ export default function LoginScreen({ onLogin }) {
       const user = findUser(email, password)
       if (user) {
         playSound("unlock")
+        resetRateLimit()
         localStorage.setItem(SESSION_KEY, JSON.stringify({ email: user.email, nombre: user.nombre, rol: user.rol || "estudiante" }))
         onLogin(user.email)
       } else {
         playSound("incorrect")
-        setError("Credenciales incorrectas. Prueba demo@aipath.app / demo1234")
+        const rl = registrarFallo()
+        if (rl.bloqueadoHasta) {
+          const restante = segundosRestantes()
+          setSegs(restante)
+          setError(`Demasiados intentos fallidos. Acceso bloqueado por ${restante} segundos.`)
+        } else {
+          const restantes = MAX_INTENTOS - rl.intentos
+          setError(`Credenciales incorrectas. Te quedan ${restantes} intento${restantes === 1 ? "" : "s"}.`)
+        }
       }
     }, 600)
   }
@@ -216,13 +284,17 @@ export default function LoginScreen({ onLogin }) {
 
             <motion.button
               type="submit"
-              disabled={loading}
+              disabled={loading || (tab === "login" && segsBloqueo > 0)}
               className="btn-primary btn-primary-pulse w-full py-3.5 text-sm mt-1"
-              style={{ opacity: loading ? 0.7 : 1 }}
+              style={{ opacity: (loading || (tab === "login" && segsBloqueo > 0)) ? 0.5 : 1 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => playSound("click")}
             >
-              {loading ? "Verificando..." : tab === "login" ? "Entrar →" : "Crear cuenta →"}
+              {loading
+                ? "Verificando..."
+                : tab === "login" && segsBloqueo > 0
+                  ? `Bloqueado (${segsBloqueo}s)`
+                  : tab === "login" ? "Entrar →" : "Crear cuenta →"}
             </motion.button>
           </form>
         </motion.div>
