@@ -14,6 +14,30 @@ function buildPages(texto) {
   )
 }
 
+// Garantiza máximo MAX_SEGS segmentos fusionando los pares adyacentes más cortos.
+// El segmento de Analogía (siempre el último, añadido aparte) no cuenta aquí.
+const MAX_SEGS = 5
+function limitPages(paginas) {
+  if (paginas.length <= MAX_SEGS) return paginas
+  let pages = paginas.map(segs => [...segs])
+  while (pages.length > MAX_SEGS) {
+    // Encontrar el par adyacente con menor suma de palabras
+    let bestI = 0
+    let bestSum = Infinity
+    for (let i = 0; i < pages.length - 1; i++) {
+      const sum = pages[i].join(" ").split(/\s+/).length +
+                  pages[i + 1].join(" ").split(/\s+/).length
+      if (sum < bestSum) { bestSum = sum; bestI = i }
+    }
+    pages = [
+      ...pages.slice(0, bestI),
+      [...pages[bestI], ...pages[bestI + 1]],
+      ...pages.slice(bestI + 2),
+    ]
+  }
+  return pages
+}
+
 // Barra de progreso de lección: 4 pasos
 function LeccionProgressBar({ paso }) {
   const pasos = ["Teoría", "Quiz", "Práctica", "Resultado"]
@@ -44,7 +68,7 @@ export default function TeoriaScreen({ leccion, onContinuar, onVolver }) {
     setPagina(0)
   }, [leccion.id])
 
-  const paginas      = useMemo(() => buildPages(t.explicacion), [t.explicacion])
+  const paginas      = useMemo(() => limitPages(buildPages(t.explicacion)), [t.explicacion])
   const numConceptos = paginas.length
   const tieneAnalogia = !!t.analogia
 
