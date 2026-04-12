@@ -128,11 +128,11 @@
             ],
             "practica": {
               "tipo": "identificar",
-              "contexto": "Eres consultor en una empresa de manufactura colombiana. El CEO dice: 'Esperemos 2 años a que la IA se estabilice antes de invertir.'",
+              "contexto": "Eres consultor en una empresa de manufactura en Stuttgart. El CEO dice: 'Esperemos 2 años a que la IA se estabilice antes de invertir.'",
               "instruccion": "Identifica los 3 argumentos más convincentes para responder al CEO basándote en el contexto histórico de adopción tecnológica.",
-              "input_malo": "Señor CEO, la IA ya está lista y si no la usan ahora van a quedar atrás de la competencia.",
-              "pista": "Usa datos concretos: tiempo de adopción de tecnologías anteriores, costos actuales vs 2020, y ejemplos de competidores en LATAM que ya están usando IA.",
-              "solucion": "1) Los costos de Claude API cayeron 95% desde 2020 — esperar 2 años es esperar más caída pero perder 2 años de ventaja competitiva. 2) La curva de aprendizaje es navegable hoy: en 6 meses puedes tener un equipo competente. En 2028 necesitarán 2 años para alcanzar lo que hoy aprendes en 6 meses. 3) Competidores en Brasil y México ya automatizaron procesos de manufactura con IA — el 'early mover advantage' en LATAM todavía existe hasta 2027.",
+              "input_malo": "Herr Müller, la IA ya está lista y si no la usan ahora van a quedar atrás de la competencia.",
+              "pista": "Usa datos concretos: tiempo de adopción de tecnologías anteriores, costos actuales vs 2020, y ejemplos de competidores en Alemania y Europa que ya están usando IA en manufactura.",
+              "solucion": "1) Los costos de Claude API cayeron 95% desde 2020 — esperar 2 años es esperar más caída pero perder 2 años de ventaja competitiva. 2) La curva de aprendizaje es navegable hoy: en 6 meses puedes tener un equipo competente. En 2028 necesitarán 2 años para alcanzar lo que hoy aprendes en 6 meses. 3) Competidores en Baviera y los Países Bajos ya automatizaron procesos de manufactura con IA — el 'early mover advantage' en Europa central todavía existe hasta 2027.",
               "criterios_de_exito": [
                 "Usa datos numéricos específicos",
                 "Menciona el costo de oportunidad de esperar",

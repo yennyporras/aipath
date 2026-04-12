@@ -52,14 +52,16 @@ function cargarProgreso() {
     if (!guardado) return {
       xpTotal: 0, rachaDiaria: 1, badges: [],
       leccionesCompletadas: [], ultimaSesion: null,
-      fasesProyecto: [], certificacionAprobada: false
+      fasesProyecto: [], certificacionAprobada: false,
+      leccionesParaRepasar: []
     }
-    return { fasesProyecto: [], certificacionAprobada: false, ...JSON.parse(guardado) }
+    return { fasesProyecto: [], certificacionAprobada: false, leccionesParaRepasar: [], ...JSON.parse(guardado) }
   } catch {
     return {
       xpTotal: 0, rachaDiaria: 1, badges: [],
       leccionesCompletadas: [], ultimaSesion: null,
-      fasesProyecto: [], certificacionAprobada: false
+      fasesProyecto: [], certificacionAprobada: false,
+      leccionesParaRepasar: []
     }
   }
 }
@@ -741,7 +743,21 @@ export default function App() {
     }
   }
 
-  function handlePracticaDone() { setPantalla("results") }
+  function handlePracticaDone(xpBonus = 0, paraRepasar = false) {
+    if (xpBonus > 0) {
+      const nuevoProgreso = { ...progreso, xpTotal: (progreso.xpTotal || 0) + xpBonus }
+      if (paraRepasar && leccionActual) {
+        const yaEsta = (nuevoProgreso.leccionesParaRepasar || []).includes(leccionActual.id)
+        if (!yaEsta) {
+          nuevoProgreso.leccionesParaRepasar = [...(nuevoProgreso.leccionesParaRepasar || []), leccionActual.id]
+        }
+      }
+      guardarProgreso(nuevoProgreso)
+      setProgreso(nuevoProgreso)
+      setXpSesion(prev => prev + xpBonus)
+    }
+    setPantalla("results")
+  }
 
   function handleReintentar() {
     setPreguntaActual(0); setXpSesion(0); setRespondidas(0); setCorrectas(0); setRachaActual(0)
