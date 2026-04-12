@@ -744,18 +744,29 @@ export default function App() {
   }
 
   function handlePracticaDone(xpBonus = 0, paraRepasar = false) {
-    if (xpBonus > 0) {
-      const nuevoProgreso = { ...progreso, xpTotal: (progreso.xpTotal || 0) + xpBonus }
-      if (paraRepasar && leccionActual) {
-        const yaEsta = (nuevoProgreso.leccionesParaRepasar || []).includes(leccionActual.id)
-        if (!yaEsta) {
-          nuevoProgreso.leccionesParaRepasar = [...(nuevoProgreso.leccionesParaRepasar || []), leccionActual.id]
-        }
+    const nuevoProgreso = { ...progreso }
+    // Lecciones sin quiz no pasan por handleSiguiente — marcarlas aquí
+    const sinQuiz = !leccionActual?.contenido?.verificacion?.length
+    if (sinQuiz && leccionActual) {
+      const xpLeccion = leccionActual.xp || 0
+      nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + xpLeccion + xpBonus
+      if (!nuevoProgreso.leccionesCompletadas.includes(leccionActual.id)) {
+        nuevoProgreso.leccionesCompletadas = [...nuevoProgreso.leccionesCompletadas, leccionActual.id]
       }
-      guardarProgreso(nuevoProgreso)
-      setProgreso(nuevoProgreso)
+      setXpSesion(xpLeccion + xpBonus)
+    } else if (xpBonus > 0) {
+      nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + xpBonus
       setXpSesion(prev => prev + xpBonus)
     }
+    if (paraRepasar && leccionActual) {
+      const yaEsta = (nuevoProgreso.leccionesParaRepasar || []).includes(leccionActual.id)
+      if (!yaEsta) {
+        nuevoProgreso.leccionesParaRepasar = [...(nuevoProgreso.leccionesParaRepasar || []), leccionActual.id]
+      }
+    }
+    nuevoProgreso.ultimaSesion = new Date().toDateString()
+    guardarProgreso(nuevoProgreso)
+    setProgreso(nuevoProgreso)
     setPantalla("results")
   }
 
