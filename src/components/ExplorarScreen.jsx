@@ -162,27 +162,32 @@ const FALLBACK = {
   ],
 }
 
-// ── Claude API — una sola llamada con todo el contenido del día ─────────────
-async function llamarClaudeAPI(fechaStr) {
+// ── Concepto base del día (seed por día de semana) ──────────────────────────
+const DIA_SEMANA = new Date(FECHA_STR).getDay()
+const CONCEPTOS_SEED = [
+  "RAG (Retrieval-Augmented Generation)",
+  "Agentes de IA autónomos",
+  "Fine-tuning vs Prompting",
+  "Embeddings y búsqueda semántica",
+  "Temperatura y parámetros de inferencia",
+  "Chain-of-Thought Prompting",
+  "Prompt Injection y seguridad en LLMs",
+]
+const CONCEPTO_BASE = CONCEPTOS_SEED[DIA_SEMANA]
+
+function parseAPIResponse(texto) {
+  const str = texto.trim()
+  const jsonStr = str.startsWith("{") ? str : str.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "")
+  return JSON.parse(jsonStr)
+}
+
+// ── Claude API — llamada 1: concepto + datos_curiosos + reflexion ────────────
+async function llamarClaudeAPIPrimario(fechaStr) {
   if (!API_KEY) return null
 
-  // Seed por día de semana para variar el concepto
-  const diaSemana = new Date(fechaStr).getDay()
-  const conceptosSeed = [
-    "RAG (Retrieval-Augmented Generation)",
-    "Agentes de IA autónomos",
-    "Fine-tuning vs Prompting",
-    "Embeddings y búsqueda semántica",
-    "Temperatura y parámetros de inferencia",
-    "Chain-of-Thought Prompting",
-    "Prompt Injection y seguridad en LLMs",
-  ]
-  const conceptoBase = conceptosSeed[diaSemana]
-  const poolIds = Object.keys(HERRAMIENTAS_POOL).join('", "')
+  const prompt = `Hoy es ${fechaStr}. Genera contenido educativo diario sobre IA para una profesional que estudia para trabajar en Europa como AI Engineer y Consultant.
 
-  const prompt = `Hoy es ${fechaStr}. Genera contenido educativo diario sobre IA para una profesional latinoamericana que estudia para trabajar en Europa como AI Engineer y Consultant.
-
-Concepto base del día: "${conceptoBase}"
+Concepto base del día: "${CONCEPTO_BASE}"
 
 Responde SOLO con JSON válido (sin texto adicional, sin bloques markdown, sin \`\`\`):
 {
@@ -203,7 +208,39 @@ Responde SOLO con JSON válido (sin texto adicional, sin bloques markdown, sin \
   "reflexion": {
     "pregunta": "pregunta profunda para reflexión personal, orientada a mercado laboral europeo y carrera en IA",
     "pista": "pista de aproximadamente 10 palabras para ayudar a responder"
-  },
+  }
+}`
+
+  const resp = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "x-api-key": API_KEY,
+      "anthropic-version": "2023-06-01",
+      "content-type": "application/json",
+      "anthropic-dangerous-direct-browser-access": "true",
+    },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-6",
+      max_tokens: 900,
+      messages: [{ role: "user", content: prompt }],
+    }),
+  })
+
+  if (!resp.ok) throw new Error(`API error ${resp.status}`)
+  const data = await resp.json()
+  return parseAPIResponse(data.content[0].text)
+}
+
+// ── Claude API — llamada 2: herramientas_ids + noticias ──────────────────────
+async function llamarClaudeAPIExtra(fechaStr) {
+  if (!API_KEY) return null
+
+  const poolIds = Object.keys(HERRAMIENTAS_POOL).join('", "')
+
+  const prompt = `Hoy es ${fechaStr}. Para el concepto de IA "${CONCEPTO_BASE}", genera:
+
+Responde SOLO con JSON válido (sin texto adicional, sin bloques markdown, sin \`\`\`):
+{
   "herramientas_ids": ["5 ids seleccionados por relevancia al concepto, del pool: "${poolIds}"],
   "noticias": [
     {
@@ -227,18 +264,14 @@ Responde SOLO con JSON válido (sin texto adicional, sin bloques markdown, sin \
     },
     body: JSON.stringify({
       model: "claude-sonnet-4-6",
-      max_tokens: 1600,
+      max_tokens: 700,
       messages: [{ role: "user", content: prompt }],
     }),
   })
 
   if (!resp.ok) throw new Error(`API error ${resp.status}`)
-
   const data = await resp.json()
-  const texto = data.content[0].text.trim()
-  // Parsear JSON — puede venir con o sin bloque de código
-  const jsonStr = texto.startsWith("{") ? texto : texto.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "")
-  return JSON.parse(jsonStr)
+  return parseAPIResponse(data.content[0].text)
 }
 
 // ── Skeletons ───────────────────────────────────────────────────────────────
@@ -484,8 +517,10 @@ function ShareModal({ tipo, datos, onClose }) {
 
 // ── Componente principal ────────────────────────────────────────────────────
 export default function ExplorarScreen() {
-  const [datos, setDatos] = useState(null)
-  const [cargando, setCargando] = useState(true)
+  const [datosPrimarios, setDatosPrimarios] = useState(null)
+  const [cargandoPrimarios, setCargandoPrimarios] = useState(true)
+  const [datosExtra, setDatosExtra] = useState(null)
+  const [cargandoExtra, setCargandoExtra] = useState(true)
   const [usandoFallback, setUsandoFallback] = useState(false)
 
   // Modal de compartir: { tipo: "concepto"|"dato", datos: {...} }
@@ -505,41 +540,64 @@ export default function ExplorarScreen() {
     try { localStorage.setItem(REFLEXION_KEY, valor) } catch {}
   }, [])
 
-  // Cargar datos al montar
+  // Cargar datos al montar — dos llamadas paralelas independientes
   useEffect(() => {
-    async function cargar() {
-      setCargando(true)
-      setUsandoFallback(false)
+    setUsandoFallback(false)
 
-      // 1. Caché del día en localStorage
-      try {
-        const cached = localStorage.getItem(CACHE_KEY)
-        if (cached) {
-          setDatos(JSON.parse(cached))
-          setCargando(false)
-          return
-        }
-      } catch {}
-
-      // 2. Llamar a Claude API
-      try {
-        const resultado = await llamarClaudeAPI(FECHA_STR)
-        if (resultado) {
-          setDatos(resultado)
-          try { localStorage.setItem(CACHE_KEY, JSON.stringify(resultado)) } catch {}
-          setCargando(false)
-          return
-        }
-      } catch (e) {
-        console.warn("[ExplorarScreen] Claude API falló, usando fallback:", e.message)
+    // 1. Caché del día — si existe, hidrata ambos estados de golpe
+    try {
+      const cached = localStorage.getItem(CACHE_KEY)
+      if (cached) {
+        const c = JSON.parse(cached)
+        setDatosPrimarios(c)
+        setDatosExtra(c)
+        setCargandoPrimarios(false)
+        setCargandoExtra(false)
+        return
       }
+    } catch {}
 
-      // 3. Fallback hardcodeado
-      setDatos(FALLBACK)
-      setUsandoFallback(true)
-      setCargando(false)
-    }
-    cargar()
+    const fbPrim  = { concepto: FALLBACK.concepto, datos_curiosos: FALLBACK.datos_curiosos, reflexion: FALLBACK.reflexion }
+    const fbExtra = { herramientas_ids: FALLBACK.herramientas_ids, noticias: FALLBACK.noticias }
+
+    // 2. Llamada 1 — concepto + datos_curiosos + reflexion
+    const promPrimario = llamarClaudeAPIPrimario(FECHA_STR)
+      .then(r => {
+        const resultado = r || fbPrim
+        if (!r) setUsandoFallback(true)
+        setDatosPrimarios(resultado)
+        setCargandoPrimarios(false)
+        return resultado
+      })
+      .catch(e => {
+        console.warn("[ExplorarScreen] API primario falló:", e.message)
+        setDatosPrimarios(fbPrim)
+        setCargandoPrimarios(false)
+        setUsandoFallback(true)
+        return fbPrim
+      })
+
+    // 3. Llamada 2 — herramientas_ids + noticias
+    const promExtra = llamarClaudeAPIExtra(FECHA_STR)
+      .then(r => {
+        const resultado = r || fbExtra
+        if (!r) setUsandoFallback(true)
+        setDatosExtra(resultado)
+        setCargandoExtra(false)
+        return resultado
+      })
+      .catch(e => {
+        console.warn("[ExplorarScreen] API extra falló:", e.message)
+        setDatosExtra(fbExtra)
+        setCargandoExtra(false)
+        setUsandoFallback(true)
+        return fbExtra
+      })
+
+    // 4. Guardar caché completo una vez que ambas resuelvan
+    Promise.all([promPrimario, promExtra]).then(([prim, extra]) => {
+      try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ...prim, ...extra })) } catch {}
+    })
   }, [])
 
   const abrirEnNuevaPestana = useCallback((url) => {
@@ -550,12 +608,12 @@ export default function ExplorarScreen() {
 
   // Resolver las 5 herramientas del día a partir de los IDs
   const herramientas = useMemo(() => {
-    if (!datos?.herramientas_ids) return []
-    return datos.herramientas_ids
+    if (!datosExtra?.herramientas_ids) return []
+    return datosExtra.herramientas_ids
       .map((id) => (HERRAMIENTAS_POOL[id] ? { id, ...HERRAMIENTAS_POOL[id] } : null))
       .filter(Boolean)
       .slice(0, 5)
-  }, [datos])
+  }, [datosExtra])
 
   return (
     <>
@@ -593,7 +651,7 @@ export default function ExplorarScreen() {
       )}
 
       {/* ── Aviso fallback ─────────────────────────────────────────────────── */}
-      {usandoFallback && !cargando && (
+      {usandoFallback && !cargandoPrimarios && !cargandoExtra && (
         <div
           className="mx-4 mb-4 rounded-xl px-4 py-3 text-xs"
           style={{
@@ -634,7 +692,7 @@ export default function ExplorarScreen() {
             </span>
           </div>
 
-          {cargando ? (
+          {cargandoPrimarios ? (
             <SkeletonConcepto />
           ) : (
             <div
@@ -646,16 +704,16 @@ export default function ExplorarScreen() {
             >
               {/* Cabecera con emoji + título */}
               <div className="flex items-start gap-3 mb-3">
-                <span className="text-4xl leading-none">{datos.concepto.emoji}</span>
+                <span className="text-4xl leading-none">{datosPrimarios.concepto.emoji}</span>
                 <div>
                   <h3
                     className="text-xl font-extrabold leading-tight"
                     style={{ fontFamily: "'Outfit', sans-serif", color: "#fff" }}
                   >
-                    {datos.concepto.titulo}
+                    {datosPrimarios.concepto.titulo}
                   </h3>
                   <p className="text-sm mt-1" style={{ color: "#06B6D4" }}>
-                    {datos.concepto.definicion_corta}
+                    {datosPrimarios.concepto.definicion_corta}
                   </p>
                 </div>
               </div>
@@ -665,7 +723,7 @@ export default function ExplorarScreen() {
                 className="text-sm leading-relaxed mb-4"
                 style={{ color: "var(--color-text-secondary)" }}
               >
-                {datos.concepto.explicacion}
+                {datosPrimarios.concepto.explicacion}
               </p>
 
               {/* Por qué importa */}
@@ -680,12 +738,12 @@ export default function ExplorarScreen() {
                   ✦ Por qué importa —{" "}
                 </span>
                 <span style={{ color: "var(--color-text-secondary)" }}>
-                  {datos.concepto.por_que_importa}
+                  {datosPrimarios.concepto.por_que_importa}
                 </span>
               </div>
 
               <button
-                onClick={() => setModal({ tipo: "concepto", datos: datos.concepto })}
+                onClick={() => setModal({ tipo: "concepto", datos: datosPrimarios.concepto })}
                 className="w-full py-2.5 rounded-xl text-sm font-semibold transition-all active:scale-95"
                 style={{
                   background: "linear-gradient(135deg, #7C3AED, #06B6D4)",
@@ -726,9 +784,9 @@ export default function ExplorarScreen() {
             className="carousel-h flex gap-3 overflow-x-auto pb-2"
             style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch" }}
           >
-            {cargando
+            {cargandoPrimarios
               ? [0, 1, 2, 3, 4].map((i) => <SkeletonCard key={i} width={240} />)
-              : datos.datos_curiosos.map((d, i) => (
+              : datosPrimarios.datos_curiosos.map((d, i) => (
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, x: 20 }}
@@ -753,7 +811,7 @@ export default function ExplorarScreen() {
                       onClick={() =>
                         setModal({
                           tipo: "dato",
-                          datos: { dato: d.dato, concepto_titulo: datos.concepto.titulo },
+                          datos: { dato: d.dato, concepto_titulo: datosPrimarios.concepto.titulo },
                         })
                       }
                       className="py-2 rounded-xl text-xs font-semibold transition-all active:scale-95 mt-auto"
@@ -788,7 +846,7 @@ export default function ExplorarScreen() {
             </h2>
           </div>
 
-          {cargando ? (
+          {cargandoPrimarios ? (
             <div
               className="rounded-2xl p-5 border"
               style={{
@@ -812,10 +870,10 @@ export default function ExplorarScreen() {
                 className="text-base font-semibold leading-relaxed mb-2"
                 style={{ color: "#fff", fontFamily: "'Outfit', sans-serif" }}
               >
-                {datos.reflexion.pregunta}
+                {datosPrimarios.reflexion.pregunta}
               </p>
               <p className="text-xs mb-4" style={{ color: "rgba(139,92,246,0.75)" }}>
-                💜 Pista: {datos.reflexion.pista}
+                💜 Pista: {datosPrimarios.reflexion.pista}
               </p>
               <textarea
                 value={reflexion}
@@ -871,7 +929,7 @@ export default function ExplorarScreen() {
             className="carousel-h flex gap-3 overflow-x-auto pb-2"
             style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch" }}
           >
-            {cargando
+            {cargandoExtra
               ? [0, 1, 2, 3, 4].map((i) => <SkeletonCard key={i} width={260} />)
               : herramientas.map((h, i) => (
                   <motion.div
@@ -963,9 +1021,9 @@ export default function ExplorarScreen() {
             className="carousel-h flex gap-3 overflow-x-auto pb-2"
             style={{ scrollSnapType: "x mandatory", WebkitOverflowScrolling: "touch" }}
           >
-            {cargando
+            {cargandoExtra
               ? [0, 1, 2].map((i) => <SkeletonCard key={i} width={280} />)
-              : datos.noticias.map((n, i) => (
+              : datosExtra.noticias.map((n, i) => (
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, x: 20 }}
