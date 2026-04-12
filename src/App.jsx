@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, lazy, Suspense } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Header from "./components/Header"
 import AIPathLogo from "./components/AIPathLogo"
@@ -11,25 +11,30 @@ import ResultsScreen from "./components/ResultsScreen"
 import TeoriaScreen from "./components/TeoriaScreen"
 import PracticaScreen from "./components/PracticaScreen"
 import LoginScreen from "./components/LoginScreen"
-import ProyectoScreen from "./components/ProyectoScreen"
-import CertificacionScreen from "./components/CertificacionScreen"
 import InstallBanner from "./components/InstallBanner"
 import ReportButton from "./components/ReportButton"
 import PrivacyScreen from "./components/PrivacyScreen"
 import { usePWAInstall } from "./hooks/usePWAInstall"
 import { playSound } from "./utils/sounds"
-import ArcadeScreen from "./components/ArcadeScreen"
-import ExplorarScreen from "./components/ExplorarScreen"
-import PerfilScreen from "./components/PerfilScreen"
 import BottomNav from "./components/BottomNav"
-import PomodoroTimer from "./components/PomodoroTimer"
 import WelcomeScreen from "./components/WelcomeScreen"
 
-// Módulos con contenido disponible — import estático (Vite los bundlea)
-import m4Data from "./content/m4-completo.json"
-import m1Data from "./content/m1/index.json"
+// Componentes lazy — se cargan solo cuando se navega a esa pantalla
+const ArcadeScreen       = lazy(() => import("./components/ArcadeScreen"))
+const ExplorarScreen     = lazy(() => import("./components/ExplorarScreen"))
+const PerfilScreen       = lazy(() => import("./components/PerfilScreen"))
+const PomodoroTimer      = lazy(() => import("./components/PomodoroTimer"))
+const ProyectoScreen     = lazy(() => import("./components/ProyectoScreen"))
+const CertificacionScreen = lazy(() => import("./components/CertificacionScreen"))
 
-const MODULO_DATA = { m4: m4Data, m1: m1Data }
+// Fallback minimalista para Suspense
+function LazyFallback() {
+  return (
+    <div className="flex items-center justify-center py-12">
+      <div className="w-6 h-6 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin" />
+    </div>
+  )
+}
 
 const STORAGE_KEY = "aipath_progreso_v2"
 const STORAGE_KEY_PREFIX = "aipath_progreso_"
@@ -618,9 +623,16 @@ export default function App() {
   // Tab activo para BottomNav: las pantallas de módulo cuentan como "academy"
   const tabActivo = ["arcade", "explorar", "perfil"].includes(pantalla) ? pantalla : "academy"
 
-  // Seleccionar módulo desde AcademyScreen
-  function handleSelectModulo(mod) {
-    const data = MODULO_DATA[mod.id]
+  // Seleccionar módulo desde AcademyScreen — carga JSON bajo demanda
+  async function handleSelectModulo(mod) {
+    let data
+    if (mod.id === "m1") {
+      const { default: m1Data } = await import("./content/m1/index.json")
+      data = m1Data
+    } else if (mod.id === "m4") {
+      const { default: m4Data } = await import("./content/m4-completo.json")
+      data = m4Data
+    }
     if (!data) return
     setModuloActivo(mod)
     setModuloData(data)
@@ -865,7 +877,7 @@ export default function App() {
     const nuevoProgreso = { ...progreso }
     if (!nuevoProgreso.certificacionAprobada) {
       nuevoProgreso.certificacionAprobada = true
-      nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + (m4Data.certificacion_final?.xp_aprobacion || 1000)
+      nuevoProgreso.xpTotal = (nuevoProgreso.xpTotal || 0) + (moduloData?.certificacion_final?.xp_aprobacion || 1000)
     }
     guardarProgreso(nuevoProgreso)
     setProgreso(nuevoProgreso)
@@ -934,7 +946,7 @@ export default function App() {
           <div className="flex items-center gap-3">
             {installButton}
             {/* Pomodoro timer — tabs principales */}
-            <PomodoroTimer onXpGanado={handlePomodoroXp} onBadgeDesbloqueado={handlePomodoroBadge} />
+            <Suspense fallback={null}><PomodoroTimer onXpGanado={handlePomodoroXp} onBadgeDesbloqueado={handlePomodoroBadge} /></Suspense>
             <div className="surface flex items-center gap-2 px-3 py-1.5 rounded-full">
               <span className="text-sm">⚡</span>
               <span className="text-xs font-medium" style={{ color: "var(--color-text-secondary)" }}>
@@ -948,19 +960,27 @@ export default function App() {
           {pantalla === "academy" && (
             <AcademyScreen progreso={progreso} onSelectModulo={handleSelectModulo} />
           )}
-          {pantalla === "arcade" && <ArcadeScreen />}
+          {pantalla === "arcade" && (
+            <Suspense fallback={<LazyFallback />}>
+              <ArcadeScreen />
+            </Suspense>
+          )}
           {pantalla === "explorar" && (
-            <ExplorarScreen
-              progreso={progreso}
-              onSelectModulo={handleSelectModulo}
-            />
+            <Suspense fallback={<LazyFallback />}>
+              <ExplorarScreen
+                progreso={progreso}
+                onSelectModulo={handleSelectModulo}
+              />
+            </Suspense>
           )}
           {pantalla === "perfil" && (
-            <PerfilScreen
-              session={getSession()}
-              progreso={progreso}
-              onLogout={handleLogout}
-            />
+            <Suspense fallback={<LazyFallback />}>
+              <PerfilScreen
+                session={getSession()}
+                progreso={progreso}
+                onLogout={handleLogout}
+              />
+            </Suspense>
           )}
         </div>
         {mostrarBanner && isMobile && (
@@ -1025,7 +1045,7 @@ export default function App() {
               </span>
             </div>
             {/* Pomodoro timer — desktop módulo */}
-            <PomodoroTimer onXpGanado={handlePomodoroXp} onBadgeDesbloqueado={handlePomodoroBadge} />
+            <Suspense fallback={null}><PomodoroTimer onXpGanado={handlePomodoroXp} onBadgeDesbloqueado={handlePomodoroBadge} /></Suspense>
             {installButton}
           </div>
         </div>
@@ -1130,21 +1150,25 @@ export default function App() {
 
         {pantalla === "proyecto" && (
           <div className="w-full max-w-2xl lg:max-w-3xl animate-fade-in">
-            <ProyectoScreen
-              progreso={progreso}
-              onFaseCompleta={handleFaseProyectoCompleta}
-              onVolver={() => setPantalla("intro")}
-            />
+            <Suspense fallback={<LazyFallback />}>
+              <ProyectoScreen
+                progreso={progreso}
+                onFaseCompleta={handleFaseProyectoCompleta}
+                onVolver={() => setPantalla("intro")}
+              />
+            </Suspense>
           </div>
         )}
 
         {pantalla === "certificacion" && (
           <div className="w-full max-w-lg lg:max-w-2xl animate-fade-in">
-            <CertificacionScreen
-              progreso={progreso}
-              onCertAprobada={handleCertAprobada}
-              onVolver={() => setPantalla("intro")}
-            />
+            <Suspense fallback={<LazyFallback />}>
+              <CertificacionScreen
+                progreso={progreso}
+                onCertAprobada={handleCertAprobada}
+                onVolver={() => setPantalla("intro")}
+              />
+            </Suspense>
           </div>
         )}
 

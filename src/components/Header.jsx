@@ -1,5 +1,7 @@
+import { lazy, Suspense } from "react"
 import AIPathLogo from "./AIPathLogo"
-import PomodoroTimer from "./PomodoroTimer"
+
+const PomodoroTimer = lazy(() => import("./PomodoroTimer"))
 
 export default function Header({ rachaDiaria, rachaActual, installButton, onVolverAInicio, onPomodoroXp, onPomodoroBadge }) {
   return (
@@ -16,7 +18,7 @@ export default function Header({ rachaDiaria, rachaActual, installButton, onVolv
       <div className="flex items-center gap-2">
         {installButton && <div className="hidden lg:block">{installButton}</div>}
         {/* Timer Pomodoro */}
-        <PomodoroTimer onXpGanado={onPomodoroXp} onBadgeDesbloqueado={onPomodoroBadge} />
+        <Suspense fallback={null}><PomodoroTimer onXpGanado={onPomodoroXp} onBadgeDesbloqueado={onPomodoroBadge} /></Suspense>
         <div className={`surface flex items-center gap-2 px-3 py-1.5 rounded-full ${rachaActual >= 3 ? "glow-streak" : ""}`}>
           <span className="text-sm">{rachaActual >= 3 ? "🔥" : "⚡"}</span>
           <span className="text-xs font-medium" style={{ color: "var(--color-text-secondary)" }}>
