@@ -1,28 +1,14 @@
 /**
  * questionBank.js — Banco dinámico de preguntas del Arcade
  *
- * Auto-detecta todos los módulos disponibles en src/content/.
- * Cuando se agreguen M5, M7, M8, etc., solo hay que añadir el import
- * aquí y una entrada en MODULOS_DISPONIBLES. El código del Arcade
- * no necesita ningún cambio.
+ * Los JSONs de contenido se cargan de forma lazy (dynamic import) para
+ * evitar que ~2.9 MB de datos se incluyan en el bundle inicial.
+ * Llamar initBank() una vez antes de usar las funciones get*.
  */
 
-// ─── Imports de módulos disponibles ──────────────────────────────────────────
-import m1Data from '../content/m1/index.json'
-import m4Data from '../content/m4-completo.json'
-// Agregar aquí cuando estén listos:
-// import m5Data from '../content/m5/index.json'
-// import m7Data from '../content/m7/index.json'
-// import m8Data from '../content/m8/index.json'
-
-// ─── Registro de módulos ──────────────────────────────────────────────────────
-const MODULOS_DISPONIBLES = [
-  { id: 'm1', data: m1Data },
-  { id: 'm4', data: m4Data },
-  // { id: 'm5', data: m5Data },
-  // { id: 'm7', data: m7Data },
-  // { id: 'm8', data: m8Data },
-]
+// ─── Pool global — se puebla en initBank() ────────────────────────────────────
+let _pool = []
+let _initialized = false
 
 // ─── Extractor de preguntas ───────────────────────────────────────────────────
 // Recorre bloques > lecciones > verificacion[] y normaliza cada pregunta
@@ -59,22 +45,42 @@ function extraerDeModulo(data, moduloId) {
   return preguntas
 }
 
-// ─── Pool global único ────────────────────────────────────────────────────────
-export const QUESTION_POOL = MODULOS_DISPONIBLES.flatMap(({ id, data }) =>
-  extraerDeModulo(data, id)
-)
+// ─── Inicialización lazy ──────────────────────────────────────────────────────
+/**
+ * Carga los JSONs de contenido de forma dinámica y puebla el pool de preguntas.
+ * Llamar una sola vez al montar ArcadeScreen; las llamadas siguientes son no-op.
+ */
+export async function initBank() {
+  if (_initialized) return
+  const [m1Mod, m4Mod] = await Promise.all([
+    import('../content/m1/index.json'),
+    import('../content/m4-completo.json'),
+    // Agregar aquí cuando estén listos:
+    // import('../content/m5/index.json'),
+    // import('../content/m7/index.json'),
+    // import('../content/m8/index.json'),
+  ])
+  const MODULOS = [
+    { id: 'm1', data: m1Mod.default },
+    { id: 'm4', data: m4Mod.default },
+  ]
+  _pool = MODULOS.flatMap(({ id, data }) => extraerDeModulo(data, id))
+  _initialized = true
+}
 
 // ─── Estadísticas (útil para debugging) ──────────────────────────────────────
-export const BANK_STATS = {
-  total: QUESTION_POOL.length,
-  porModulo: MODULOS_DISPONIBLES.reduce((acc, { id }) => {
-    acc[id] = QUESTION_POOL.filter((q) => q.modulo_id === id).length
-    return acc
-  }, {}),
-  porDificultad: [1, 2, 3].reduce((acc, d) => {
-    acc[d] = QUESTION_POOL.filter((q) => q.dificultad === d).length
-    return acc
-  }, {}),
+export function getBankStats() {
+  return {
+    total: _pool.length,
+    porModulo: ['m1', 'm4'].reduce((acc, id) => {
+      acc[id] = _pool.filter((q) => q.modulo_id === id).length
+      return acc
+    }, {}),
+    porDificultad: [1, 2, 3].reduce((acc, d) => {
+      acc[d] = _pool.filter((q) => q.dificultad === d).length
+      return acc
+    }, {}),
+  }
 }
 
 // ─── Utilidades internas ──────────────────────────────────────────────────────
@@ -129,8 +135,8 @@ function claveUsada(q) {
  * Si el pool de no-usadas es insuficiente, recicla todas.
  */
 export function getRandomQuestions(n = 10) {
-  const disponibles = QUESTION_POOL.filter((q) => !usadasEnSesion.has(claveUsada(q)))
-  const pool = disponibles.length >= n ? disponibles : QUESTION_POOL
+  const disponibles = _pool.filter((q) => !usadasEnSesion.has(claveUsada(q)))
+  const pool = disponibles.length >= n ? disponibles : _pool
   const seleccionadas = shuffle(pool).slice(0, n)
   marcarUsadas(seleccionadas)
   return seleccionadas
@@ -142,7 +148,7 @@ export function getRandomQuestions(n = 10) {
  */
 export function getDailyQuestions(n = 10) {
   const seed = seedDeHoy()
-  const shuffled = shuffleConSeed(QUESTION_POOL, seed)
+  const shuffled = shuffleConSeed(_pool, seed)
   return shuffled.slice(0, n)
 }
 
@@ -154,8 +160,8 @@ export function getDailyQuestions(n = 10) {
  */
 export function getProgressiveQuestions(intentos = 0, n = 10) {
   const dificultadMinima = intentos <= 2 ? 1 : intentos <= 5 ? 2 : 3
-  const filtradas = QUESTION_POOL.filter((q) => q.dificultad >= dificultadMinima)
-  const pool = filtradas.length >= n ? filtradas : QUESTION_POOL
+  const filtradas = _pool.filter((q) => q.dificultad >= dificultadMinima)
+  const pool = filtradas.length >= n ? filtradas : _pool
   return shuffle(pool).slice(0, n)
 }
 
@@ -168,7 +174,7 @@ export function getProgressiveQuestions(intentos = 0, n = 10) {
  */
 export function getTrueFalseQuestions(n = 10) {
   // Tomar el doble para tener margen si alguna no es convertible
-  const base = shuffle(QUESTION_POOL).slice(0, n * 2)
+  const base = shuffle(_pool).slice(0, n * 2)
   const resultado = []
 
   for (const q of base) {
@@ -204,7 +210,7 @@ export function getTrueFalseQuestions(n = 10) {
  * Formato de salida: { termino: string, definicion: string }
  */
 export function getFlashcardQuestions(n = 10) {
-  return shuffle(QUESTION_POOL)
+  return shuffle(_pool)
     .slice(0, n)
     .map((q) => ({
       termino: q.concepto_reforzado,
@@ -220,7 +226,7 @@ export function getFlashcardQuestions(n = 10) {
  */
 export function getConexionRapidaQuestions(n = 32) {
   const seen = new Set()
-  return shuffle(QUESTION_POOL)
+  return shuffle(_pool)
     .filter((q) => {
       if (seen.has(q.concepto_reforzado)) return false
       seen.add(q.concepto_reforzado)
@@ -241,7 +247,7 @@ export function getConexionRapidaQuestions(n = 32) {
  * Formato de salida: { concepto: string, opciones: [string, string], correcta: 0|1 }
  */
 export function getBatallaQuestions(n = 10) {
-  return shuffle(QUESTION_POOL)
+  return shuffle(_pool)
     .slice(0, n)
     .map((q) => {
       const correcta = q.opciones[q.correcta_index]
@@ -271,7 +277,7 @@ export function getCompletaConceptoQuestions(n = 10) {
   const limpiarPregunta = (texto) =>
     texto.replace(/^¿/, '').replace(/\?$/, '').trim()
 
-  return shuffle(QUESTION_POOL)
+  return shuffle(_pool)
     .slice(0, n)
     .map((q) => {
       const contexto = limpiarPregunta(q.pregunta)

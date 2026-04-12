@@ -15,8 +15,8 @@ export default function BlockLessons({ bloque, todasLecciones, progreso, onSelec
       <button onClick={onVolver}
         className="text-xs font-medium mb-4 flex items-center gap-1.5 animate-reveal transition-colors min-h-[44px] -mx-2 px-2"
         style={{ color: "var(--color-text-muted)" }}
-        onMouseEnter={e => e.target.style.color = "var(--color-text-secondary)"}
-        onMouseLeave={e => e.target.style.color = "var(--color-text-muted)"}>
+        onMouseEnter={e => e.currentTarget.style.color = "var(--color-text-secondary)"}
+        onMouseLeave={e => e.currentTarget.style.color = "var(--color-text-muted)"}>
         ← Bloques
       </button>
 

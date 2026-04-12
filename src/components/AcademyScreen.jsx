@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import academyIndex from "../content/academy-index.json"
 import { playSound } from "../utils/sounds"
@@ -71,7 +71,7 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
   }
 
   // Calcular módulo a continuar
-  const nextModulo = (() => {
+  const nextModulo = useMemo(() => {
     const available = modulos.filter(m => m.estado === "disponible")
     const started = available.find(m => {
       const done = completadas.filter(id => id.startsWith(m.id + "-")).length
@@ -84,104 +84,38 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
     const notStarted = available.find(m => completadas.filter(id => id.startsWith(m.id + "-")).length === 0)
     if (notStarted) return { modulo: notStarted, pct: 0, done: 0 }
     return null
-  })()
+  }, [completadas, modulos])
 
   return (
     <div className="w-full max-w-4xl mx-auto px-2 relative z-10">
-      {/* Header */}
+
+      {/* 1 — Header compacto */}
       <motion.div
-        className="text-center mb-10"
+        className="text-center mb-4"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="mb-4">
-          <p className="font-display text-xs font-bold uppercase tracking-[0.25em]"
-            style={{ color: "var(--color-text-muted)" }}>
-            Academia de IA · Nivel Mundial
-          </p>
-          <h2 className="font-display text-3xl lg:text-4xl font-extrabold text-gradient mt-2"
-            style={{ fontFamily: "'Outfit', sans-serif" }}>
-            Tu ruta en IA
-          </h2>
-          <p className="text-sm mt-2" style={{ color: "var(--color-text-secondary)" }}>
-            17 módulos · ~1,400 lecciones · De cero a referente mundial
-          </p>
-        </div>
-      </motion.div>
-
-      {/* Stats globales */}
-      <motion.div
-        className="max-w-lg mx-auto surface rounded-2xl p-5 mb-4 grid grid-cols-4 gap-4 text-center"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <div>
-          <p className="text-lg font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: "#06B6D4" }}>
-            <AnimatedNumber value={completadas.length} />
-          </p>
-          <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>Lecciones</p>
-        </div>
-        <div>
-          <p className="text-lg font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}>
-            <AnimatedNumber value={xpTotal} />
-          </p>
-          <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>XP total</p>
-        </div>
-        <div>
-          <p className="text-lg font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: "#06B6D4" }}>
-            <AnimatedNumber value={nivel} duration={600} />
-          </p>
-          <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>Nivel</p>
-        </div>
-        <div>
-          <p className="text-lg font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: "#F97316" }}>
-            <AnimatedNumber value={progreso.rachaDiaria || 1} duration={600} />
-          </p>
-          <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>Racha</p>
-        </div>
-      </motion.div>
-
-      {/* Meta + Countdown */}
-      <motion.div
-        className="max-w-lg mx-auto mb-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <p className="text-center text-[11px] font-bold uppercase tracking-[0.2em] mb-3"
-          style={{ color: "#06B6D4" }}>
-          Meta: Referente en IA — Octubre 2026
+        <p className="font-display text-xs font-bold uppercase tracking-[0.25em]"
+          style={{ color: "var(--color-text-muted)" }}>
+          Academia de IA · Nivel Mundial
         </p>
-        <div className="surface rounded-2xl px-5 py-3 grid grid-cols-3 gap-2 text-center"
-          style={{ border: "1px solid rgba(6,182,212,0.2)" }}>
-          {[
-            { val: countdown.dias,    label: "días" },
-            { val: countdown.horas,   label: "horas" },
-            { val: countdown.minutos, label: "minutos" },
-          ].map(({ val, label }) => (
-            <motion.div
-              key={label}
-              animate={{ scale: [1, 1.04, 1] }}
-              transition={{ duration: 2, repeat: Infinity, repeatDelay: 58, ease: "easeInOut" }}
-            >
-              <p className="text-2xl font-extrabold" style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}>
-                {val}
-              </p>
-              <p className="text-xs uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>{label}</p>
-            </motion.div>
-          ))}
-        </div>
+        <h2 className="font-display text-3xl lg:text-4xl font-extrabold text-gradient mt-1"
+          style={{ fontFamily: "'Outfit', sans-serif" }}>
+          Tu ruta en IA
+        </h2>
+        <p className="text-sm mt-1" style={{ color: "var(--color-text-secondary)" }}>
+          17 módulos · ~1,400 lecciones · De cero a referente mundial
+        </p>
       </motion.div>
 
-      {/* Card "Continúa aquí" */}
+      {/* 2 — Card "Continúa aquí" — primer elemento interactivo */}
       {nextModulo && (
         <motion.div
-          className="max-w-lg mx-auto mb-6"
+          className="max-w-lg mx-auto mb-4"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.4, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
         >
           <motion.button
             onClick={() => { playSound("unlock"); onSelectModulo(nextModulo.modulo) }}
@@ -224,6 +158,54 @@ export default function AcademyScreen({ progreso, onSelectModulo }) {
           </motion.button>
         </motion.div>
       )}
+
+      {/* 3 — Stats globales */}
+      <motion.div
+        className="max-w-lg mx-auto surface rounded-2xl p-5 mb-2 grid grid-cols-4 gap-4 text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <div>
+          <p className="text-lg font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: "#06B6D4" }}>
+            <AnimatedNumber value={completadas.length} />
+          </p>
+          <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>Lecciones</p>
+        </div>
+        <div>
+          <p className="text-lg font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: "#F59E0B" }}>
+            <AnimatedNumber value={xpTotal} />
+          </p>
+          <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>XP total</p>
+        </div>
+        <div>
+          <p className="text-lg font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: "#06B6D4" }}>
+            <AnimatedNumber value={nivel} duration={600} />
+          </p>
+          <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>Nivel</p>
+        </div>
+        <div>
+          <p className="text-lg font-bold" style={{ fontFamily: "'Outfit', sans-serif", color: "#F97316" }}>
+            <AnimatedNumber value={progreso.rachaDiaria || 1} duration={600} />
+          </p>
+          <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>Racha</p>
+        </div>
+      </motion.div>
+
+      {/* 4 — Countdown colapsado: 1 línea horizontal compacta */}
+      <motion.p
+        className="max-w-lg mx-auto text-center text-xs mb-8 py-1"
+        style={{ color: "var(--color-text-muted)" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
+      >
+        ⏳{" "}
+        <span style={{ color: "#F59E0B", fontWeight: 700 }}>{countdown.dias}</span> días ·{" "}
+        <span style={{ color: "#F59E0B", fontWeight: 700 }}>{countdown.horas}</span>h ·{" "}
+        <span style={{ color: "#F59E0B", fontWeight: 700 }}>{countdown.minutos}</span>min
+        <span style={{ color: "#06B6D4" }}> — Meta Oct 2026</span>
+      </motion.p>
 
       {/* Módulos por fase */}
       {fases.map((faseKey, fi) => {

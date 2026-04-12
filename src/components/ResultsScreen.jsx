@@ -3,23 +3,24 @@ import { motion, AnimatePresence } from "framer-motion"
 import { playSound } from "../utils/sounds"
 
 // ── Tarjeta compartible Boss Battle ─────────────────────────────────
-const BOSS_TOPICS = ["Fundamentos IA", "Machine Learning", "LLMs & Transformers", "Ética y Regulación", "IA en Producción"]
+const DEFAULT_BOSS_TOPICS = ["Fundamentos IA", "Machine Learning", "LLMs & Transformers", "Ética y Regulación", "IA en Producción"]
+const DEFAULT_BOSS_TITULO  = "Fundamentos de IA"
 
-function getBossBadge(correctas) {
+function getBossBadge(correctas, bossTopics = DEFAULT_BOSS_TOPICS) {
   if (correctas >= 18) return { label: "M1 Master", color: "#F59E0B" }
   if (correctas >= 15) return { label: "M1 Expert", color: "#06B6D4" }
   if (correctas >= 14) return { label: "M1 Aprobado", color: "#10B981" }
   return { label: "M1 — Sigue intentando", color: "#94A3B8" }
 }
 
-function BossBattleCard({ correctas, totalPreguntas, nombreUsuario, xp }) {
+function BossBattleCard({ correctas, totalPreguntas, nombreUsuario, xp, bossTitulo = DEFAULT_BOSS_TITULO, bossTopics = DEFAULT_BOSS_TOPICS }) {
   const [copiado, setCopiado] = useState(false)
   const pct = totalPreguntas > 0 ? Math.round((correctas / totalPreguntas) * 100) : 0
-  const badge = getBossBadge(correctas)
+  const badge = getBossBadge(correctas, bossTopics)
   const passed = correctas >= Math.ceil(totalPreguntas * 0.7)
 
   async function compartir() {
-    const texto = `Acabo de completar el Boss Battle de Fundamentos de IA en AIPath con ${correctas}/${totalPreguntas}. ¿Te atreves? aipath-beta.vercel.app`
+    const texto = `Acabo de completar el Boss Battle de ${bossTitulo} en AIPath con ${correctas}/${totalPreguntas}. ¿Te atreves? aipath-beta.vercel.app`
     if (navigator.share) {
       try {
         await navigator.share({
@@ -90,7 +91,7 @@ function BossBattleCard({ correctas, totalPreguntas, nombreUsuario, xp }) {
         {nombreUsuario}
       </p>
       <p style={{ textAlign: "center", fontSize: 11, color: "#64748B", marginBottom: 16 }}>
-        Boss Battle — Fundamentos de IA
+        Boss Battle — {bossTitulo}
       </p>
 
       {/* Puntuación */}
@@ -122,7 +123,7 @@ function BossBattleCard({ correctas, totalPreguntas, nombreUsuario, xp }) {
 
       {/* Topic pills */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "center", marginBottom: 16 }}>
-        {BOSS_TOPICS.map(t => (
+        {bossTopics.map(t => (
           <span key={t} style={{
             fontSize: 10, fontWeight: 600,
             color: "#94A3B8",

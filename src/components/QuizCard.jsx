@@ -1,29 +1,10 @@
 import { useState, useEffect, useRef, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { playSound } from "../utils/sounds"
+import LeccionProgressBar from "./LeccionProgressBar"
 
 const PRAISE = ["¡Exacto!", "¡Correcto!", "¡Bien pensado!", "¡Perfecto!", "¡Excelente!", "¡Así se hace!", "¡Genial!"]
 
-// Barra de progreso de lección: 4 pasos
-function LeccionProgressBar({ paso }) {
-  const pasos = ["Teoría", "Quiz", "Práctica", "Resultado"]
-  return (
-    <div className="flex items-center gap-0.5 mb-4 w-full">
-      {pasos.map((nombre, i) => (
-        <div key={i} className="flex flex-col items-center flex-1">
-          <div
-            className="w-full rounded-full transition-all duration-400"
-            style={{ height: "6px", background: i <= paso ? "#06B6D4" : "rgba(255,255,255,0.08)" }}
-          />
-          <span className="text-[10px] mt-0.5 font-medium"
-            style={{ color: i === paso ? "#06B6D4" : "rgba(255,255,255,0.2)" }}>
-            {nombre}
-          </span>
-        </div>
-      ))}
-    </div>
-  )
-}
 
 function shuffleOpciones(pregunta) {
   const opciones = [...pregunta.opciones]
@@ -38,36 +19,44 @@ function shuffleOpciones(pregunta) {
 // Confetti de partículas pequeñas al acertar
 function MiniConfetti() {
   const colors = ["#06B6D4", "#0891B2", "#F59E0B", "#10B981", "#F97316"]
+  const particulas = useMemo(() => Array.from({ length: 18 }, (_, i) => ({
+    left:     10 + Math.random() * 80,
+    top:      10 + Math.random() * 40,
+    w:        3  + Math.random() * 4,
+    h:        3  + Math.random() * 4,
+    isCircle: Math.random() > 0.5,
+    color:    colors[i % colors.length],
+    dy:       -(40 + Math.random() * 60),
+    dx:       (Math.random() - 0.5) * 80,
+    dur:      1 + Math.random() * 0.8,
+    delay:    Math.random() * 0.3,
+    rotate:   Math.random() * 360,
+  })), [])
+
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl">
-      {Array.from({ length: 18 }, (_, i) => (
+      {particulas.map((p, i) => (
         <motion.div
           key={i}
           className="absolute"
           style={{
-            left: `${10 + Math.random() * 80}%`,
-            top:  `${10 + Math.random() * 40}%`,
-            width:  `${3 + Math.random() * 4}px`,
-            height: `${3 + Math.random() * 4}px`,
-            borderRadius: Math.random() > 0.5 ? "50%" : "2px",
-            background: colors[i % colors.length],
+            left:         `${p.left}%`,
+            top:          `${p.top}%`,
+            width:        `${p.w}px`,
+            height:       `${p.h}px`,
+            borderRadius: p.isCircle ? "50%" : "2px",
+            background:   p.color,
           }}
           initial={{ opacity: 1, y: 0, x: 0, scale: 1 }}
-          animate={{
-            opacity: 0,
-            y: -(40 + Math.random() * 60),
-            x: (Math.random() - 0.5) * 80,
-            scale: 0.3,
-            rotate: Math.random() * 360,
-          }}
-          transition={{ duration: 1 + Math.random() * 0.8, ease: "easeOut", delay: Math.random() * 0.3 }}
+          animate={{ opacity: 0, y: p.dy, x: p.dx, scale: 0.3, rotate: p.rotate }}
+          transition={{ duration: p.dur, ease: "easeOut", delay: p.delay }}
         />
       ))}
     </div>
   )
 }
 
-export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, rachaActual }) {
+export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, rachaActual, xpPorPregunta = 30 }) {
   // Shuffle opciones al montar (key en App.jsx garantiza remount por pregunta)
   const [shuffled] = useState(() => shuffleOpciones(pregunta))
 
@@ -91,6 +80,7 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
   function pick(i) {
     if (answered) return
     setSel(i)
+    setHovered(null)
     const isCorrect = i === shuffled.correcta
     onAnswer(isCorrect)
     if (isCorrect) {
@@ -122,7 +112,7 @@ export default function QuizCard({ pregunta, indice, totalPreguntas, onAnswer, r
             exit={{}}
             transition={{ duration: 1.4, ease: "easeOut" }}
           >
-            <span className="font-display text-xl font-bold" style={{ color: "#F59E0B" }}>+30 XP</span>
+            <span className="font-display text-xl font-bold" style={{ color: "#F59E0B" }}>+{xpPorPregunta} XP</span>
           </motion.div>
         )}
       </AnimatePresence>

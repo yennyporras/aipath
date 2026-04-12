@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 // Usuarios demo base — siempre presentes en el ranking
 const DEMO_RANKING = [
   { email: "team@aipath.app",         nombre: "AIPath Team", xp: 4850, racha: 47 },
+  { email: "paola@aipath.app",        nombre: "Paola Y.",    xp: 3200, racha: 28 },
   { email: "demo@estratek.com.co",    nombre: "Demo User",   xp: 2340, racha: 12 },
   { email: "admin@estratek.com.co",   nombre: "Admin",       xp: 1980, racha: 8  },
 ]
@@ -33,22 +34,16 @@ function buildRanking(sessionEmail) {
   } catch { realUsers = [] }
 
   const demoEmails = new Set(DEMO_RANKING.map(u => u.email))
-  const specialEmails = ["paola@estratek.com.co", "equipo@estratek.com.co"]
-  const specialUsers = specialEmails.map(email => {
-    const { xp, racha } = getProgresoUsuario(email)
-    const nombre = email === "paola@estratek.com.co" ? "Paola" : "Equipo"
-    return { email, nombre, xp, racha }
-  })
 
   const extraUsers = realUsers
-    .filter(u => !demoEmails.has(u.email) && !specialEmails.includes(u.email))
+    .filter(u => !demoEmails.has(u.email))
     .map(u => {
       const { xp, racha } = getProgresoUsuario(u.email)
       const nombre = u.nombre || u.email.split("@")[0]
       return { email: u.email, nombre, xp, racha }
     })
 
-  const todos = [...DEMO_RANKING, ...specialUsers, ...extraUsers]
+  const todos = [...DEMO_RANKING, ...extraUsers]
 
   const yaEsta = todos.some(u => u.email === sessionEmail)
   if (!yaEsta && sessionEmail) {
@@ -104,12 +99,8 @@ export default function PerfilScreen({ session, progreso, onLogout }) {
   const [dias7, setDias7] = useState(() => getUltimos7Dias())
 
   useEffect(() => {
-    setLoadingRanking(true)
-    const id = setTimeout(() => {
-      setRanking(buildRanking(emailActual))
-      setLoadingRanking(false)
-    }, 300)
-    return () => clearTimeout(id)
+    setRanking(buildRanking(emailActual))
+    setLoadingRanking(false)
   }, [emailActual, xpTotal])
 
   // Refrescar gráfica cuando el componente está visible

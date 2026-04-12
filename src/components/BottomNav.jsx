@@ -52,7 +52,8 @@ export default function BottomNav({ activo, onChange }) {
     <nav
       className="fixed bottom-0 left-0 right-0 md:hidden z-40 flex items-center"
       style={{
-        height: "60px",
+        height: "calc(60px + env(safe-area-inset-bottom, 0px))",
+        paddingBottom: "env(safe-area-inset-bottom, 0px)",
         background: "var(--color-bg-surface, #0D0D14)",
         borderTop: "1px solid var(--color-border, #1E1E35)",
       }}

@@ -220,7 +220,7 @@ Responde SOLO con JSON válido (sin texto adicional, sin bloques markdown, sin \
       "anthropic-dangerous-direct-browser-access": "true",
     },
     body: JSON.stringify({
-      model: "claude-sonnet-4-6",
+      model: "claude-sonnet-4-20250514",
       max_tokens: 900,
       messages: [{ role: "user", content: prompt }],
     }),
@@ -263,7 +263,7 @@ Responde SOLO con JSON válido (sin texto adicional, sin bloques markdown, sin \
       "anthropic-dangerous-direct-browser-access": "true",
     },
     body: JSON.stringify({
-      model: "claude-sonnet-4-6",
+      model: "claude-sonnet-4-20250514",
       max_tokens: 700,
       messages: [{ role: "user", content: prompt }],
     }),
@@ -540,9 +540,11 @@ export default function ExplorarScreen() {
     try { localStorage.setItem(REFLEXION_KEY, valor) } catch {}
   }, [])
 
-  // Cargar datos al montar — dos llamadas paralelas independientes
-  useEffect(() => {
+  // Cargar datos — llamable al montar y desde el botón Reintentar
+  const cargar = useCallback(() => {
     setUsandoFallback(false)
+    setCargandoPrimarios(true)
+    setCargandoExtra(true)
 
     // 1. Caché del día — si existe, hidrata ambos estados de golpe
     try {
@@ -599,6 +601,8 @@ export default function ExplorarScreen() {
       try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ...prim, ...extra })) } catch {}
     })
   }, [])
+
+  useEffect(() => { cargar() }, [cargar])
 
   const abrirEnNuevaPestana = useCallback((url) => {
     setToastVisible(true)
@@ -660,9 +664,18 @@ export default function ExplorarScreen() {
             color: "#F59E0B",
           }}
         >
-          ⚠️ Sin conexión con Claude API — mostrando contenido de ejemplo.
-          Configura <code className="font-mono">VITE_CLAUDE_API_KEY</code> en{" "}
-          <code className="font-mono">.env.local</code> para activar el contenido diario real.
+          <span>
+            ⚠️ Sin conexión con Claude API — mostrando contenido de ejemplo.
+            Configura <code className="font-mono">VITE_CLAUDE_API_KEY</code> en{" "}
+            <code className="font-mono">.env.local</code> para activar el contenido diario real.
+          </span>
+          <button
+            onClick={() => { try { localStorage.removeItem(CACHE_KEY) } catch {} cargar() }}
+            className="mt-2 block font-semibold underline underline-offset-2"
+            style={{ color: "#F59E0B" }}
+          >
+            Reintentar
+          </button>
         </div>
       )}
 

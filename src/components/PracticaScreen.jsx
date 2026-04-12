@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { playSound } from "../utils/sounds"
+import LeccionProgressBar from "./LeccionProgressBar"
 
 const TIPO_LABELS = {
   reescribir: "Reescribe el prompt",
@@ -51,6 +52,7 @@ export default function PracticaScreen({ leccion, onSiguiente }) {
       exit={{ opacity: 0, x: -30 }}
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
     >
+      <LeccionProgressBar paso={2} />
       <div className="surface p-6 flex flex-col gap-5">
         {/* Header */}
         <motion.div custom={0} variants={sectionVariants} initial="hidden" animate="visible">

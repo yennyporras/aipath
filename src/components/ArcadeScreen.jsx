@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { useState, useEffect, useRef } from "react"
 import {
+  initBank,
   getTrueFalseQuestions,
   getFlashcardQuestions,
   getBatallaQuestions,
@@ -2658,6 +2659,12 @@ export default function ArcadeScreen() {
   const [rachaActual, setRachaActual] = useState(() => cargarProgreso().rachaDiaria || 0)
   const [estudióHoy, setEstudióHoy] = useState(() => estudióHoyCheck())
   const [countdown, setCountdown] = useState(() => segundosHastaMedianoche())
+  const [bankReady, setBankReady] = useState(false)
+
+  // Carga lazy del banco de preguntas (los JSONs de contenido son ~2.9 MB)
+  useEffect(() => {
+    initBank().then(() => setBankReady(true))
+  }, [])
 
   // Countdown hasta medianoche — siempre activo
   const dailyCompletadoHoy = dailyState?.fecha === getTodayStr() && dailyState?.completado
@@ -2923,16 +2930,17 @@ export default function ArcadeScreen() {
 
             {/* Botón Jugar */}
             <button
-              onClick={() => manejarJugar(i)}
-              className="w-full text-sm font-semibold py-1.5 rounded-xl transition-all duration-200 hover:brightness-110 active:scale-95"
+              onClick={() => bankReady && manejarJugar(i)}
+              disabled={!bankReady}
+              className="w-full text-sm font-semibold py-1.5 rounded-xl transition-all duration-200 hover:brightness-110 active:scale-95 disabled:opacity-50 disabled:cursor-wait"
               style={{
                 background: "var(--color-accent-primary)",
                 color: "#fff",
                 fontFamily: "'Outfit', sans-serif",
-                cursor: "pointer",
+                cursor: bankReady ? "pointer" : "wait",
               }}
             >
-              Jugar
+              {bankReady ? "Jugar" : "Cargando…"}
             </button>
           </motion.div>
         ))}
